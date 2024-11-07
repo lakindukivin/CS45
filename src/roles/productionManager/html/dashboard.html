@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Production Manager DashBoard</title>
+  <link rel="stylesheet" href="../styles/custom_orders.css">
+</head>
+<body>
+  <div class="sidebar">
+    <div>
+      <img src="../Waste360.png" alt="logo" width="150" height="150" class="logo">
+    </div>
+    
+    <ul>
+      <br><br><br><br>
+      <li><a href="#">Custom Orders</a></li><br>
+      <li><a href="#">Recycled Polythene</a></li><br>
+      <li><a href="#">Polythene Collection</a></li><br>
+      <li><a href="#">Supply Requests</a></li><br>
+    </ul>
+  </div>
+
+
+  <div class="content">
+
+    <header class="header">
+      <h1 class="logo">DashBoard</h1>
+      <nav class="nav">
+        <ul>
+          <li><a href="#">Logout</a></li>
+          <li><a href="#">Profile</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class = "top">
+      <div class = "left">
+        <div class="calendar">
+          <div class="calendar-header">
+              <button onclick="prevMonth()">‹</button>
+              <h2 id="monthYear"></h2>
+              <button onclick="nextMonth()">›</button>
+          </div>
+          <div class="days">
+              <div class="day">Sun</div>
+              <div class="day">Mon</div>
+              <div class="day">Tue</div>
+              <div class="day">Wed</div>
+              <div class="day">Thu</div>
+              <div class="day">Fri</div>
+              <div class="day">Sat</div>
+          </div>
+          <div class="days" id="dates"></div>
+        </div>
+      </div>
+
+      <!--timeeeeeeeeeeeee-->
+      <div class = "right">
+        <div><br> Time </div>
+            <div id="clock">Loading...</div>
+        </div>
+    </div>
+</div>
+    <script src="../javaScript/custom_order.js"></script>
+</body>
+</html>
