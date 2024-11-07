@@ -41,14 +41,14 @@
 .header .nav ul li a:hover {
   color: #ffeb3b;                  /* Change color on hover */
 }
-body {
+.body {
   font-family: Arial, sans-serif;
   display: flex;
 }
 /* Sidebar styling */
 .sidebar {
   width: 250px;
-  background-color: #22ccff;
+  background-color: #136e27;
   color: white;
   height: 100vh;
   position: fixed;
@@ -74,7 +74,7 @@ body {
 .sidebar ul li {
   padding: 15px 20px;
   background-color: #333;
-  border-bottom: 1px solid #e00000;
+  border-bottom: 1px solid #3a1a1a;
   position: relative;
   border-radius: 10px;
   margin: 5%;
@@ -129,6 +129,10 @@ body {
   margin: 0 auto; /* Automatically set equal left and right margins */
 }
 
+.content {
+  width: 100%;
+  background-color: #000000d3;
+}
 
 body {
   display: flex;
@@ -143,9 +147,11 @@ body {
   width: 400px;
   text-align: center;
   font-family: Arial, sans-serif;
-  border: 1px solid #ddd;
+  border: 1px solid #248324;
   border-radius: 8px;
   padding: 20px;
+  margin-top: 150px;
+  margin-left: 75px;
 }
 
 .calendar-header {
@@ -153,10 +159,11 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
+  color: #18b902d3;
 }
 
 .calendar-header button {
-  background-color: #3498db;
+  background-color: #12692f;
   color: white;
   border: none;
   padding: 5px 10px;
@@ -183,12 +190,12 @@ body {
 
 .day {
   font-weight: bold;
-  background-color: #f4f4f4;
+  background-color: #93e772;
   border-radius: 4px;
 }
 
 .date {
-  background-color: #e9f7fe;
+  background-color: #a9f5ad;
   border-radius: 4px;
 }
 
@@ -197,7 +204,7 @@ body {
 }
 
 .date.today {
-  background-color: #3498db;
+  background-color: #104e18;
   color: white;
   font-weight: bold;
 }
@@ -212,12 +219,39 @@ body {
 }
 
 .left{
-  margin-right: 100px;
+  margin-left: 200px;
   margin-bottom: 80px;
 }
+.ri-bot{
+  display: flex;
+  margin-top: 60px;
+  
+ }
+.box{
+  padding: 30px 25px;
+  background-color: #08550b;
+  border-bottom: 1px solid #25060a;
+  position: relative;
+  border-radius: 10px;
+  margin: 15%;
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth hover transition */
+  cursor: pointer;
+  color: white;
+  text-decoration: none;
+  display: block;
+  transition: color 0.6s ease;
+  transform: translateY(-5px); /* Moves the button upwards slightly */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
 
-
-
+.time{
+  margin-left: 200px;
+  margin-top: 60px;
+  color: #0da112;
+  font-weight: bold;
+}
 
 #clock {
   font-size: 2em;
@@ -227,6 +261,7 @@ body {
   border: 2px solid #333;
   border-radius: 8px;
   display: inline-block;
-  background-color: #f4f4f4;
-  margin-top: 20px;
+  background-color: #b0f588;
+  margin-top: 5px;
 }
+

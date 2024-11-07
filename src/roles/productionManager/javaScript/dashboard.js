@@ -69,7 +69,7 @@
       // Initial calendar render
       renderCalendar();
 
-  // timeeeeeeeeeeeeeeeee
+  // time
   
       function updateClock() {
           const now = new Date();
