@@ -1,0 +1,21 @@
+body {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  background-color: #130f0f;
+  font-family: Arial, sans-serif;
+}
+.container{
+  display: flex;
+  justify-content: center;
+  height: 50px;
+  margin-top : 70px;
+  font-family: Arial, sans-serif;
+}
+
+.dropdown {
+  display: inline-block;
+  border-radius: 50px;
+  color: #061106;
+  background-color: #64ff64;
+}

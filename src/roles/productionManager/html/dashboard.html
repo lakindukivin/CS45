@@ -5,25 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Production Manager DashBoard</title>
   <link rel="stylesheet" href="../styles/dashboard.css">
+  <link rel="stylesheet" href="../styles/sidebar.css">
 </head>
 <body>
   <div class="sidebar">
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰menu</button> <!-- Toggle Button -->
+
     <div>
       <img src="../Waste360.png" alt="logo" width="150" height="150" class="logo">
     </div>
     
     <ul>
       <br><br><br><br>
-      <li><a href="#">Custom Orders</a></li><br>
-      <li><a href="#">Recycled Polythene</a></li><br>
-      <li><a href="#">Polythene Collection</a></li><br>
-      <li><a href="#">Supply Requests</a></li><br>
+      <li><a href="../html/customer_order/pending_custom_orders.html">Custom Orders</a></li><br>
+      <li><a href="../html/recycled_polythene/recycled_polythene.html">Recycled Polythene</a></li><br>
+      <li><a href="../html/polythene_collection/schedule.html">Polythene Collection</a></li><br>
+      <li><a href="../html/supply_requests/supply_request.html">Supply Requests</a></li><br>
     </ul>
   </div>
 
 
   <div class="content">
-
     <header class="header">
       <h1 class="logo">DashBoard</h1>
       <nav class="nav">
@@ -86,5 +88,6 @@
     </div>
 </div>
     <script src="../javaScript/dashboard.js"></script>
+    <script src="../javaScript/sidebar.js"></script>
 </body>
 </html>

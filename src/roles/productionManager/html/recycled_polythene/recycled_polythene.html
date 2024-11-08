@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recycled Polythene</title>
+  <link rel="stylesheet" href="../../styles/recycled_polythene/recycled_polythene.css">
+  <link rel="stylesheet" href="../../styles/sidebar.css">
+</head>
+<body>
+  <div class="sidebar">
+    <button class="sidebar-toggle" onClick="toggleSidebar()">☰menu</button>
+    <div>
+      <img src="../../Waste360.png" alt="logo" width="150" height="150" class="logo">
+    </div>
+    <ul>
+      <br><br><br><br>
+      <li><a href="#">Custom Orders</a></li><br>
+      <li><a href="#">Recycled Polythene</a></li><br>
+      <li><a href="#">Polythene Collection</a></li><br>
+      <li><a href="#">Supply Requests</a></li><br>
+    </ul>
+  </div>
+  <div class="content">
+    <header class="header">
+      <h1 class="logo">Amount of Polythene Recycled</h1>
+      <nav class="nav">
+        <ul>
+          <li><a href="#">Logout</a></li>
+          <li><a href="#">Profile</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="container">
+      <form >
+        <label for="name">Polythene Amount(Tons):</label>
+        <input type="text" id="name" name="name" required>
+        <br><br>
+  
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" rows="4" cols="50" required></textarea>
+        <br><br>
+  
+        <label for="Month">Month:</label>
+        <select id="Month" name="Month">
+          <option value="january">January</option>
+          <option value="february">February</option>
+          <option value="march">March</option>
+          <option value="april">April</option>
+          <option value="may">May</option>
+          <option value="june">June</option>
+          <option value="july">July</option>
+          <option value="august">August</option>
+          <option value="september">September</option>
+          <option value="october">October</option>
+          <option value="november">November</option>
+          <option value="december">December</option>
+        </select>
+        <br><br>
+  
+        <input class="save" type="submit" value="Save">
+      </form>
+  </div> 
+    <script src="../../javaScript/sidebar.js"></script>
+</body>
+</html>

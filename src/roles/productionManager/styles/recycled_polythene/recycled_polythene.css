@@ -1,0 +1,39 @@
+body {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  background-color: #130f0f;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+  border: #ffffff;
+  border-width: 1px;
+  border-style: solid;
+  width: 50%;
+  margin-left: 35%;
+  height: 50%;
+}
+
+label {
+  font-weight: 600;
+  color: #adf7a4;
+}
+
+.save {
+  display: flex;
+  justify-content: center;
+  padding: 8px 20px;
+  margin: 0 auto;
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: #2a6921;
+  color: #fff;
+}
