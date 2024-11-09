@@ -1,0 +1,28 @@
+body {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  background-color: #130f0f;
+  font-family: Arial, sans-serif;
+}
+.container{
+  display: flex;
+  justify-content: center;
+  height: 50px;
+  margin-top : 90px;
+  margin-left: 200px;
+  font-family: Arial, sans-serif;
+  gap: 400px;
+}
+
+.dropdown {
+  display: inline-block;
+  border-radius: 60px;
+  color: #061106;
+  background-color: #64ff64;
+  width: 100px;
+}
+
+.header .nav ul { 
+  margin-left: 950px;                      /* Space between links */
+}

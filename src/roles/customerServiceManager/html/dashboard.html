@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title></title>
+  <link rel="stylesheet" href="../styles/dashboard.css" />
+  <link rel="stylesheet" href="../styles/sidebar.css" />
+</head>
+
+<body>
+  <div class="sidebar">
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰menu</button>
+    <!-- Toggle Button -->
+
+    <div>
+      <img src="../Waste360.png" alt="logo" width="150" height="150" class="logo" />
+    </div>
+
+    <ul>
+      <br /><br /><br /><br />
+      <li>
+        <a href="../html/give_away/give_away_request.html">Give Away</a>
+      </li>
+      <br />
+      <li>
+        <a href="../html/inquries_&_returns/inquries_&_returns.html">Inquries & Returns</a>
+      </li>
+      <br />
+      <li>
+        <a href="../html/manage_orders/manage_order.html">Manage Orders</a>
+      </li>
+      <br />
+      <li>
+        <a href="../html/manage_reviews/manage_reviews.html">Manage Reviews</a>
+      </li>
+      <br />
+    </ul>
+  </div>
+
+  <div class="content">
+    <header class="header">
+      <h1 class="logo">DashBoard</h1>
+      <nav class="nav">
+        <ul>
+          <li><a href="#">Logout</a></li>
+          <li><a href="#">Profile</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="top">
+      <div class="left">
+        <div class="calendar">
+          <div class="calendar-header">
+            <button onclick="prevMonth()">‹</button>
+            <h2 id="monthYear"></h2>
+            <button onclick="nextMonth()">›</button>
+          </div>
+          <div class="days">
+            <div class="day">Sun</div>
+            <div class="day">Mon</div>
+            <div class="day">Tue</div>
+            <div class="day">Wed</div>
+            <div class="day">Thu</div>
+            <div class="day">Fri</div>
+            <div class="day">Sat</div>
+          </div>
+          <div class="days" id="dates"></div>
+        </div>
+      </div>
+
+      <!--timee-->
+      <div class="right">
+        <div class="time">
+          <div>
+            <br />
+            Time
+          </div>
+          <div id="clock">Loading...</div>
+        </div>
+
+        <div class="ri-bot">
+          <div class="one">
+            <div class="box">
+              <div>Amount of Give Aways</div>
+            </div>
+            <div class="box">
+              <div>Amount of Inquries & Returns</div>
+            </div>
+          </div>
+          <div class="two">
+            <div class="box">
+              <div>Amount of Orders</div>
+            </div>
+            <div class="box">
+              <div>Amount of Reviews</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../javaScript/dashboard.js"></script>
+  <script src="../javaScript/sidebar.js"></script>
+</body>
+
+</html>
