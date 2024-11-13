@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Waste360</title>
-    <link rel="stylesheet" href="../styles/home.css" />
+    <title>Login</title>
+    <link rel="stylesheet" href="../styles/login.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
       rel="stylesheet"
@@ -45,26 +45,20 @@
           class="recycling-image"
         />
         <div class="cta">
-          <h1>BE A PART OF THE <br />GREEN REVOLUTION</h1>
-          <div class="cta-buttons">
-            <button>BUY NOW</button>
-            <a href="login.html">
-              <button>RECYCLE</button>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="stats-box">
-        <div class="stats">
-          <div class="stat-item">
-            <h2>50+ Tons</h2>
-            <p>polythene recycled last month</p>
-          </div>
-          <div class="stat-item">
-            <h2>20,000+</h2>
-            <p>carbon footprints saved</p>
-          </div>
+            <form class="login-form">
+                <div class="input-group">
+                  <label for="email">Email</label>
+                  <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+                <div class="input-group">
+                  <label for="password">Password</label>
+                  <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+                <div class="cta-buttons">
+                    <button type="submit" class="login-button">Login</button>
+                </div>
+                <p class="signup-text">Don't have an account? <a href="#">Sign up now</a></p>
+              </form>          
         </div>
       </div>
     </main>
