@@ -1,6 +1,5 @@
-
 .form-container {
-    background-color: #d3d3d3;
+    background-color: #fff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
@@ -92,7 +91,7 @@ textarea {
 
 .submit-btn {
     margin: 4px;
-    background-color: #1332;
+    background-color: #133223;
     color: #fff;
     padding: 10px;
     border: none;
@@ -104,7 +103,7 @@ textarea {
 }
 
 .submit-btn:hover {
-    background-color: #1332
+    background-color: #1c573b
 }
 
 
