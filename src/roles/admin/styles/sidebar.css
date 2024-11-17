@@ -1,5 +1,3 @@
-
-
 #sidebar {
   box-sizing: border-box;
   height: 100vh;
@@ -14,12 +12,12 @@
 
 #sidebar .sidebar-container {
   display: grid;
-  grid-template-rows: 250px auto 50px;  
+  grid-template-rows: 250px auto 50px;
   align-content: space-between;
   min-height: 90vh;
 }
 
-#sidebar .sidebar-container > div {
+#sidebar .sidebar-container>div {
   place-self: center;
 }
 
@@ -105,20 +103,17 @@
   transform: rotate(180deg);
 }
 
-/* @media (max-width: 800px) {
-   body {
-      grid-template-columns: 1fr;
-   } */
+/* 
+@media (max-width: 800px) {
 
-/* #sidebar {
-      height: 60px;
-      width: 100%;
-      position: fixed;
-      bottom: 0;
-   }
+  #sidebar {
 
-   #sidebar ul {
-      display: flex;
-      justify-content: space-around;
-   }
+    display: none;
+  }
+.sidebar-hide{
+  display: none;
+}
+  .sidebar-show {
+    display: block;
+  }
 } */
