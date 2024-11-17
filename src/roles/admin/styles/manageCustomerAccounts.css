@@ -1,12 +1,7 @@
- 
-
 h2 {
     text-align: center;
     margin-bottom: 20px;
 }
-
-
-
 
 .container {
     display: flex;
@@ -24,7 +19,6 @@ h2 {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
- 
 
 .table-header {
     display: flex;
@@ -117,23 +111,4 @@ th {
 
 .actions:hover .dropdown {
     display: block;
-}
-
-
-
-
-
-@media (min-width: 768px) {
-    .main-content {
-        flex-direction: row;
-        justify-content: space-around;
-        max-height: 2100vh;
-        /* Limit height on larger screens */
-    }
-
-    .sub-content {
-        flex-direction: row;
-        justify-content: space-around;
-        max-height: 10vh;
-    }
 }
