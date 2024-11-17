@@ -13,8 +13,13 @@ body {
     min-height: 100vh;
     display: grid;
     grid-template-columns: auto 1fr;
-        background-color: #f4f4f4;
+    background-color: #f4f4f4;
 }
+
+main {
+    position: relative;
+}
+
 h2 {
     text-align: center;
     margin-bottom: 20px;
@@ -66,6 +71,9 @@ footer {
     background-color: #333;
     color: #fff;
     height: 5vh;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
 
 footer .logo {
