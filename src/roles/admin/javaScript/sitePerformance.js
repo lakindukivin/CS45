@@ -1,5 +1,3 @@
-
-
 // Error Logs Modal Control
 function openErrorLogs() {
   document.getElementById('errorLogsModal').style.display = 'block';
@@ -9,4 +7,3 @@ function openErrorLogs() {
 function closeErrorLogs() {
   document.getElementById('errorLogsModal').style.display = 'none';
 }
- 
