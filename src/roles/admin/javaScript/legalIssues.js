@@ -1,4 +1,4 @@
- // Sample data for demonstration
+// Sample data for demonstration
 let legalIssues = [
   {
     id: 'L001',
