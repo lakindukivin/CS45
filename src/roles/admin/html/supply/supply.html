@@ -3,10 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/src/roles/admin/styles/sidebar.css" />
     <link rel="stylesheet" href="/src/roles/admin/styles/common.css" />
-    <link rel="stylesheet" href="/src/roles/admin/styles/home.css" />
-    <title>Waste360|Dashboard</title>
+    <link rel="stylesheet" href="/src/roles/admin/styles/sidebar.css" />
+    <link rel="stylesheet" href="/src/roles/admin/styles/supply.css" />
+
+    <title>Supply Requests</title>
   </head>
   <body>
     <nav id="sidebar">
@@ -22,7 +23,7 @@
         <div>
           <ul>
             <li>
-              <a href="#" class="sidebar-active"
+              <a href="/src/roles/admin/html/home.html"
                 ><img
                   src="/src/roles/admin/assets/dashboard.svg"
                   alt="dashboard"
@@ -85,7 +86,7 @@
               >
             </li>
             <li>
-              <a href="/src/roles/admin/html/supply/supply.html"
+              <a href="#" class="sidebar-active"
                 ><img
                   src="/src/roles/admin/assets/supply.svg"
                   alt="supply"
@@ -96,6 +97,7 @@
         </div>
       </div>
     </nav>
+
     <main>
       <header>
         <div class="logo">
@@ -103,20 +105,56 @@
           <h1>Waste360</h1>
         </div>
         <nav class="header-nav">
-          <a href="#"><img src="/src/roles/admin/assets/notifications.svg" alt=""></a>
-          <a href="#">Profile</a>
-          <a href="#">Log Out</a>
-
+          <a href="#">Home</a>
         </nav>
       </header>
 
+      <div class="form-container">
+        <h2>Special Requests of Pallets and Garbage Bags</h2>
+        <div class="input-container">
+          <form action="">
+            <div class="form-group">
+              <label for="type">Type</label>
+              <select name="selectType" id="type">
+                <option value="">Select type</option>
+                <option value="">Garbage Bags</option>
+                <option value="">Palletes</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="amount">Amount</label>
+              <input
+                type="text"
+                id="amount"
+                name="amount"
+                placeholder="Enter the required amount"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="date">Due Date</label>
+              <input type="date" id=date" name ="date">
+            </div>
+
+            <div class="form-group">
+              <label for="info">Customized information(if any)</label>
+              <textarea type="text" id="info" rows="4"></textarea>
+            </div>
+          </form>
+        </div>
+
+        <button onclick="request()" class="submit-btn">Request</button>
+      </div>
+
       <!-- <footer>
         <div class="logo">
-            <img src="/src/roles/admin/assets/Waste360.png" alt="Waste360">
+          <img src="../../../../../assets/Waste360.png" alt="Waste360" />
         </div>
         <p>&copy; 2024 Waste360. All rights reserved.</p>
-    </footer> -->
-      <script src="/src/roles/admin/javaScript/sidebar.js"></script>
+      </footer> -->
     </main>
+    <script src="/src/roles/admin/javaScript/sidebar.js"></script>
+    <script src="/src/roles/admin/javaScript/supply.js"></script>
   </body>
 </html>

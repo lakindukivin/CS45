@@ -3,10 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/src/roles/admin/styles/sidebar.css" />
     <link rel="stylesheet" href="/src/roles/admin/styles/common.css" />
-    <link rel="stylesheet" href="/src/roles/admin/styles/home.css" />
-    <title>Waste360|Dashboard</title>
+    <link rel="stylesheet" href="/src/roles/admin/styles/sidebar.css" />
+    <link
+      rel="stylesheet"
+      href="/src/roles/admin/styles/manageCustomerAccounts.css"
+    />
+
+    <title>Manage Customer Accounts</title>
   </head>
   <body>
     <nav id="sidebar">
@@ -22,7 +26,7 @@
         <div>
           <ul>
             <li>
-              <a href="#" class="sidebar-active"
+              <a href="/src/roles/admin/html/home.html"
                 ><img
                   src="/src/roles/admin/assets/dashboard.svg"
                   alt="dashboard"
@@ -43,9 +47,7 @@
 
               <ul id="sub-menu" class="sub-menu">
                 <li>
-                  <a
-                    class="sidebar-titles"
-                    href="/src/roles/admin/html/manageAccounts/manageCustomerAccounts.html"
+                  <a class="sidebar-titles sidebar-active" href="#"
                     >Manage Customer Accounts</a
                   >
                 </li>
@@ -103,19 +105,65 @@
           <h1>Waste360</h1>
         </div>
         <nav class="header-nav">
-          <a href="#"><img src="/src/roles/admin/assets/notifications.svg" alt=""></a>
-          <a href="#">Profile</a>
-          <a href="#">Log Out</a>
-
+          <a href="#">Home</a>
         </nav>
       </header>
 
+      <div class="table-container">
+        <div class="Customer-title">
+          <h2>Customer Details</h2>
+        </div>
+
+        <div class="table-header">
+          <div class="search-bar">
+            <img
+              src="/src/roles/admin/assets/magnifying-glass-solid.svg"
+              class="search-icon"
+            />
+            <input type="text" />
+            <button>Search</button>
+          </div>
+
+          <div class="total-users">
+            Total Customers: <span id="totalUsers">0</span>
+          </div>
+        </div>
+
+        <table id="userTable">
+          <thead>
+            <tr>
+              <th>User ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Contact No.</th>
+              <th>Address</th>
+              <th>Give Away amount</th>
+              <th>Purchased Amount</th>
+              <th>Saved Carbon Footprint</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
       <!-- <footer>
         <div class="logo">
-            <img src="/src/roles/admin/assets/Waste360.png" alt="Waste360">
+          <img src="../../../../../assets/Waste360.pn" alt="Waste360" />
         </div>
         <p>&copy; 2024 Waste360. All rights reserved.</p>
-    </footer> -->
+      </footer> -->
       <script src="/src/roles/admin/javaScript/sidebar.js"></script>
     </main>
   </body>

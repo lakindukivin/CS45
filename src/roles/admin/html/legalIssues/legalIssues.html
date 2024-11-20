@@ -3,10 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/src/roles/admin/styles/sidebar.css" />
+
+    <title>Legal Issues</title>
     <link rel="stylesheet" href="/src/roles/admin/styles/common.css" />
-    <link rel="stylesheet" href="/src/roles/admin/styles/home.css" />
-    <title>Waste360|Dashboard</title>
+    <link rel="stylesheet" href="/src/roles/admin/styles/sidebar.css" />
+    <link rel="stylesheet" href="/src/roles/admin/styles/legalIssues.css" />
   </head>
   <body>
     <nav id="sidebar">
@@ -22,7 +23,7 @@
         <div>
           <ul>
             <li>
-              <a href="#" class="sidebar-active"
+              <a href="/src/roles/admin/html/home.html"
                 ><img
                   src="/src/roles/admin/assets/dashboard.svg"
                   alt="dashboard"
@@ -68,7 +69,7 @@
               >
             </li>
             <li>
-              <a href="/src/roles/admin/html/legalIssues/legalIssues.html"
+              <a href="#" class="sidebar-active"
                 ><img
                   src="/src/roles/admin/assets/legal-issues.svg"
                   alt="legal issues"
@@ -103,20 +104,96 @@
           <h1>Waste360</h1>
         </div>
         <nav class="header-nav">
-          <a href="#"><img src="/src/roles/admin/assets/notifications.svg" alt=""></a>
-          <a href="#">Profile</a>
-          <a href="#">Log Out</a>
-
+          <a href="#">Home</a>
         </nav>
       </header>
 
+      <div class="issues-container">
+        <h2>Legal Issues Management</h2>
+
+        <!-- Legal Issues Overview -->
+        <div id="legal-issues-overview">
+          <h3>Current Legal Issues</h3>
+          <table id="legalIssuesTable">
+            <thead>
+              <tr>
+                <th>Issue ID</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>L001</td>
+                <td>GDPR compliance audit required</td>
+                <td>Escalated</td>
+                <td>
+                  <button>Edit</button>
+                  <button>Delete</button>
+                </td>
+              </tr>
+              <tr>
+                <td>L002</td>
+                <td>User dispute over data handling</td>
+                <td>Resolved</td>
+                <td>
+                  <button>Edit</button>
+                  <button>Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div id="manage-legal-issue">
+          <h3>Manage Legal Issue</h3>
+          <form id="legalForm">
+            <label for="issueId">Issue ID:</label>
+            <input
+              type="text"
+              id="issueId"
+              placeholder="Auto-generated ID"
+              readonly
+            />
+
+            <label for="description">Description:</label>
+            <textarea
+              id="description"
+              rows="4"
+              placeholder="Enter issue description"
+              required
+            ></textarea>
+
+            <label for="status">Status:</label>
+            <select id="status" required>
+              <option value="" disabled selected>Select Status</option>
+              <option value="Pending">Pending</option>
+              <option value="Resolved">Resolved</option>
+              <option value="Escalated">Escalated</option>
+            </select>
+
+            <label for="actionsTaken">Actions Taken:</label>
+            <textarea
+              id="actionsTaken"
+              rows="4"
+              placeholder="Document actions taken"
+            ></textarea>
+
+            <button type="submit" class="action-btn">Save & Update</button>
+          </form>
+        </div>
+      </div>
+
       <!-- <footer>
         <div class="logo">
-            <img src="/src/roles/admin/assets/Waste360.png" alt="Waste360">
+          <img src="/src/roles/admin/assets/Waste360.png" alt="Waste360" />
         </div>
         <p>&copy; 2024 Waste360. All rights reserved.</p>
-    </footer> -->
-      <script src="/src/roles/admin/javaScript/sidebar.js"></script>
+      </footer> -->
     </main>
+
+    <script src="/src/roles/admin/javaScript/sidebar.js"></script>
+    <script src="/src/roles/admin/javaScript/legalIssues.js"></script>
   </body>
 </html>
