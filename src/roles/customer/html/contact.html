@@ -3,13 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Custom Order</title>
-    <link rel="stylesheet" href="../styles/customOrder.css" />
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="../styles/contact.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
       rel="stylesheet"
     />
-    <script src="customOrder.js" defer></script>
   </head>
   <body>
     <header>
@@ -21,6 +20,7 @@
         />
         <span>Waste360</span>
       </a>
+
       <nav>
         <ul class="nav-links">
           <li><a href="homte.html">Home</a></li>
@@ -36,58 +36,47 @@
         </ul>
       </nav>
     </header>
+
     <main>
-      <div class="order-section">
-        <h2>Order Customized Bags</h2>
-        <form id="custom-order-form">
-          <label for="company-name">Company/Client Name</label>
-          <input
-            type="text"
-            id="company-name"
-            placeholder="Enter company name"
-            required
-          />
-
-          <label for="quantity">Quantity</label>
-          <input
-            type="number"
-            id="quantity"
-            placeholder="min 1000*"
-            min="1000"
-            required
-          />
-
+      <section class="contact-section">
+        <h2>Contact for support</h2>
+        <form id="contactForm">
           <label for="email">Email</label>
           <input
             type="email"
             id="email"
+            name="email"
             placeholder="Enter your email"
             required
           />
+
+          <label for="reason">Reason</label>
+          <select id="reason" name="reason" required>
+            <option value="returns">Returns</option>
+            <option value="general">General</option>
+          </select>
 
           <label for="phone">Phone</label>
           <input
             type="tel"
             id="phone"
+            name="phone"
             placeholder="Enter your phone number"
             required
           />
 
-          <label for="specifications">Specifications</label>
-          <textarea
-            id="specifications"
-            placeholder="Enter specifications"
-            rows="4"
-          ></textarea>
-
           <button type="submit">Submit</button>
         </form>
-      </div>
+      </section>
     </main>
+
     <footer>
       <div class="footer-content">
-        <p>© 2024 Waste360. All rights reserved.</p>
+        <p>Call us - 077 7168174</p>
+        <p>Get in touch - info@waste360.lk</p>
       </div>
     </footer>
+
+    <script src="contact.js"></script>
   </body>
 </html>
