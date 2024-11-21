@@ -1,81 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/src/roles/customerServiceManager/styles/sidebar.css">
-    <link rel="stylesheet" href="/src/roles/customerServiceManager/styles/manage_review/manage_review.css">
-    <link rel="stylesheet" href="/src/roles/customerServiceManager/styles/common.css">
-    <title>Waste360|Dashboard|CSM</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/app/views/src/roles/customerServiceManager/styles/sidebar.css">
+  <link rel="stylesheet" href="/app/views/src/roles/customerServiceManager/styles/manage_review/manage_review.css">
+  <link rel="stylesheet" href="/app/views/src/roles/customerServiceManager/styles/common.css">
+  <title>Waste360|Dashboard|CSM</title>
 </head>
+
 <body>
-    <nav id="sidebar">
-      <button id="toggle-btn" onclick="toggleSidebar()" class="toggle-btn">
-        <img src="/src/assets/menu.svg" alt="menu" />
-      </button>
-      <div class="sidebar-container">
-        <div class="prof-picture">
-          <img src="/src/assets/user.svg" alt="profile" />
-          <span class="user-title">Customer Service Manager</span>
-        </div>
-
-        <div>
-          <ul>
-            <li>
-              <a href="/src/roles/customerServiceManager/html/home.html" 
-                ><img src="/src/assets/dashboard.svg" alt="dashboard" /><span
-                  class="sidebar-titles"
-                  >Dashboard</span
-                ></a
-              >
-            </li>
-
-            <li>
-              <a href="/src/roles/customerServiceManager/html/give_away/give_away_request.html"
-                ><img src="/src/assets/give_away.svg" /><span
-                  class="sidebar-titles"
-                  >Give Away</span
-                ></a
-              >
-            </li>
-            <li>
-              <a href="/src/roles/customerServiceManager/html/returns/returns.html"
-                ><img src="/src/assets/returns.svg" /><span
-                  class="sidebar-titles"
-                  >Returns</span
-                ></a
-              >
-            </li>
-            <li>
-              <a href="/src/roles/customerServiceManager/html/manage_orders/manage_order.html"
-                ><img
-                  src="/src/assets/manage_order.svg"
-                /><span class="sidebar-titles">Manage order</span></a
-              >
-            </li>
-            <li>
-              <a href="#" class="sidebar-active"
-                ><img src="/src/assets/reviews.svg" /><span
-                  class="sidebar-titles"
-                  >Manage Reviews</span
-                ></a
-              >
-            </li>
-          </ul>
-        </div> 
+  <nav id="sidebar">
+    <button id="toggle-btn" onclick="toggleSidebar()" class="toggle-btn">
+      <img src="/app/views/src/assets/menu.svg" alt="menu" />
+    </button>
+    <div class="sidebar-container">
+      <div class="prof-picture">
+        <img src="/app/views/src/assets/user.svg" alt="profile" />
+        <span class="user-title">Customer Service Manager</span>
       </div>
-    </nav>
+
+      <div>
+        <ul>
+          <li>
+            <a href="/app/views/src/roles/customerServiceManager/html/home.html"><img
+                src="/app/views/src/assets/dashboard.svg" alt="dashboard" /><span
+                class="sidebar-titles">Dashboard</span></a>
+          </li>
+
+          <li>
+            <a href="/app/views/src/roles/customerServiceManager/html/give_away/give_away_request.html"><img
+                src="/app/views/src/assets/give_away.svg" /><span class="sidebar-titles">Give Away</span></a>
+          </li>
+          <li>
+            <a href="/app/views/src/roles/customerServiceManager/html/returns/returns.html"><img
+                src="/app/views/src/assets/returns.svg" /><span class="sidebar-titles">Returns</span></a>
+          </li>
+          <li>
+            <a href="/app/views/src/roles/customerServiceManager/html/manage_orders/manage_order.html"><img
+                src="/app/views/src/assets/manage_order.svg" /><span class="sidebar-titles">Manage order</span></a>
+          </li>
+          <li>
+            <a href="#" class="sidebar-active"><img src="/app/views/src/assets/reviews.svg" /><span
+                class="sidebar-titles">Manage Reviews</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
   <div class="content">
     <header class="header">
       <div class="logo">
-      <img src="/src/assets/Waste360.png" alt="logo" />
-      <h1>Waste360</h1>  
-      </div> 
+        <img src="/app/views/src/assets/Waste360.png" alt="logo" />
+        <h1>Waste360</h1>
+      </div>
       <h1 class="logo">DashBoard</h1>
       <nav class="nav">
         <ul>
-          <li><a href="#"><img src="/src/assets/notifications.svg"></a></li>
+          <li><a href="#"><img src="/app/views/src/assets/notifications.svg"></a></li>
           <li><a href="#">Profile</a></li>
           <li><a href="#">Logout</a></li>
         </ul>
@@ -84,60 +68,61 @@
 
     <div class="box">
       <div class="container">
-          <h2>Pending Reviews</h2>
-          <div class="review-list">
-              <ul id="reviewList">
-                  <!-- Reviews will be dynamically added here -->
-              </ul>
-          </div>
+        <h2>Pending Reviews</h2>
+        <div class="review-list">
+          <ul id="reviewList">
+            <!-- Reviews will be dynamically added here -->
+          </ul>
+        </div>
       </div>
       <div class="container">
-          <h2>Replied Reviews</h2>
-          <div class="review-list">
-              <ul id="reviewList1">
-                  <!-- Reviews will be dynamically added here -->
-              </ul>
-          </div>
+        <h2>Replied Reviews</h2>
+        <div class="review-list">
+          <ul id="reviewList1">
+            <!-- Reviews will be dynamically added here -->
+          </ul>
+        </div>
       </div>
-  </div>
+    </div>
 
-  <!-- Status Modal -->
-  <div id="statusModal" class="modal">
+    <!-- Status Modal -->
+    <div id="statusModal" class="modal">
       <div class="modal-content">
-          <span class="close">&times;</span>
-          <h2>Review Details</h2>
-          <div class="status-details">
-              <p><strong>Review No:</strong> <span id="reviewId"></span></p>
-              <p><strong>Status:</strong> <span id="reviewStatus"></span></p>
-              <p><strong>Created Date:</strong> <span id="reviewDate"></span></p>
-              <p><strong>Customer:</strong> <span id="customerName"></span></p>
-              <p><strong>Description:</strong> <span id="reviewDescription"></span></p>
-              <p id="replySection" style="display: none;">
-                  <strong>Previous Reply:</strong> <span id="reviewReply"></span>
-              </p>
-          </div>
-          <div class="reply-box" id="replyBox" style="display: none;">
-              <textarea id="replyText" placeholder="Type your reply here..."></textarea>
-          </div>
-          <div class="button-group" id="modalButtons">
-              <!-- Buttons will be dynamically added here -->
-          </div>
+        <span class="close">&times;</span>
+        <h2>Review Details</h2>
+        <div class="status-details">
+          <p><strong>Review No:</strong> <span id="reviewId"></span></p>
+          <p><strong>Status:</strong> <span id="reviewStatus"></span></p>
+          <p><strong>Created Date:</strong> <span id="reviewDate"></span></p>
+          <p><strong>Customer:</strong> <span id="customerName"></span></p>
+          <p><strong>Description:</strong> <span id="reviewDescription"></span></p>
+          <p id="replySection" style="display: none;">
+            <strong>Previous Reply:</strong> <span id="reviewReply"></span>
+          </p>
+        </div>
+        <div class="reply-box" id="replyBox" style="display: none;">
+          <textarea id="replyText" placeholder="Type your reply here..."></textarea>
+        </div>
+        <div class="button-group" id="modalButtons">
+          <!-- Buttons will be dynamically added here -->
+        </div>
       </div>
-  </div>
+    </div>
 
-  <!-- Confirmation Modal -->
-  <div id="confirmationModal" class="modal-overlay">
+    <!-- Confirmation Modal -->
+    <div id="confirmationModal" class="modal-overlay">
       <div class="confirmation-modal">
-          <h3>Confirm Delete</h3>
-          <p>Are you sure you want to delete this review?</p>
-          <div class="button-group">
-              <button class="btn btn-danger" id="confirmDelete">Delete</button>
-              <button class="btn btn-primary" id="cancelDelete">Cancel</button>
-          </div>
+        <h3>Confirm Delete</h3>
+        <p>Are you sure you want to delete this review?</p>
+        <div class="button-group">
+          <button class="btn btn-danger" id="confirmDelete">Delete</button>
+          <button class="btn btn-primary" id="cancelDelete">Cancel</button>
+        </div>
       </div>
+    </div>
   </div>
-</div>
-    <script src="/src/roles/customerServiceManager/javaScript/manage_reviews/manage_reviews.js"></script>
-    <script src="/src/roles/customerServiceManager/javaScript/sidebar.js"></script>
+  <script src="/app/views/src/roles/customerServiceManager/javaScript/manage_reviews/manage_reviews.js"></script>
+  <script src="/app/views/src/roles/customerServiceManager/javaScript/sidebar.js"></script>
 </body>
+
 </html>
