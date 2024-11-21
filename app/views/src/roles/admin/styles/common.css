@@ -48,17 +48,24 @@ header {
     margin-right: 8px;
 }
 
+.page-title,
+.header-nav a {
+    color: #4c8f36;
+    font-weight: bold;
+}
+
 .header-nav {
     display: flex;
-    gap: 8px;
     flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+     gap: 1.25rem;
 }
 
 .header-nav a {
     text-decoration: none;
-    color: #4c8f36;
-    font-weight: bold;
-}
+ }
+
 
 
 
