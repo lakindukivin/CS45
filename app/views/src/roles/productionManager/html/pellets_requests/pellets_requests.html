@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/src/roles/productionManager/styles/sidebar.css">
-    <link rel="stylesheet" href="/src/roles/productionManager/styles/home.css">
+    <link rel="stylesheet" href="/src/roles/productionManager/styles/pellets_requests/pellets_requests.css">
     <link rel="stylesheet" href="/src/roles/productionManager/styles/common.css">
     <title>Waste360|Dashboard|PM</title>
 </head>
@@ -22,7 +22,7 @@
         <div>
           <ul>
             <li>
-              <a href="#" class="sidebar-active"
+              <a href="/src/roles/productionManager/html/home.html"
                 ><img src="/src/assets/dashboard.svg" alt="dashboard" /><span
                   class="sidebar-titles"
                   >Dashboard</span
@@ -31,7 +31,7 @@
             </li>
 
             <li>
-              <a href="/src/roles/productionManager/html/customer_order/pending_custom_orders.html"
+              <a href="/src/roles/productionManager/html/pellets_requests/pellets_requests.html"
                 ><img src="/src/assets/order.svg" /><span
                   class="sidebar-titles"
                   >Custom Orders</span
@@ -63,7 +63,7 @@
               >
             </li>
             <li>
-              <a href="/src/roles/productionManager/html/supply_requests/supply_request.html"
+              <a href="#" class="sidebar-active"
                 ><img src="/src/assets/order.svg" alt="supply" /><span
                   class="sidebar-titles"
                   >Pellets Requests</span
@@ -92,57 +92,49 @@
       </nav>
     </header>
 
-    <div class = "top">
-      <div class = "left">
-        <div class="calendar">
-          <div class="calendar-header">
-              <button onclick="prevMonth()">‹</button>
-              <h2 id="monthYear"></h2>
-              <button onclick="nextMonth()">›</button>
-          </div>
-          <div class="days">
-              <div class="day">Sun</div>
-              <div class="day">Mon</div>
-              <div class="day">Tue</div>
-              <div class="day">Wed</div>
-              <div class="day">Thu</div>
-              <div class="day">Fri</div>
-              <div class="day">Sat</div>
-          </div>
-          <div class="days" id="dates"></div>
+    <div class="box">
+      <div class="container">
+        <h2>Pending Pellets Orders</h2>
+        <div class="order-list">
+          <ul id="orderList">
+            <!-- Orders will be dynamically added here -->
+          </ul>
         </div>
       </div>
-
-      <!--timeeeeeeeeeeeee-->
-      <div class="status-section">
-        <div class="time-display">
-            <h3>Current Time</h3>
-            <div id="clock" class="clock">Loading...</div>
+      <div class="container">
+        <h2>Finished Pellets Orders</h2>
+        <div class="order-list">
+          <ul id="orderList1">
+            <!-- Orders will be dynamically added here -->
+          </ul>
         </div>
-        <div class="metric-grid">
-            <div class="metric-card">
-                <h4>New Orders</h4>
-                <div class="metric-value">0</div>
-            </div>
-            <div class="metric-card">
-                <h4>Monthly Amount of Recycled Polythene</h4>
-                <div class="metric-value">0</div>
-            </div>
-            <div class="metric-card">
-                <h4>Today Collection centres</h4>
-                <div class="metric-value">0</div>
-            </div>
-            <div class="metric-card">
-                <h4>Amount of Supply request</h4>
-                <div class="metric-value">0</div>
-            </div>
+      </div>
+  
+      <!-- Add this modal HTML -->
+      <div id="statusModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Order Status</h2>
+          <div class="status-details">
+            <p><strong>Order ID:</strong> <span id="orderId"></span></p>
+            <p><strong>Status:</strong> <span id="orderStatus"></span></p>
+            <p><strong>Created Date:</strong> <span id="orderDate"></span></p>
+            <p><strong>Customer:</strong> <span id="customerName"></span></p>
+            <p><strong>Pellets Color:</strong> <span id="pelletcolor"></span></p>
+            <p><strong>Quantity:</strong> <span id="quantity"></span></p>
+            <p><strong>Description:</strong> <span id="orderDescription"></span></p>
+          </div>
+          <div class="status-timeline">
+            <div class="operation">
+              <button class="accept">Accept</button>
+              <button class="reject">Reject</button>
+              </div>
+          </div>
         </div>
+      </div>
     </div>
-    </div>
-</div>
-   
-    <script src="/src/roles/productionManager/javaScript/sidebar.js"></script>
-    <script src="/src/roles/productionManager/javaScript/home.js"></script>
- </main>
+  </div>
+  <script src="/src/roles/productionManager/javaScript/sidebar.js"></script>
+  <script src="/src/roles/productionManager/javaScript/pellets_requests/pellets_requests.js"></script>
 </body>
 </html>
