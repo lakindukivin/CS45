@@ -13,8 +13,9 @@ body {
     min-height: 100vh;
     display: grid;
     grid-template-columns: auto 1fr;
-        background-color: #f4f4f4;
+    background-color: #f4f4f4;
 }
+
 h2 {
     text-align: center;
     margin-bottom: 20px;
@@ -27,7 +28,7 @@ header {
     padding: 10px;
     background-color: #fff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
 }
 
 .logo {
@@ -43,18 +44,23 @@ header {
     margin-right: 8px;
 }
 
-.header-nav {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
+.page-title,
 .header-nav a {
-    text-decoration: none;
     color: #4c8f36;
     font-weight: bold;
 }
 
+.header-nav {
+    display: flex;
+    /* flex-wrap: wrap; */
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.header-nav a {
+    text-decoration: none;
+}
 
 
 
