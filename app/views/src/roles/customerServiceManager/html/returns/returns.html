@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/app/views/src/roles/customerServiceManager/styles/home.css">
   <link rel="stylesheet" href="/app/views/src/roles/customerServiceManager/styles/sidebar.css">
+  <link rel="stylesheet" href="/app/views/src/roles/customerServiceManager/styles/returns/returns.css">
   <link rel="stylesheet" href="/app/views/src/roles/customerServiceManager/styles/common.css">
   <title>Waste360|Dashboard|CSM</title>
 </head>
@@ -24,7 +24,8 @@
       <div>
         <ul>
           <li>
-            <a href="#" class="sidebar-active"><img src="/app/views/src/assets/dashboard.svg" alt="dashboard" /><span
+            <a href="/app/views/src/roles/customerServiceManager/html/home.html"><img
+                src="/app/views/src/assets/dashboard.svg" alt="dashboard" /><span
                 class="sidebar-titles">Dashboard</span></a>
           </li>
 
@@ -33,8 +34,8 @@
                 src="/app/views/src/assets/give_away.svg" /><span class="sidebar-titles">Give Away</span></a>
           </li>
           <li>
-            <a href="/app/views/src/roles/customerServiceManager/html/returns/returns.html"><img
-                src="/app/views/src/assets/returns.svg" /><span class="sidebar-titles">Returns</span></a>
+            <a href="#" class="sidebar-active"><img src="/app/views/src/assets/returns.svg" /><span
+                class="sidebar-titles">Returns</span></a>
           </li>
           <li>
             <a href="/app/views/src/roles/customerServiceManager/html/manage_orders/manage_order.html"><img
@@ -42,7 +43,7 @@
           </li>
           <li>
             <a href="/app/views/src/roles/customerServiceManager/html/manage_reviews/manage_reviews.html"><img
-                src="/src/assets/reviews.svg" /><span class="sidebar-titles">Manage Reviews</span></a>
+                src="/app/views/src/assets/reviews.svg" /><span class="sidebar-titles">Manage Reviews</span></a>
           </li>
         </ul>
       </div>
@@ -64,57 +65,46 @@
         </ul>
       </nav>
     </header>
-
-    <div class="top">
-      <div class="left">
-        <div class="calendar">
-          <div class="calendar-header">
-            <button onclick="prevMonth()">‹</button>
-            <h2 id="monthYear"></h2>
-            <button onclick="nextMonth()">›</button>
-          </div>
-          <div class="days">
-            <div class="day">Sun</div>
-            <div class="day">Mon</div>
-            <div class="day">Tue</div>
-            <div class="day">Wed</div>
-            <div class="day">Thu</div>
-            <div class="day">Fri</div>
-            <div class="day">Sat</div>
-          </div>
-          <div class="days" id="dates"></div>
+    <div class="box">
+      <div class="container">
+        <h2>Pending Return Requests</h2>
+        <div class="order-list">
+          <ul id="orderList">
+            <!-- Orders will be dynamically added here -->
+          </ul>
+        </div>
+      </div>
+      <div class="container">
+        <h2>Finished Return Requests</h2>
+        <div class="order-list">
+          <ul id="orderList1">
+            <!-- Orders will be dynamically added here -->
+          </ul>
         </div>
       </div>
 
-      <!--timee-->
-      <div class="status-section">
-        <div class="time-display">
-          <h3>Current Time</h3>
-          <div id="clock" class="clock">Loading...</div>
-        </div>
-        <div class="metric-grid">
-          <div class="metric-card">
-            <h4>Give Aways</h4>
-            <div class="metric-value">0</div>
+      <!-- Add this modal HTML -->
+      <div id="statusModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Return Status</h2>
+          <div class="status-details">
+            <p><strong>Order ID:</strong> <span id="orderId"></span></p>
+            <p><strong>Status:</strong> <span id="orderStatus"></span></p>
+            <p><strong>Created Date:</strong> <span id="orderDate"></span></p>
+            <p><strong>Customer:</strong> <span id="customerName"></span></p>
+            <p><strong>Description:</strong> <span id="orderDescription"></span></p>
           </div>
-          <div class="metric-card">
-            <h4>Inquiries & Returns</h4>
-            <div class="metric-value">0</div>
-          </div>
-          <div class="metric-card">
-            <h4>Orders</h4>
-            <div class="metric-value">0</div>
-          </div>
-          <div class="metric-card">
-            <h4>Reviews</h4>
-            <div class="metric-value">0</div>
+          <div class="operation">
+            <button class="accept">Accept</button>
+            <button class="reject">Reject</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <script src="/app/views/src/roles/customerServiceManager/javaScript/home.js"></script>
   <script src="/app/views/src/roles/customerServiceManager/javaScript/sidebar.js"></script>
+  <script src="/app/views/src/roles/customerServiceManager/javaScript/returns/returns.js"></script>
 </body>
 
 </html>
