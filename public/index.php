@@ -1,7 +1,8 @@
 <?php
-require_once '../core/router.php';
-require_once '../config/config.php';
 
-// Initialize the Router
-$router = new Router();
-$router->run();
+session_start();
+
+require "../app/core/init.php";
+
+$app = new App;
+$app->loadController();
