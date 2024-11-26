@@ -7,13 +7,12 @@ class Home extends Controller
     {
 
         $model = new Model;
-        $arr['customer_name'] = "sajani";
-        $arr['customer_contact'] = "123456123";
-        $arr['customer_address'] = "abcdefgh";
+        $arr['customer_name'] = 'Nethmi';
+        $arr['customer_address'] = 'danne naha';
 
-        $result = $model->insert($arr);
+        $result = $model->update(1, $arr, 'customer_id');
 
-        //show($result);
+        show($result);
 
 
 
