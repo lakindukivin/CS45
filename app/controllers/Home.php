@@ -1,21 +1,14 @@
 <?php
 
+/**
+ * home class
+ */
 
-class Home extends Controller
+class Home
 {
-    public function index($a = '', $b = '', $c = '')
+    use Controller;
+    public function index()
     {
-
-        $model = new Model;
-        $arr['customer_name'] = 'Nethmi';
-        $arr['customer_address'] = 'danne naha';
-
-        $result = $model->update(1, $arr, 'customer_id');
-
-        show($result);
-
-
-
         $this->view('home');
     }
 }
