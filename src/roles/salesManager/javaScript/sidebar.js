@@ -17,7 +17,6 @@ function toggleSidebar() {
   closeAllSubMenus();
 }
 
-
 function toggleSubMenu() {
   if (sidebar.classList.contains('close')) {
     sidebar.classList.remove('close');
