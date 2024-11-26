@@ -65,10 +65,41 @@ class Model
     {
 
         $keys = array_keys($data);
-        $query = "select * from $this->table where ";
+        $query = "insert into $this->table (" . implode(",", $keys) . ") values (:" . implode(",:", $keys) . ")";
+
+        $this->query($query, $data);
+        return false;
     }
 
-    public function update($id, $data, $id_column = 'id') {}
+    public function update($id, $data, $id_column = 'id')
+    {
 
-    public function delete($id, $id_column = 'id') {}
+        $keys = array_keys($data);
+        $query = "update $this->table set ";
+
+        foreach ($keys as $key) {
+            $query .= $key . "= :" . $key . " , ";
+        }
+
+        $query = trim($query, ", ");
+
+        $query .= " where $id_column = :$id_column ";
+
+        $data[$id_column] = $id;
+
+        $this->query($query, $data);
+        return false;
+    }
+
+    public function delete($id, $id_column = 'id')
+    {
+
+        $data[$id_column] = $id;
+
+        $query = "delete from $this->table where $id_column = :$id_column";
+
+        $this->query($query, $data);
+
+        return false;
+    }
 }
