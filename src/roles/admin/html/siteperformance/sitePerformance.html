@@ -3,28 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/src/roles/admin/styles/common.css" />
-    <link rel="stylesheet" href="/src/roles/admin/styles/sidebar.css" />
-    <link rel="stylesheet" href="/src/roles/admin/styles/sitePerformance.css" />
+    <link rel="stylesheet" href="../../styles/common.css" />
+    <link rel="stylesheet" href="../../styles/sidebar.css" />
+    <link rel="stylesheet" href="../../styles/sitePerformance.css" />
     <title>Site Performance</title>
   </head>
   <body>
     <nav id="sidebar">
       <button id="toggle-btn" onclick="toggleSidebar()" class="toggle-btn">
-        <img src="/src/roles/admin/assets/menu.svg" alt="menu" />
+        <img src="../../assets/menu.svg" alt="menu" />
       </button>
       <div class="sidebar-container">
         <div class="prof-picture">
-          <img src="/src/roles/admin/assets/user.svg" alt="profile" />
+          <img src="../../assets/user.svg" alt="profile" />
           <span class="user-title">Admin</span>
         </div>
 
         <div>
           <ul>
             <li>
-              <a href="/src/roles/admin/html/home.html"
+              <a href="../../html/home.html"
                 ><img
-                  src="/src/roles/admin/assets/dashboard.svg"
+                  src="../../assets/dashboard.svg"
                   alt="dashboard"
                 /><span class="sidebar-titles">Dashboard</span></a
               >
@@ -32,10 +32,10 @@
 
             <li>
               <button onclick="toggleSubMenu()" class="dropdown-button">
-                <img src="/src/roles/admin/assets/manage-accounts.svg" alt="" />
+                <img src="../../assets/manage-accounts.svg" alt="" />
                 <span class="sidebar-titles">Manage Accounts</span
                 ><img
-                  src="/src/roles/admin/assets/dropdownbtn.svg"
+                  src="../../assets/dropdownbtn.svg"
                   alt="dropdown-button"
                   id="dropdownbtn-img"
                 />
@@ -45,14 +45,14 @@
                 <li>
                   <a
                     class="sidebar-titles"
-                    href="/src/roles/admin/html/manageAccounts/manageCustomerAccounts.html"
+                    href="../../html/manageAccounts/manageCustomerAccounts.html"
                     >Manage Customer Accounts</a
                   >
                 </li>
                 <li>
                   <a
                     class="sidebar-titles"
-                    href="/src/roles/admin/html/manageAccounts/manageStaffAccounts.html"
+                    href="../../html/manageAccounts/manageStaffAccounts.html"
                     >Manage Staff Accounts</a
                   >
                 </li>
@@ -60,9 +60,9 @@
             </li>
 
             <li>
-              <a href="/src/roles/admin/html/legalIssues/legalIssues.html"
+              <a href="../../html/legalIssues/legalIssues.html"
                 ><img
-                  src="/src/roles/admin/assets/legal-issues.svg"
+                  src="../../assets/legal-issues.svg"
                   alt="legal issues"
                 /><span class="sidebar-titles">Issues</span></a
               >
@@ -70,15 +70,15 @@
             <li>
               <a href="#" class="sidebar-active"
                 ><img
-                  src="/src/roles/admin/assets/site-performance.svg"
+                  src="../../assets/site-performance.svg"
                   alt="site Performance"
                 /><span class="sidebar-titles">Site Performance</span></a
               >
             </li>
             <li>
-              <a href="/src/roles/admin/html/supply/supply.html"
+              <a href="../../html/supply/supply.html"
                 ><img
-                  src="/src/roles/admin/assets/supply.svg"
+                  src="../../assets/supply.svg"
                   alt="supply"
                 /><span class="sidebar-titles">Supply</span></a
               >
@@ -148,7 +148,7 @@
                 <th>Last Updated</th>
               </tr>
               <tr>
-                <td onclick="openErrorLogs()">Database</td>
+                <td>Database</td>
                 <td>Active</td>
                 <td>99.9%</td>
                 <td>1min ago</td>
@@ -216,7 +216,7 @@
         <p>&copy; 2024 Waste360. All rights reserved.</p>
     </footer> -->
     </main>
-    <script src="/src/roles/admin/javaScript/sidebar.js"></script>
-    <script src="/src/roles/admin/javaScript/sitePerformance.js"></script>
+    <script src="../../javaScript/sidebar.js"></script>
+    <script src="../../javaScript/sitePerformance.js"></script>
   </body>
 </html>
