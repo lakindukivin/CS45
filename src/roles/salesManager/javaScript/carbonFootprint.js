@@ -1,7 +1,5 @@
 // Sample data for demonstration
-let carbonData = [
-  { metric: 'Polythene Waste', value: 50, unit: 'kg' },
-];
+let carbonData = [{ metric: 'Polythene Waste', value: 50, unit: 'kg' }];
 
 // Load data into the table on page load
 window.addEventListener('DOMContentLoaded', () => {
@@ -49,7 +47,7 @@ document.getElementById('updateForm').addEventListener('submit', (e) => {
     carbonData[editingIndex] = { value, unit }; // Update existing data
     delete document.getElementById('updateForm').dataset.editingIndex;
   } else {
-    carbonData.push({value, unit }); // Add new data
+    carbonData.push({ value, unit }); // Add new data
   }
 
   loadCarbonData(); // Reload the table
@@ -66,7 +64,7 @@ function resetForm() {
 // Function to edit existing data
 function editData(index) {
   const data = carbonData[index];
-   
+
   document.getElementById('value').value = data.value;
   document.getElementById('unit').value = data.unit;
   document.getElementById('updateForm').dataset.editingIndex = index;
