@@ -27,8 +27,7 @@
 }
 
 form input,
-form textarea
-form select {
+form textarea form select {
     width: 100%;
     padding: 8px;
     margin-top: 5px;
