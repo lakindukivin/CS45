@@ -1,220 +1,148 @@
 :root {
-  --primary-color: white;
-  --secondary-color: white;
-  --text-color: black;
-  --accent-color: #1c573b;
-  --danger-color: #dc3545;
-  --success-color: #28a745;
-  --background-dark: #130f0f;
-  --container-bg: #b7bebb;
+  --primary-color: #2e7d32;
+  --primary-hover: #1b5e20;
+  --text-color: #333;
+  --border-color: #ddd;
+  --background-color: #f5f5f5;
 }
 
-/* Base Styles */
 body {
-  display: flex;
-  height: 100vh;
-  background-color: var(--background-dark);
-  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-}
-
-/* Container Styles */
-.container {
-  width: 40%;
-  padding: 20px;
-  background-color: var(--container-bg);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--background-color);
   color: var(--text-color);
 }
-
-.box {
-  display: flex;
-  gap: 40px;
-  margin-top: 50px;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Review List Styles */
-.review-list {
-  max-height: 350px;
-  overflow-y: auto;
-  border: 1px solid var(--secondary-color);
-  border-radius: 4px;
-}
-
-.review-list ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.review-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  border-bottom: 1px solid var(--secondary-color);
-  transition: background-color 0.2s;
-}
-
-.review-item:last-child {
-  border-bottom: none;
-}
-
-.review-item:hover {
-  background-color:  #5c7c6d;
-  cursor: pointer;
-}
-
-/* Modal Styles */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal-content {
-  background-color: rgb(245, 241, 241);
-  margin: 5% auto;
-  padding: 30px;
-  border: 1px solid var(--container-bg);
-  width: 60%;
-  max-width: 600px;
+/* Table Styles */
+.table-container {
+  width: 95%;
+  margin: 20px auto;
+  background: #d1d1d1;
   border-radius: 8px;
-  position: relative;
-  animation: modalFade 0.3s ease-in-out;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
-@keyframes modalFade {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Reply Box Styles */
-.reply-box {
-  margin-top: 20px;
+#collectionTable {
   width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
 }
 
-.reply-box textarea {
-  width: 100%;
-  min-height: 100px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: vertical;
-  margin-bottom: 10px;
-  font-family: inherit;
+#collectionTable thead {
+  background-color: #a1dda9;
+}
+
+#collectionTable th {
+  padding: 15px;
+  text-align: center;
+  font-weight: 600;
+  color: black;
+  border-bottom: 2px solid #e9ecef;
+}
+
+#collectionTable td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #e9ecef;
+  color: #555;
+  text-align: center;
+}
+
+#collectionTable tbody tr:hover {
+  background-color: #f8f9fa;
+  transition: background-color 0.2s ease;
+}
+
+#collectionTable td a {
+  text-decoration: none;
+}
+
+#collectionTable td a:hover {
+  text-decoration: underline;
 }
 
 /* Button Styles */
-.button-group {
-  display: flex;
-  gap: 10px;
-  justify-content: flex-end;
-  margin-top: 20px;
+.rep-button {
+  margin: 20px;
+  text-align: right;
 }
 
-.btn {
-  padding: 8px 16px;
+.reply-button {
+  background-color: #1dbd42;
+  color: white;
   border: none;
-  border-radius: 4px;
+  padding: 10px 20px;
+  border-radius: 5px;
   cursor: pointer;
+  font-size: 14px;
   font-weight: 500;
-  transition: background-color 0.2s, transform 0.1s;
+  transition: background-color 0.2s ease;
 }
 
-.btn:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
+.reply-button:hover {
+  background-color: #218838;
 }
 
-.btn:active {
-  transform: translateY(0);
-}
-
-.btn-primary {
-  background-color: var(--accent-color);
+.reply-button a {
   color: white;
-}
+  text-decoration: none;
+} 
 
-.btn-danger {
-  background-color: var(--danger-color);
+.table-container td button a {
+  display: inline;
   color: white;
-}
-
-.btn-success {
-  background-color: var(--success-color);
-  color: white;
-}
-
-/* Status Badge */
-.review-status {
-  font-size: 0.9em;
-  padding: 4px 8px;
-  border-radius: 12px;
-  background-color: #4a5568;
-  color: white;
-  margin-left: 8px;
-}
-
-/* Close Button */
-.close {
-  position: absolute;
-  right: 20px;
-  top: 10px;
-  color: #1c573b;
-  font-size: 28px;
-  font-weight: bold;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: color 0.2s;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+  text-decoration: none;
 }
 
-.close:hover {
-  color: black;
+.table-container td button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
 
-/* Confirmation Modal */
-.modal-overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
+.table-container td button a[href*="reply.php"] {
+  background-color: #066927;
 }
 
-.confirmation-modal {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 400px;
-  margin: 20% auto;
-  animation: modalFade 0.3s ease-in-out;
+.table-container td button a[href*="replied_reply.php"] {
+  background-color: #066927;
 }
 
-/* Review Actions */
-.review-actions {
-  display: flex;
-  gap: 8px;
+.table-container td button a[href*="delete.php"] {
+  background-color: red;
 }
 
-/* Status Details */
-.status-details {
-  margin: 20px 0;
+.table-container td button:hover {
+  background-color:rgb(23, 53, 23);
+}
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .table-container {
+      width: 100%;
+      margin: 10px 0;
+      overflow-x: auto;
+  }
+
+  #collectionTable {
+      font-size: 13px;
+  }
+
+  #collectionTable th,
+  #collectionTable td {
+      padding: 10px;
+      text-align: center;
+  }
+
+  .reply-button {
+      padding: 8px 16px;
+      font-size: 13px;
+  }
 }
 
-.status-details p {
-  margin: 10px 0;
-  color: #1c573b;
-}

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../styles/sidebar.css">
-    <link rel="stylesheet" href="../../styles/customer_order/pending_custom_orders.css">
+    <link rel="stylesheet" href="../../styles/polythene_collection/schedule.css">
     <link rel="stylesheet" href="../../styles/common.css">
     <title>Waste360|Dashboard|PM</title>
 </head>
@@ -22,7 +22,7 @@
         <div>
           <ul>
             <li>
-              <a href="../home.html"
+              <a href="../home.html" 
                 ><img src="../../../../assets/dashboard.svg" alt="dashboard" /><span
                   class="sidebar-titles"
                   >Dashboard</span
@@ -31,7 +31,7 @@
             </li>
 
             <li>
-              <a href="#" class="sidebar-active"
+              <a href="../customer_order/pending_custom_orders.html"
                 ><img src="../../../../assets/order.svg" /><span
                   class="sidebar-titles"
                   >Custom Orders</span
@@ -39,7 +39,7 @@
               >
             </li>
             <li>
-              <a href="../recycled_polythene/recycled_polythene.html"
+              <a href="../recycled_polythene/recycled_polythene.html" class="sidebar-active"
                 ><img src="../../../../assets/recycle.svg" /><span
                   class="sidebar-titles"
                   >Recycled Polythene</span
@@ -47,7 +47,7 @@
               >
             </li>
             <li>
-              <a href="../polythene_collection/schedule.html"
+              <a href="../polythene_collection/schedule.html" 
                 ><img
                   src="../../../../assets/collection.svg"
                   alt="site Performance"
@@ -91,45 +91,44 @@
         </ul>
       </nav>
     </header>
-
-    <div class="box">
-      <div class="container">
-        <h2>Pending Custom Orders</h2>
-        <div class="order-list">
-          <ul id="orderList">
-            <!-- Orders will be dynamically added here -->
-          </ul>
-        </div>
+    <div class="container">
+      <h1>Recyled Polythene Amount</h1>
+      <div class="table-container">
+          <table id="collectionTable">
+              <thead>
+                  <tr>
+                      <th>Amount(Tons)</th>
+                      <th>Message</th>
+                      <th>Month</th>
+                      <th>Updated Date</th>
+                  </tr>
+                  <tr>
+                    <td>10000</td>
+                    <td>Recyled Monthly</td>
+                    <td>January</td>
+                    <td>2023-09-30</td>
+                </tr>
+                <tr>
+                  <td>10000</td>
+                  <td>Recyled Monthly</td>
+                  <td>January</td>
+                  <td>2023-09-30</td>
+              </tr>
+              <tr>
+                <td>10000</td>
+                    <td>Recyled Monthly</td>
+                    <td>January</td>
+                    <td>2023-09-30</td>
+            </tr>
+              </thead>
+              <tbody>
+                  <!-- Table rows will be dynamically added here -->
+              </tbody>
+          </table>
       </div>
-  
-      <!-- Add this modal HTML -->
-      <div id="statusModal" class="modal">
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <h2>Order Status</h2>
-          <div class="status-details">
-            <p><strong>Order ID:</strong> <span id="orderId"></span></p>
-            <p><strong>Status:</strong> <span id="orderStatus"></span></p>
-            <p><strong>Created Date:</strong> <span id="orderDate"></span></p>
-            <p><strong>Company/Client Name:</strong> <span id="clientName"></span></p>
-            <p><strong>Email:</strong> <span id="email"></span></p>
-            <p><strong>Phone:</strong> <span id="phone"></span></p>
-            <p><strong>Quantity:</strong> <span id="quantity"></span></p>
-            <p><strong>Specifications:</strong> <span id="orderDescription"></span></p>
-          </div>
-          <div class="status-timeline">
-            <div class="operation">
-              <button class="accept">Accept</button>
-              <button class="reject">Reject</button>
-              </div>
-          </div>
-        </div>
-      </div>
-      <div> <button type="view" class="view-btn" ><a href="../customer_order/completed_orders.html">View</a> </button></div>
+  </div>
 
-    </div> 
   </div>
   <script src="../../javaScript/sidebar.js"></script>
-  <script src="../../javaScript/customer_order/pending_custom_order.js"></script>
 </body>
 </html>

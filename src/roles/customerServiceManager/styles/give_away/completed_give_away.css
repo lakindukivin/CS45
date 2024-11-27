@@ -12,9 +12,9 @@ body {
 }
 
 .container {
-  width: 60%;
+  width: 500px;
   padding: 20px;
-  background-color:#b7bebb;
+  background-color: #b7bebb;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   color: var(--text-color);
@@ -39,7 +39,6 @@ body {
   overflow-y: auto;
   border: 1px solid var(--secondary-color);
   border-radius: 4px;
-  cursor: pointer;
 }
 
 .order-list ul {
@@ -184,7 +183,6 @@ body {
 
 .view-btn a{
   color: white;
-  text-decoration: none;
 }
 
 .view-btn:hover {

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../styles/sidebar.css">
-    <link rel="stylesheet" href="../../styles/manage_order/manage_order.css">
+    <link rel="stylesheet" href="../../styles/give_away/completed_give_away.css">
     <link rel="stylesheet" href="../../styles/common.css">
     <title>Waste360|Dashboard|CSM</title>
 </head>
@@ -22,7 +22,7 @@
         <div>
           <ul>
             <li>
-              <a href="../home.html"
+              <a href="../home.html" 
                 ><img src="../../../../assets/dashboard.svg" alt="dashboard" /><span
                   class="sidebar-titles"
                   >Dashboard</span
@@ -31,7 +31,7 @@
             </li>
 
             <li>
-              <a href="../give_away/give_away_request.html"
+              <a href="../give_away/give_away_request.html" class="sidebar-active"
                 ><img src="../../../../assets/give_away.svg" /><span
                   class="sidebar-titles"
                   >Give Away</span
@@ -47,7 +47,7 @@
               >
             </li>
             <li>
-              <a href="#" class="sidebar-active"
+              <a href="../manage_orders/manage_order.html"
                 ><img
                   src="../../../../assets/manage_order.svg"
                 /><span class="sidebar-titles">Manage Orders</span></a
@@ -72,7 +72,7 @@
       <img src="../../../../assets/Waste360.png" alt="logo" />
       <h1>Waste360</h1>  
       </div> 
-      <h1 class="logo"></h1>
+      <h1 class="logo">DashBoard</h1>
       <nav class="nav">
         <ul>
           <li><a href="#"><img src="../../../../assets/notifications.svg"></a></li>
@@ -83,40 +83,33 @@
     </header>
     <div class="box">
       <div class="container">
-        <h2>Pending Orders</h2>
+        <h2>Completed Give Away Request</h2>
         <div class="order-list">
           <ul id="orderList">
             <!-- Orders will be dynamically added here -->
           </ul>
         </div>
       </div>
-      
   
       <!-- Add this modal HTML -->
       <div id="statusModal" class="modal">
         <div class="modal-content">
           <span class="close">&times;</span>
-          <h2>Order Status</h2>
+          <h2>Give Away Status</h2>
           <div class="status-details">
-            <p><strong>Order ID:</strong> <span id="orderId"></span></p>
+            <p><strong>Give Away ID:</strong> <span id="orderId"></span></p>
             <p><strong>Status:</strong> <span id="orderStatus"></span></p>
             <p><strong>Created Date:</strong> <span id="orderDate"></span></p>
             <p><strong>Customer:</strong> <span id="customerName"></span></p>
+            <p><strong>Polythene Quantity(Roughly kgs):</strong> <span id="quantity"></span></p>
             <p><strong>Description:</strong> <span id="orderDescription"></span></p>
           </div>
-          <div class="status-timeline">
-            <div class="operation">
-              <button class="accept">Accept</button>
-              <button class="reject">Reject</button>
-              </div>
-          </div>
+           
         </div>
       </div>
-      <div> <button type="view" class="view-btn" ><a href="../manage_orders/completed_order.html">View</a> </button></div>
-
     </div>
   </div>
-  <script src="../../javaScript/sidebar.js"></script> 
-  <script src="../../javaScript/manage_order/manage_order.js"></script>  
+  <script src="../../javaScript/sidebar.js"></script>
+  <script src="../../javaScript/give_away/completed_give_away.js"></script>
 </body>
 </html>
