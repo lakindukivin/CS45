@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../styles/sidebar.css">
-    <link rel="stylesheet" href="../../styles/manage_order/manage_order.css">
+    <link rel="stylesheet" href="../../styles/customer_order/pending_custom_orders.css">
     <link rel="stylesheet" href="../../styles/common.css">
-    <title>Waste360|Dashboard|CSM</title>
+    <title>Waste360|Dashboard|PM</title>
 </head>
 <body>
     <nav id="sidebar">
@@ -16,7 +16,7 @@
       <div class="sidebar-container">
         <div class="prof-picture">
           <img src="../../../../assets/user.svg" alt="profile" />
-          <span class="user-title">Customer Service Manager</span>
+          <span class="user-title">Production Manager</span>
         </div>
 
         <div>
@@ -31,33 +31,42 @@
             </li>
 
             <li>
-              <a href="../give_away/give_away_request.html"
-                ><img src="../../../../assets/give_away.svg" /><span
+              <a href="../customer_order/pending_custom_orders.html" 
+                ><img src="../../../../assets/order.svg" /><span
                   class="sidebar-titles"
-                  >Give Away</span
+                  >Custom Orders</span
                 ></a
               >
             </li>
             <li>
-              <a href="../returns/returns.html"
-                ><img src="../../../../assets/returns.svg" /><span
+              <a href="../recycled_polythene/recycled_polythene.html"
+                ><img src="../../../../assets/recycle.svg" /><span
                   class="sidebar-titles"
-                  >Returns</span
+                  >Recycled Polythene</span
                 ></a
               >
             </li>
             <li>
-              <a href="#" class="sidebar-active"
+              <a href="../../html/polythene_collection/schedule.html"
                 ><img
-                  src="../../../../assets/manage_order.svg"
-                /><span class="sidebar-titles">Manage Orders</span></a
+                  src="../../../../assets/collection.svg"
+                  alt="site Performance"
+                /><span class="sidebar-titles">Polythene Collection</span></a
               >
             </li>
             <li>
-              <a href="../manage_reviews/manage_reviews.php"
-                ><img src="../../../../assets/reviews.svg" /><span
+              <a href="../supply_requests/supply_request.html" class="sidebar-active"
+                ><img src="../../../../assets/supply.svg" alt="supply" /><span
                   class="sidebar-titles"
-                  >Manage Reviews</span
+                  >Supply Requests</span
+                ></a
+              >
+            </li>
+            <li>
+              <a href="../pellets_requests/pellets_requests.html"
+                ><img src="../../../../assets/order.svg" alt="supply" /><span
+                  class="sidebar-titles"
+                  >Pellets Requests</span
                 ></a
               >
             </li>
@@ -66,13 +75,14 @@
       </div>
     </nav>
 
+    
   <div class="content">
-    <header class="header">
+    <header>
       <div class="logo">
       <img src="../../../../assets/Waste360.png" alt="logo" />
       <h1>Waste360</h1>  
       </div> 
-      <h1 class="logo"></h1>
+      <h1 class="logo">DashBoard</h1>
       <nav class="nav">
         <ul>
           <li><a href="#"><img src="../../../../assets/notifications.svg"></a></li>
@@ -81,42 +91,37 @@
         </ul>
       </nav>
     </header>
+
     <div class="box">
       <div class="container">
-        <h2>Pending Orders</h2>
+        <h2>Completed Suply Requests</h2>
         <div class="order-list">
           <ul id="orderList">
             <!-- Orders will be dynamically added here -->
           </ul>
         </div>
       </div>
-      
   
       <!-- Add this modal HTML -->
       <div id="statusModal" class="modal">
         <div class="modal-content">
           <span class="close">&times;</span>
-          <h2>Order Status</h2>
+          <h2>Supply Status</h2>
           <div class="status-details">
-            <p><strong>Order ID:</strong> <span id="orderId"></span></p>
+            <p><strong>Supply ID:</strong> <span id="orderId"></span></p>
             <p><strong>Status:</strong> <span id="orderStatus"></span></p>
             <p><strong>Created Date:</strong> <span id="orderDate"></span></p>
-            <p><strong>Customer:</strong> <span id="customerName"></span></p>
+            <p><strong>Bag Size:</strong> <span id="bagSize"></span></p>
+            <p><strong>Category:</strong> <span id="category"></span></p>
+            <p><strong>Pack Size:</strong> <span id="packSize"></span></p>
+            <p><strong>Quantity:</strong> <span id="quantity"></span></p>
             <p><strong>Description:</strong> <span id="orderDescription"></span></p>
-          </div>
-          <div class="status-timeline">
-            <div class="operation">
-              <button class="accept">Accept</button>
-              <button class="reject">Reject</button>
-              </div>
           </div>
         </div>
       </div>
-      <div> <button type="view" class="view-btn" ><a href="../manage_orders/completed_order.html">View</a> </button></div>
-
-    </div>
+    </div> 
   </div>
-  <script src="../../javaScript/sidebar.js"></script> 
-  <script src="../../javaScript/manage_order/manage_order.js"></script>  
+  <script src="../../javaScript/sidebar.js"></script>
+  <script src="../../javaScript/supply_requests/completed_supply.js"></script>
 </body>
 </html>

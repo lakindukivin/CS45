@@ -4,53 +4,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/app/views/src/roles/productionManager/styles/sidebar.css">
-  <link rel="stylesheet" href="/app/views/src/roles/productionManager/styles/supply_requests/supply_request.css">
-  <link rel="stylesheet" href="/app/views/src/roles/productionManager/styles/common.css">
+  <link rel="stylesheet" href="../../styles/sidebar.css">
+  <link rel="stylesheet" href="../../styles/supply_requests/supply_request.css">
+  <link rel="stylesheet" href="../../styles/common.css">
   <title>Waste360|Dashboard|PM</title>
 </head>
 
 <body>
   <nav id="sidebar">
     <button id="toggle-btn" onclick="toggleSidebar()" class="toggle-btn">
-      <img src="/app/views/src/assets/menu.svg" alt="menu" />
+      <img src="../../../../assets/menu.svg" alt="menu" />
     </button>
     <div class="sidebar-container">
       <div class="prof-picture">
-        <img src="/app/views/src/assets/user.svg" alt="profile" />
+        <img src="../../../../assets/user.svg" alt="profile" />
         <span class="user-title">Production Manager</span>
       </div>
 
       <div>
         <ul>
           <li>
-            <a href="/app/views/src/roles/productionManager/html/home.html"><img src="/src/assets/dashboard.svg"
+            <a href="../home.html"><img src="../../../../assets/dashboard.svg"
                 alt="dashboard" /><span class="sidebar-titles">Dashboard</span></a>
           </li>
 
           <li>
-            <a href="/app/views/src/roles/productionManager/html/customer_order/pending_custom_orders.html"><img
-                src="/app/views/src/assets/order.svg" /><span class="sidebar-titles">Custom Orders</span></a>
+            <a href="../customer_order/pending_custom_orders.html"><img
+                src="../../../../assets/order.svg" /><span class="sidebar-titles">Custom Orders</span></a>
           </li>
           <li>
-            <a href="/app/views/src/roles/productionManager/html/recycled_polythene/recycled_polythene.html"><img
-                src="/app/views/src/assets/recycle.svg" /><span class="sidebar-titles">Recycled Polythene</span></a>
+            <a href="../recycled_polythene/recycled_polythene.html"><img
+                src="../../../../assets/recycle.svg" /><span class="sidebar-titles">Recycled Polythene</span></a>
           </li>
           <li>
-            <a href="/app/views/src/roles/productionManager//html/polythene_collection/schedule.html"><img
-                src="/app/views/src/assets/collection.svg" /><span class="sidebar-titles">Polythene
-                Collection</span></a>
+            <a href="../polythene_collection/schedule.html"><img
+                src="../../../../assets/collection.svg" /><span class="sidebar-titles">Polythene Collection</span></a>
           </li>
           <li>
-            <a href="#" class="sidebar-active"><img src="/app/views/src/assets/supply.svg" /><span
-                class="sidebar-titles">Supply
+            <a href="#" class="sidebar-active"><img src="../../../../assets/supply.svg" /><span class="sidebar-titles">Supply
                 Requests</span>
-            </a>
+              </a>
           </li>
           <li>
-            <a href="/app/views/src/roles/productionManager/html/pellets_requests/pellets_requests.html"><img
-                src="/app/views/src/assets/order.svg" alt="supply" /><span class="sidebar-titles">Pellets
-                Requests</span></a>
+            <a href="../pellets_requests/pellets_requests.html"><img
+                src="../../../../assets/order.svg" alt="supply" /><span class="sidebar-titles">Pellets Requests</span></a>
           </li>
         </ul>
       </div>
@@ -61,13 +58,13 @@
   <div class="content">
     <header>
       <div class="logo">
-        <img src="/app/views/src/assets/Waste360.png" alt="logo" />
+        <img src="../../../../assets/Waste360.png" alt="logo" />
         <h1>Waste360</h1>
       </div>
       <h1 class="logo">DashBoard</h1>
       <nav class="nav">
         <ul>
-          <li><a href="#"><img src="/app/views/src/assets/notifications.svg"></a></li>
+          <li><a href="#"><img src="../../../../assets/notifications.svg"></a></li>
           <li><a href="#">Profile</a></li>
           <li><a href="#">Logout</a></li>
         </ul>
@@ -82,15 +79,6 @@
           </ul>
         </div>
       </div>
-      <div class="container">
-        <h2>Finished supply requests</h2>
-        <div class="order-list">
-          <ul id="orderList1">
-            <!-- Orders will be dynamically added here -->
-          </ul>
-        </div>
-      </div>
-
       <!-- Add this modal HTML -->
       <div id="statusModal" class="modal">
         <div class="modal-content">
@@ -100,9 +88,9 @@
             <p><strong>Supply ID:</strong> <span id="orderId"></span></p>
             <p><strong>Status:</strong> <span id="orderStatus"></span></p>
             <p><strong>Created Date:</strong> <span id="orderDate"></span></p>
-            <p><strong>Bag Size:</strong> <span id="bagsize"></span></p>
+            <p><strong>Bag Size:</strong> <span id="bagSize"></span></p>
             <p><strong>Category:</strong> <span id="category"></span></p>
-            <p><strong>Pack Size:</strong> <span id="packsize"></span></p>
+            <p><strong>Pack Size:</strong> <span id="packSize"></span></p>
             <p><strong>Quantity:</strong> <span id="quantity"></span></p>
             <p><strong>Description:</strong> <span id="orderDescription"></span></p>
           </div>
@@ -114,10 +102,11 @@
           </div>
         </div>
       </div>
+      <div> <button type="view" class="view-btn" ><a href="../supply_requests/completed_supply.html">View</a> </button></div>
     </div>
   </div>
-  <script src="/app/views/src/roles/productionManager/javaScript/sidebar.js"></script>
-  <script src="/app/views/src/roles/productionManager/javaScript/supply_requests/supply_request.js"></script>
+  <script src="../../javaScript/sidebar.js"></script>
+  <script src="../../javaScript/supply_requests/supply_request.js"></script>
 </body>
 
 </html>

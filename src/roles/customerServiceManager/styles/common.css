@@ -9,13 +9,14 @@ html {
     line-height: 1.5rem;
 }
 
-body{
+body {
     background-color: #f5f5f5;
     color: #333;
     min-height: 100vh;
     display: grid;
     grid-template-columns: auto 1fr;
 }
+
 .content {
     position: relative;
 }

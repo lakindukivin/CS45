@@ -4,11 +4,7 @@ const orders = [
     name: 'Item 1',
     status: 'Pending',
     date: '2024-03-19',
-    client: 'John Doe',
-    email: 'nnimasha43@gmail.com',
-    phone: '0768512877',
-    pack_size: '100',
-    Quantity: '50',
+    customer: 'John Doe',
     description: 'Custom plastic container with specific dimensions'
   },
   { 
@@ -16,10 +12,7 @@ const orders = [
     name: 'Item 1',
     status: 'Pending',
     date: '2024-03-19',
-   client: 'John Doe',
-    email: 'nnimasha43@gmail.com',
-    phone: '0768512877',
-    Quantity: '50',
+    customer: 'John Doe',
     description: 'Custom plastic container with specific dimensions'
   },
   { 
@@ -27,11 +20,7 @@ const orders = [
     name: 'Item 1',
     status: 'Pending',
     date: '2024-03-19',
-   client: 'John Doe',
-    email: 'nnimasha43@gmail.com',
-    phone: '0768512877',
-    pack_size: '100',
-    Quantity: '50',
+    customer: 'John Doe',
     description: 'Custom plastic container with specific dimensions'
   },
   { 
@@ -39,11 +28,7 @@ const orders = [
     name: 'Item 1',
     status: 'Pending',
     date: '2024-03-19',
-   client: 'John Doe',
-    email: 'nnimasha43@gmail.com',
-    phone: '0768512877',
-    pack_size: '100',
-    Quantity: '50',
+    customer: 'John Doe',
     description: 'Custom plastic container with specific dimensions'
   },
   { 
@@ -51,11 +36,7 @@ const orders = [
     name: 'Item 1',
     status: 'Pending',
     date: '2024-03-19',
-   client: 'John Doe',
-    email: 'nnimasha43@gmail.com',
-    phone: '0768512877',
-    pack_size: '100',
-    Quantity: '50',
+    customer: 'John Doe',
     description: 'Custom plastic container with specific dimensions'
   },
   { 
@@ -63,11 +44,7 @@ const orders = [
     name: 'Item 1',
     status: 'Pending',
     date: '2024-03-19',
-   client: 'John Doe',
-    email: 'nnimasha43@gmail.com',
-    phone: '0768512877',
-    pack_size: '100',
-    Quantity: '50',
+    customer: 'John Doe',
     description: 'Custom plastic container with specific dimensions'
   },
   { 
@@ -75,11 +52,7 @@ const orders = [
     name: 'Item 1',
     status: 'Pending',
     date: '2024-03-19',
-   client: 'John Doe',
-    email: 'nnimasha43@gmail.com',
-    phone: '0768512877',
-    pack_size: '100',
-    Quantity: '50',
+    customer: 'John Doe',
     description: 'Custom plastic container with specific dimensions'
   },
   { 
@@ -87,11 +60,7 @@ const orders = [
     name: 'Item 1',
     status: 'Pending',
     date: '2024-03-19',
-   client: 'John Doe',
-    email: 'nnimasha43@gmail.com',
-    phone: '0768512877',
-    pack_size: '100',
-    Quantity: '50',
+    customer: 'John Doe',
     description: 'Custom plastic container with specific dimensions'
   },
   { 
@@ -99,11 +68,7 @@ const orders = [
     name: 'Item 1',
     status: 'Pending',
     date: '2024-03-19',
-    client: 'John Doe',
-    email: 'nnimasha43@gmail.com',
-    phone: '0768512877',
-    pack_size: '100',
-    Quantity: '50',
+    customer: 'John Doe',
     description: 'Custom plastic container with specific dimensions'
   },
   { 
@@ -111,11 +76,7 @@ const orders = [
     name: 'Item 1',
     status: 'Pending',
     date: '2024-03-19',
-    client: 'John Doe',
-    email: 'nnimasha43@gmail.com',
-    phone: '0768512877',
-    pack_size: '100',
-    Quantity: '50',
+    customer: 'John Doe',
     description: 'Custom plastic container with specific dimensions'
   },
   // Add more items as needed
@@ -155,11 +116,9 @@ function openOrderStatus(order) {
   document.getElementById('orderId').textContent = order.id;
   document.getElementById('orderStatus').textContent = order.status;
   document.getElementById('orderDate').textContent = order.date;
-  document.getElementById('clientName').textContent = order.client;
-  document.getElementById('email').textContent = order.email;
-  document.getElementById('phone').textContent = order.phone;
-  document.getElementById('quantity').textContent = order.Quantity;
+  document.getElementById('customerName').textContent = order.customer;
   document.getElementById('orderDescription').textContent = order.description;
+
   // Show the modal
   modal.style.display = 'block';
 }

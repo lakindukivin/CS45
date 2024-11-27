@@ -182,16 +182,3 @@ body {
   transition: background-color 0.2s ease;
 }
 
-.view-btn a{
-  color: white;
-  text-decoration: none;
-}
-
-.view-btn:hover {
-  background-color:#1b5e20;
-}
-
-.view-btn:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
-}

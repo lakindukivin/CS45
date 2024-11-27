@@ -12,9 +12,9 @@ body {
 }
 
 .container {
-  width: 60%;
+  width: 40%;;
   padding: 20px;
-  background-color:#b7bebb;
+  background-color: #b7bebb;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   color: var(--text-color);
@@ -39,7 +39,6 @@ body {
   overflow-y: auto;
   border: 1px solid var(--secondary-color);
   border-radius: 4px;
-  cursor: pointer;
 }
 
 .order-list ul {
@@ -59,7 +58,7 @@ body {
 }
 
 .order-list li:hover {
-  background-color: #5c7c6d;
+  background-color: #1c573b;
 }
 
 .modal {
@@ -166,32 +165,4 @@ body {
 
 .operation .reject {
   background-color: red;
-}
-
-.view-btn {
-  background-color: #2e7d32;
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  width: 40%;
-  margin-left: 200px;
-  margin-top: 5px;
-  transition: background-color 0.2s ease;
-}
-
-.view-btn a{
-  color: white;
-  text-decoration: none;
-}
-
-.view-btn:hover {
-  background-color:#1b5e20;
-}
-
-.view-btn:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
 }

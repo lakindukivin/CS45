@@ -47,7 +47,7 @@
               >
             </li>
             <li>
-              <a href="#" class="sidebar-active"
+              <a href="../manage_orders/manage_order.html" class="sidebar-active"
                 ><img
                   src="../../../../assets/manage_order.svg"
                 /><span class="sidebar-titles">Manage Orders</span></a
@@ -83,7 +83,7 @@
     </header>
     <div class="box">
       <div class="container">
-        <h2>Pending Orders</h2>
+        <h2>Completed Orders</h2>
         <div class="order-list">
           <ul id="orderList">
             <!-- Orders will be dynamically added here -->
@@ -105,15 +105,25 @@
             <p><strong>Description:</strong> <span id="orderDescription"></span></p>
           </div>
           <div class="status-timeline">
-            <div class="operation">
-              <button class="accept">Accept</button>
-              <button class="reject">Reject</button>
-              </div>
+            <div class="timeline-item active">
+              <div class="timeline-point"></div>
+              <div class="timeline-content">Order Placed</div>
+            </div>
+            <div class="timeline-item active">
+              <div class="timeline-point"></div>
+              <div class="timeline-content">Processing</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-point"></div>
+              <div class="timeline-content">Manufacturing</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-point"></div>
+              <div class="timeline-content">Completed</div>
+            </div>
           </div>
         </div>
       </div>
-      <div> <button type="view" class="view-btn" ><a href="../manage_orders/completed_order.html">View</a> </button></div>
-
     </div>
   </div>
   <script src="../../javaScript/sidebar.js"></script> 
