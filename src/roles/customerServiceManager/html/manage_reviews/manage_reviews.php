@@ -70,7 +70,7 @@ include "../../../../connect.php";
     </header>
 
     <div class="rep-button">
-      <button class="reply-button"> <a href="replied_table.php">View</a></button>
+      <button class="reply-button"> <a href="replied_table.php">View Replies</a></button>
     </div>
 
     <div class="box">

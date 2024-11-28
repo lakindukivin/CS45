@@ -58,7 +58,7 @@ body {
 }
 
 #collectionTable td a:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 /* Button Styles */

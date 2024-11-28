@@ -128,10 +128,12 @@ select.form-control {
   margin-left: 200px;
   margin-top: 5px;
   transition: background-color 0.2s ease;
+ 
 }
 
 .view-btn a{
   color: white;
+  text-decoration: none;
 }
 
 .view-btn:hover {
