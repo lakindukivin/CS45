@@ -19,6 +19,7 @@ body {
   border-radius: 8px;
   color: var(--text-color);
   font-family: Arial, sans-serif;
+  margin-left: 150px;
 }
 
 .box {
