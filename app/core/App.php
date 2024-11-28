@@ -38,7 +38,9 @@ class App
             }
         }
 
+        $data = [];
 
-        call_user_func_array([$controller, $this->method], $URL);
+
+        call_user_func_array([$controller, $this->method], [$data, ...$URL]);
     }
 }
