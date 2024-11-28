@@ -5,7 +5,7 @@ class Database
     private $host = "localhost";
     private $username = "root";
     private $password = "";
-    private $dbname = "waste360";
+    private $dbname = "waste360t";
     public $conn;
 
     public function __construct()
