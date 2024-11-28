@@ -11,6 +11,7 @@ trait Model
     protected $offset = '0';
     protected $order_type = "desc";
     protected $order_column = "customer_id";
+    public $errors = [];
 
     public function findAll()
     {
@@ -72,21 +73,32 @@ trait Model
 
     public function insert($data)
     {
-        /** remove unwanted data */
-
+        // Remove unwanted data
         if (!empty($this->allowedColumns)) {
-            foreach ($data as $key => $value) {
-                if (!in_array($key, $this->allowedColumns)) {
-                    unset($data[$key]);
-                }
-            }
+            $data = array_intersect_key($data, array_flip($this->allowedColumns));
         }
-        $keys = array_keys($data);
-        $query = "insert into $this->table (" . implode(",", $keys) . ") values (:" . implode(",:", $keys) . ")";
 
+        // Ensure there's valid data to insert
+        if (empty($data)) {
+            throw new Exception("No valid data provided for insert operation.");
+        }
+
+        // Build the SQL query
+        $keys = array_keys($data);
+        $query = "INSERT INTO $this->table (" . implode(",", $keys) . ") 
+                  VALUES (:" . implode(",:", $keys) . ")";
+
+        // Debugging (optional, for development purposes)
+        error_log("Insert Query: $query");
+        error_log("Data: " . print_r($data, true));
+
+        // Execute the query
         $this->query($query, $data);
-        return false;
+
+        // Indicate success
+        return true;
     }
+
 
     public function update($id, $data, $id_column = 'id')
     {

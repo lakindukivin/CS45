@@ -1,20 +1,34 @@
 <?php
 
-/**
- * Customer Class
- */
-
 class Customer
 {
-
     use Model;
 
-    protected $table = 'customer';
+    protected $table = 'Customers'; // Ensure this matches the table name
+    protected $allowedColumns = ['user_id', 'address', 'phone_number'];
 
-    protected $allowedColumns = [
+    // Fetch customer by user ID
+    public function getCustomerByUserId($userId)
+    {
+        return $this->first(['user_id' => $userId]);
+    }
 
-        'customer_name',
-        'customer_contact',
-        'customer_address',
-    ];
+    // Update customer profile
+    public function updateCustomer($userId, $data)
+    {
+        return $this->update($userId, $data, 'user_id');
+    }
+
+    // Add new customer profile
+    public function addCustomer($data)
+    {
+        return $this->insert($data);
+    }
+
+    // Delete customer profile by user ID
+    public function deleteCustomerByUserId($userId)
+    {
+        // Ensure the customer record is deleted from the Customers table
+        return $this->delete($userId, 'user_id');
+    }
 }

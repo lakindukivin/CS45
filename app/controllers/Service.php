@@ -1,14 +1,14 @@
 <?php
 
 /**
- * home class
+ * service class
  */
 
-class Home
+class Service
 {
     use Controller;
     public function index()
     {
-        $this->view('customer/home');
+        $this->view('customer/service');
     }
 }

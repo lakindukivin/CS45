@@ -3,13 +3,13 @@
 if ($_SERVER['SERVER_NAME'] == 'localhost') {
 
     /** database config **/
-    define('DBNAME', 'waste360');
+    define('DBNAME', 'waste360t');
     define('DBHOST', 'localhost');
     define('DBUSER', 'root');
     define('DBPASS', '');
     define('DBDRIVER', 'localhost');
 
-    define('ROOT', 'http://localhost/CS45/public');
+    define('ROOT', 'http://localhost/CS45t/public');
 } else {
     /** database config **/
     define('DBNAME', 'waste36');
