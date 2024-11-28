@@ -107,7 +107,7 @@
             <button>Search</button>
           </div>
           <div>
-            <button onclick="openAddModal()">Add Product</button>
+            <button class="action-btn" onclick="openAddModal()">Add Product</button>
           </div>
         </div>
 
@@ -134,7 +134,7 @@
           <span class="close" onclick="closeAddModal()">&times;</span>
 
           <h3>Add Product</h3>
-          <form id="productForm" action="./addProduct.php" method="post">
+          <form id="productForm" enctype="multipart/form-data" method="post">
             <div class="form-group">
               <label for="productName">Product Name:</label>
               <input
@@ -147,7 +147,7 @@
             </div>
             <div class="form-group">
               <label for="img">Product Image:</label>
-              <input name="img" type="file" id="img" required />
+              <input name="img" type="file" id="img" accept="image/*" required />
             </div>
             <div class="form-group">
               <label for="productPrice">Product Price:</label>
@@ -156,6 +156,7 @@
                 type="number"
                 id="productPrice"
                 placeholder="Enter product Price"
+                min="0"
                 required
               />
             </div>
@@ -165,6 +166,7 @@
                 id="description"
                 rows="4"
                 name="description"
+                minlength="3"
                 required
               ></textarea>
             </div>
@@ -203,90 +205,15 @@
         </div>
       </div>
 
-      <!-- Edit Form -->
-      <!-- <div id="editModal" class="modal">
-
-        <div class="modal-content">
-          <span class="close" onclick="closeEditModal()">&times;</span>
-
-          <h3>Edit Product</h3>
-          <form id="productForm" action="./editProduct.php" method="post">
-            <div class="form-group">
-              <label for="productID">Product ID:</label>
-              <input name="productID" id="productID" disabled />
-            </div>
-            <div class="form-group">
-              <label for="productName">Product Name:</label>
-              <input
-                name="productName"
-                type="text"
-                id="productName"
-                placeholder="Enter product Name"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="img">Product Image:</label>
-              <input name="img" type="file" id="img" required />
-            </div>
-            <div class="form-group">
-              <label for="productPrice">Product Price:</label>
-              Rs.<input
-                name="productPrice"
-                type="number"
-                id="productPrice"
-                placeholder="Enter product Price"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="description">Description:</label>
-              <textarea
-                id="description"
-                rows="4"
-                name="description"
-                required
-              ></textarea>
-            </div>
-            <div class="form-group">
-              <label for="packSize">Pack Size:</label>
-              <input
-                name="packSize"
-                type="text"
-                id="packSize"
-                placeholder="Enter Pack Size"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="bagSize">Bag Size:</label>
-              <input
-                name="bagSize"
-                type="text"
-                id="bagSize"
-                placeholder="Enter Bag Size"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="quantity">Quantity:</label>
-              <input
-                name="quantity"
-                type="number"
-                id="quantity"
-                placeholder="Enter Quantity"
-                required
-              />
-            </div>
-            <button type="submit" class="action-btn">Add</button>
-          </form>
-        </div>
-      </div> -->
       <div id="editModal" class="modal">
         <div class="modal-content">
           <span class="close" onclick="closeEditModal()">&times;</span>
           <h3>Edit Product</h3>
-          <form id="editProductForm" method="post" action="editProduct.php">
+          <form
+            id="editProductForm"
+            method="post"
+            enctype="multipart/form-data"
+          >
             <input type="hidden" name="product_id" id="editProductID" />
             <div class="form-group">
               <label for="editProductName">Product Name:</label>
@@ -300,7 +227,8 @@
             </div>
             <div class="form-group">
               <label for="editProductImage">Product Image:</label>
-              <input name="product_image" type="file" id="editProductImage" />
+              <img id="existingImage" src="" alt="Product Image" style="width: 100px; height: auto;" />
+              <input type="file" name="existing_image" id="existingImage" accept="image/*" />
             </div>
             <div class="form-group">
               <label for="editProductPrice">Product Price:</label>
