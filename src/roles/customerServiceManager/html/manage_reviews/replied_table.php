@@ -22,30 +22,30 @@ include "../../../../connect.php";
     <div class="sidebar-container">
       <div class="prof-picture">
         <img src="../../../../assets/user.svg" alt="profile" />
-        <span class="user-Customer_id">Customer Service Manager</span>
+        <span class="user-title">Customer Service Manager</span>
       </div>
 
       <div>
         <ul>
           <li>
             <a href="../home.html"><img src="../../../../assets/dashboard.svg"
-                alt="dashboard" /><span class="sidebar-Customer_ids">Dashboard</span></a>
+                alt="dashboard" /><span class="sidebar-titles">Dashboard</span></a>
           </li>
 
           <li>
             <a href="../give_away/give_away_request.html"><img
-                src="../../../../assets/give_away.svg" /><span class="sidebar-Customer_ids">Give Away</span></a>
+                src="../../../../assets/give_away.svg" /><span class="sidebar-titles">Give Away</span></a>
           </li>
           <li>
             <a href="../returns/returns.html"><img
-                src="../../../../assets/returns.svg" /><span class="sidebar-Customer_ids">Returns</span></a>
+                src="../../../../assets/returns.svg" /><span class="sidebar-titles">Returns</span></a>
           </li>
           <li>
             <a href="../manage_orders/manage_order.html"><img
-                src="../../../../assets/manage_order.svg" /><span class="sidebar-Customer_ids">Manage order</span></a>
+                src="../../../../assets/manage_order.svg" /><span class="sidebar-titles">Manage order</span></a>
           </li>
           <li>
-            <a href="../manage_reviews/manage_reviews.php" class="sidebar-active"><img src="../../../../assets/reviews.svg" /><span class="sidebar-Customer_ids">Manage
+            <a href="../manage_reviews/manage_reviews.php" class="sidebar-active"><img src="../../../../assets/reviews.svg" /><span class="sidebar-titles">Manage
                 Reviews</span></a>
           </li>
         </ul>

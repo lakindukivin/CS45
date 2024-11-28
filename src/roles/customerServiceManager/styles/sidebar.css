@@ -15,7 +15,7 @@
   min-height: 90vh;
 }
 
-#sidebar .sidebar-container>div {
+#sidebar .sidebar-container div {
   place-self: center;
 }
 
