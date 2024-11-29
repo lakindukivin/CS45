@@ -4,12 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Store</title>
+
     <link rel="stylesheet" href="../styles/store.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
       rel="stylesheet"
     />
-    <script src="../javaScript/store.js" defer></script>
   </head>
   <body>
     <header>
@@ -40,8 +40,8 @@
 
     <main>
       <h2>Products made from Recycled Material</h2>
-      <div class="product-container">
-        <div class="product-card">
+      <div class="product-container" id="productsList">
+        <!-- <div class="product-card" id="productcard">
           <img src="../../../../assets/pellets.png" alt="Recycled Pellets" />
           <h3>Recycled Pellets</h3>
           <a href="pelletForm.html"
@@ -65,8 +65,50 @@
           />
           <h3>Oxo-biodegradable Garbage Bags</h3>
           <a href="oxoBagForm.html"
-            ><button class="primary">See Options</button></a
+            ><button class="primary">See Options</button></a 
           >
+        </div> -->
+      </div>
+      <div class="modal" id="option-modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeOptionModal()">&times;</span>
+          <div id="optionForm">
+            <div class="product-image">
+              <img
+                src="../../../../assets/oxoBiodegradable.png"
+                alt="Oxo-biodegradable bag"
+              />
+            </div>
+            <div class="product-details" id="product-details">
+              <h2>Oxo-biodegradable Bag Packs</h2>
+              <h3>LKR 200 - LKR 5000</h3>
+              <p>Description</p>
+            </div>
+          </div>
+          <div class="dropdown">
+            <label for="pack-size">Pack Size</label>
+            <select id="pack-size">
+              <option value="small">Small</option>
+              <option value="medium">Medium</option>
+              <option value="large">Large</option>
+            </select>
+          </div>
+          <div class="dropdown">
+            <label for="bag-size">Bag Size</label>
+            <select id="bag-size">
+              <option value="small">Small</option>
+              <option value="medium">Medium</option>
+              <option value="large">Large</option>
+            </select>
+          </div>
+          <div class="dropdown">
+            <label for="bag-size">Quantity</label>
+            <input type="number" value="1" min="1" />
+          </div>
+          <button>Add to Cart</button>
+          <button onclick="location.href='customOrder.html'">
+            Custom Order
+          </button>
         </div>
       </div>
     </main>
@@ -76,7 +118,7 @@
         <p>© 2024 Waste360. All rights reserved.</p>
       </div>
     </footer>
-
+    <script src="../javaScript/store.js" defer></script>
     <script src="script.js"></script>
   </body>
 </html>

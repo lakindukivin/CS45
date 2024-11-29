@@ -74,8 +74,7 @@ class ProductController
                 'productPrice' => $_POST['productPrice'],
                 'description' => $_POST['description'],
                 'packSize' => $_POST['packSize'],
-                'bagSize' => $_POST['bagSize'],
-                'quantity' => $_POST['quantity']
+                'bagSize' => $_POST['bagSize']
             ];
 
             if ($this->productModel->addProduct($data)) {
@@ -114,14 +113,12 @@ class ProductController
                 'product_img' => $imageName,
                 'product_price' => $_POST['product_price'],
                 'description' => $_POST['description'],
-                'pack_size' => $_POST['pack_size'],
-                'bag_size' => $_POST['bag_size'],
-                'quantity' => $_POST['quantity']
+                'pack_size' => $_POST['packSize'],
+                'bag_size' => $_POST['bagSize']
             ];
 
             if ($this->productModel->updateProduct($data)) {
                 echo json_encode(['success' => true, 'message' => 'Product added successfully']);
-
             } else {
                 echo json_encode(['success' => false, 'message' => 'Failed to add product']);
             }
