@@ -9,7 +9,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
         rel="stylesheet" />
-    <script src="<?= ROOT ?>/assets/js/customOrder.js" defer></script>
+
 </head>
 
 <body>
@@ -49,16 +49,9 @@
         <div class="order-section">
             <h2>Order Customized Bags</h2>
 
-            <!-- Display Success/Failure Messages -->
-            <?php if (isset($_SESSION['success_message'])): ?>
-                <div class="success-message"><?= $_SESSION['success_message']; ?></div>
-                <?php unset($_SESSION['success_message']); ?>
-            <?php elseif (isset($_SESSION['error_message'])): ?>
-                <div class="error-message"><?= $_SESSION['error_message']; ?></div>
-                <?php unset($_SESSION['error_message']); ?>
-            <?php endif; ?>
 
-            <form id="custom-order-form" method="POST">
+
+            <form method="POST" action="customOrder">
                 <label for="company-name">Company/Client Name</label>
                 <input type="text" id="company-name" name="company_name" placeholder="Enter company name" required />
 

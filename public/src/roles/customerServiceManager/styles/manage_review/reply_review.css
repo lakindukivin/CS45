@@ -1,0 +1,36 @@
+body {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  background-color: #130f0f;
+  font-family: Arial, sans-serif;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 60px);
+}
+
+.reviews {
+  text-align: center;
+  width: 300px;
+  margin-left: 80px;
+}
+
+.review-content {
+  background-color: #e0e0e0;
+  padding: 50px;
+  margin-bottom: 20px;
+}
+
+.operation button {
+  background-color: rgb(72, 235, 39);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 100px;
+  margin-left: 150px;
+}

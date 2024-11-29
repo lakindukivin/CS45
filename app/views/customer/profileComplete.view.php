@@ -58,7 +58,7 @@
 
                 <!-- Orders and Delete Account Buttons -->
                 <div class="action-buttons">
-                    <a href="<?= ROOT ?>/orders">
+                    <a href="<?= ROOT ?>/order">
                         <button class="orders-btn">My Orders</button>
                     </a>
                     <!-- Delete account button with confirmation -->

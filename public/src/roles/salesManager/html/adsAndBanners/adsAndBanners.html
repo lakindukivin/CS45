@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../styles/common.css" />
+    <link rel="stylesheet" href="../../styles/sidebar.css" />
+    <link rel="stylesheet" href="../../styles/adsAndBanners.css" />
+    <title>Ads/Banners</title>
+  </head>
+  <body>
+    <nav id="sidebar">
+      <button id="toggle-btn" onclick="toggleSidebar()" class="toggle-btn">
+        <img src="../../assets/menu.svg" alt="menu" />
+      </button>
+      <div class="sidebar-container">
+        <div class="prof-picture">
+          <img src="../../assets/user.svg" alt="profile" />
+          <span class="user-title">Sales and Marketing Manager</span>
+        </div>
+
+        <div>
+          <ul>
+            <li>
+              <a href="../../html/home.html"
+                ><img src="../../assets/dashboard.svg" alt="dashboard" /><span
+                  class="sidebar-titles"
+                  >Dashboard</span
+                >
+              </a>
+            </li>
+
+            <li>
+              <a href="../../html/carbon footprint/carbonFootprint.html"
+                ><img
+                  src="../../assets/carbon-footprint.svg"
+                  alt="carbon-footprint"
+                /><span class="sidebar-titles">Carbon footprint</span></a
+              >
+            </li>
+            <li>
+              <a href="../../html/discounts/discounts.html"
+                ><img src="../../assets/discount.svg" alt="Discount" /><span
+                  class="sidebar-titles"
+                  >Discount</span
+                ></a
+              >
+            </li>
+            <li>
+              <a href="../../html/products/products.html"
+                ><img src="../../assets/product.svg" alt="product" /><span
+                  class="sidebar-titles"
+                  >Products</span
+                ></a
+              >
+            </li>
+            <li>
+              <a href="#" class="sidebar-active"
+                ><img src="../../assets/ads.svg" alt="ads/banners" /><span
+                  class="sidebar-titles"
+                  >Ads/Banners</span
+                ></a
+              >
+            </li>
+            <li>
+              <a href="../../html/genarateReports/generateReports.html"
+                ><img src="../../assets/report.svg" alt="reports" /><span
+                  class="sidebar-titles"
+                  >Generate Reports</span
+                >
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <header>
+        <div class="logo">
+          <img src="../../assets/Waste360.png" alt="Waste360" />
+          <h1>Waste360</h1>
+        </div>
+        <div class="page-title">
+          <p>Ads/Banners</p>
+        </div>
+        <nav class="header-nav">
+          <a href="#"><img src="../../assets/notifications.svg" alt="" /></a>
+          <a href="#">Profile</a>
+          <a href="#">Log Out</a>
+        </nav>
+      </header>
+
+      <div id="ad-management" class="form-container">
+        <h2>Ad/Banner Management</h2>
+
+        <!-- Ad Form Section -->
+        <div id="adForm" class="input-container">
+          <form id="adFormContent">
+            <div class="form-group">
+              <label
+                >Title:
+                <input
+                  type="text"
+                  id="adTitle"
+                  placeholder="Ad Title"
+                  required
+                />
+              </label>
+            </div>
+            <div class="form-group">
+              <label
+                >Description:
+                <textarea
+                  id="adDescription"
+                  placeholder="Ad Description"
+                  required
+                ></textarea>
+              </label>
+            </div>
+
+            <div class="form-group">
+              <label
+                >Target Audience:
+                <input
+                  type="text"
+                  id="adAudience"
+                  placeholder="E.g., Customers, Teens, Professionals"
+                  required
+                />
+              </label>
+            </div>
+            <div class="form-group">
+              <label
+                >Display Settings:
+                <input
+                  type="text"
+                  id="adSettings"
+                  placeholder="E.g., Homepage, Sidebar, Banner"
+                  required
+                />
+              </label>
+            </div>
+            <div class="form-group">
+              <label
+                >Upload Banner File:
+                <input type="file" id="adFile" accept="image/*" required />
+              </label>
+            </div>
+            <button type="submit" class="action-btn">Save & Preview</button>
+          </form>
+        </div>
+
+        <!-- Existing Ads Section -->
+
+        <div id="adTableSection" class="table-container">
+          <div class="table-title">
+            <h3>Existing Ads/Banners</h3>
+          </div>
+          <table id="adTable">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Target Audience</th>
+                <th>Display Settings</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Rows dynamically added -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- <footer>
+        <div class="logo">
+          <img src="/src/roles/salesManager/assets/Waste360.png" alt="Waste360" />
+        </div>
+        <p>&copy; 2024 Waste360. All rights reserved.</p>
+      </footer> -->
+    </main>
+    <script src="../../javaScript/sidebar.js"></script>
+    <script src="../../javaScript/adsAndBanner.js"></script>
+  </body>
+</html>
