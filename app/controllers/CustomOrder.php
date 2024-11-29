@@ -1,33 +1,34 @@
 <?php
 
-/**
- * Custom Order Controller
- */
 class CustomOrder
 {
     use Controller;
 
     public function index()
     {
+
         if (!isset($_SESSION['user_id'])) {
             redirect('login');
         }
 
         $userId = $_SESSION['user_id'];
+        $orderModel = new CustomOrderModel();
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Get data from the POST request
-            $companyName = htmlspecialchars($_POST['company_name'] ?? '');
-            $quantity = htmlspecialchars($_POST['quantity'] ?? '');
-            $email = htmlspecialchars($_POST['email'] ?? '');
-            $phone = htmlspecialchars($_POST['phone'] ?? '');
-            $type = htmlspecialchars($_POST['type'] ?? '');
-            $specifications = htmlspecialchars($_POST['specifications'] ?? '');
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $companyName = htmlspecialchars(trim($_POST['company_name'] ?? ''));
+            $quantity = htmlspecialchars(trim($_POST['quantity'] ?? ''));
+            $email = htmlspecialchars(trim($_POST['email'] ?? ''));
+            $phone = htmlspecialchars(trim($_POST['phone'] ?? ''));
+            $type = htmlspecialchars(trim($_POST['type'] ?? ''));
+            $specifications = htmlspecialchars(trim($_POST['specifications'] ?? ''));
+
 
             if (!empty($companyName) && !empty($quantity) && !empty($email) && !empty($phone) && !empty($type)) {
-                // Prepare data for insertion, using user_id from session
+
                 $data = [
-                    'user_id' => $userId,  // Use the user_id from the session (foreign key)
+                    'user_id' => $userId, // Use the user's ID from the session
                     'company_name' => $companyName,
                     'quantity' => $quantity,
                     'email' => $email,
@@ -36,21 +37,22 @@ class CustomOrder
                     'specifications' => $specifications,
                 ];
 
-                // Debugging: Log the data being inserted
-                error_log("Data being inserted: " . print_r($data, true));
-
-                // Attempt to insert the order into the database using the model
-                $orderModel = new CustomOrder();  // Use the model for data insertion
-                if ($orderModel->createOrder($data)) {
-                    $_SESSION['success_message'] = "Your custom order has been submitted successfully!";
-                } else {
-                    $_SESSION['error_message'] = "Failed to create your custom order. Please try again.";
+                try {
+                    $success = $orderModel->createOrder($data);
+                    if ($success) {
+                        $_SESSION['success_message'] = "Your custom order has been submitted successfully!";
+                    } else {
+                        $_SESSION['error_message'] = "Failed to submit your order. Please try again.";
+                    }
+                } catch (Exception $e) {
+                    error_log("Error inserting order: " . $e->getMessage());
+                    $_SESSION['error_message'] = "A database error occurred. Please contact support.";
                 }
             } else {
                 $_SESSION['error_message'] = "All required fields must be filled!";
             }
 
-            // Redirect to the custom order page (refresh the page)
+            // Redirect to refresh the page and avoid resubmission
             redirect('customOrder');
         }
 

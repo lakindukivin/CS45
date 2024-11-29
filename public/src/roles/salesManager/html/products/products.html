@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../styles/common.css" />
+    <link rel="stylesheet" href="../../styles/sidebar.css" />
+    <link rel="stylesheet" href="../../styles/products.css" />
+    <title>Products List</title>
+  </head>
+
+  <body>
+    <nav id="sidebar">
+      <button id="toggle-btn" onclick="toggleSidebar()" class="toggle-btn">
+        <img src="../../assets/menu.svg" alt="menu" />
+      </button>
+      <div class="sidebar-container">
+        <div class="prof-picture">
+          <img src="../../assets/user.svg" alt="profile" />
+          <span class="user-title">Sales and Marketing Manager</span>
+        </div>
+
+        <div>
+          <ul>
+            <li>
+              <a href="../../html/home.html"
+                ><img src="../../assets/dashboard.svg" alt="dashboard" /><span
+                  class="sidebar-titles"
+                  >Dashboard</span
+                ></a
+              >
+            </li>
+
+            <li>
+              <a href="../../html/carbon footprint/carbonFootprint.html"
+                ><img
+                  src="../../assets/carbon-footprint.svg"
+                  alt="carbon-footprint"
+                /><span class="sidebar-titles">Carbon footprint</span></a
+              >
+            </li>
+            <li>
+              <a href="../../html/discounts/discounts.html"
+                ><img src="../../assets/discount.svg" alt="Discount" /><span
+                  class="sidebar-titles"
+                  >Discount</span
+                ></a
+              >
+            </li>
+            <li>
+              <a href="#" class="sidebar-active"
+                ><img src="../../assets/product.svg" alt="product" /><span
+                  class="sidebar-titles"
+                  >Products</span
+                ></a
+              >
+            </li>
+            <li>
+              <a href="../../html/adsAndBanners/adsAndBanners.html"
+                ><img src="../../assets/ads.svg" alt="ads/banners" /><span
+                  class="sidebar-titles"
+                  >Ads/Banners</span
+                ></a
+              >
+            </li>
+            <li>
+              <a href="../../html/genarateReports/generateReports.html"
+                ><img src="../../assets/report.svg" alt="reports" /><span
+                  class="sidebar-titles"
+                  >Generate Reports</span
+                >
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <main>
+      <header>
+        <div class="logo">
+          <img src="../../assets/Waste360.png" alt="Waste360" />
+          <h1>Waste360</h1>
+        </div>
+        <div class="page-title">
+          <p>Product List</p>
+        </div>
+        <nav class="header-nav">
+          <a href="#"><img src="../../assets/notifications.svg" alt="" /></a>
+          <a href="#">Profile</a>
+          <a href="#">Log Out</a>
+        </nav>
+      </header>
+
+      <div class="table-container">
+        <div>
+          <h2>Product List</h2>
+        </div>
+
+        <div class="table-header">
+          <div class="search-bar">
+            <img
+              src="../../assets/magnifying-glass-solid.svg"
+              class="search-icon"
+              width="50px"
+            />
+            <input type="text" />
+            <button>Search</button>
+          </div>
+          <div>
+            <button onclick="openAddModal()">Add Product</button>
+          </div>
+        </div>
+
+        <table id="productTable">
+          <thead>
+            <tr>
+              <th>Product ID</th>
+              <th>Product Name</th>
+              <th>Product image</th>
+              <th>price</th>
+              <th>Description</th>
+              <th>Pack Size</th>
+              <th>Bag Size</th>
+              <th>Quantity</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="productTableBody"></tbody>
+        </table>
+      </div>
+
+      <div id="addModal" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeAddModal()">&times;</span>
+
+          <h3>Add Product</h3>
+          <form id="productForm" action="./addProduct.php" method="post">
+            <div class="form-group">
+              <label for="productName">Product Name:</label>
+              <input
+                name="productName"
+                type="text"
+                id="productName"
+                placeholder="Enter product Name"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="img">Product Image:</label>
+              <input name="img" type="file" id="img" required />
+            </div>
+            <div class="form-group">
+              <label for="productPrice">Product Price:</label>
+              Rs.<input
+                name="productPrice"
+                type="number"
+                id="productPrice"
+                placeholder="Enter product Price"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="description">Description:</label>
+              <textarea
+                id="description"
+                rows="4"
+                name="description"
+                required
+              ></textarea>
+            </div>
+            <div class="form-group">
+              <label for="packSize">Pack Size:</label>
+              <input
+                name="packSize"
+                type="text"
+                id="packSize"
+                placeholder="Enter Pack Size"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="bagSize">Bag Size:</label>
+              <input
+                name="bagSize"
+                type="text"
+                id="bagSize"
+                placeholder="Enter Bag Size"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="quantity">Quantity:</label>
+              <input
+                name="quantity"
+                type="number"
+                id="quantity"
+                placeholder="Enter Quantity"
+                required
+              />
+            </div>
+            <button type="submit" class="action-btn">Add</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Edit Form -->
+      <!-- <div id="editModal" class="modal">
+
+        <div class="modal-content">
+          <span class="close" onclick="closeEditModal()">&times;</span>
+
+          <h3>Edit Product</h3>
+          <form id="productForm" action="./editProduct.php" method="post">
+            <div class="form-group">
+              <label for="productID">Product ID:</label>
+              <input name="productID" id="productID" disabled />
+            </div>
+            <div class="form-group">
+              <label for="productName">Product Name:</label>
+              <input
+                name="productName"
+                type="text"
+                id="productName"
+                placeholder="Enter product Name"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="img">Product Image:</label>
+              <input name="img" type="file" id="img" required />
+            </div>
+            <div class="form-group">
+              <label for="productPrice">Product Price:</label>
+              Rs.<input
+                name="productPrice"
+                type="number"
+                id="productPrice"
+                placeholder="Enter product Price"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="description">Description:</label>
+              <textarea
+                id="description"
+                rows="4"
+                name="description"
+                required
+              ></textarea>
+            </div>
+            <div class="form-group">
+              <label for="packSize">Pack Size:</label>
+              <input
+                name="packSize"
+                type="text"
+                id="packSize"
+                placeholder="Enter Pack Size"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="bagSize">Bag Size:</label>
+              <input
+                name="bagSize"
+                type="text"
+                id="bagSize"
+                placeholder="Enter Bag Size"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="quantity">Quantity:</label>
+              <input
+                name="quantity"
+                type="number"
+                id="quantity"
+                placeholder="Enter Quantity"
+                required
+              />
+            </div>
+            <button type="submit" class="action-btn">Add</button>
+          </form>
+        </div>
+      </div> -->
+      <div id="editModal" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeEditModal()">&times;</span>
+          <h3>Edit Product</h3>
+          <form id="editProductForm" method="post" action="editProduct.php">
+            <input type="hidden" name="product_id" id="editProductID" />
+            <div class="form-group">
+              <label for="editProductName">Product Name:</label>
+              <input
+                name="product_name"
+                type="text"
+                id="editProductName"
+                placeholder="Enter product Name"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="editProductImage">Product Image:</label>
+              <input name="product_image" type="file" id="editProductImage" />
+            </div>
+            <div class="form-group">
+              <label for="editProductPrice">Product Price:</label>
+              Rs.<input
+                name="product_price"
+                type="number"
+                id="editProductPrice"
+                placeholder="Enter product Price"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="editDescription">Description:</label>
+              <textarea
+                id="editDescription"
+                rows="4"
+                name="description"
+                required
+              ></textarea>
+            </div>
+            <div class="form-group">
+              <label for="editPackSize">Pack Size:</label>
+              <input
+                name="pack_size"
+                type="text"
+                id="editPackSize"
+                placeholder="Enter Pack Size"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="editBagSize">Bag Size:</label>
+              <input
+                name="bag_size"
+                type="text"
+                id="editBagSize"
+                placeholder="Enter Bag Size"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="editQuantity">Quantity:</label>
+              <input
+                name="quantity"
+                type="number"
+                id="editQuantity"
+                placeholder="Enter Quantity"
+                required
+              />
+            </div>
+            <button type="submit" class="action-btn">Update</button>
+          </form>
+        </div>
+      </div>
+      <!-- <footer>
+        <div class="logo">
+          <img src="../../../../../assets/Waste360.png" alt="Waste360" />
+        </div>
+        <p>&copy; 2024 Waste360. All rights reserved.</p>
+      </footer> -->
+    </main>
+    <script src="../../javaScript/sidebar.js"></script>
+    <script src="../../javaScript/modal.js"></script>
+    <script src="../../javaScript/products.js"></script>
+  </body>
+</html>

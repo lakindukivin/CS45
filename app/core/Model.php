@@ -9,20 +9,25 @@ trait Model
     use Database;
     protected $limit = 10;
     protected $offset = '0';
-    protected $order_type = "desc";
-    protected $order_column = "customer_id";
+    public $order_type = "desc";
+    public $order_column = "customer_id";
     public $errors = [];
 
-    public function findAll()
+    public function findAll($order_column = null, $order_type = null)
     {
+        $order_column = $order_column ?? $this->order_column;
+        $order_type = $order_type ?? $this->order_type;
 
-        $query = "select * from $this->table order by $this->order_column $this->order_type limit $this->limit offset $this->offset";
+        $query = "select * from $this->table order by $order_column $order_type limit $this->limit offset $this->offset";
 
         return $this->query($query);
     }
 
-    public function where($data, $data_not = [])
+    public function where($data, $data_not = [], $order_column = null, $order_type = null)
     {
+        $order_column = $order_column ?? $this->order_column;
+        $order_type = $order_type ?? $this->order_type;
+
         $keys = array_keys($data);
         $keys_not = array_keys($data_not);
         $query = "select * from $this->table where ";
@@ -37,14 +42,17 @@ trait Model
 
         $query = trim($query, " && ");
 
-        $query .= " order by $this->order_column $this->order_type limit $this->limit offset $this->offset";
+        $query .= " order by $order_column $order_type limit $this->limit offset $this->offset";
         $data = array_merge($data, $data_not);
 
         return $this->query($query, $data);
     }
 
-    public function first($data, $data_not = [])
+    public function first($data, $data_not = [], $order_column = null, $order_type = null)
     {
+
+        $order_column = $order_column ?? $this->order_column;
+        $order_type = $order_type ?? $this->order_type;
 
         $keys = array_keys($data);
         $keys_not = array_keys($data_not);
