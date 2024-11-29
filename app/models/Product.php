@@ -24,18 +24,17 @@ class Product
 
     public function addProduct($data)
     {
-        $query = "INSERT INTO product (product_name, product_img, product_price, product_description, product_pack_size, product_bag_size, product_quantity)
-              VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO product (product_name, product_img, product_price, product_description, product_pack_size, product_bag_size)
+              VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param(
-            "ssisssi",
+            "ssisss",
             $data['productName'],
             $data['productImg'], // Use the resolved image name
             $data['productPrice'],
             $data['description'],
             $data['packSize'],
-            $data['bagSize'],
-            $data['quantity']
+            $data['bagSize']
         );
 
         return $stmt->execute();
@@ -58,19 +57,17 @@ class Product
           product_price = ?, 
           product_description = ?, 
           product_pack_size = ?, 
-          product_bag_size = ?, 
-          product_quantity = ? 
+          product_bag_size = ?
           WHERE product_id = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param(
-            "ssisssii",
+            "ssisssi",
             $data['product_name'],
             $data['product_img'], // Use the resolved image name
             $data['product_price'],
             $data['description'],
             $data['pack_size'],
             $data['bag_size'],
-            $data['quantity'],
             $data['product_id']
         );
 

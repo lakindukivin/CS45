@@ -20,7 +20,7 @@ const fetchProducts = async () => {
           <td>${product.product_description}</td>
           <td>${product.product_pack_size}</td>
           <td>${product.product_bag_size}</td>
-          <td>${product.product_quantity}</td>
+           
           <td>
             <button class="edit-btn" onclick="editProduct(${product.product_id})">Edit</button>
             <button class="delete-btn" onclick="deleteProduct(${product.product_id})">Delete</button>
@@ -39,6 +39,7 @@ fetchProducts();
 document
   .getElementById('productForm')
   .addEventListener('submit', async function (event) {
+    event.preventDefault(); // Prevent the form's default submission behavior
     const form = event.target;
     const formData = new FormData(form);
 
@@ -51,18 +52,21 @@ document
         }
       );
 
-      const result = await response.json();
+      if (!response.ok) {
+       throw new Error('Failed to fetch product details');
+      }
 
+      const result = await response.json();
       if (result.success) {
         alert('Product added successfully!');
-        fetchProducts();
+        window.location.reload();
       } else {
         alert(result.message || 'Failed to add product.');
       }
     } catch (error) {
+      // Handle network or server errors
       console.error('Error:', error);
-      console.log(error);
-      alert('An error occurred while adding the product.');
+      alert(error.message || 'An error occurred while adding the product.');
     }
   });
 
@@ -79,7 +83,7 @@ const editProduct = async (product_id) => {
     }
 
     const product = await response.json();
-    console.log(product);
+
     // Populate the edit form with product data
     document.getElementById('editProductForm').product_id.value =
       product.product_id;
@@ -87,17 +91,16 @@ const editProduct = async (product_id) => {
       product.product_name;
     document.getElementById('existingImage').src = product.product_img_url;
     document.getElementById('editProductForm').existing_image.value =
-      product.product_img_url;
+      product.product_img;
     document.getElementById('editProductForm').product_price.value =
       product.product_price;
     document.getElementById('editProductForm').description.value =
       product.product_description;
-    document.getElementById('editProductForm').pack_size.value =
-      product.product_pack_size;
-    document.getElementById('editProductForm').bag_size.value =
-      product.product_bag_size;
-    document.getElementById('editProductForm').quantity.value =
-      product.product_quantity;
+    const packSizeSelect = document.getElementById('editProductForm').packSize;
+    const bagSizeSelect = document.getElementById('editProductForm').bagSize;
+
+    packSizeSelect.value = product.product_pack_size;
+    bagSizeSelect.value = product.product_bag_size;
   } catch (error) {
     console.error('Error fetching product details:', error);
   }

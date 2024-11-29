@@ -113,13 +113,12 @@ class ProductController
                 'product_img' => $imageName,
                 'product_price' => $_POST['product_price'],
                 'description' => $_POST['description'],
-                'pack_size' => $_POST['pack_size'],
-                'bag_size' => $_POST['bag_size']
-             ];
+                'pack_size' => $_POST['packSize'],
+                'bag_size' => $_POST['bagSize']
+            ];
 
             if ($this->productModel->updateProduct($data)) {
                 echo json_encode(['success' => true, 'message' => 'Product added successfully']);
-
             } else {
                 echo json_encode(['success' => false, 'message' => 'Failed to add product']);
             }
