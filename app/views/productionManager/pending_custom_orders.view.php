@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/sidebar.css" />
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/pending_custom_orders.css" />
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/common.css" />
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/productionManager/sidebar.css" />
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/productionManager/pending_custom_orders.css" />
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/productionManager/common.css" />
     <title>Waste360|Dashboard|PM</title>
 </head>
 <body>
@@ -79,7 +79,7 @@
   <div class="content">
     <header>
       <div class="logo">
-      <img src=".<?= ROOT ?>/assets/images/Waste360.png" alt="logo" />
+      <img src="<?= ROOT ?>/assets/images/Waste360.png" alt="logo" />
       <h1>Waste360</h1>  
       </div> 
       <h1 class="logo">DashBoard</h1>
@@ -129,7 +129,7 @@
 
     </div> 
   </div>
-  <script src="../../javaScript/sidebar.js"></script>
-  <script src="../../javaScript/customer_order/pending_custom_order.js"></script>
+  <script src="<?= ROOT ?>/assets/js/productionManager/sidebar.js"></script>
+  <script src="<?= ROOT ?>/assets/js/productionManager/pending_custom_order.js"></script>
 </body>
 </html>
