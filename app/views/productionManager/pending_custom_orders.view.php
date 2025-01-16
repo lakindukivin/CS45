@@ -22,7 +22,7 @@
         <div>
           <ul>
             <li>
-              <a href="<?= ROOT ?>/home.php"
+              <a href="<?= ROOT ?>/ProductionManagerHome"
                 ><img src="<?= ROOT ?>/assets/images/dashboard.svg" alt="dashboard" /><span
                   class="sidebar-titles"
                   >Dashboard</span
@@ -39,7 +39,7 @@
               >
             </li>
             <li>
-              <a href="<?= ROOT ?>/recycled_polythene.php"
+              <a href="<?= ROOT ?>/recycled_polythene"
                 ><img src="<?= ROOT ?>/assets/images/recycle.svg" /><span
                   class="sidebar-titles"
                   >Recycled Polythene</span
@@ -47,7 +47,7 @@
               >
             </li>
             <li>
-              <a href="<?= ROOT ?>/schedule.php"
+              <a href="<?= ROOT ?>/schedule"
                 ><img
                   src="<?= ROOT ?>/assets/images/collection.svg"
                   alt="site Performance"
@@ -55,7 +55,7 @@
               >
             </li>
             <li>
-              <a href="<?= ROOT ?>/supply_request.php"
+              <a href="<?= ROOT ?>/supply_request"
                 ><img src="<?= ROOT ?>/assets/images/supply.svg" alt="supply" /><span
                   class="sidebar-titles"
                   >Supply Requests</span
@@ -94,7 +94,7 @@
 
     <div class="box">
       <div class="container">
-        <h2>Pending Custom Orders</h2>
+        <h3>Pending Custom Orders</h3>
         <div class="order-list">
           <ul id="orderList">
             <!-- Orders will be dynamically added here -->
@@ -125,7 +125,7 @@
           </div>
         </div>
       </div>
-      <div> <button type="view" class="view-btn" ><a href="../customer_order/completed_orders.html">View Completed Orders</a> </button></div>
+      <div class="view-button"> <button type="view" class="view-btn" ><a href="../customer_order/completed_orders.html">View Completed Orders</a> </button></div>
 
     </div> 
   </div>

@@ -29,11 +29,11 @@
                     </li>
 
                     <li>
-                        <a href="<?= ROOT ?>/pendingCustomOrder"><img src="<?= ROOT ?>/assets/images/order.svg" /><span
+                        <a href="<?= ROOT ?>/PendingCustomOrder"><img src="<?= ROOT ?>/assets/images/order.svg" /><span
                                 class="sidebar-titles">Custom Orders</span></a>
                     </li>
                     <li>
-                        <a href="<?= ROOT ?>/recycled_polythene"><img src="<?= ROOT ?>/assets/images/recycle.svg" /><span
+                        <a href="<?= ROOT ?>/recycledPolythene"><img src="<?= ROOT ?>/assets/images/recycle.svg" /><span
                                 class="sidebar-titles">Recycled Polythene</span></a>
                     </li>
                     <li>
