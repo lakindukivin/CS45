@@ -24,12 +24,12 @@
       <div>
         <ul>
           <li>
-            <a href="../home.html"><img src="<?= ROOT ?>/assets/images/dashboard.svg"
+            <a href="<?= ROOT ?>/productionManagerHome"><img src="<?= ROOT ?>/assets/images/dashboard.svg"
                 alt="dashboard" /><span class="sidebar-titles">Dashboard</span></a>
           </li>
 
           <li>
-            <a href="../customer_order/pending_custom_orders.html"><img
+            <a href="<?= ROOT ?>/PendingCustomOrder"><img
                 src="<?= ROOT ?>/assets/images/order.svg" /><span class="sidebar-titles">Custom Orders</span></a>
           </li>
           <li>
@@ -37,16 +37,16 @@
                 class="sidebar-titles">Recycled Polythene</span></a>
           </li>
           <li>
-            <a href="../../html/polythene_collection/schedule.html"><img
+            <a href="<?=ROOT?>/Schedule"><img
                 src="<?= ROOT ?>/assets/images/collection.svg" alt="site Performance" /><span class="sidebar-titles">Polythene
                 Collection</span></a>
           </li>
           <li>
-            <a href="../supply_requests/supply_request.html"><img
+            <a href="<?=ROOT?>/SupplyRequest"><img
                 src="<?= ROOT ?>/assets/images/supply.svg" alt="supply" /><span class="sidebar-titles">Supply Requests</span></a>
           </li>
           <li>
-            <a href="../pellets_requests/pellets_requests.html"><img
+            <a href="<?=ROOT?>/PelletsRequests"><img
                 src="<?= ROOT ?>/assets/images/order.svg" alt="supply" /><span class="sidebar-titles">Pellets Requests</span></a>
           </li>
         </ul>
@@ -108,10 +108,10 @@
 
         <button type="submit" class="submit-btn">Save</button>
       </form>
-      <div> <button type="view" class="view-btn" ><a href="../recycled_polythene/amount_view.html">View Amounts</a> </button></div>
+      <div> <button type="view" class="view-btn" ><a href="<?=ROOT?>/recycled_polythene/amount_view.html">View Amounts</a> </button></div>
     </div>
-    <script src="../../javaScript/sidebar.js"></script>
-    <script src="../../javaScript/recycled_polythene/recycled_polythene.js"></script>
+    <script src="<?=ROOT?>/<?=ROOT?>/javaScript/sidebar.js"></script>
+    <script src="<?=ROOT?>/<?=ROOT?>/javaScript/recycled_polythene/recycled_polythene.js"></script>
 </body>
 
 </html>

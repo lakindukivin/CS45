@@ -39,7 +39,7 @@
               >
             </li>
             <li>
-              <a href="<?= ROOT ?>/recycled_polythene"
+              <a href="<?= ROOT ?>/RecycledPolythene"
                 ><img src="<?= ROOT ?>/assets/images/recycle.svg" /><span
                   class="sidebar-titles"
                   >Recycled Polythene</span
@@ -47,7 +47,7 @@
               >
             </li>
             <li>
-              <a href="<?= ROOT ?>/schedule"
+              <a href="<?= ROOT ?>/Schedule"
                 ><img
                   src="<?= ROOT ?>/assets/images/collection.svg"
                   alt="site Performance"
@@ -55,7 +55,7 @@
               >
             </li>
             <li>
-              <a href="<?= ROOT ?>/supply_request"
+              <a href="<?= ROOT ?>/SupplyRequest"
                 ><img src="<?= ROOT ?>/assets/images/supply.svg" alt="supply" /><span
                   class="sidebar-titles"
                   >Supply Requests</span
@@ -63,7 +63,7 @@
               >
             </li>
             <li>
-              <a href="<?= ROOT ?>/pellets_requests.php"
+              <a href="<?= ROOT ?>/PelletsRequests.php"
                 ><img src="<?= ROOT ?>/assets/images/order.svg" alt="supply" /><span
                   class="sidebar-titles"
                   >Pellets Requests</span
