@@ -33,20 +33,20 @@
                                 class="sidebar-titles">Custom Orders</span></a>
                     </li>
                     <li>
-                        <a href="<?= ROOT ?>/recycledPolythene"><img src="<?= ROOT ?>/assets/images/recycle.svg" /><span
+                        <a href="<?= ROOT ?>/RecycledPolythene"><img src="<?= ROOT ?>/assets/images/recycle.svg" /><span
                                 class="sidebar-titles">Recycled Polythene</span></a>
                     </li>
                     <li>
-                        <a href="<?= ROOT ?>/schedule"><img
+                        <a href="<?= ROOT ?>/Schedule"><img
                                 src="<?= ROOT ?>/assets/images/collection.svg"
                                 alt="site Performance" /><span class="sidebar-titles">Polythene Collection</span></a>
                     </li>
                     <li>
-                        <a href="<?= ROOT ?>/supply_request"><img src="<?= ROOT ?>/assets/images/supply.svg" alt="supply" /><span
+                        <a href="<?= ROOT ?>/SupplyRequest"><img src="<?= ROOT ?>/assets/images/supply.svg" alt="supply" /><span
                                 class="sidebar-titles">Supply Requests</span></a>
                     </li>
                     <li>
-                        <a href="<?= ROOT ?>/pellets_requests"><img src="<?= ROOT ?>/assets/images/order.svg" alt="supply" /><span
+                        <a href="<?= ROOT ?>/PelletsRequests"><img src="<?= ROOT ?>/assets/images/order.svg" alt="supply" /><span
                                 class="sidebar-titles">Pellets Requests</span></a>
                     </li>
                 </ul>

@@ -29,11 +29,11 @@
           </li>
 
           <li>
-            <a href="<?= ROOT ?>/PendingCustomOrder"><img
-                src="<?= ROOT ?>/assets/images/order.svg" /><span class="sidebar-titles">Custom Orders</span></a>
+            <a href="<?=ROOT?>/PendingCustomOrder"><img
+                src="<?=ROOT?>/assets/images/order.svg" /><span class="sidebar-titles">Custom Orders</span></a>
           </li>
           <li>
-            <a href="<?ROOT?>/RecycledPolythene" class="sidebar-active"><img src="<?= ROOT ?>/assets/images/recycle.svg" /><span
+            <a href="<?=ROOT?>/RecycledPolythene"><img src="<?= ROOT ?>/assets/images/recycle.svg" /><span
                 class="sidebar-titles">Recycled Polythene</span></a>
           </li>
           <li>
@@ -42,7 +42,7 @@
                 Collection</span></a>
           </li>
           <li>
-            <a href="<?=ROOT?>/SupplyRequest"><img
+            <a href="#" class="sidebar-active"><img
                 src="<?= ROOT ?>/assets/images/supply.svg" alt="supply" /><span class="sidebar-titles">Supply Requests</span></a>
           </li>
           <li>
@@ -72,7 +72,7 @@
     </header>
     <div class="box">
       <div class="container">
-        <h2>Pending supply requests</h2>
+        <h3>Pending supply requests</h3>
         <div class="order-list">
           <ul id="orderList">
             <!-- Orders will be dynamically added here -->
