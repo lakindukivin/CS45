@@ -1,0 +1,175 @@
+.top {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  padding: 2rem;
+ 
+}
+
+/* Calendar Styles */
+.calendar {
+  background-color: var(--white);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+  padding: 1.5rem;
+  min-width: 320px;
+  max-width: 420px;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.calendar-header button {
+  background-color: var(--secondary-green);
+  color: var(--white);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.calendar-header button:hover {
+  background-color: var(--accent-green);
+  transform: translateY(-2px);
+}
+
+.calendar-header h2 {
+  color: var(--primary-green);
+  font-size: 1.25rem;
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.day, .date {
+  padding: 0.75rem;
+  font-size: 0.9rem;
+  text-align: center;
+  border-radius: 6px;
+}
+
+.day {
+  background-color: var(--secondary-green);
+  color: var(--white);
+  font-weight: 500;
+}
+
+.date {
+  background-color: var(--light-green);
+  color: var(--primary-green);
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.date:hover {
+  background-color: var(--secondary-green);
+  color: var(--white);
+  transform: scale(1.05);
+}
+
+.date.other-month {
+  opacity: 0.5;
+}
+
+.date.today {
+  background-color: var(--accent-green);
+  color: var(--white);
+  font-weight: bold;
+}
+
+/* Status Section Styles */
+.status-section {
+  flex-grow: 1;
+  max-width: 800px;
+}
+
+.time-display {
+  background-color: var(--white);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+  padding: 0.5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.time-display h3 {
+  color: var(--primary-green);
+  margin-bottom: 1rem;
+}
+
+#clock {
+  background: linear-gradient(135deg, var(--secondary-green), var(--accent-green));
+  color: var(--white);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 2.0rem;
+  font-weight: 600;
+  display: inline-block;
+  min-width: 200px;
+}
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.metric-card {
+  background-color: var(--white);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+  padding: 1.5rem;
+  text-align: center;
+  transition: var(--transition);
+}
+
+.metric-card:hover {
+  transform: translateY(-5px);
+}
+
+.metric-card h4 {
+  color: var(--primary-green);
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  min-height: 2.5rem;
+}
+
+.metric-card .metric-value {
+  color: var(--secondary-green);
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+@media (max-width: 1200px) {
+  .top {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .calendar {
+    margin: 0;
+  }
+
+  .status-section {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .metric-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .top {
+    padding: 1rem;
+  }
+}
