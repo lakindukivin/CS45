@@ -125,7 +125,7 @@
           </div>
         </div>
       </div>
-      <div class="view-button"> <button type="view" class="view-btn" ><a href="../customer_order/completed_orders.html">View Completed Orders</a> </button></div>
+      <div class="view-button"> <button type="view" class="view-btn" ><a href="<?=ROOT?>/CompletedOrders">View Completed Orders</a> </button></div>
 
     </div> 
   </div>
