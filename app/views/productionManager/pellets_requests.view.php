@@ -125,7 +125,7 @@
           </div>
         </div>
       </div>
-      <div> <button type="view" class="view-btn" ><a href="<?=ROOT?>/productionManagerHellets_requests/completed_pellets.html">View Completed Requets</a> </button></div>
+      <div> <button type="view" class="view-btn" ><a href="<?=ROOT?>/CompletedPellets">View Completed Requets</a> </button></div>
 
     </div>
   </div>

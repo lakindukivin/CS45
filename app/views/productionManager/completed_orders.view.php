@@ -55,7 +55,7 @@
               >
             </li>
             <li>
-              <a href="<?=ROOT?>/SupplyRequests"
+              <a href="<?=ROOT?>/SupplyRequest"
                 ><img src="<?=ROOT?>/assets/images/supply.svg" alt="supply" /><span
                   class="sidebar-titles"
                   >Supply Requests</span
