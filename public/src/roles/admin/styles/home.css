@@ -15,111 +15,7 @@ body {
     grid-template-columns: auto 1fr;
     background-color: #f4f4f4;
 }
-
-#sidebar {
-    box-sizing: border-box;
-    height: 100vh;
-    width: 250px;
-    padding: 5px;
-    background-color: #133223;
-    border-right: 1px solid #ccc;
-    position: sticky;
-    top: 0;
-    transition: all 200ms ease-out;
-}
-
-#sidebar .sidebar-container {
-    display: grid;
-    grid-template-rows: 250px auto 50px;
-    align-content: space-between;
-    min-height: 90vh;
-}
-
-#sidebar .sidebar-container>div {
-    place-self: center;
-}
-
-#sidebar.close {
-    width: 60px;
-}
-
-#sidebar .prof-picture {
-    display: flex;
-    flex-direction: column;
-}
-
-#sidebar .user-title {
-    color: #e8eaed;
-}
-
-#sidebar ul {
-    list-style: none;
-}
-
-#sidebar ul li {
-    margin-bottom: 4px;
-}
-
-#sidebar a,
-#sidebar .dropdown-button {
-    border-radius: 0.5em;
-    padding: 0.5em;
-    text-decoration: none;
-    color: #e8eaed;
-    display: flex;
-    align-items: center;
-}
-
-#sidebar .dropdown-button,
-#sidebar .toggle-btn {
-    background: none;
-    border: none;
-    font: inherit;
-    cursor: pointer;
-    text-align: left;
-}
-
-#sidebar a:hover,
-#sidebar .dropdown-button:hover {
-    background-color: #1c573b;
-}
-
-#sidebar .sidebar-active {
-    background-color: #1c573b;
-}
-
-#sidebar .toggle-btn {
-    display: flex;
-    text-align: right;
-    position: absolute;
-    right: 5px;
-}
-
-#sidebar .toggle-btn img {
-    width: 30px;
-}
-
-#sidebar .sidebar-titles {
-    margin-left: 1rem;
-}
-
-#sidebar .hide {
-    display: none;
-}
-
-#sidebar .sub-menu {
-    display: none;
-    padding-left: 1em;
-    font-size: 0.8em;
-}
-
-#sidebar .sub-menu.show {
-    display: block;
-}
-
-#sidebar .rotate {
-    transform: rotate(180deg);
-}
+ 
 
 /* 
 body {
@@ -129,16 +25,16 @@ body {
     background-color: #f5f5f5;
     font-family: Arial, sans-serif;
 } */
-
 .calendar {
     width: 420px;
     text-align: center;
     font-family: Arial, sans-serif;
-    border: 1px solid #248324;
+    border: 1px solid #317c51;
     border-radius: 8px;
     padding: 20px;
     margin-top: 12%;
     margin-left: 150px;
+    background-color: white;
 }
 
 .calendar-header {
@@ -151,7 +47,7 @@ body {
 
 .calendar-header button {
     background-color: #133223;
-    color: white;
+    color: #b0d3bf;
     border: none;
     padding: 5px 10px;
     cursor: pointer;
@@ -179,12 +75,12 @@ body {
 
 .day {
     font-weight: bold;
-    background-color: #4c8f36;
+    background-color: #b0d3bf;
     border-radius: 4px;
 }
 
 .date {
-    background-color: #133223;
+    background-color: #1a512e;
     border-radius: 4px;
 }
 
@@ -193,7 +89,7 @@ body {
 }
 
 .date.today {
-    background-color: #4c8f36;
+    background-color: #b0d3bf;
     color: white;
     font-weight: bold;
 }
@@ -253,13 +149,13 @@ body {
 
 #clock {
     font-size: 2em;
-    color: #333;
+    color: white;
     font-family: Arial, sans-serif;
     padding: 20px;
-    border: 2px solid #333;
+    border: 2px solid #b0d3bf;
     border-radius: 8px;
     display: inline-block;
-    background-color: #4c8f36;
+    background-color: #1a512e;
     margin-top: 5px;
 }
 
