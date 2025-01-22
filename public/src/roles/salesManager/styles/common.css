@@ -26,7 +26,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    background-color: #fff;
+
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     /* flex-wrap: wrap; */
 }
@@ -46,7 +46,7 @@ header {
 
 .page-title,
 .header-nav a {
-    color: #4c8f36;
+    color: #1a512e;
     font-weight: bold;
 }
 
