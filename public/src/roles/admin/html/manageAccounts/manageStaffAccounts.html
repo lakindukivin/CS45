@@ -121,7 +121,7 @@
           </div>
         </div>
 
-        <table id="userTable">
+        <table id="staffTable">
           <thead>
             <tr>
               <th>Staff ID</th>
@@ -135,7 +135,7 @@
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <!-- <tbody>
             <tr>
               <td>001</td>
               <td>John Doe</td>
@@ -206,8 +206,64 @@
                 <button class="delete-btn">Delete</button>
               </td>
             </tr>
-          </tbody>
+          </tbody> -->
+          <tbody id="staffTableBody"></tbody>
         </table>
+      </div>
+
+      <div id="editModal" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeEditModal()">&times;</span>
+          <h3>Edit Staff Details</h3>
+          <form
+            id="editStaffAccounts"
+            method="post"
+            enctype="multipart/form-data"
+          >
+            <input type="hidden" name="userId" id="userId" />
+            <div class="form-group">
+              <label for="editStaffName">Name:</label>
+              <input
+                name="editStaffName"
+                type="text"
+                id="editStaffName"
+                placeholder="Enter Staff Name"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="editStaffEmail">Email</label>
+              <input
+                name="editStaffEmail"
+                type="email"
+                id="editStaffEmail"
+                placeholder="Enter Staff Email"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="editStaffContactNo">Contact No</label>
+              <input
+                name="editStaffContactNo"
+                type="text"
+                id="editStaffContactNo"
+                placeholder="Enter Staff Contact Number"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="editStaffAddress">Address</label>
+              <textarea
+                name="editStaffAddress"
+                id="editStaffAddress"
+                required
+              ></textarea>
+            </div>
+
+            <button type="button" class="action-btn">Update</button>
+          </form>
+        </div>
       </div>
 
       <!-- <footer>
@@ -218,5 +274,7 @@
       </footer> -->
     </main>
     <script src="../../javaScript/sidebar.js"></script>
+    <script src="../../javaScript/modal.js"></script>
+    <script src="../../javaScript/manageStaffAccounts.js"></script>
   </body>
 </html>

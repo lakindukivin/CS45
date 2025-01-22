@@ -78,6 +78,7 @@ const fetchCustomerDetails = async () => {
             `;
       })
       .join('');
+    document.getElementById('totalUsers').textContent = staffDetails.length;
   } catch (error) {
     console.error('Error:', error);
   }
