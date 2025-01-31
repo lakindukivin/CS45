@@ -23,10 +23,7 @@
         <nav>
             <ul class="nav-links">
                 <li><a href="<?= ROOT ?>">Home</a></li>
-                <li><a href="<?= ROOT ?>/service">Services</a></li>
-                <li><a href="<?= ROOT ?>/store">Store</a></li>
-                <li><a href="<?= ROOT ?>/contact">Contact</a></li>
-                <li><a href="<?= ROOT ?>/about">About</a></li>
+               
                 <li>
                     <a href="<?= $profileLink ?>" class="profile-icon">
                         <div class="profile-placeholder"></div>
