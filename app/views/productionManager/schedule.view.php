@@ -72,8 +72,11 @@
         </ul>
       </nav>
     </header>
+    <div class="box">
     <div class="container">
+      <div class="header">
       <h1>Collection Schedule</h1>
+      </div>
       <div class="table-container">
           <table id="collectionTable">
               <thead>
@@ -88,7 +91,7 @@
               </tbody>
           </table>
       </div>
-      <button class="add-btn" onclick="openModal()">Add Collection Schedule</button>
+      <button class="submit-btn" onclick="openModal()">Add Collection Schedule</button>
   </div>
 
   <div id="modal" class="modal">

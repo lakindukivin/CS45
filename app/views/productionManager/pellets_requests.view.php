@@ -94,12 +94,27 @@
 
     <div class="box">
       <div class="container">
-        <h3>Pending Pellets Orders</h3>
-        <div class="order-list">
-          <ul id="orderList">
-            <!-- Orders will be dynamically added here -->
-          </ul>
+        <div class="header">
+        <h1>Pending Pellets Orders</h1>
+        <button class="add-button">
+                <a href="<?=ROOT?>/CompletedPellets">View Completed Pellets Requests</a>
+            </button>
         </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Customer ID</th>
+                    <th>Comapany Name</th>
+                    <th>Quantity</th>
+                    <th>Phone</th>
+                    <th>Type</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="orderTableBody">
+                <!-- Table body will be populated by JavaScript -->
+            </tbody>
+        </table>
       </div>
   
   
@@ -125,7 +140,6 @@
           </div>
         </div>
       </div>
-      <div> <button type="view" class="view-btn" ><a href="<?=ROOT?>/CompletedPellets">View Completed Requets</a> </button></div>
 
     </div>
   </div>

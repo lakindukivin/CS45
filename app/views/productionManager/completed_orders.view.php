@@ -91,19 +91,34 @@
         </ul>
       </nav>
     </header>
-
     <div class="box">
-      <div class="container">
-        <h2>Completed Custom Orders</h2>
-        <div class="order-list">
-          <ul id="orderList">
-            <!-- Orders will be dynamically added here -->
-          </ul>
+    <div class="container">
+        <div class="header">
+            <h1>Completed Custom Orders</h1>
+            <button class="add-button">
+                <a href="<?=ROOT?>/CompletedOrders">View Completed Orders</a>
+            </button>
         </div>
-      </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Customer ID</th>
+                    <th>Comapany Name</th>
+                    <th>Quantity</th>
+                    <th>Phone</th>
+                    <th>Type</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="orderTableBody">
+                <!-- Table body will be populated by JavaScript -->
+            </tbody>
+        </table>
+    </div>
   
       <!-- Add this modal HTML -->
-      <div id="statusModal" class="modal">
+    <!--  <div id="statusModal" class="modal">
         <div class="modal-content">
           <span class="close">&times;</span>
           <h2>Order Status</h2>
@@ -117,7 +132,7 @@
             <p><strong>Quantity:</strong> <span id="quantity"></span></p>
             <p><strong>Specifications:</strong> <span id="orderDescription"></span></p>
           </div>
-        </div>
+        </div>-->
       </div>
     </div> 
   </div>

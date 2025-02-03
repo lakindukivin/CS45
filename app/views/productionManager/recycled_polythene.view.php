@@ -108,10 +108,10 @@
 
         <button type="submit" class="submit-btn">Save</button>
       </form>
-      <div> <button type="view" class="view-btn" ><a href="<?=ROOT?>/PolytheneAmount">View Amounts</a> </button></div>
+      <div> <button type="view" class="add-button" ><a href="<?=ROOT?>/PolytheneAmount">View Polythene Amounts</a> </button></div>
     </div>
-    <script src="<?=ROOT?>/<?=ROOT?>/javaScript/sidebar.js"></script>
-    <script src="<?=ROOT?>/<?=ROOT?>/javaScript/recycled_polythene/recycled_polythene.js"></script>
+    <script src="<?= ROOT ?>/assets/js/productionManager/sidebar.js"></script>
+    <script src="<?=ROOT?>/assets/js/productionManager/recycled_polythene.js"></script>
 </body>
 
 </html>

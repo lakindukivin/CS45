@@ -8,35 +8,55 @@ class Login
     {
         $user = new User();
 
-
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
-
-            if (isset($_POST['email']) && isset($_POST['password'])) {
-                $arr['email'] = $_POST['email'];
+            if (isset($_POST['Email']) && isset($_POST['Password'])) {
+                $arr['Email'] = $_POST['Email'];
 
                 $existingUser = $user->first($arr);
 
                 if ($existingUser) {
-                    if ($_POST['password'] === $existingUser->password) {
+                    // Debugging: Check if the correct user is retrieved
+                    // var_dump($existingUser);
+                    // exit();
 
-                        session_start();
-                        $_SESSION['user_id'] = $existingUser->user_id;
-                        $_SESSION['email'] = $existingUser->email;
-                        $_SESSION['role'] = $existingUser->role;
+                    // Password check (adjust if using plain text or hashed passwords)
+                    if ($_POST['Password'] === $existingUser->Password) { // Use password_verify() if passwords are hashed
 
-                        if ($_SESSION['role'] === 'customer') {
-                            redirect('profile');
-                        } elseif ($_SESSION['role'] === 'admin') {
-                            redirect('adminHome');
-                        } elseif ($_SESSION['role'] === 'productionManager') {
-                            redirect('productionManagerHome');
-                        } elseif ($_SESSION['role'] === 'salesManager') {
-                            redirect('salesManagerHome');
-                        } elseif ($_SESSION['role'] === 'customerServiceManager') {
-                            redirect('cSManagerHome');
+                        if (session_status() === PHP_SESSION_NONE) {
+                            session_start();
                         }
-                    } else {
 
+                        $_SESSION['User_id'] = $existingUser->User_id;
+                        $_SESSION['Email'] = $existingUser->Email;
+                        $_SESSION['Role_id'] = $existingUser->Role_id;
+
+                        // Debugging: Check if session variables are set
+                        // var_dump($_SESSION);
+                        // exit();
+
+                        // Redirect based on numeric Role_id
+                        switch ($_SESSION['Role_id']) {
+                            case 1:  // Admin
+                                header("Location: adminHome.php");
+                                break;
+                            case 2:  // Sales Manager
+                                header("Location: salesManagerHome.php");
+                                break;
+                            case 3:  // Customer
+                                header("Location: ProductionManagerHome");
+                                break;
+                            case 4:  // Production Manager
+                                header("Location: CSManagerHome");
+                                break;
+                            case 5:  // Customer Service Manager
+                                header("Location: cSManagerHome.php");
+                                break;
+                            default:
+                                echo "Invalid role.";
+                                exit();
+                        }
+                        exit();
+                    } else {
                         $data['errors'][] = "Invalid password.";
                     }
                 } else {

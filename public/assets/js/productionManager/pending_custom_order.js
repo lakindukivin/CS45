@@ -1,6 +1,6 @@
 const orders = [
-  { 
-    id: 1, 
+ /** { 
+     id: 1, 
     name: 'Item 1',
     status: 'Pending',
     date: '2024-03-19',
@@ -10,118 +10,40 @@ const orders = [
     pack_size: '100',
     Quantity: '50',
     description: 'Custom plastic container with specific dimensions'
+  },*/
+  
+  { 
+    customer_id: 1, 
+    Company_name: 'Item 1',
+    Quantity: 'Pending',
+    Phone: 'John Doe',
+    Type: 'nnimasha43@gmail.com',
   },
   { 
-    id: 1, 
-    name: 'Item 1',
-    status: 'Pending',
-    date: '2024-03-19',
-   client: 'John Doe',
-    email: 'nnimasha43@gmail.com',
-    phone: '0768512877',
-    Quantity: '50',
-    description: 'Custom plastic container with specific dimensions'
+    customer_id: 1, 
+    Company_name: 'Item 1',
+    Quantity: 'Pending',
+    Phone: 'John Doe',
+    Type: 'nnimasha43@gmail.com',
   },
   { 
-    id: 1, 
-    name: 'Item 1',
-    status: 'Pending',
-    date: '2024-03-19',
-   client: 'John Doe',
-    email: 'nnimasha43@gmail.com',
-    phone: '0768512877',
-    pack_size: '100',
-    Quantity: '50',
-    description: 'Custom plastic container with specific dimensions'
+    customer_id: 1, 
+    Company_name: 'Item 1',
+    Quantity: 'Pending',
+    Phone: 'John Doe',
+    Type: 'nnimasha43@gmail.com',
   },
   { 
-    id: 1, 
-    name: 'Item 1',
-    status: 'Pending',
-    date: '2024-03-19',
-   client: 'John Doe',
-    email: 'nnimasha43@gmail.com',
-    phone: '0768512877',
-    pack_size: '100',
-    Quantity: '50',
-    description: 'Custom plastic container with specific dimensions'
-  },
-  { 
-    id: 1, 
-    name: 'Item 1',
-    status: 'Pending',
-    date: '2024-03-19',
-   client: 'John Doe',
-    email: 'nnimasha43@gmail.com',
-    phone: '0768512877',
-    pack_size: '100',
-    Quantity: '50',
-    description: 'Custom plastic container with specific dimensions'
-  },
-  { 
-    id: 1, 
-    name: 'Item 1',
-    status: 'Pending',
-    date: '2024-03-19',
-   client: 'John Doe',
-    email: 'nnimasha43@gmail.com',
-    phone: '0768512877',
-    pack_size: '100',
-    Quantity: '50',
-    description: 'Custom plastic container with specific dimensions'
-  },
-  { 
-    id: 1, 
-    name: 'Item 1',
-    status: 'Pending',
-    date: '2024-03-19',
-   client: 'John Doe',
-    email: 'nnimasha43@gmail.com',
-    phone: '0768512877',
-    pack_size: '100',
-    Quantity: '50',
-    description: 'Custom plastic container with specific dimensions'
-  },
-  { 
-    id: 1, 
-    name: 'Item 1',
-    status: 'Pending',
-    date: '2024-03-19',
-   client: 'John Doe',
-    email: 'nnimasha43@gmail.com',
-    phone: '0768512877',
-    pack_size: '100',
-    Quantity: '50',
-    description: 'Custom plastic container with specific dimensions'
-  },
-  { 
-    id: 1, 
-    name: 'Item 1',
-    status: 'Pending',
-    date: '2024-03-19',
-    client: 'John Doe',
-    email: 'nnimasha43@gmail.com',
-    phone: '0768512877',
-    pack_size: '100',
-    Quantity: '50',
-    description: 'Custom plastic container with specific dimensions'
-  },
-  { 
-    id: 1, 
-    name: 'Item 1',
-    status: 'Pending',
-    date: '2024-03-19',
-    client: 'John Doe',
-    email: 'nnimasha43@gmail.com',
-    phone: '0768512877',
-    pack_size: '100',
-    Quantity: '50',
-    description: 'Custom plastic container with specific dimensions'
-  },
+    customer_id: 1, 
+    Company_name: 'Item 1',
+    Quantity: 'Pending',
+    Phone: 'John Doe',
+    Type: 'nnimasha43@gmail.com',
+  }
   // Add more items as needed
 ];
 
-const orderList = document.getElementById('orderList');
+/*const orderList = document.getElementById('orderList');
 const orderList1 = document.getElementById('orderList1');
 const modal = document.getElementById('statusModal');
 const closeBtn = document.getElementsByClassName('close')[0];
@@ -178,4 +100,46 @@ window.onclick = function(event) {
 
 // Initialize the lists
 addOrders();
-addOrders1();
+*/
+function renderorders() {
+  const tableBody = document.getElementById('orderTableBody');
+  tableBody.innerHTML = '';
+
+  orders.forEach(orders => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+          <td>${orders.customer_id}</td>
+          <td>${orders.Company_name}</td>
+          <td>${orders.Quantity}</td>
+          <td>${orders.Phone}</td>
+          <td>${orders.Type}</td>
+          <td>
+              <div class="actions">
+                  <button class="action-button view-button" title="View">👁️</button>
+                  <button class="action-button edit-button" title="Accept">✏️</button>
+                  <button class="action-button delete-button" title="Reject">🗑️</button>
+              </div>
+          </td>
+      `;
+      tableBody.appendChild(row);
+  });
+}
+
+// Add event listener for Add New order button
+document.querySelector('.add-button').addEventListener('click', () => {
+  alert('Add New order functionality would go here');
+});
+
+// Initial render
+renderorders();
+
+// Add event listeners for action buttons
+document.addEventListener('click', (e) => {
+  if (e.target.closest('.view-button')) {
+      alert('View order details');
+  } else if (e.target.closest('.edit-button')) {
+      alert('Edit order details');
+  } else if (e.target.closest('.delete-button')) {
+      alert('Delete order');
+  }
+});

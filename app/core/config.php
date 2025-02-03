@@ -3,7 +3,7 @@
 if ($_SERVER['SERVER_NAME'] == 'localhost') {
 
     /** database config **/
-    define('DBNAME', 'waste360t');
+    define('DBNAME', 'w360');
     define('DBHOST', 'localhost');
     define('DBUSER', 'root');
     define('DBPASS', '');
@@ -12,7 +12,7 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
     define('ROOT', 'http://localhost/CS45/public');
 } else {
     /** database config **/
-    define('DBNAME', 'waste360t');
+    define('DBNAME', 'w360');
     define('DBHOST', 'localhost');
     define('DBUSER', 'root');
     define('DBPASS', '');
@@ -21,7 +21,7 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
     define('ROOT', 'http://www.website.com');
 }
 
-define('APP_NAME', "Waste360t");
+define('APP_NAME', "w360");
 define('APP_DESC', "Polythene Recycling Company");
 
 //true means hsow errors

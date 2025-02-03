@@ -22,7 +22,7 @@
         <div>
           <ul>
             <li>
-              <a href="../home.html" 
+              <a href="<?=ROOT?>/CSManagerHome" 
                 ><img src="<?=ROOT?>/assets/images/dashboard.svg" alt="dashboard" /><span
                   class="sidebar-titles"
                   >Dashboard</span
@@ -39,7 +39,7 @@
               >
             </li>
             <li>
-              <a href="../returns/returns.html"
+              <a href="<?=ROOT?>/Returns"
                 ><img src="<?=ROOT?>/assets/images/returns.svg" /><span
                   class="sidebar-titles"
                   >Returns</span
@@ -47,14 +47,14 @@
               >
             </li>
             <li>
-              <a href="../manage_orders/manage_order.html"
+              <a href="<?=ROOT?>/ManageOrders"
                 ><img
                   src="<?=ROOT?>/assets/images/manage_order.svg"
                 /><span class="sidebar-titles">Manage Orders</span></a
               >
             </li>
             <li>
-              <a href="../manage_reviews/manage_reviews.php"
+              <a href="<?=ROOT?>/manage_reviews/manage_reviews.php"
                 ><img src="<?=ROOT?>/assets/images/reviews.svg" /><span
                   class="sidebar-titles"
                   >Manage Reviews</span
@@ -83,12 +83,27 @@
     </header>
     <div class="box">
       <div class="container">
+        <div class="header">
         <h2>Pending Give Away Request</h2>
-        <div class="order-list">
-          <ul id="orderList">
-            <!-- Orders will be dynamically added here -->
-          </ul>
+        <button class="add-button">
+                <a href="<?=ROOT?>/CompletedOrders">View Completed Orders</a>
+            </button>
         </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Customer ID</th>
+                    <th>Comapany Name</th>
+                    <th>Quantity</th>
+                    <th>Phone</th>
+                    <th>Type</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="orderTableBody">
+                <!-- Table body will be populated by JavaScript -->
+            </tbody>
+        </table>
       </div>
   
       <!-- Add this modal HTML -->
@@ -110,7 +125,6 @@
               </div>
         </div>
       </div>
-      <div> <button type="view" class="view-btn" ><a href="../give_away/completed_give_away.html">View</a> </button></div>
     </div>
   </div>
   <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>

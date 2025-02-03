@@ -72,12 +72,23 @@
     </header>
     <div class="box">
       <div class="container">
-        <h3>Pending supply requests</h3>
-        <div class="order-list">
-          <ul id="orderList">
-            <!-- Orders will be dynamically added here -->
-          </ul>
+        <div class="header">
+        <h1>Completed supply requests</h1>
         </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Customer ID</th>
+                    <th>Customer Name</th>
+                    <th>Quantity</th>
+                    <th>Type</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="orderTableBody">
+                <!-- Table body will be populated by JavaScript -->
+            </tbody>
+        </table>
       </div>
       <!-- Add this modal HTML -->
       <div id="statusModal" class="modal">

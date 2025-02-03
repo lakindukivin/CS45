@@ -91,9 +91,11 @@
         </ul>
       </nav>
     </header>
+    <div class="box">
     <div class="container">
-      <h1>Recyled Polythene Amount</h1>
-      <div class="table-container">
+    <div class="header">
+            <h1>Polythene Amount</h1>
+        </div>
           <table id="collectionTable">
               <thead>
                   <tr>
@@ -102,6 +104,7 @@
                       <th>Month</th>
                       <th>Updated Date</th>
                   </tr>
+                </thead>
                   <tr>
                     <td>10000</td>
                     <td>Recyled Monthly</td>
@@ -144,7 +147,7 @@
       <td>July</td>
       <td>2023-09-30</td>
   </tr>
-              </thead>
+             
               <tbody>
                   <!-- Table rows will be dynamically added here -->
               </tbody>
@@ -153,6 +156,6 @@
   </div>
 
   </div>
-  <script src="../../javaScript/sidebar.js"></script>
+  <script src="<?= ROOT ?>/assets/js/productionManager/sidebar.js"></script>
 </body>
 </html>

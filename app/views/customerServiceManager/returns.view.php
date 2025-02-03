@@ -3,27 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../styles/sidebar.css">
-    <link rel="stylesheet" href="../../styles/returns/returns.css">
-    <link rel="stylesheet" href="../../styles/common.css">
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/customerServiceManager/sidebar.css">
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/customerServiceManager/returns.css">
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/customerServiceManager/common.css">
     <title>Waste360|Dashboard|CSM</title>
 </head>
 <body>
     <nav id="sidebar">
       <button id="toggle-btn" onclick="toggleSidebar()" class="toggle-btn">
-        <img src="../../../../assets/menu.svg" alt="menu" />
+        <img src="<?=ROOT?>/assets/images/menu.svg" alt="menu" />
       </button>
       <div class="sidebar-container">
         <div class="prof-picture">
-          <img src="../../../../assets/user.svg" alt="profile" />
+          <img src="<?=ROOT?>/assets/images/user.svg" alt="profile" />
           <span class="user-title">Customer Service Manager</span>
         </div>
 
         <div>
           <ul>
             <li>
-              <a href="../home.html"
-                ><img src="../../../../assets/dashboard.svg" alt="dashboard" /><span
+              <a href="<?=ROOT?>/CSManagerHome"
+                ><img src="<?=ROOT?>/assets/images/dashboard.svg" alt="dashboard" /><span
                   class="sidebar-titles"
                   >Dashboard</span
                 ></a
@@ -31,8 +31,8 @@
             </li>
 
             <li>
-              <a href="../give_away/give_away_request.html"
-                ><img src="../../../../assets/give_away.svg" /><span
+              <a href="<?=ROOT?>/GiveAwayRequest"
+                ><img src="<?=ROOT?>/assets/images/give_away.svg" /><span
                   class="sidebar-titles"
                   >Give Away</span
                 ></a
@@ -40,22 +40,22 @@
             </li>
             <li>
               <a href="#" class="sidebar-active"
-                ><img src="../../../../assets/returns.svg" /><span
+                ><img src="<?=ROOT?>/assets/images/returns.svg" /><span
                   class="sidebar-titles"
                   >Returns</span
                 ></a
               >
             </li>
             <li>
-              <a href="../manage_orders/manage_order.html"
+              <a href="<?=ROOT?>/ManageOrders"
                 ><img
-                  src="../../../../assets/manage_order.svg"
+                  src="<?=ROOT?>/assets/images/manage_order.svg"
                 /><span class="sidebar-titles">Manage Orders</span></a
               >
             </li>
             <li>
-              <a href="../manage_reviews/manage_reviews.php"
-                ><img src="../../../../assets/reviews.svg" /><span
+              <a href="<?=ROOT?>/manage_reviews/manage_reviews.php"
+                ><img src="<?=ROOT?>/assets/images/reviews.svg" /><span
                   class="sidebar-titles"
                   >Manage Reviews</span
                 ></a
@@ -69,13 +69,13 @@
   <div class="content">
     <header class="header">
       <div class="logo">
-      <img src="../../../../assets/Waste360.png" alt="logo" />
+      <img src="<?=ROOT?>/assets/images/Waste360.png" alt="logo" />
       <h1>Waste360</h1>  
       </div> 
       <h1 class="logo">DashBoard</h1>
       <nav class="nav">
         <ul>
-          <li><a href="#"><img src="../../../../assets/notifications.svg"></a></li>
+          <li><a href="#"><img src="<?=ROOT?>/assets/images/notifications.svg"></a></li>
           <li><a href="#">Profile</a></li>
           <li><a href="#">Logout</a></li>
         </ul>
@@ -83,13 +83,29 @@
     </header>
     <div class="box">
       <div class="container">
-        <h2>Pending Return Requests</h2>
-        <div class="order-list">
-          <ul id="orderList">
-            <!-- Orders will be dynamically added here -->
-          </ul>
+        <div class="header">
+        <h2>Pending Give Away Request</h2>
+        <button class="add-button">
+                <a href="<?=ROOT?>/CompletedReturns">View Completed Returns</a>
+            </button>
         </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Customer ID</th>
+                    <th>Comapany Name</th>
+                    <th>Quantity</th>
+                    <th>Phone</th>
+                    <th>Type</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="orderTableBody">
+                <!-- Table body will be populated by JavaScript -->
+            </tbody>
+        </table>
       </div>
+  
   
   
       <!-- Add this modal HTML -->
@@ -110,11 +126,9 @@
               </div>
           </div>
       </div>
-      <div> <button type="view" class="view-btn" ><a href="../returns/completed_returns.html">View</a> </button></div>
-
     </div>
   </div>
-  <script src="../../javaScript/sidebar.js"></script>  
-  <script src="../../javaScript/returns/returns.js"></script>  
+  <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>  
+  <script src="<?=ROOT?>/assets/js/customerServiceManager/returns.js"></script>  
 </body>
 </html>
