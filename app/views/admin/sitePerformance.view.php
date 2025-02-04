@@ -32,7 +32,7 @@
             <div>
                 <ul>
                     <li>
-                        <a href="<?= ROOT ?>/home">
+                        <a href="<?= ROOT ?>/adminHome">
                             <img src="<?= ROOT ?>/assets/images/dashboard.svg" alt="dashboard" />
                             <span class="sidebar-titles">Dashboard</span>
                         </a>
