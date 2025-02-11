@@ -84,7 +84,7 @@
     <div class="box">
       <div class="container">
         <div class="header">
-        <h2>Pending Give Away Request</h2>
+        <h2>Pending Orders</h2>
         <button class="add-button">
                 <a href="<?=ROOT?>/CompletedOrders">View Completed Orders</a>
             </button>
@@ -92,11 +92,10 @@
         <table>
             <thead>
                 <tr>
+                    <th>Order ID</th>
+                    <th>Product ID</th>
                     <th>Customer ID</th>
-                    <th>Comapany Name</th>
                     <th>Quantity</th>
-                    <th>Phone</th>
-                    <th>Type</th>
                     <th>Action</th>
                 </tr>
             </thead>

@@ -9,6 +9,11 @@
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/productionManager/common.css" />
   <title>Waste360|Dashboard|PM</title>
 </head>
+<?php if(isset($success) && !empty($success)): ?>
+    <div class="alert success-message" id="successAlert">
+        <?= $success ?>
+    </div>
+<?php endif; ?>
 
 <body>
   <nav id="sidebar">
@@ -72,7 +77,7 @@
     </header>
 
     <div class="container">
-      <form id="polytheneForm" class="form-card">
+      <form action="<?=ROOT?>/RecycledPolythene/updateAmount" method="POST" class="form-card">
         <h2>Polythene Collection Details</h2>
 
         <div class="form-group">

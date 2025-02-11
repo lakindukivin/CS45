@@ -54,7 +54,7 @@
               >
             </li>
             <li>
-              <a href="<?=ROOT?>/manage_reviews/manage_reviews.php"
+              <a href="<?=ROOT?>/ManageReviews"
                 ><img src="<?=ROOT?>/assets/images/reviews.svg" /><span
                   class="sidebar-titles"
                   >Manage Reviews</span
@@ -86,7 +86,7 @@
         <div class="header">
         <h2>Pending Give Away Request</h2>
         <button class="add-button">
-                <a href="<?=ROOT?>/CompletedOrders">View Completed Orders</a>
+                <a href="<?=ROOT?>/CompletedOrders">View Completed Give Aways</a>
             </button>
         </div>
         <table>

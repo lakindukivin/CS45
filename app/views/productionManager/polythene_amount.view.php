@@ -105,52 +105,21 @@
                       <th>Updated Date</th>
                   </tr>
                 </thead>
-                  <tr>
-                    <td>10000</td>
-                    <td>Recyled Monthly</td>
-                    <td>January</td>
-                    <td>2023-09-30</td>
-                </tr>
-                <tr>
-                  <td>10000</td>
-                  <td>Recyled Monthly</td>
-                  <td>February</td>
-                  <td>2023-09-30</td>
-              </tr>
-              <tr>
-                <td>10000</td>
-                    <td>Recyled Monthly</td>
-                    <td>March</td>
-                    <td>2023-09-30</td>
-            </tr>
-          <tr>
-            <td>10000</td>
-            <td>Recyled Monthly</td>
-            <td>April</td>
-            <td>2023-09-30</td>
-        </tr>
-        <tr>
-          <td>10000</td>
-          <td>Recyled Monthly</td>
-          <td>May</td>
-          <td>2023-09-30</td>
-      </tr>
-      <tr>
-        <td>10000</td>
-        <td>Recyled Monthly</td>
-        <td>June</td>
-        <td>2023-09-30</td>
-    </tr>
-    <tr>
-      <td>10000</td>
-      <td>Recyled Monthly</td>
-      <td>July</td>
-      <td>2023-09-30</td>
-  </tr>
-             
               <tbody>
-                  <!-- Table rows will be dynamically added here -->
-              </tbody>
+              <?php if(isset($amounts) && is_array($amounts)): ?>
+        <?php foreach($amounts as $amount): ?>
+            <tr>
+                <td><?=htmlspecialchars($amount->month)?></td>
+                <td><?=htmlspecialchars($amount->polytheneamount)?></td>
+                <td><?=htmlspecialchars($amount->message)?></td>
+                <td><?=htmlspecialchars($amount->updated_date)?></td>
+            </tr>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <tr>
+            <td colspan="4">No records found</td>
+        </tr>
+    <?php endif; ?>              </tbody>
           </table>
       </div>
   </div>

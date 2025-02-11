@@ -79,47 +79,69 @@
         </div>
 
         <table>
-            <thead>
-                <tr>
-                    <th>Customer ID</th>
-                    <th>Comapany Name</th>
-                    <th>Quantity</th>
-                    <th>Phone</th>
-                    <th>Type</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="orderTableBody">
-                <!-- Table body will be populated by JavaScript -->
-            </tbody>
-        </table>
-    </div>
-  
-      <!-- Add this modal HTML -->
-   <!--   <div id="statusModal" class="modal">
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <h2>Order Status</h2>
-          <div class="status-details">
-            <p><strong>Order ID:</strong> <span id="orderId"></span></p>
-            <p><strong>Status:</strong> <span id="orderStatus"></span></p>
-            <p><strong>Created Date:</strong> <span id="orderDate"></span></p>
-            <p><strong>Company/Client Name:</strong> <span id="clientName"></span></p>
-            <p><strong>Email:</strong> <span id="email"></span></p>
-            <p><strong>Phone:</strong> <span id="phone"></span></p>
-            <p><strong>Quantity:</strong> <span id="quantity"></span></p>
-            <p><strong>Specifications:</strong> <span id="orderDescription"></span></p>
-          </div>
-          <div class="status-timeline">
-            <div class="operation">
-              <button class="accept">Accept</button>
-              <button class="reject">Reject</button>
-              </div>
-          </div>
-        </div>
-      </div>-->
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Customer Name</th>
+                <th>Company Name</th>
+                <th>Quantity</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if(isset($data['orders']) && is_array($data['orders'])): ?>
+                <?php foreach($data['orders'] as $order): ?>
+                    <tr>
+                        <td><?=htmlspecialchars($order->customOrder_id)?></td>
+                        <td><?=htmlspecialchars($order->customer_name)?></td>
+                        <td><?=htmlspecialchars($order->Company_name)?></td>
+                        <td><?=htmlspecialchars($order->Quantity)?></td>
+                        <td><?=htmlspecialchars($order->Type)?></td>
+                        <td><?=htmlspecialchars($order->customOrder_status)?></td>
+                        <td>
+                            <div class="buttons">
+                            <button class="view-btn" onclick="viewDetails(<?=$order->customOrder_id?>)">View </button>
+                            <button class="update-btn" onclick="updateStatus(<?=$order->customOrder_id?>)">Update</button>
+                            </div>
+                          </td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </tbody>
+    </table>
 
-    </div> 
+    <!-- View Details Modal -->
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeDetailsModal()">&times;</span>
+            <h2>Order Details</h2>
+            <div id="orderDetails"></div>
+        </div>
+    </div>
+
+    <!-- Status Update Modal -->
+    <div id="statusModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Update Order Status</h2>
+            <form id="statusForm" method="POST">
+                <div class="form-group">
+                    <label>Select Status:</label>
+                    <select name="status" required>
+                        <option value="accepted">Accept</option>
+                        <option value="rejected">Reject</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button type="submit" class="submit-btn">Update</button>
+                    <button type="button" class="cancel-btn" onclick="closeModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div> 
   </div>
   <script src="<?= ROOT ?>/assets/js/productionManager/sidebar.js"></script>
   <script src="<?= ROOT ?>/assets/js/productionManager/pending_custom_order.js"></script>

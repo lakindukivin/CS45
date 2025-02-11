@@ -33,15 +33,15 @@
                                 class="sidebar-titles">Give Away</span></a>
                     </li>
                     <li>
-                        <a href="<?= ROOT ?>/give_away_request.html"><img src="<?= ROOT ?>/assets/images/returns.svg" /><span
+                        <a href="<?= ROOT ?>/Returns"><img src="<?= ROOT ?>/assets/images/returns.svg" /><span
                                 class="sidebar-titles">Returns</span></a>
                     </li>
                     <li>
-                        <a href="<?= ROOT ?>/manage_order.html"><img
+                        <a href="<?= ROOT ?>/ManageOrders"><img
                                 src="<?= ROOT ?>/assets/images/manage_order.svg" /><span class="sidebar-titles">Manage Orders</span></a>
                     </li>
                     <li>
-                        <a href="<?= ROOT ?>/manage_reviews.php"><img src="<?= ROOT ?>/assets/images/reviews.svg" /><span
+                        <a href="<?= ROOT ?>/ManageReviews"><img src="<?= ROOT ?>/assets/images/reviews.svg" /><span
                                 class="sidebar-titles">Manage Reviews</span></a>
                     </li>
                 </ul>

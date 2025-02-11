@@ -30,7 +30,7 @@
           </li>
 
           <li>
-            <a href="<?=ROOT?>GiveAwayRequest"><img
+            <a href="<?=ROOT?>/GiveAwayRequest"><img
                 src="<?=ROOT?>/assets/images/give_away.svg" /><span class="sidebar-titles">Give Away</span></a>
           </li>
           <li>
@@ -69,29 +69,50 @@
     <div class="box">
       <div class="container">
         <div class="header">
-        <h2>Pending Give Away Request</h2>
+        <h2>Pending Reviews</h2>
         <button class="add-button">
-                <a href="<?=ROOT?>/CompletedOrders">View Completed Orders</a>
+                <a href="<?=ROOT?>/CompletedOrders">View Replied Reviews</a>
             </button>
         </div>
         <table>
-            <thead>
-                <tr>
-                    <th>Customer ID</th>
-                    <th>Comapany Name</th>
-                    <th>Quantity</th>
-                    <th>Phone</th>
-                    <th>Type</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="orderTableBody">
-                <!-- Table body will be populated by JavaScript -->
-            </tbody>
-        </table>
+    <thead>
+        <tr>
+            <th>Customer ID</th>
+            <th>Order ID</th>
+            <th>Rating</th>
+            <th>Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($reviews as $review): ?>
+        <tr>
+            <td><?=htmlspecialchars($review->customer_id)?></td>
+            <td><?=htmlspecialchars($review->order_id)?></td>
+            <td><?=htmlspecialchars($review->rating)?></td>
+            <td><?=htmlspecialchars($review->date)?></td>
+            <td>
+           <button class="view-btn" data-review-id="<?=$review->review_id?>"> <a href="<?=ROOT?>/Reviews">View</a></button>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+
+<!-- Reply Modal -->
+<!--<div id="replyModal" class="modal">
+    <div class="modal-content">
+        <form action="<?=ROOT?>/manageReviews/reply" method="POST">
+            <input type="hidden" name="review_id" id="modal-review-id">
+            <textarea name="reply" required></textarea>
+            <button type="submit">Submit Reply</button>
+            <button type="button" class="close-modal">Cancel</button>
+        </form>
+    </div>
+</div>
       </div>
     <!-- Status Modal -->
-    <div id="statusModal" class="modal">
+   <!-- <div id="statusModal" class="modal">
       <div class="modal-content">
         <span class="close">&times;</span>
         <h2>Review Details</h2>
@@ -109,24 +130,14 @@
           <textarea id="replyText" placeholder="Type your reply here..."></textarea>
         </div>
         <div class="button-group" id="modalButtons">
-          <!-- Buttons will be dynamically added here -->
+          <!-- Buttons will be dynamically added here
         </div>
       </div>
-    </div>
+    </div>-->
 
     <!-- Confirmation Modal -->
-    <div id="confirmationModal" class="modal-overlay">
-      <div class="confirmation-modal">
-        <h3>Confirm Delete</h3>
-        <p>Are you sure you want to delete this review?</p>
-        <div class="button-group">
-          <button class="btn btn-danger" id="confirmDelete">Delete</button>
-          <button class="btn btn-primary" id="cancelDelete">Cancel</button>
-        </div>
-      </div>
-    </div>
   </div>
-  <script src="<?=ROOT?>/assets/js/customerServiceManager/manage_reviews.js"></script>
+  <script src="<?=ROOT?>/assets/js/customerServiceManager/manage_rev.js"></script>
   <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>
 </body>
 
