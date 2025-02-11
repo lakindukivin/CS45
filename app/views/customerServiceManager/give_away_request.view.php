@@ -89,42 +89,66 @@
                 <a href="<?=ROOT?>/CompletedOrders">View Completed Give Aways</a>
             </button>
         </div>
-        <table>
+        <table id="giveAwayTable">  
             <thead>
                 <tr>
                     <th>Customer ID</th>
-                    <th>Comapany Name</th>
-                    <th>Quantity</th>
+                    <th>Address</th>
                     <th>Phone</th>
                     <th>Type</th>
+                    <th>Quantity</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody id="orderTableBody">
-                <!-- Table body will be populated by JavaScript -->
+            <?php foreach($giveAwayRequests as $request): ?>
+                <tr>
+                    <td><?= htmlspecialchars($request->Giveaway_id) ?></td>
+                    <td><?= htmlspecialchars($request->customer_name) ?></td>
+                    <td><?= htmlspecialchars($request->Type) ?></td>
+                    <td><?= htmlspecialchars($request->Address) ?></td>
+                    <td><?= htmlspecialchars($request->quantity) ?></td>
+                    <td>
+                        <button onclick="viewRequest(<?= $request->Giveaway_id ?>)" class="view-btn">View</button>
+                        <button onclick="editRequest(<?= $request->Giveaway_id ?>)" class="edit-btn">Edit</button>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
             </tbody>
         </table>
       </div>
-  
-      <!-- Add this modal HTML -->
-      <div id="statusModal" class="modal">
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <h2>Give Away Status</h2>
-          <div class="status-details">
-            <p><strong>Give Away ID:</strong> <span id="orderId"></span></p>
-            <p><strong>Status:</strong> <span id="orderStatus"></span></p>
-            <p><strong>Created Date:</strong> <span id="orderDate"></span></p>
-            <p><strong>Customer:</strong> <span id="customerName"></span></p>
-            <p><strong>Polythene Quantity(Roughly kgs):</strong> <span id="quantity"></span></p>
-            <p><strong>Description:</strong> <span id="orderDescription"></span></p>
-          </div>
-            <div class="operation">
-              <button class="accept">Accept</button>
-              <button class="reject">Reject</button>
-              </div>
-        </div>
-      </div>
+  <!-- View Modal -->
+<div id="viewModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Request Details</h2>
+        <div id="requestDetails"></div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Edit Request</h2>
+        <form id="editForm">
+            <input type="hidden" id="editId" name="id">
+            <div class="form-group">
+                <label>Type:</label>
+                <input type="text" id="editType" name="type" required>
+            </div>
+            <div class="form-group">
+                <label>Address:</label>
+                <input type="text" id="editAddress" name="address" required>
+            </div>
+            <div class="form-group">
+                <label>Quantity:</label>
+                <input type="number" id="editQuantity" name="quantity" required>
+            </div>
+            <button type="submit" class="submit-btn">Update</button>
+        </form>
+    </div>
+</div>
     </div>
   </div>
   <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>
