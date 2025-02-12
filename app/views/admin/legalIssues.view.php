@@ -109,24 +109,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>L001</td>
-                            <td>GDPR compliance audit required</td>
-                            <td>Escalated</td>
-                            <td>
-                                <button class="edit-btn">Edit</button>
-                                <button class="delete-btn">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>L002</td>
-                            <td>User dispute over data handling</td>
-                            <td>Resolved</td>
-                            <td>
-                                <button class="edit-btn">Edit</button>
-                                <button class="delete-btn">Delete</button>
-                            </td>
-                        </tr>
+                        <?php if (!empty($issues)): ?>
+                            <?php foreach ($issues as $issue): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($issue->issue_id) ?></td>
+                                    <td><?= htmlspecialchars($issue->description) ?></td>
+                                    <td><?= htmlspecialchars($issue->status) ?></td>
+                                    <td>
+                                        <button class="edit-btn">Edit</button>
+                                        <button class="delete-btn">Delete</button>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="4">No issues found.</td>
+                            </tr>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>
