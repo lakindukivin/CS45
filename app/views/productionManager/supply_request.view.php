@@ -70,17 +70,30 @@
         </ul>
       </nav>
     </header>
-    <div class="box">
       <div class="container">
-        <h3>Pending supply requests</h3>
-        <div class="order-list">
-          <ul id="orderList">
-            <!-- Orders will be dynamically added here -->
-          </ul>
+        <div class="header">
+        <h1>Pending supply requests</h1>
+        <button class="add-button">
+                <a href="<?=ROOT?>/CompletedSupply">View Completed Supply Requests</a>
+            </button>
         </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Customer ID</th>
+                    <th>Customer Name</th>
+                    <th>Quantity</th>
+                    <th>Type</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="orderTableBody">
+                <!-- Table body will be populated by JavaScript -->
+            </tbody>
+        </table>
       </div>
       <!-- Add this modal HTML -->
-      <div id="statusModal" class="modal">
+     <!-- <div id="statusModal" class="modal">
         <div class="modal-content">
           <span class="close">&times;</span>
           <h2>Supply Status</h2>
@@ -100,9 +113,9 @@
               <button class="reject">Reject</button>
             </div>
           </div>
-        </div>
+        </div>-->
       </div>
-      <div> <button type="view" class="view-btn" ><a href="../supply_requests/completed_supply.html">View Completed Requests</a> </button></div>
+      <div> <button type="view" class="view-btn" ><a href="<?=ROOT?>/CompletedSupply">View Completed Requests</a> </button></div>
     </div>
   </div>
   <script src="<?=ROOT?>/assets/js/productionManager/sidebar.js"></script>

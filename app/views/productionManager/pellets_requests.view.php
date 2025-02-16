@@ -94,38 +94,76 @@
 
     <div class="box">
       <div class="container">
-        <h3>Pending Pellets Orders</h3>
-        <div class="order-list">
-          <ul id="orderList">
-            <!-- Orders will be dynamically added here -->
-          </ul>
+        <div class="header">
+        <h1>Pending Pellets Orders</h1>
+        <button class="add-button">
+                <a href="<?=ROOT?>/CompletedPellets">View Completed Pellets Requests</a>
+            </button>
         </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer Name</th>
+                    <th>Comapany Name</th>
+                    <th>Amount</th>
+                    <th>Date Required</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php if(isset($data['orders']) && is_array($data['orders'])): ?>
+                <?php foreach($data['orders'] as $order): ?>
+                    <tr>
+                        <td><?=htmlspecialchars($order->PelletOrder_id)?></td>
+                        <td><?=htmlspecialchars($order->customer_name)?></td>
+                        <td><?=htmlspecialchars($order->Company_name)?></td>
+                        <td><?=htmlspecialchars($order->Amount)?></td>
+                        <td><?=htmlspecialchars($order->dateRequired)?></td>
+                        <td><?=htmlspecialchars($order->PelletOrderStatus)?></td>
+                        <td>
+                            <div class="buttons">
+                            <button class="view-btn" onclick="viewDetails(<?=$order->PelletOrder_id?>)">View </button>
+                            <button class="update-btn" onclick="updateStatus(<?=$order->PelletOrder_id?>)">Update</button>
+                            </div>
+                          </td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php endif; ?>            </tbody>
+        </table>
       </div>
   
-  
-      <!-- Add this modal HTML -->
-      <div id="statusModal" class="modal">
+   <!-- View Details Modal -->
+   <div id="detailsModal" class="modal">
         <div class="modal-content">
-          <span class="close">&times;</span>
-          <h2>Order Status</h2>
-          <div class="status-details">
-            <p><strong>Order ID:</strong> <span id="orderId"></span></p>
-            <p><strong>Status:</strong> <span id="orderStatus"></span></p>
-            <p><strong>Created Date:</strong> <span id="orderDate"></span></p>
-            <p><strong>Customer:</strong> <span id="customerName"></span></p>
-            <p><strong>Pellets Color:</strong> <span id="pelletcolor"></span></p>
-            <p><strong>Quantity:</strong> <span id="quantity"></span></p>
-            <p><strong>Description:</strong> <span id="orderDescription"></span></p>
-          </div>
-          <div class="status-timeline">
-            <div class="operation">
-              <button class="accept">Accept</button>
-              <button class="reject">Reject</button>
-              </div>
-          </div>
+            <span class="close" onclick="closeDetailsModal()">&times;</span>
+            <h2>Order Details</h2>
+            <div id="orderDetails"></div>
         </div>
-      </div>
-      <div> <button type="view" class="view-btn" ><a href="<?=ROOT?>/productionManagerHellets_requests/completed_pellets.html">View Completed Requets</a> </button></div>
+    </div>
+
+    <!-- Status Update Modal -->
+    <div id="statusModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Update Order Status</h2>
+            <form id="statusForm" method="POST">
+                <div class="form-group">
+                    <label>Select Status:</label>
+                    <select name="status" required>
+                        <option value="accepted">Accept</option>
+                        <option value="rejected">Reject</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button type="submit" class="submit-btn">Update</button>
+                    <button type="button" class="cancel-btn" onclick="closeModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+     
 
     </div>
   </div>
