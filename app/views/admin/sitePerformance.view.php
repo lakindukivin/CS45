@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/admin/common.css" />
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/admin/sidebar.css" />
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/admin/home.css" />
-    <title>Waste360 | Dashboard</title>
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/admin/sitePerformance.css" />
+    <title>Waste360 | Site Performance</title>
 </head>
 
 <body>
@@ -18,9 +18,6 @@
         $profileLink = ROOT . '/login';
     }
     ?>
-
-
-
 
     <nav id="sidebar">
         <button id="toggle-btn" onclick="toggleSidebar()" class="toggle-btn">
@@ -35,7 +32,7 @@
             <div>
                 <ul>
                     <li>
-                        <a href="#" class="sidebar-active">
+                        <a href="<?= ROOT ?>/adminHome">
                             <img src="<?= ROOT ?>/assets/images/dashboard.svg" alt="dashboard" />
                             <span class="sidebar-titles">Dashboard</span>
                         </a>
@@ -70,7 +67,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="<?= ROOT ?>/siteperformance">
+                        <a href="<?= ROOT ?>/siteperformance" class="sidebar-active">
                             <img src="<?= ROOT ?>/assets/images/site-performance.svg" alt="site Performance" />
                             <span class="sidebar-titles">Site Performance</span>
                         </a>
@@ -79,6 +76,7 @@
             </div>
         </div>
     </nav>
+
     <main>
         <header>
             <div class="logo">
@@ -86,64 +84,90 @@
                 <h1>Waste360</h1>
             </div>
             <div class="page-title">
-                <p>Dashboard</p>
+                <p>Site Performance</p>
             </div>
             <nav class="header-nav">
-                <a href="#"><img src="<?= ROOT ?>assets/images/notifications.svg" alt="" /></a>
+                <a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg" alt="" /></a>
                 <a href="#">Profile</a>
                 <a href="#">Log Out</a>
             </nav>
         </header>
 
-        <div class="top">
-            <div class="left">
-                <div class="calendar">
-                    <div class="calendar-header">
-                        <button onclick="prevMonth()">‹</button>
-                        <h2 id="monthYear"></h2>
-                        <button onclick="nextMonth()">›</button>
-                    </div>
-                    <div class="days">
-                        <div class="day">Sun</div>
-                        <div class="day">Mon</div>
-                        <div class="day">Tue</div>
-                        <div class="day">Wed</div>
-                        <div class="day">Thu</div>
-                        <div class="day">Fri</div>
-                        <div class="day">Sat</div>
-                    </div>
-                    <div class="days" id="dates"></div>
+        <div class="performance-container">
+            <section class="performance-section">
+                <div class="user-traffic">
+                    <h3>User Traffic Information</h3>
+                    <p>Total Visits (24h): <span id="total-visits">Loading...</span></p>
                 </div>
-            </div>
 
-            <div class="status-section">
-                <div class="time-display">
-                    <h3>Current Time</h3>
-                    <div id="clock" class="clock">Loading...</div>
+                <div class="user-traffic-trend">
+                    <h3>User Traffic Trend (Last 24h)</h3>
+                    <canvas id="trafficChart"></canvas>
                 </div>
-                <div class="metric-grid">
-                    <div class="metric-card">
-                        <h4>Total Staff</h4>
-                        <div class="metric-value">10+</div>
-                    </div>
-                    <div class="metric-card">
-                        <h4>Total Users</h4>
-                        <div class="metric-value">100+</div>
-                    </div>
-                    <div class="metric-card">
-                        <h4>Site Performance</h4>
-                        <div class="metric-value">
-                            <img src="<?= ROOT ?>/assets/images/graph1.png" alt="graph" height="100px" width="200px" />
-                        </div>
-                    </div>
+
+                <div class="server-status">
+                    <h3>Server Status</h3>
+                    <table>
+                        <tr>
+                            <th>Uptime</th>
+                            <td>12h</td>
+                        </tr>
+                        <tr>
+                            <th>CPU Usage</th>
+                            <td>55%</td>
+                        </tr>
+                        <tr>
+                            <th>Memory Usage</th>
+                            <td>65</td>
+                        </tr>
+                        <tr>
+                            <th>Disk I/O</th>
+                            <td>120Mbps</td>
+                        </tr>
+                    </table>
                 </div>
+
+                <div class="server-table">
+                    <button onclick="openErrorLogs()">Open Error Logs</button>
+                </div>
+            </section>
+        </div>
+
+        <!-- Error Logs Modal -->
+        <div id="errorLogsModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeErrorLogs()">&times;</span>
+                <h2>Error Logs</h2>
+                <label for="filter">Filter by Severity:</label>
+                <select id="filter">
+                    <option>All</option>
+                    <option>Critical</option>
+                    <option>Warning</option>
+                    <option>Info</option>
+                </select>
+                <table>
+                    <tr>
+                        <th>Time</th>
+                        <th>Severity</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>2024-11-10 14:32</td>
+                        <td>Critical</td>
+                        <td>Database connection failure</td>
+                    </tr>
+                    <tr>
+                        <td>2024-11-10 12:10</td>
+                        <td>Warning</td>
+                        <td>High memory usage</td>
+                    </tr>
+                </table>
             </div>
         </div>
     </main>
 
-
     <script src="<?= ROOT ?>/assets/js/admin/sidebar.js"></script>
-    <script src="<?= ROOT ?>/assets/js/admin/home.js"></script>
+    <script src="<?= ROOT ?>/assets/js/admin/sitePerformance.js"></script>
 </body>
 
 </html>

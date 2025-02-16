@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/admin/common.css" />
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/admin/sidebar.css" />
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/admin/home.css" />
-    <title>Waste360 | Dashboard</title>
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/admin/manageCustomerAccounts.css" />
+    <title>Waste360 | Manage Customer Accounts</title>
 </head>
 
 <body>
@@ -18,9 +18,6 @@
         $profileLink = ROOT . '/login';
     }
     ?>
-
-
-
 
     <nav id="sidebar">
         <button id="toggle-btn" onclick="toggleSidebar()" class="toggle-btn">
@@ -35,7 +32,7 @@
             <div>
                 <ul>
                     <li>
-                        <a href="#" class="sidebar-active">
+                        <a href="<?= ROOT ?>/adminHome">
                             <img src="<?= ROOT ?>/assets/images/dashboard.svg" alt="dashboard" />
                             <span class="sidebar-titles">Dashboard</span>
                         </a>
@@ -51,7 +48,7 @@
 
                         <ul id="sub-menu" class="sub-menu">
                             <li>
-                                <a class="sidebar-titles" href="<?= ROOT ?>/manageCustomerAccounts">
+                                <a class="sidebar-titles sidebar-active" href="<?= ROOT ?>/manageCustomerAccounts">
                                     Manage Customer Accounts
                                 </a>
                             </li>
@@ -79,6 +76,7 @@
             </div>
         </div>
     </nav>
+
     <main>
         <header>
             <div class="logo">
@@ -86,64 +84,86 @@
                 <h1>Waste360</h1>
             </div>
             <div class="page-title">
-                <p>Dashboard</p>
+                <p>Customer Management</p>
             </div>
             <nav class="header-nav">
-                <a href="#"><img src="<?= ROOT ?>assets/images/notifications.svg" alt="" /></a>
+                <a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg" alt="" /></a>
                 <a href="#">Profile</a>
                 <a href="#">Log Out</a>
             </nav>
         </header>
 
-        <div class="top">
-            <div class="left">
-                <div class="calendar">
-                    <div class="calendar-header">
-                        <button onclick="prevMonth()">‹</button>
-                        <h2 id="monthYear"></h2>
-                        <button onclick="nextMonth()">›</button>
-                    </div>
-                    <div class="days">
-                        <div class="day">Sun</div>
-                        <div class="day">Mon</div>
-                        <div class="day">Tue</div>
-                        <div class="day">Wed</div>
-                        <div class="day">Thu</div>
-                        <div class="day">Fri</div>
-                        <div class="day">Sat</div>
-                    </div>
-                    <div class="days" id="dates"></div>
+        <div class="table-container">
+            <div class="Customer-title">
+                <h2>Customer Details</h2>
+            </div>
+
+            <div class="table-header">
+                <div class="search-bar">
+                    <img src="<?= ROOT ?>/assets/images/magnifying-glass-solid.svg" class="search-icon" />
+                    <input type="text" />
+                    <button>Search</button>
+                </div>
+
+                <div class="total-users">
+                    Total Customers: <span id="totalUsers">0</span>
                 </div>
             </div>
 
-            <div class="status-section">
-                <div class="time-display">
-                    <h3>Current Time</h3>
-                    <div id="clock" class="clock">Loading...</div>
-                </div>
-                <div class="metric-grid">
-                    <div class="metric-card">
-                        <h4>Total Staff</h4>
-                        <div class="metric-value">10+</div>
+            <table id="customerTable">
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Contact No.</th>
+                        <th>Address</th>
+                        <th>Give Away Amount</th>
+                        <th>Purchased Amount</th>
+                        <th>Saved Carbon Footprint</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="customerTableBody"></tbody>
+            </table>
+        </div>
+
+        <div id="editModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeEditModal()">&times;</span>
+                <h3>Edit Customer Details</h3>
+                <form id="editCustomerAccounts" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="userId" id="userId" />
+                    <div class="form-group">
+                        <label for="editCustomerName">Customer Name:</label>
+                        <input name="editCustomerName" type="text" id="editCustomerName"
+                            placeholder="Enter customer Name" required />
                     </div>
-                    <div class="metric-card">
-                        <h4>Total Users</h4>
-                        <div class="metric-value">100+</div>
+
+                    <div class="form-group">
+                        <label for="editCustomerEmail">Customer Email</label>
+                        <input name="editCustomerEmail" type="email" id="editCustomerEmail"
+                            placeholder="Enter customer Email" required />
                     </div>
-                    <div class="metric-card">
-                        <h4>Site Performance</h4>
-                        <div class="metric-value">
-                            <img src="<?= ROOT ?>/assets/images/graph1.png" alt="graph" height="100px" width="200px" />
-                        </div>
+                    <div class="form-group">
+                        <label for="editCustomerContactNo">Contact No</label>
+                        <input name="editCustomerContactNo" type="text" id="editCustomerContactNo"
+                            placeholder="Enter customer Contact Number" required />
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label for="editCustomerAddress">Address</label>
+                        <textarea name="editCustomerAddress" id="editCustomerAddress" required></textarea>
+                    </div>
+
+                    <button type="button" class="action-btn">Update</button>
+                </form>
             </div>
         </div>
     </main>
 
-
+    <script src="<?= ROOT ?>/assets/js/admin/modal.js"></script>
     <script src="<?= ROOT ?>/assets/js/admin/sidebar.js"></script>
-    <script src="<?= ROOT ?>/assets/js/admin/home.js"></script>
+    <script src="<?= ROOT ?>/assets/js/admin/manageCustomerAccounts.js"></script>
 </body>
 
 </html>

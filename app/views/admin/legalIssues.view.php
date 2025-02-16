@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/admin/common.css" />
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/admin/sidebar.css" />
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/admin/home.css" />
-    <title>Waste360 | Dashboard</title>
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/admin/legalIssues.css" />
+    <title>Waste360 | Issues</title>
 </head>
 
 <body>
@@ -18,9 +18,6 @@
         $profileLink = ROOT . '/login';
     }
     ?>
-
-
-
 
     <nav id="sidebar">
         <button id="toggle-btn" onclick="toggleSidebar()" class="toggle-btn">
@@ -35,7 +32,7 @@
             <div>
                 <ul>
                     <li>
-                        <a href="#" class="sidebar-active">
+                        <a href="<?= ROOT ?>/adminHome">
                             <img src="<?= ROOT ?>/assets/images/dashboard.svg" alt="dashboard" />
                             <span class="sidebar-titles">Dashboard</span>
                         </a>
@@ -64,7 +61,7 @@
                     </li>
 
                     <li>
-                        <a href="<?= ROOT ?>/legalIssues">
+                        <a href="<?= ROOT ?>/legalIssues" class="sidebar-active">
                             <img src="<?= ROOT ?>/assets/images/legal-issues.svg" alt="legal issues" />
                             <span class="sidebar-titles">Issues</span>
                         </a>
@@ -79,6 +76,7 @@
             </div>
         </div>
     </nav>
+
     <main>
         <header>
             <div class="logo">
@@ -86,64 +84,80 @@
                 <h1>Waste360</h1>
             </div>
             <div class="page-title">
-                <p>Dashboard</p>
+                <p>Issues</p>
             </div>
             <nav class="header-nav">
-                <a href="#"><img src="<?= ROOT ?>assets/images/notifications.svg" alt="" /></a>
+                <a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg" alt="" /></a>
                 <a href="#">Profile</a>
                 <a href="#">Log Out</a>
             </nav>
         </header>
 
-        <div class="top">
-            <div class="left">
-                <div class="calendar">
-                    <div class="calendar-header">
-                        <button onclick="prevMonth()">‹</button>
-                        <h2 id="monthYear"></h2>
-                        <button onclick="nextMonth()">›</button>
-                    </div>
-                    <div class="days">
-                        <div class="day">Sun</div>
-                        <div class="day">Mon</div>
-                        <div class="day">Tue</div>
-                        <div class="day">Wed</div>
-                        <div class="day">Thu</div>
-                        <div class="day">Fri</div>
-                        <div class="day">Sat</div>
-                    </div>
-                    <div class="days" id="dates"></div>
-                </div>
+        <div class="issues-container">
+            <h2>Issues Management</h2>
+
+            <!-- Legal Issues Overview -->
+            <div id="legal-issues-overview">
+                <h3>Legal Issues</h3>
+                <table id="legalIssuesTable">
+                    <thead>
+                        <tr>
+                            <th>Issue ID</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (!empty($issues)): ?>
+                            <?php foreach ($issues as $issue): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($issue->issue_id) ?></td>
+                                    <td><?= htmlspecialchars($issue->description) ?></td>
+                                    <td><?= htmlspecialchars($issue->status) ?></td>
+                                    <td>
+                                        <button class="edit-btn">Edit</button>
+                                        <button class="delete-btn">Delete</button>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="4">No issues found.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
             </div>
 
-            <div class="status-section">
-                <div class="time-display">
-                    <h3>Current Time</h3>
-                    <div id="clock" class="clock">Loading...</div>
-                </div>
-                <div class="metric-grid">
-                    <div class="metric-card">
-                        <h4>Total Staff</h4>
-                        <div class="metric-value">10+</div>
-                    </div>
-                    <div class="metric-card">
-                        <h4>Total Users</h4>
-                        <div class="metric-value">100+</div>
-                    </div>
-                    <div class="metric-card">
-                        <h4>Site Performance</h4>
-                        <div class="metric-value">
-                            <img src="<?= ROOT ?>/assets/images/graph1.png" alt="graph" height="100px" width="200px" />
-                        </div>
-                    </div>
-                </div>
+            <div id="manage-legal-issue">
+                <h3>Manage Legal Issue</h3>
+                <form id="legalForm">
+                    <label for="issueId">Issue ID:</label>
+                    <input type="text" id="issueId" placeholder="Auto-generated ID" readonly />
+
+                    <label for="description">Description:</label>
+                    <textarea id="description" rows="4" placeholder="Enter issue description" required></textarea>
+
+                    <label for="status">Status:</label>
+                    <select id="status" required>
+                        <option value="" disabled selected>Select Status</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Resolved">Resolved</option>
+                        <option value="Escalated">Escalated</option>
+                    </select>
+
+                    <label for="actionsTaken">Actions Taken:</label>
+                    <textarea id="actionsTaken" rows="4" placeholder="Document actions taken"></textarea>
+
+                    <button type="submit" class="action-btn">Save & Update</button>
+                </form>
             </div>
         </div>
     </main>
 
-
     <script src="<?= ROOT ?>/assets/js/admin/sidebar.js"></script>
-    <script src="<?= ROOT ?>/assets/js/admin/home.js"></script>
+    <script src="<?= ROOT ?>/assets/js/admin/legalIssues.js"></script>
 </body>
 
 </html>
