@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 04, 2025 at 06:51 AM
+-- Generation Time: Feb 12, 2025 at 09:12 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -41,7 +41,8 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`Customer_id`, `User_id`, `Address`, `Phone`, `Mobile`, `Name`) VALUES
-(1, 1, 'No 112, temple road, Galle', '0768512877', '0766778889', 'Thihansa');
+(1, 1, 'No 112, temple road, Galle', '0768512877', '0766778889', 'Thihansa'),
+(2, 1, 'me dkemkefmek', '0768512877', '0766778889', 'd3kmf3kfm');
 
 -- --------------------------------------------------------
 
@@ -58,8 +59,18 @@ CREATE TABLE `custom_order` (
   `Phone` varchar(20) DEFAULT NULL,
   `Type` varchar(255) DEFAULT NULL,
   `Specifications` text DEFAULT NULL,
-  `customOrder_status` varchar(50) DEFAULT NULL
+  `customOrder_status` enum('pending','accepted','rejected','') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `custom_order`
+--
+
+INSERT INTO `custom_order` (`customOrder_id`, `customer_id`, `Company_name`, `Quantity`, `Email`, `Phone`, `Type`, `Specifications`, `customOrder_status`) VALUES
+(1, 1, 'UCSC', 120, 'nnimasha43@gmail.com', '0768512877', 'oxo', 'crkcjevlejmv', 'pending'),
+(2, 2, 'WSO2', 340, 'hi@gmail.com', '0768512877', 'oxo', 'dekcjlckw', 'pending'),
+(3, 1, 'Q4us', 500, 'hello@gmail.com', '0768512877', 'oxo', 'dekcrclorkc', 'pending'),
+(4, 2, 'syscolabs', 450, 'hiii@gmail.com', '0768512877', 'oxo', 'd3fglr;jsjbygfu', 'accepted');
 
 -- --------------------------------------------------------
 
@@ -129,8 +140,44 @@ CREATE TABLE `pellet` (
   `Contact` varchar(20) DEFAULT NULL,
   `dateRequired` date DEFAULT NULL,
   `Date` datetime DEFAULT NULL,
-  `PelletOrderStatus` varchar(50) DEFAULT NULL
+  `PelletOrderStatus` enum('pending','accepted','rejected','') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `pellet`
+--
+
+INSERT INTO `pellet` (`PelletOrder_id`, `customer_id`, `Company_name`, `Email`, `Amount`, `Contact`, `dateRequired`, `Date`, `PelletOrderStatus`) VALUES
+(1, 1, 'UCSC', 'hi@gmail.com', 120.00, '0768512877', '2025-02-28', '2025-02-11 15:22:26', 'pending');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `polytheneamount`
+--
+
+CREATE TABLE `polytheneamount` (
+  `amount_id` int(50) NOT NULL,
+  `polytheneamount` float NOT NULL,
+  `message` varchar(100) NOT NULL,
+  `month` enum('January','February','March','April','May','June','July','August','Sepetember','October','November','December') NOT NULL,
+  `updated_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `polytheneamount`
+--
+
+INSERT INTO `polytheneamount` (`amount_id`, `polytheneamount`, `message`, `month`, `updated_date`) VALUES
+(1, 0.08, 'edkdmwkd', 'January', '2025-02-11 12:01:37'),
+(2, 0.01, 'dwiwjowl,', 'February', '2025-02-11 12:08:53'),
+(3, 0.03, 'vhbjnmgcg', 'March', '2025-02-11 12:16:45'),
+(4, 0.03, 'hbkn', 'January', '2025-02-11 12:19:26'),
+(5, 0.03, 'hbkn', 'January', '2025-02-11 12:27:25'),
+(6, 0.03, 'dwjkdmqwdmwl,d', 'August', '2025-02-11 12:27:41'),
+(7, 0.05, 'nakxmlx,', 'August', '2025-02-11 12:28:27'),
+(8, 0.03, 'bjnwkdmw', 'July', '2025-02-11 12:44:56'),
+(9, 0.01, 'bjbn', 'June', '2025-02-11 12:55:20');
 
 -- --------------------------------------------------------
 
@@ -159,6 +206,13 @@ CREATE TABLE `polythenegiveaway` (
   `Address` varchar(255) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `polythenegiveaway`
+--
+
+INSERT INTO `polythenegiveaway` (`Giveaway_id`, `Customer_id`, `Type`, `Address`, `quantity`) VALUES
+(1, 1, 'dwmdw', 'wdnwkfmel', 23);
 
 -- --------------------------------------------------------
 
@@ -247,7 +301,8 @@ CREATE TABLE `review` (
 --
 
 INSERT INTO `review` (`Review_id`, `customer_id`, `order_id`, `Rating`, `Comment`, `Date`, `dateModified`) VALUES
-(1, 1, 1, NULL, 'gsuchsclwm,m', '2025-02-04 11:19:52', '2025-02-04 11:19:52');
+(1, 1, 1, 3, 'gsuchsclwm,m', '2025-02-04 11:19:52', '2025-02-04 11:19:52'),
+(2, 1, 1, 4, 'dhwidjwdjqd', '2025-02-03 15:30:11', '2025-02-04 11:19:52');
 
 -- --------------------------------------------------------
 
@@ -365,6 +420,12 @@ ALTER TABLE `pellet`
   ADD KEY `customer_id` (`customer_id`);
 
 --
+-- Indexes for table `polytheneamount`
+--
+ALTER TABLE `polytheneamount`
+  ADD PRIMARY KEY (`amount_id`);
+
+--
 -- Indexes for table `polythenecollection`
 --
 ALTER TABLE `polythenecollection`
@@ -448,13 +509,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `Customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `custom_order`
 --
 ALTER TABLE `custom_order`
-  MODIFY `customOrder_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `customOrder_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `discount`
@@ -478,7 +539,13 @@ ALTER TABLE `payment`
 -- AUTO_INCREMENT for table `pellet`
 --
 ALTER TABLE `pellet`
-  MODIFY `PelletOrder_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `PelletOrder_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `polytheneamount`
+--
+ALTER TABLE `polytheneamount`
+  MODIFY `amount_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `polythenecollection`
@@ -490,7 +557,7 @@ ALTER TABLE `polythenecollection`
 -- AUTO_INCREMENT for table `polythenegiveaway`
 --
 ALTER TABLE `polythenegiveaway`
-  MODIFY `Giveaway_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Giveaway_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -520,7 +587,7 @@ ALTER TABLE `return_item`
 -- AUTO_INCREMENT for table `review`
 --
 ALTER TABLE `review`
-  MODIFY `Review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `rewards`

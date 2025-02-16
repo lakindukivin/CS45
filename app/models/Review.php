@@ -16,7 +16,17 @@ class Review {
         return $this->query($sql);
     }
 
-    public function getRepliedReviews() {
+    public function getReviewDetails($review_id) {
+        $sql = "SELECT r.review_id, r.rating, r.date, r.comment,
+                c.customer_id, o.order_id, c.name AS customer_name
+                FROM review r
+                JOIN customer c ON r.customer_id = c.customer_id
+                JOIN orders o ON r.order_id = o.order_id
+                WHERE r.review_id = :review_id";
+        
+        return $this->query($sql, ['review_id' => $review_id])[0] ?? false;
+    }
+        public function getRepliedReviews() {
         $sql = "SELECT r.review_id, r.rating, r.date, 
                 c.customer_id, o.order_id, rr.reply 
                 FROM review r 

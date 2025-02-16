@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="<?=ROOT?>/assets/css/customerServiceManager/sidebar.css">
-  <link rel="stylesheet" href="<?=ROOT?>/assets/css/customerServiceManager/manage_reviews.css">
   <link rel="stylesheet" href="<?=ROOT?>/assets/css/customerServiceManager/common.css">
-  <title>Waste360|Dashboard|CSM</title>
+  <link rel="stylesheet" href="<?=ROOT?>/assets/css/customerServiceManager/manage_reviews.css">
+  <title>Document</title>
 </head>
-
 <body>
-  <nav id="sidebar">
+<nav id="sidebar">
     <button id="toggle-btn" onclick="toggleSidebar()" class="toggle-btn">
       <img src="<?=ROOT?>/assets/images/menu.svg" alt="menu" />
     </button>
@@ -42,7 +40,7 @@
                 src="<?=ROOT?>/assets/images/manage_order.svg" /><span class="sidebar-titles">Manage order</span></a>
           </li>
           <li>
-            <a href="#" class="sidebar-active"><img src="<?=ROOT?>/assets/images/reviews.svg" /><span
+            <a href="<?=ROOT?>/ManageReviews" class="sidebar-active"><img src="<?=ROOT?>/assets/images/reviews.svg" /><span
                 class="sidebar-titles">Manage Reviews</span></a>
           </li>
         </ul>
@@ -66,42 +64,45 @@
       </nav>
     </header>
 
-    <div class="box">
-      <div class="container">
-        <div class="header">
-        <h2>Pending Reviews</h2>
-        <button class="add-button">
-                <a href="<?=ROOT?>/CompletedOrders">View Replied Reviews</a>
-            </button>
+    <div class="form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="give_away-id">Give Away ID ID</label>
+          <input type="text" id="give_away-id" name="give_away-id"  required>
         </div>
-        <table>
-    <thead>
-        <tr>
-            <th>Customer ID</th>
-            <th>Order ID</th>
-            <th>Rating</th>
-            <th>Date</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach($reviews as $review): ?>
-        <tr>
-            <td><?=htmlspecialchars($review->customer_id)?></td>
-            <td><?=htmlspecialchars($review->order_id)?></td>
-            <td><?=htmlspecialchars($review->rating)?></td>
-            <td><?=htmlspecialchars($review->date)?></td>
-            <td>
-           <button class="view-btn"><a href="<?=ROOT?>/Reviews<?=$review->review_id?>">View</a></button>
-            </td>
-        </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
-
-  </div>
-  <script src="<?=ROOT?>/assets/js/customerServiceManager/manage_rev.js"></script>
-  <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>
+        <div class="form-group">
+          <label for="customer-id">Customer ID</label>
+          <input type="text" id="customer-id" name="customer-id" placeholder="customer ID" required>
+        </div>
+        <div class="form-group">
+          <label for="name">Customer Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input type="address" id="address" name="address" required>
+      </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group">
+          <label for="Type">Type</label>
+          <input type="text" id="type" name="type"  required>
+      </div>
+    </div>
+    <div class="form-row">
+    <div class="form-group">
+        <label for="quantity">Quantity</label>
+        <input id="quantity" name="quantity" placeholder="quantity" required></input>
+      </div>
+      <div class="form-group">
+        <label for="date">Date</label>
+        <input type="date" id="date" name="date" placeholder="Date" required>
+       </div>
+    </div>
+    <button type="Accept" class="accept-button">Accept</button>  
+    <button type="Reject" class="reject-button">Reject</button> 
+    </div>
 </body>
-
 </html>

@@ -100,54 +100,11 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody id="orderTableBody">
-            <?php foreach($giveAwayRequests as $request): ?>
-                <tr>
-                    <td><?= htmlspecialchars($request->Giveaway_id) ?></td>
-                    <td><?= htmlspecialchars($request->customer_name) ?></td>
-                    <td><?= htmlspecialchars($request->Type) ?></td>
-                    <td><?= htmlspecialchars($request->Address) ?></td>
-                    <td><?= htmlspecialchars($request->quantity) ?></td>
-                    <td>
-                        <button onclick="viewRequest(<?= $request->Giveaway_id ?>)" class="view-btn">View</button>
-                        <button onclick="editRequest(<?= $request->Giveaway_id ?>)" class="edit-btn">Edit</button>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
+            <tbody>
+            <button class="view-btn"><a href="<?=ROOT?>/GiveAwayReqUpdate">View/Edit</a></button>
             </tbody>
         </table>
-      </div>
-  <!-- View Modal -->
-<div id="viewModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Request Details</h2>
-        <div id="requestDetails"></div>
-    </div>
-</div>
-
-<!-- Edit Modal -->
-<div id="editModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Edit Request</h2>
-        <form id="editForm">
-            <input type="hidden" id="editId" name="id">
-            <div class="form-group">
-                <label>Type:</label>
-                <input type="text" id="editType" name="type" required>
-            </div>
-            <div class="form-group">
-                <label>Address:</label>
-                <input type="text" id="editAddress" name="address" required>
-            </div>
-            <div class="form-group">
-                <label>Quantity:</label>
-                <input type="number" id="editQuantity" name="quantity" required>
-            </div>
-            <button type="submit" class="submit-btn">Update</button>
-        </form>
-    </div>
+      </div> 
 </div>
     </div>
   </div>
