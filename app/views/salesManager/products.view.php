@@ -12,7 +12,7 @@
 </head>
 
 <body>
-   
+
 
     <header>
         <a href="#" class="logo">
@@ -23,7 +23,7 @@
         <nav>
             <ul class="nav-links">
                 <li><a href="<?= ROOT ?>">Home</a></li>
-               
+
                 <li>
                     <a href="<?= $profileLink ?>" class="profile-icon">
                         <div class="profile-placeholder"></div>
@@ -41,6 +41,9 @@
             <div class="sidebar-container">
                 <div class="prof-picture">
                     <img src="<?= ROOT ?>/assets/images/profile-circle.svg" alt="profile" />
+
+                </div>
+                <div>
                     <span class="user-title">Sales and Marketing Manager</span>
                 </div>
 
