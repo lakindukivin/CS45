@@ -132,30 +132,36 @@
 
             <div id="manage-legal-issue">
                 <h3>Manage Legal Issue</h3>
-                <form id="legalForm">
-                    <label for="issueId">Issue ID:</label>
-                    <input type="text" id="issueId" placeholder="Auto-generated ID" readonly />
+                <div id="editModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeEditModal()">&times;</span>
+                        <form id="legalForm">
+                            <label for="issueId">Issue ID:</label>
+                            <input type="text" id="issueId" placeholder="Auto-generated ID" readonly />
 
-                    <label for="description">Description:</label>
-                    <textarea id="description" rows="4" placeholder="Enter issue description" required></textarea>
+                            <label for="description">Description:</label>
+                            <textarea id="description" rows="4" placeholder="Enter issue description"
+                                required></textarea>
 
-                    <label for="status">Status:</label>
-                    <select id="status" required>
-                        <option value="" disabled selected>Select Status</option>
-                        <option value="Pending">Pending</option>
-                        <option value="Resolved">Resolved</option>
-                        <option value="Escalated">Escalated</option>
-                    </select>
+                            <label for="status">Status:</label>
+                            <select id="status" required>
+                                <option value="" disabled selected>Select Status</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Resolved">Resolved</option>
+                                <option value="Escalated">Escalated</option>
+                            </select>
 
-                    <label for="actionsTaken">Actions Taken:</label>
-                    <textarea id="actionsTaken" rows="4" placeholder="Document actions taken"></textarea>
+                            <label for="actionsTaken">Actions Taken:</label>
+                            <textarea id="actionsTaken" rows="4" placeholder="Document actions taken"></textarea>
 
-                    <button type="submit" class="action-btn">Save & Update</button>
-                </form>
+                            <button type="submit" class="action-btn">Save & Update</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
-
+    <script src="<?= ROOT ?>/assets/js/admin/modal.js"></script>
     <script src="<?= ROOT ?>/assets/js/admin/sidebar.js"></script>
     <script src="<?= ROOT ?>/assets/js/admin/legalIssues.js"></script>
 </body>

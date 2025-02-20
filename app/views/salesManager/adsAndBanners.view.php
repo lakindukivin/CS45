@@ -7,10 +7,11 @@
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/salesManager/common.css" />
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/salesManager/sidebar.css" />
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/salesManager/adsAndBanners.css" />
-    <title>Waste360 | Ads/Banners</title>
+    <title>Ads/Banners</title>
 </head>
 
 <body>
+
     <?php
     if (isset($_SESSION['user_id'])) {
         $profileLink = ROOT . '/profile';
@@ -18,7 +19,6 @@
         $profileLink = ROOT . '/login';
     }
     ?>
-
     <nav id="sidebar">
         <button id="toggle-btn" onclick="toggleSidebar()" class="toggle-btn">
             <img src="<?= ROOT ?>/assets/images/menu.svg" alt="menu" />
@@ -26,6 +26,8 @@
         <div class="sidebar-container">
             <div class="prof-picture">
                 <img src="<?= ROOT ?>/assets/images/profile-circle.svg" alt="profile" />
+            </div>
+            <div>
                 <span class="user-title">Sales and Marketing Manager</span>
             </div>
 
@@ -146,30 +148,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if (!empty($ads)): ?>
-                            <?php foreach ($ads as $ad): ?>
-                                <tr>
-                                    <td><?= htmlspecialchars($ad->title) ?></td>
-                                    <td><?= htmlspecialchars($ad->description) ?></td>
-                                    <td><?= htmlspecialchars($ad->target_audience) ?></td>
-                                    <td><?= htmlspecialchars($ad->display_settings) ?></td>
-                                    <td>
-                                        <button class="edit-btn">Edit</button>
-                                        <button class="delete-btn">Delete</button>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <tr>
-                                <td colspan="5">No ads/banners found.</td>
-                            </tr>
-                        <?php endif; ?>
+                        <!-- Rows dynamically added -->
                     </tbody>
                 </table>
             </div>
         </div>
-    </main>
 
+        <!-- <footer>
+            <div class="logo">
+                <img src="<?= ROOT ?>/assets/images/Waste360.png" alt="Waste360" />
+            </div>
+            <p>&copy; 2024 Waste360. All rights reserved.</p>
+        </footer> -->
+    </main>
     <script src="<?= ROOT ?>/assets/js/salesManager/sidebar.js"></script>
     <script src="<?= ROOT ?>/assets/js/salesManager/adsAndBanners.js"></script>
 </body>
