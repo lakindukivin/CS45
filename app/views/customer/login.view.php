@@ -46,20 +46,20 @@
             <div class="cta">
                 <form class="login-form" method="post">
                     <div class="input-group">
-                        <label for="email">Email</label>
+                        <label for="Email">Email</label>
                         <input
                             type="email"
-                            id="email"
-                            name="email"
+                            id="Email"
+                            name="Email"
                             placeholder="Enter your email"
                             required />
                     </div>
                     <div class="input-group">
-                        <label for="password">Password</label>
+                        <label for="Password">Password</label>
                         <input
                             type="password"
-                            id="password"
-                            name="password"
+                            id="Password"
+                            name="Password"
                             placeholder="Enter your password"
                             required />
                     </div>

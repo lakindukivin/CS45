@@ -4,44 +4,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="<?= ROOT ?>/src/roles/customerServiceManager/styles/sidebar.css">
-    <link rel="stylesheet" href="<?= ROOT ?>/src/roles/customerServiceManager/styles/home.css">
-    <link rel="stylesheet" href="<?= ROOT ?>/src/roles/customerServiceManager/styles/common.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/customerServiceManager/sidebar.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/customerServiceManager/home.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/customerServiceManager/common.css">
     <title>Waste360|Dashboard|CSM</title>
 </head>
 
 <body>
     <nav id="sidebar">
         <button id="toggle-btn" onclick="toggleSidebar()" class="toggle-btn">
-            <img src="<?= ROOT ?>/src/assets/menu.svg" alt="menu" />
+            <img src="<?= ROOT ?>/assets/images/menu.svg" alt="menu" />
         </button>
         <div class="sidebar-container">
             <div class="prof-picture">
-                <img src="<?= ROOT ?>/src/assets/user.svg" alt="profile" />
+                <img src="<?= ROOT ?>/assets/images/user.svg" alt="profile" />
                 <span class="user-title">Customer Service Manager</span>
             </div>
 
             <div>
                 <ul>
                     <li>
-                        <a href="#" class="sidebar-active"><img src="<?= ROOT ?>/src/assets/dashboard.svg" alt="dashboard" /><span
+                        <a href="#" class="sidebar-active"><img src="<?= ROOT ?>/assets/images/dashboard.svg" alt="dashboard" /><span
                                 class="sidebar-titles">Dashboard</span></a>
                     </li>
 
                     <li>
-                        <a href="<?= ROOT ?>/src/roles/customerServiceManager/give_away/give_away_request.html"><img src="<?= ROOT ?>/src/assets/give_away.svg" /><span
+                        <a href="<?= ROOT ?>/GiveAwayRequest"><img src="<?= ROOT ?>/assets/images/give_away.svg" /><span
                                 class="sidebar-titles">Give Away</span></a>
                     </li>
                     <li>
-                        <a href="<?= ROOT ?>/src/roles/customerServiceManager/html/give_away/give_away_request.html"><img src="<?= ROOT ?>/src/assets/returns.svg" /><span
+                        <a href="<?= ROOT ?>/Returns"><img src="<?= ROOT ?>/assets/images/returns.svg" /><span
                                 class="sidebar-titles">Returns</span></a>
                     </li>
                     <li>
-                        <a href="<?= ROOT ?>/src/roles/customerServiceManager/html/manage_orders/manage_order.html"><img
-                                src="<?= ROOT ?>/src/assets/manage_order.svg" /><span class="sidebar-titles">Manage Orders</span></a>
+                        <a href="<?= ROOT ?>/ManageOrders"><img
+                                src="<?= ROOT ?>/assets/images/manage_order.svg" /><span class="sidebar-titles">Manage Orders</span></a>
                     </li>
                     <li>
-                        <a href="<?= ROOT ?>/src/roles/customerServiceManager/html/manage_reviews/manage_reviews.php"><img src="<?= ROOT ?>/src/assets/reviews.svg" /><span
+                        <a href="<?= ROOT ?>/ManageReviews"><img src="<?= ROOT ?>/assets/images/reviews.svg" /><span
                                 class="sidebar-titles">Manage Reviews</span></a>
                     </li>
                 </ul>
@@ -52,13 +52,13 @@
     <div class="content">
         <header class="header">
             <div class="logo">
-                <img src="<?= ROOT ?>/src/assets/Waste360.png" alt="logo" />
+                <img src="<?= ROOT ?>/assets/images/Waste360.png" alt="logo" />
                 <h1>Waste360</h1>
             </div>
             <h1 class="logo">DashBoard</h1>
             <nav class="nav">
                 <ul>
-                    <li><a href="#"><img src="<?= ROOT ?>/src/assets/notifications.svg"></a></li>
+                    <li><a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg"></a></li>
                     <li><a href="#">Profile</a></li>
                     <li><a href="<?= ROOT ?>/login">Logout</a></li>
                 </ul>
@@ -113,8 +113,8 @@
             </div>
         </div>
     </div>
-    <script src="<?= ROOT ?>/src/roles/customerServiceManager/javaScript/home.js"></script>
-    <script src="<?= ROOT ?>/src/roles/customerServiceManager/javaScript/sidebar.js"></script>
+    <script src="<?= ROOT ?>/assets/js/customerServiceManager/home.js"></script>
+    <script src="<?= ROOT ?>/assets/js/customerServiceManager/sidebar.js"></script>
 </body>
 
 </html>
