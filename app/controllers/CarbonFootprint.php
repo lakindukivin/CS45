@@ -4,7 +4,7 @@
  * sales manager home class
  */
 
-class arbonFootprint
+class CarbonFootprint
 {
     use Controller;
     public function index()
