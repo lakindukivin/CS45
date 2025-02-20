@@ -21,7 +21,7 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
     define('ROOT', 'http://www.website.com');
 }
 
-define('APP_NAME', "Waste360t");
+define('APP_NAME', "Waste360");
 define('APP_DESC', "Polythene Recycling Company");
 
 //true means hsow errors

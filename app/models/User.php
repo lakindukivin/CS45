@@ -7,7 +7,7 @@ class User
 {
     use Model;
 
-    protected $table = 'User';
+    protected $table = 'user';
     protected $allowedColumns = ['email', 'password', 'role'];
 
     public $errors = [];
