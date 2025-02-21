@@ -94,8 +94,7 @@
         </header>
 
         <div class="issues-container">
-            <h2>Issues Management</h2>
-
+           
             <!-- Legal Issues Overview -->
             <div id="legal-issues-overview">
                 <h3>Legal Issues</h3>
