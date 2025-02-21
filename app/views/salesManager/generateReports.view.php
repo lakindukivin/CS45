@@ -46,7 +46,7 @@
                     <li>
                         <a href="<?= ROOT ?>/discounts">
                             <img src="<?= ROOT ?>/assets/images/discount.svg" alt="discounts" />
-                            <span class="sidebar-titles">Discounts</span>
+                            <span class="sidebar-titles">Discount</span>
                         </a>
                     </li>
                     <li>
@@ -88,7 +88,7 @@
             </nav>
         </header>
 
-        <div id="generate-reports" class="form-container">
+        <div class="form-container">
             <h2>Generate Reports</h2>
 
             <div id="reportForm" class="input-container">

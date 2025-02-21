@@ -43,7 +43,7 @@
                     <li>
                         <a href="<?= ROOT ?>/carbonFootprint">
                             <img src="<?= ROOT ?>/assets/images/carbon-footprint.svg" alt="carbon-footprint" />
-                            <span class="sidebar-titles">Carbon footprint</span>
+                            <span class="sidebar-titles">Carbon Footprint</span>
                         </a>
                     </li>
                     <li>

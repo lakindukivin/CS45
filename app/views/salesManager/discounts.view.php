@@ -50,7 +50,7 @@
                     <li>
                         <a href="<?= ROOT ?>/discounts" class="sidebar-active">
                             <img src="<?= ROOT ?>/assets/images/discount.svg" alt="discounts" />
-                            <span class="sidebar-titles">Discounts</span>
+                            <span class="sidebar-titles">Discount</span>
                         </a>
                     </li>
 
@@ -95,7 +95,7 @@
             </nav>
         </header>
 
-        <div id="discount-management" class="form-container">
+        <div class="form-container">
             <h2>Discount Management</h2>
 
             <!-- Create New Discount Section -->

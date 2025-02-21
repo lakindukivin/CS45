@@ -52,7 +52,7 @@
                     <li>
                         <a href="<?= ROOT ?>/discounts">
                             <img src="<?= ROOT ?>/assets/images/discount.svg" alt="discounts" />
-                            <span class="sidebar-titles">Discounts</span>
+                            <span class="sidebar-titles">Discount</span>
                         </a>
                     </li>
 

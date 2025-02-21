@@ -50,7 +50,7 @@
                     <li>
                         <a href="<?= ROOT ?>/discounts">
                             <img src="<?= ROOT ?>/assets/images/discount.svg" alt="discounts" />
-                            <span class="sidebar-titles">Discounts</span>
+                            <span class="sidebar-titles">Discount</span>
                         </a>
                     </li>
 
@@ -96,8 +96,7 @@
         </header>
 
         <div id="ad-management" class="form-container">
-            <h2>Ad/Banner Management</h2>
-
+           
             <!-- Ad Form Section -->
             <div id="adForm" class="input-container">
                 <form id="adFormContent">
