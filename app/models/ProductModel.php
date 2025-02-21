@@ -4,7 +4,7 @@ class ProductModel
     use Model;
 
     protected $table = "product";
-    protected $allowedColumns = ['product_id', 'productName', 'producrImage', 'productPrice', 'productDescription', 'productPackSize', 'productBagSize', 'productStatus'];
+    protected $allowedColumns = ['Product_id', 'productName', 'productImage', 'productPrice', 'productDescription', 'productPackSize', 'productBagSize', 'productStatus'];
 
     public function getAllProducts()
     {
