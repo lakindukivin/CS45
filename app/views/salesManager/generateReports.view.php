@@ -88,10 +88,38 @@
             </nav>
         </header>
 
-        <div class="form-container">
+
+
+        <div class="container">
+
+            <!--Table Header-->
+
+            <div class="table-header">
+                <div>
+
+                </div>
+                <div>
+                    <button class="action-btn" onclick="openAddModal()">Create a Report</button>
+                </div>
+            </div>
+
+            <!-- report table -->
+            <table id="reportTable">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Date Range</th>
+                        <th>Metrics</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            <!-- report form -->
             <h2>Generate Reports</h2>
 
-            <div id="reportForm" class="input-container">
+            <form id="reportForm">
                 <div class="form-group">
                     <label for="reportType">Select Report Type:</label>
                     <select id="reportType" required>
@@ -104,8 +132,10 @@
 
                 <div class="form-group">
                     <label>Date Range:</label>
-                    <input type="date" id="startDate" required /> to
-                    <input type="date" id="endDate" required />
+                    <div class="date-range">
+                        <input type="date" id="startDate" required /> to
+                        <input type="date" id="endDate" required />
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Specific Metrics:
@@ -114,22 +144,11 @@
                 </div>
 
                 <button id="generateReport" class="action-btn">Generate Report</button>
-            </div>
+            </form>
 
-            <div id="reportTableSection">
-                <h3>Generated Reports</h3>
-                <table id="reportTable">
-                    <thead>
-                        <tr>
-                            <th>Type</th>
-                            <th>Date Range</th>
-                            <th>Metrics</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
+
+
+        </div>
         </div>
     </main>
 

@@ -97,10 +97,10 @@
             </nav>
         </header>
 
-        <div id="carbon-footprint-section" class="form-container">
-            <h2>Carbon Footprint Management</h2>
+        <div id="carbon-footprint-section" class="container">
 
-            <div id="update-data" class="input-container">
+
+            <!-- <div id="update-data" class="input-container">
                 <h3>Update Carbon Footprint Data</h3>
                 <form id="updateForm">
                     <div class="form-group">
@@ -117,7 +117,7 @@
                     </div>
                     <button type="submit" class="action-btn">Save Changes</button>
                 </form>
-            </div>
+            </div> -->
             <div id="current-data">
                 <h3>Current Carbon Footprint Data</h3>
                 <table id="carbonFootprintTable">

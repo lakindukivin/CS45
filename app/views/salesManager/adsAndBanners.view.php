@@ -95,62 +95,71 @@
             </nav>
         </header>
 
-        <div id="ad-management" class="form-container">
-           
-            <!-- Ad Form Section -->
-            <div id="adForm" class="input-container">
-                <form id="adFormContent">
-                    <div class="form-group">
-                        <label>Title:
-                            <input type="text" id="adTitle" placeholder="Ad Title" required />
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label>Description:
-                            <textarea id="adDescription" placeholder="Ad Description" required></textarea>
-                        </label>
-                    </div>
+        <div id="ad-management" class="container">
+            <!--Table Header-->
 
-                    <div class="form-group">
-                        <label>Target Audience:
-                            <input type="text" id="adAudience" placeholder="E.g., Customers, Teens, Professionals"
-                                required />
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label>Display Settings:
-                            <input type="text" id="adSettings" placeholder="E.g., Homepage, Sidebar, Banner" required />
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label>Upload Banner File:
-                            <input type="file" id="adFile" accept="image/*" required />
-                        </label>
-                    </div>
-                    <button type="submit" class="action-btn">Save & Preview</button>
-                </form>
+            <div class="table-header">
+                <div>
+
+                </div>
+                <div>
+                    <button class="action-btn" onclick="openAddModal()">Add Ads/Banners</button>
+                </div>
             </div>
 
             <!-- Existing Ads Section -->
-            <div id="adTableSection" class="table-container">
-                <div class="table-title">
-                    <h3>Existing Ads/Banners</h3>
+
+
+            <table id="adTable">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Target Audience</th>
+                        <th>Display Settings</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows dynamically added -->
+                </tbody>
+            </table>
+
+
+            <!-- Ad Form Section -->
+
+            <h3>Add Ads/Banners</h3>
+
+            <form id="adFormContent">
+                <div class="form-group">
+                    <label>Title:
+                        <input type="text" id="adTitle" placeholder="Ad Title" required />
+                    </label>
                 </div>
-                <table id="adTable">
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Target Audience</th>
-                            <th>Display Settings</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Rows dynamically added -->
-                    </tbody>
-                </table>
-            </div>
+                <div class="form-group">
+                    <label>Description:
+                        <textarea id="adDescription" placeholder="Ad Description" required></textarea>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label>Target Audience:
+                        <input type="text" id="adAudience" placeholder="E.g., Customers, Teens, Professionals"
+                            required />
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>Display Settings:
+                        <input type="text" id="adSettings" placeholder="E.g., Homepage, Sidebar, Banner" required />
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>Upload Banner File:
+                        <input type="file" id="adFile" accept="image/*" required />
+                    </label>
+                </div>
+                <button type="submit" class="action-btn">Save & Preview</button>
+            </form>
         </div>
 
         <!-- <footer>

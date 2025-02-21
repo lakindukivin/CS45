@@ -95,51 +95,56 @@
             </nav>
         </header>
 
-        <div class="form-container">
-            <h2>Discount Management</h2>
+        <div class="container">
+            <!--Table Header-->
 
-            <!-- Create New Discount Section -->
-            <div id="discountForm" class="input-container">
-                <h3>Create New Discount</h3>
-                <form id="discountFormContent">
-                    <div class="form-group">
-                        <label>Discount Percentage:
-                            <input type="number" id="discountPercentage" placeholder="E.g., 10, 20" min="1" max="100"
-                                required />
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label>Start Date:
-                            <input type="date" id="startDate" required />
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label>End Date:
-                            <input type="date" id="endDate" required />
-                        </label>
-                    </div>
-                    <button type="submit" class="action-btn">Save Discount</button>
-                </form>
+            <div class="table-header">
+                <div>
+
+                </div>
+                <div>
+                    <button class="action-btn" onclick="openAddModal()">Add Ads/Banners</button>
+                </div>
             </div>
 
             <!-- Existing Discounts Section -->
-            <div id="discountTableSection" class="table-container">
-                <div class="table-title">
-                    <h3>Existing Discounts</h3>
+            <table id="discountTable">
+                <thead>
+                    <tr>
+                        <th>Percentage</th>
+                        <th>Validity Period</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows dynamically added -->
+                </tbody>
+            </table>
+
+
+            <!-- Create New Discount Section -->
+
+            <h3>Create New Discount</h3>
+            <form id="discountFormContent">
+                <div class="form-group">
+                    <label>Discount Percentage:
+                        <input type="number" id="discountPercentage" placeholder="E.g., 10, 20" min="1" max="100"
+                            required />
+                    </label>
                 </div>
-                <table id="discountTable">
-                    <thead>
-                        <tr>
-                            <th>Percentage</th>
-                            <th>Validity Period</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Rows dynamically added -->
-                    </tbody>
-                </table>
-            </div>
+                <div class="form-group">
+                    <label>Start Date:
+                        <input type="date" id="startDate" required />
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>End Date:
+                        <input type="date" id="endDate" required />
+                    </label>
+                </div>
+                <button type="submit" class="action-btn">Save Discount</button>
+            </form>
+
         </div>
 
         <!-- <footer>
