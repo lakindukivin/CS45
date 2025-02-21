@@ -1,4 +1,3 @@
-console.log('admin Home');
 let currentDate = new Date();
 const today = new Date(); // Stores today's date
 

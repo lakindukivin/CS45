@@ -71,4 +71,4 @@ function closeAllSubMenus() {
 //   if (sidebar.classList.contains('close')) {
 //     sidebar.classList.remove('close');
 //     toggleButton.classList.toggle('rotate');
-//   }
+//
