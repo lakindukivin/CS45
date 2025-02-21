@@ -1,5 +1,5 @@
 .table-container {
-    margin-top: 50px;
+    margin: 2rem;
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -200,17 +200,8 @@ form select {
     background-color: #612424;
 }
 
-#productTable {
-    display: block;
-}
 
-#manageCustomerAccountsCard {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    padding: 10px;
-    display: none;
-}
+
 
 .product-card {
     background-color: #fff;
