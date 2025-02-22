@@ -158,6 +158,7 @@
                                 <textarea id="actionsTaken" rows="4" placeholder="Document actions taken"></textarea>
                             </div>
                             <button type="submit" class="action-btn">Save & Update</button>
+                            <button type="submit" class="cancel-btn">Cancel</button>
                         </form>
                     </div>
                 </div>
