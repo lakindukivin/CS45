@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -93,7 +93,7 @@
             </nav>
         </header>
 
-        <div class="performance-container">
+        <div class="container">
             <section class="performance-section">
                 <div class="user-traffic">
                     <h3>User Traffic Information</h3>

@@ -4,7 +4,7 @@
  * sales manager home class
  */
 
-class SotePerformance
+class SitePerformance
 {
     use Controller;
     public function index()

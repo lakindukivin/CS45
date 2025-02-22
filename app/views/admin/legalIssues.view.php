@@ -93,69 +93,79 @@
             </nav>
         </header>
 
-        <div class="issues-container">
-            <h2>Issues Management</h2>
+        <div class="container">
 
             <!-- Legal Issues Overview -->
-            <div id="legal-issues-overview">
-                <h3>Legal Issues</h3>
-                <table id="legalIssuesTable">
-                    <thead>
-                        <tr>
-                            <th>Issue ID</th>
-                            <th>Description</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (!empty($issues)): ?>
-                            <?php foreach ($issues as $issue): ?>
-                                <tr>
-                                    <td><?= htmlspecialchars($issue->issue_id) ?></td>
-                                    <td><?= htmlspecialchars($issue->description) ?></td>
-                                    <td><?= htmlspecialchars($issue->status) ?></td>
-                                    <td>
-                                        <button class="edit-btn">Edit</button>
-                                        <button class="delete-btn">Delete</button>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php else: ?>
+
+
+            <table id="legalIssuesTable">
+                <thead>
+                    <tr>
+                        <th>Issue ID</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (!empty($issues)): ?>
+                        <?php foreach ($issues as $issue): ?>
                             <tr>
-                                <td colspan="4">No issues found.</td>
+                                <td><?= htmlspecialchars($issue->issue_id) ?></td>
+                                <td><?= htmlspecialchars($issue->description) ?></td>
+                                <td><?= htmlspecialchars($issue->status) ?></td>
+                                <td>
+                                    <button class="edit-btn">Edit</button>
+                                    <button class="delete-btn">Delete</button>
+                                </td>
                             </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
-            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="4">No issues found.</td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+
 
             <div id="manage-legal-issue">
-                <h3>Manage Legal Issue</h3>
-                <form id="legalForm">
-                    <label for="issueId">Issue ID:</label>
-                    <input type="text" id="issueId" placeholder="Auto-generated ID" readonly />
-
-                    <label for="description">Description:</label>
-                    <textarea id="description" rows="4" placeholder="Enter issue description" required></textarea>
-
-                    <label for="status">Status:</label>
-                    <select id="status" required>
-                        <option value="" disabled selected>Select Status</option>
-                        <option value="Pending">Pending</option>
-                        <option value="Resolved">Resolved</option>
-                        <option value="Escalated">Escalated</option>
-                    </select>
-
-                    <label for="actionsTaken">Actions Taken:</label>
-                    <textarea id="actionsTaken" rows="4" placeholder="Document actions taken"></textarea>
-
-                    <button type="submit" class="action-btn">Save & Update</button>
-                </form>
+                <h3>Manage Issues</h3>
+                <div id="editModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeEditModal()">&times;</span>
+                        <form id="legalForm">
+                            <div class="form-group">
+                                <label for="issueId">Issue ID:</label>
+                                <input type="text" id="issueId" placeholder="Auto-generated ID" readonly />
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Description:</label>
+                                <textarea id="description" rows="4" placeholder="Enter issue description"
+                                    required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="status">Status:</label>
+                                <select id="status" required>
+                                    <option value="" disabled selected>Select Status</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Resolved">Resolved</option>
+                                    <option value="Escalated">Escalated</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="actionsTaken">Actions Taken:</label>
+                                <textarea id="actionsTaken" rows="4" placeholder="Document actions taken"></textarea>
+                            </div>
+                            <button type="submit" class="action-btn">Save & Update</button>
+                            <button type="submit" class="cancel-btn">Cancel</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
-
+    <script src="<?= ROOT ?>/assets/js/admin/modal.js"></script>
     <script src="<?= ROOT ?>/assets/js/admin/sidebar.js"></script>
     <script src="<?= ROOT ?>/assets/js/admin/legalIssues.js"></script>
 </body>

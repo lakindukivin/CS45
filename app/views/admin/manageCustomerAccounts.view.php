@@ -93,10 +93,7 @@
             </nav>
         </header>
 
-        <div class="table-container">
-            <div class="Customer-title">
-                <h2>Customer Details</h2>
-            </div>
+        <div class="container">
 
             <div class="table-header">
                 <div class="search-bar">
