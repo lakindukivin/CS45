@@ -1,8 +1,8 @@
 <?php
 
 
-trait Database
-{
+trait Database {
+
     private function connect()
     {
         $string = "mysql:hostname=" . DBHOST . ";dbname=" . DBNAME;
@@ -24,6 +24,7 @@ trait Database
         }
 
         return false;
+        
     }
 
     public function get_row($query, $data = [])

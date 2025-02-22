@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/customerServiceManager/sidebar.css">
-    <link rel="stylesheet" href="<?=ROOT?>/assets/css/customerServiceManager/returns.css">
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/customerServiceManager/give_away_request.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/customerServiceManager/common.css">
     <title>Waste360|Dashboard|CSM</title>
 </head>
@@ -22,7 +22,7 @@
         <div>
           <ul>
             <li>
-              <a href="<?=ROOT?>/CSManagerHome"
+              <a href="<?=ROOT?>/CSManagerHome" 
                 ><img src="<?=ROOT?>/assets/images/dashboard.svg" alt="dashboard" /><span
                   class="sidebar-titles"
                   >Dashboard</span
@@ -31,7 +31,7 @@
             </li>
 
             <li>
-              <a href="<?=ROOT?>/GiveAwayRequest"
+              <a href="#" class="sidebar-active"
                 ><img src="<?=ROOT?>/assets/images/give_away.svg" /><span
                   class="sidebar-titles"
                   >Give Away</span
@@ -39,7 +39,7 @@
               >
             </li>
             <li>
-              <a href="<?=ROOT?>/ManageReturns" class="sidebar-active"
+              <a href="<?=ROOT?>/Returns"
                 ><img src="<?=ROOT?>/assets/images/returns.svg" /><span
                   class="sidebar-titles"
                   >Returns</span
@@ -84,33 +84,35 @@
     <div class="box">
       <div class="container">
         <div class="header">
-        <h2>Completed Return Requests</h2>
+        <h2>Completed Give Away Request</h2>
         </div>
-        <table>
+        <table id="giveAwayTable">  
             <thead>
                 <tr>
-                    <th>Order ID</th>
                     <th>Customer ID</th>
-                    <th>Customer Name</th>
-                    <th>Quantity</th>
+                    <th>Name</th>
                     <th>Phone</th>
+                    <th>Type</th>
+                    <th>Address</th>  
+                    <th>Quantity</th>
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody id="orderTableBody">
-            <?php if(isset($data['returns']) && is_array($data['returns'])): ?>
-              <?php foreach ($data['returns'] as $return) : ?>
-                <tr>
-                  <td><?= $return->order_id ?></td>
-                  <td><?= $return->customer_id ?></td>
-                  <td><?= $return->customer_name ?></td>
-                  <td><?= $return->Quantity ?></td>
-                  <td><?= $return->phone ?></td>
-                  <td>
-                  <button class="view-btn"><a href="<?=ROOT?>/GiveAwayReqUpdate">View/Edit</a></button>
-                  </td>
-                </tr>
-              <?php endforeach; ?>
+            <tbody>
+            <?php if(isset($data['giveaways']) && is_array($data['giveaways'])): ?>
+                <?php foreach($data['giveaways'] as $giveaway): ?>
+                    <tr>
+                        <td><?= $giveaway->Customer_id ?></td>
+                        <td><?= $giveaway->Name ?></td>
+                        <td><?= $giveaway->Phone ?></td>
+                        <td><?= $giveaway->Type ?></td>
+                        <td><?= $giveaway->Address ?></td>
+                        <td><?= $giveaway->quantity ?></td>
+                        <td>
+                        <button class="view-btn"><a href="<?=ROOT?>/GiveAwayReqUpdate">View/Edit</a></button>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
             <?php else: ?>
                 <tr>
                     <td colspan="7">No give away requests found</td>
@@ -118,32 +120,11 @@
             <?php endif; ?>
             </tbody>
         </table>
-      </div>
-  
-  
-  
-      <!-- Add this modal HTML -->
-      <div id="statusModal" class="modal">
-        <div class="modal-content">
-
-          <span class="close">×</span>
-          <h2>Return Status</h2>
-          <div class="status-details">
-            <p><strong>Order ID:</strong> <span id="orderId"></span></p>
-            <p><strong>Status:</strong> <span id="orderStatus"></span></p>
-            <p><strong>Created Date:</strong> <span id="orderDate"></span></p>
-            <p><strong>Customer:</strong> <span id="customerName"></span></p>
-            <p><strong>Description:</strong> <span id="orderDescription"></span></p>
-          </div>
-            <div class="operation">
-              <button class="accept">Accept</button>
-              <button class="reject">Reject</button>
-              </div>
-          </div>
-      </div>
+      </div> 
+</div>
     </div>
-  </div>  </div>
-  <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>  
-  <script src="<?=ROOT?>/assets/js/customerServiceManager/returns.js"></script>  
+  </div>
+  <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>
+  <script src="<?=ROOT?>/assets/js/customerServiceManager/give_away_request.js"></script>
 </body>
 </html>
