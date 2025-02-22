@@ -86,22 +86,41 @@
         <div class="header">
         <h2>Pending Give Away Request</h2>
         <button class="add-button">
-                <a href="<?=ROOT?>/CompletedOrders">View Completed Give Aways</a>
+                <a href="<?=ROOT?>/CompletedGiveAway">View Completed Give Aways</a>
             </button>
         </div>
         <table id="giveAwayTable">  
             <thead>
                 <tr>
                     <th>Customer ID</th>
-                    <th>Address</th>
+                    <th>Name</th>
                     <th>Phone</th>
                     <th>Type</th>
+                    <th>Address</th>  
                     <th>Quantity</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-            <button class="view-btn"><a href="<?=ROOT?>/GiveAwayReqUpdate">View/Edit</a></button>
+            <?php if(isset($data['giveaways']) && is_array($data['giveaways'])): ?>
+                <?php foreach($data['giveaways'] as $giveaway): ?>
+                    <tr>
+                        <td><?= $giveaway->Customer_id ?></td>
+                        <td><?= $giveaway->Name ?></td>
+                        <td><?= $giveaway->Phone ?></td>
+                        <td><?= $giveaway->Type ?></td>
+                        <td><?= $giveaway->Address ?></td>
+                        <td><?= $giveaway->quantity ?></td>
+                        <td>
+                        <button class="view-btn"><a href="<?=ROOT?>/GiveAwayReqUpdate">View/Edit</a></button>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="7">No give away requests found</td>
+                </tr>
+            <?php endif; ?>
             </tbody>
         </table>
       </div> 

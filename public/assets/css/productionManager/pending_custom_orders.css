@@ -135,6 +135,11 @@ th {
   transition: var(--transition);
 }
 
+.view-btn a {
+  color: var(--white);
+  text-decoration: none;
+}
+
 .update-btn {
   background-color: var(--danger-red);
   color: var(--white);
@@ -159,6 +164,96 @@ th {
   align-items: center;
   justify-content: center;
 }
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+td {
+  color: var(--gray-800);
+}
+
+th {
+  background-color:var(--gray-300);
+  color: var(--primary-green);
+  font-weight: 600;
+}
+
+
+.form {
+  width: 80%;
+  max-width: 800px;
+  background-color: var(--white);    
+  margin: 2rem auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-row {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  flex: 1;
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  color:var(--primary-green);
+  margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-green);
+  box-shadow: 0 0 0 2px rgba(28, 87, 59, 0.1);
+}
+
+.form-group textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.submit-button {
+  background-color: var(--primary-green);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  width: 30%;
+  margin-left: 35%;
+}
+
+.submit-button:hover {
+  background-color: var(--accent-green);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);}
+
 
 
 .modal {

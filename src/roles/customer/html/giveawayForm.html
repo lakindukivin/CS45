@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Polythtene Giveaway</title>
+    <link rel="stylesheet" href="../styles/giveawayForm.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <a href="#" class="logo">
+        <img
+          src="../../../assets/Waste360.png"
+          alt="Waste360 Logo"
+          class="logo-image"
+        />
+        <span>Waste360</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="homte.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="store.html">Store</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="about.html">About</a></li>
+          <li>
+            <a href="login.html" class="profile-icon">
+              <div class="profile-placeholder"></div>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="contact-section">
+        <h2>Polythene Giveaway</h2>
+        <form id="giveawayForm">
+          <label for="province">Province</label>
+          <select id="province" name="province" onchange="updateDistricts()" required>
+            <option value = "">Select Province</option>
+            <option value="western">Western</option>
+            <option value="central">Central</option>
+            <option value="southern">Southern</option>
+          </select>
+
+          <label for="district">District</label>
+          <select id="district" name="district" onchange="updateTowns()" required>
+            <option value = "">Select District</option>
+          </select>
+
+          <label for="town">Town</label>
+          <select id="town" name="town" required>
+            <option value = "">Select Town</option>
+          </select>
+
+          <label for="address">Address</label>
+          <input
+            type="text"
+            id="address"
+            name="address"
+            placeholder="Enter your address"
+            required
+          />
+
+          <label for="quantity">Quantity</label>
+          <input
+            type="number"
+            id="quantity"
+            name="quantity"
+            placeholder="Enter the quantity"
+            min="21"
+            required
+          />
+
+          <button type="submit">Submit</button>
+        </form>
+      </section>
+    </main>
+    <script src="../javaScript/giveawayForm.js"></script>
+  </body>
+</html>
