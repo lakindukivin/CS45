@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact Us</title>
+    <title>Polythtene Giveaway</title>
     <link rel="stylesheet" href="../styles/giveawayForm.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
@@ -47,20 +47,15 @@
             <option value="western">Western</option>
             <option value="central">Central</option>
             <option value="southern">Southern</option>
-            <option value="northern">Northern</option>
-            <option value="northWestern">North Western</option>
-            <option value="northCentral">North Central</option>
-            <option value="sabaragamuwa">Sabaragamuwa</option>
-            <option value="eastern">Eastern</option>
-            <option value="uva">Uva</option>
+          </select>
 
           <label for="district">District</label>
-          <select id="district" name="district" onchange="updateDistricts()" required>
+          <select id="district" name="district" onchange="updateTowns()" required>
             <option value = "">Select District</option>
           </select>
 
           <label for="town">Town</label>
-          <select id="town" name="town" onchange="updateTowns()" required>
+          <select id="town" name="town" required>
             <option value = "">Select Town</option>
           </select>
 
@@ -87,6 +82,6 @@
         </form>
       </section>
     </main>
-    <script src="giveawayForm.js"></script>
+    <script src="../javaScript/giveawayForm.js"></script>
   </body>
 </html>

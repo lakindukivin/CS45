@@ -1,58 +1,66 @@
-// Define district data based on province selection
-const districts = {
-    "Western": ["Colombo", "Gampaha", "Kalutara"],
-    "Central": ["Kandy", "Matale", "Nuwara Eliya"],
-    "Southern": ["Galle", "Matara", "Hambantota"]
+document.getElementById("province").addEventListener("change", updateDistricts);
+document.getElementById("district").addEventListener("change", updateTowns);
+
+const districtData = {
+  western: ["Colombo", "Gampaha", "Kalutara"],
+  central: ["Kandy", "Matale", "Nuwaraeliya"],
+  southern: ["Galle", "Matara", "Hambantota"]
 };
 
-// Define towns data based on district selection
-const towns = {
-    "Colombo": ["Colombo 1", "Colombo 2", "Colombo 3"],
-    "Gampaha": ["Negombo", "Gampaha Town", "Ja-Ela"],
-    "Kalutara": ["Kalutara North", "Kalutara South", "Panadura"],
-    "Kandy": ["Peradeniya", "Katugastota", "Pilimathalawa"],
-    "Matale": ["Dambulla", "Matale Town", "Rattota"],
-    "Nuwara Eliya": ["Hatton", "Nuwara Eliya Town", "Thalawakele"],
-    "Galle": ["Galle Fort", "Unawatuna", "Hikkaduwa"],
-    "Matara": ["Weligama", "Matara Town", "Dikwella"],
-    "Hambantota": ["Tangalle", "Hambantota Town", "Tissamaharama"]
+const townData = {
+  Colombo: ["Colombo", "Kollupitiya", "Rajagiriya"],
+  Gampaha: ["Gampaha Town", "Nittambuwa", "Veyangoda"],
+  Kalutara: ["Kalutara", "Beruwala", "Moratuwa"],
+  Kandy: ["Kandy", "Peradeniya", "Nuwara Eliya"],
+  Matale: ["Matale", "Dambulla", "Sigiriya"],
+  Nuwaraeliya: ["Nuwara Eliya", "Hatton", "Balangoda"],
+  Galle: ["Galle", "Habaraduwa", "Unawatuna"],
+  Matara: ["Matara", "Tangalle", "Mirissa"],
+  Hambantota: ["Hambantota", "Tissamaharama", "Katuwana"]
 };
 
-// Function to update the district dropdown
 function updateDistricts() {
-    let province = document.getElementById("province").value;
-    let districtSelect = document.getElementById("district");
+  const province = document.getElementById("province").value;
+  const districtSelect = document.getElementById("district");
+  
+  // Clear previous options
+  districtSelect.innerHTML = "<option value=''>Select District</option>";
 
-    // Clear existing options
-    districtSelect.innerHTML = '<option value="">Select District</option>';
-    document.getElementById("town").innerHTML = '<option value="">Select Town</option>';
-
-    // Add new districts based on province
-    if (province && districts[province]) {
-        districts[province].forEach(district => {
-            let option = document.createElement("option");
-            option.value = district;
-            option.textContent = district;
-            districtSelect.appendChild(option);
-        });
-    }
+  if (province) {
+    const districts = districtData[province] || [];
+    districts.forEach(district => {
+      const option = document.createElement("option");
+      option.value = district;
+      option.textContent = district;
+      districtSelect.appendChild(option);
+    });
+  }
 }
 
-// Function to update the town dropdown
 function updateTowns() {
-    let district = document.getElementById("district").value;
-    let townSelect = document.getElementById("town");
+  const district = document.getElementById("district").value;
+  const townSelect = document.getElementById("town");
+  
+  // Clear previous options
+  townSelect.innerHTML = "<option value=''>Select Town</option>";
 
-    // Clear existing options
-    townSelect.innerHTML = '<option value="">Select Town</option>';
-
-    // Add new towns based on district
-    if (district && towns[district]) {
-        towns[district].forEach(town => {
-            let option = document.createElement("option");
-            option.value = town;
-            option.textContent = town;
-            townSelect.appendChild(option);
-        });
-    }
+  if (district) {
+    const towns = townData[district] || [];
+    towns.forEach(town => {
+      const option = document.createElement("option");
+      option.value = town;
+      option.textContent = town;
+      townSelect.appendChild(option);
+    });
+  }
 }
+
+// document.getElementById("giveawayForm").addEventListener("submit", function(event) {
+//     event.preventDefault(); // Prevent actual form submission (remove this if needed)
+
+//     // Simulating form submission (replace this with actual logic if needed)
+//     setTimeout(() => {
+//         window.location.href = "confirmation.html"; // Redirect to confirmation page
+//     }, 1000);
+// });
+
