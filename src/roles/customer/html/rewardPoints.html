@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waste360 - Reward Points</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Ensure this points to your CSS file -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+        .reward-section {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px; /* Adds spacing between image and text */
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+.reward-image {
+    width: 80px; /* Adjust the size of the image */
+    height: auto;
+}
+
+.reward-text {
+    flex: 1; /* Ensures the text takes up remaining space */
+    text-align: left;
+}
+        .leaderboard-button {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+        .bottom-button {
+            text-align: left;
+            display: block;
+            margin: 60px auto;
+            width: fit-content;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <div class="logo-image">
+                <img src="profile-placeholder.png" alt="Profile" class="profile-placeholder">
+            </div>
+            <span>Waste360</span>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#" class="current">Home</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Store</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">About</a></li>
+                <li class="profile-icon">
+                    <div class="profile-placeholder"></div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+    <section class="reward-section">
+    <img src="trophy.png" alt="Trophy" class="reward-image">
+    <div class="reward-text">
+        <h2>Reward Points</h2>
+        <p>Total reward points - 400</p>
+        <p>Reward points earned for this month - 30</p>
+    </div>
+    <div class="leaderboard-button">
+        <button>View leaderboard</button>
+        <button class="bottom-button">Use Reward Points</button>
+    </div>
+</section>
+</main>
+
+    
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Waste360. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
