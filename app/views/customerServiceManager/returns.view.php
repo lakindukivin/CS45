@@ -92,16 +92,33 @@
         <table>
             <thead>
                 <tr>
+                    <th>Order ID</th>
                     <th>Customer ID</th>
-                    <th>Comapany Name</th>
+                    <th>Customer Name</th>
                     <th>Quantity</th>
                     <th>Phone</th>
-                    <th>Type</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody id="orderTableBody">
-                <!-- Table body will be populated by JavaScript -->
+            <?php if(isset($data['returns']) && is_array($data['returns'])): ?>
+              <?php foreach ($data['returns'] as $return) : ?>
+                <tr>
+                  <td><?= $return->order_id ?></td>
+                  <td><?= $return->customer_id ?></td>
+                  <td><?= $return->customer_name ?></td>
+                  <td><?= $return->Quantity ?></td>
+                  <td><?= $return->phone ?></td>
+                  <td>
+                  <button class="view-btn"><a href="<?=ROOT?>/GiveAwayReqUpdate">View/Edit</a></button>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="7">No give away requests found</td>
+                </tr>
+            <?php endif; ?>
             </tbody>
         </table>
       </div>
@@ -111,7 +128,8 @@
       <!-- Add this modal HTML -->
       <div id="statusModal" class="modal">
         <div class="modal-content">
-          <span class="close">&times;</span>
+
+          <span class="close">×</span>
           <h2>Return Status</h2>
           <div class="status-details">
             <p><strong>Order ID:</strong> <span id="orderId"></span></p>
@@ -127,7 +145,7 @@
           </div>
       </div>
     </div>
-  </div>
+  </div>  </div>
   <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>  
   <script src="<?=ROOT?>/assets/js/customerServiceManager/returns.js"></script>  
 </body>

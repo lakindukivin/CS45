@@ -42,7 +42,7 @@
                 src="<?=ROOT?>/assets/images/manage_order.svg" /><span class="sidebar-titles">Manage order</span></a>
           </li>
           <li>
-            <a href="#" class="sidebar-active"><img src="<?=ROOT?>/assets/images/reviews.svg" /><span
+            <a href="<?=ROOT?>/ManageReviews" class="sidebar-active"><img src="<?=ROOT?>/assets/images/reviews.svg" /><span
                 class="sidebar-titles">Manage Reviews</span></a>
           </li>
         </ul>
@@ -70,9 +70,6 @@
       <div class="container">
         <div class="header">
         <h2>Pending Reviews</h2>
-        <button class="add-button">
-                <a href="<?=ROOT?>/CompletedReviews">View Replied Reviews</a>
-            </button>
         </div>
         <table>
     <thead>
@@ -89,13 +86,11 @@
         <tr>
             <td><?=htmlspecialchars($review->customer_id)?></td>
             <td><?=htmlspecialchars($review->order_id)?></td>
-            <td><?=htmlspecialchars($review->Rating)?></td>
-            <td><?=htmlspecialchars($review->Date)?></td>
+            <td><?=htmlspecialchars($review->rating)?></td>
+            <td><?=htmlspecialchars($review->date)?></td>
             <td>
-            <button class="view-btn">
-            <a href="<?=ROOT?>/Reviews/<?=$review->Review_id?>" class="view-btn">View</a>
-            </button>
-</td>
+            <button class="view-btn"><a href="<?=ROOT?>/Reviews<?=$review->review_id?>">View</a></button>
+            </td>
         </tr>
         <?php endforeach; ?>
     </tbody>

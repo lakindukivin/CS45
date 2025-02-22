@@ -73,45 +73,55 @@
     <div class="container">
         <div class="header">
             <h1>Pending Custom Orders</h1>
-            <button class="add-button">
-                <a href="<?=ROOT?>/CompletedOrders">View Completed Orders</a>
-            </button>
         </div>
 
-        <table>
-        <thead>
-            <tr>
-                <th>Order ID</th>
-                <th>Customer Name</th>
-                <th>Company Name</th>
-                <th>Quantity</th>
-                <th>Type</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if(isset($data['orders']) && is_array($data['orders'])): ?>
-                <?php foreach($data['orders'] as $order): ?>
-                    <tr>
-                        <td><?=htmlspecialchars($order->customOrder_id)?></td>
-                        <td><?=htmlspecialchars($order->customer_name)?></td>
-                        <td><?=htmlspecialchars($order->Company_name)?></td>
-                        <td><?=htmlspecialchars($order->Quantity)?></td>
-                        <td><?=htmlspecialchars($order->Type)?></td>
-                        <td><?=htmlspecialchars($order->customOrder_status)?></td>
-                        <td>
-                            <div class="buttons">
-                            <button class="view-btn"><a href="<?=ROOT?>/CustomOrderViewForm">View</a>
-                            </button>                          
-              <button class="update-btn" onclick="updateStatus(<?=$order->customOrder_id?>)">Update</button>
-                            </div>
-                          </td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php endif; ?>
-        </tbody>
-    </table>
+        <div class="form">
+    <form method="POST" action="<?=ROOT?>/Reviews/reply">
+        <input type="hidden" name="Review_id">
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>Review ID</label>
+                <input type="text"  readonly>
+            </div>
+            <div class="form-group">
+                <label>Customer Name</label>
+                <input type="text" readonly>
+            </div>
+            <div class="form-group">
+                <label>Order ID</label>
+                <input type="text"  readonly>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Rating</label>
+                <input type="text"  readonly>
+            </div>
+            <div class="form-group">
+                <label>Date</label>
+                <input type="text" readonly>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Comment</label>
+                <textarea readonly></textarea>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Reply</label>
+                <textarea name="reply" required></textarea>
+            </div>
+        </div>
+
+        <button type="submit" class="submit-button">Submit Reply</button>
+    </form>
+</div>
 
     <!-- View Details Modal -->
     <div id="detailsModal" class="modal">

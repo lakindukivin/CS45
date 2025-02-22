@@ -1,5 +1,6 @@
 <?php
 class ManageReviews {
+    
     use Controller;
     private $reviewModel;
 

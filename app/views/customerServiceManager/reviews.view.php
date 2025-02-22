@@ -65,49 +65,54 @@
     </header>
 
 
-<div class="form">
-    <form method="POST" action="<?=ROOT?>/Reviews">
+    <div class="form">
+    <form method="POST" action="<?=ROOT?>/Reviews/reply">
+        <input type="hidden" name="Review_id" value="<?=esc($review->Review_id)?>">
+        
         <div class="form-row">
             <div class="form-group">
-                <label for="review-id">Review ID</label>
-                <input type="text" id="review-id" name="review-id" value="<?=esc($review['review_id'])?>" readonly>
+                <label>Review ID</label>
+                <input type="text" value="<?=esc($review->Review_id)?>" readonly>
             </div>
             <div class="form-group">
-                <label for="customer-id">Customer ID</label>
-                <input type="text" id="customer-id" name="customer-id" value="<?=esc($review['customer_id'])?>" readonly>
+                <label>Customer Name</label>
+                <input type="text" value="<?=esc($review->customer_name)?>" readonly>
             </div>
             <div class="form-group">
-                <label for="order-id">Order ID</label>
-                <input type="text" id="order-id" name="order-id" value="<?=esc($review['order_id'])?>" readonly>
+                <label>Order ID</label>
+                <input type="text" value="<?=esc($review->order_id)?>" readonly>
             </div>
         </div>
+
         <div class="form-row">
             <div class="form-group">
-                <label for="Rating">Rating</label>
-                <input type="text" id="rating" name="rating" value="<?=esc($review['rating'])?>" readonly>
+                <label>Rating</label>
+                <input type="text" value="<?=esc($review->Rating)?>" readonly>
             </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="date">Date</label>
-                    <input type="date" id="date" name="date" value="<?=esc($review['date'])?>" readonly>
-                </div>
+            <div class="form-group">
+                <label>Date</label>
+                <input type="text" value="<?=esc($review->Date)?>" readonly>
             </div>
         </div>
+
         <div class="form-row">
             <div class="form-group">
-                <label for="comment">Comment</label>
-                <textarea id="comment" name="comment" readonly><?=esc($review['comment'])?></textarea>
+                <label>Comment</label>
+                <textarea readonly><?=esc($review->comment)?></textarea>
             </div>
         </div>
+
         <div class="form-row">
             <div class="form-group">
-                <label for="reply">Reply</label>
-                <textarea id="reply" name="reply" placeholder="Enter your reply" required></textarea>
+                <label>Reply</label>
+                <textarea name="reply" required></textarea>
             </div>
         </div>
-        <button type="submit" class="submit-button">Submit Reply</button>  
+
+        <button type="submit">Submit Reply</button>
     </form>
 </div>
 
+</div> 
 </body>
 </html>
