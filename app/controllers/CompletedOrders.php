@@ -9,6 +9,6 @@ class CompletedOrders
     use Controller;
     public function index()
     {
-        $this->view('productionManager/completed_orders');
+        $this->view('customerServiceManager/completed_orders');
     }
 }
