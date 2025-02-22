@@ -49,7 +49,7 @@ class Login
                                 header("Location: CSManagerHome");
                                 break;
                             case 5:  // Customer Service Manager
-                                header("Location: cSManagerHome.php");
+                                header("Location: profile");
                                 break;
                             default:
                                 echo "Invalid role.";
