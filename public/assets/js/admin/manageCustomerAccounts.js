@@ -116,3 +116,73 @@ const editCustomer = async (customerID) => {
       customer.address;
   } catch (error) {}
 };
+
+let currentCustomerId = null;
+
+// Open Delete Confirmation Modal
+const openDeleteConfirmationModal = (customerId) => {
+  currentCustomerId = customerId; // Store the customer ID to delete
+  openDeleteModal(); // Use the existing function from modal.js to open the delete modal
+};
+
+// Delete Customer Function
+const deleteCustomer = async () => {
+  try {
+    const response = await fetch(
+      'http://localhost/cs45/app/controllers/CustomerController.php?action=delete',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ customer_id: currentCustomerId }), // Send the customer ID to delete
+      }
+    );
+
+    const result = await response.json();
+    if (result.success) {
+      closeDeleteModal(); // Use the existing function from modal.js to close the delete modal
+      showSuccessMessage('Customer deleted successfully'); // Show success message
+      fetchCustomerDetails(); // Refresh the customer list
+    } else {
+      alert(result.message || 'Failed to delete customer'); // Show error message
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('An error occurred while deleting the customer');
+  }
+};
+
+// Show Success Message
+const showSuccessMessage = (message) => {
+  const successMessage = document.getElementById('successMessage');
+  successMessage.querySelector('p').textContent = message; // Set the success message text
+  successMessage.style.display = 'block'; // Show the success message modal
+};
+
+// Close Success Message
+const closeSuccessMessage = () => {
+  document.getElementById('successMessage').style.display = 'none'; // Hide the success message modal
+};
+
+// Event Listeners
+document
+  .getElementById('confirmDelete')
+  .addEventListener('click', deleteCustomer); // Confirm delete
+document
+  .getElementById('cancelDelete')
+  .addEventListener('click', closeDeleteModal); // Cancel delete (use existing function)
+document
+  .getElementById('closeSuccess')
+  .addEventListener('click', closeSuccessMessage); // Close success message
+
+// Close modals if user clicks outside the modal
+window.addEventListener('click', (event) => {
+  const deleteModal = document.getElementById('deleteModal');
+  const successMessage = document.getElementById('successMessage');
+
+  if (event.target === deleteModal) {
+    closeDeleteModal(); // Close delete confirmation modal (use existing function)
+  }
+  if (event.target === successMessage) {
+    closeSuccessMessage(); // Close success message modal
+  }
+});

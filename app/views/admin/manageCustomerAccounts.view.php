@@ -153,7 +153,26 @@
                     </div>
 
                     <button type="button" class="action-btn">Update</button>
+                    <button type="button" class="cancel-btn">Cancel</button>
                 </form>
+            </div>
+
+            <!-- Delete Confirmation Modal -->
+            <div id="deleteModal" class="modal">
+                <div class="modal-content">
+                    <p>Are you sure you want to delete this customer?</p>
+                    <button id="confirmDelete" class="confirm-btn">Yes, Delete</button>
+                    <button id="cancelDelete" class="cancel-btn">Cancel</button>
+                </div>
+            </div>
+
+            <!-- Success Message Modal -->
+            <div id="successMessage" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeSuccessMessage()">&times;</span>
+                    <p>Customer deleted successfully!</p>
+                    <button id="closeSuccess" class="close">Close</button>
+                </div>
             </div>
         </div>
     </main>
