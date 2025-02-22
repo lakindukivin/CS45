@@ -37,10 +37,10 @@ class Login
                         // Redirect based on numeric Role_id
                         switch ($_SESSION['Role_id']) {
                             case 1:  // Admin
-                                header("Location: adminHome.php");
+                                header("Location: adminHome");
                                 break;
                             case 2:  // Sales Manager
-                                header("Location: salesManagerHome.php");
+                                header("Location: SalesManagerHome");
                                 break;
                             case 3:  // Customer
                                 header("Location: ProductionManagerHome");

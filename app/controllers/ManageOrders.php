@@ -1,16 +1,23 @@
 <?php
+class ManageOrders {
+    use Controller;
+    private $orderModel;
 
-/**
- * ManageOrders class
- */
- 
- class ManageOrders {
+    public function __construct() {
+        $this->orderModel = new ManageOrderModel();
+    }
 
-  use Controller;
+    public function index() {
+        $orders = $this->orderModel->getAllOrders();
+        $this->view('customerServiceManager/manage_orders', ['orders' => $orders]);
+    }
 
-  public function index() {
-
-    $this->view('customerServiceManager/manage_orders');
-  }
-
- }
+    public function updateStatus() {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $orderId = $_POST['order_id'];
+            $status = $_POST['status'];
+            $result = $this->orderModel->updateOrderStatus($orderId, $status);
+            echo json_encode(['success' => $result]);
+        }
+    }
+}
