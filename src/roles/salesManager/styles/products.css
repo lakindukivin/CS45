@@ -148,8 +148,53 @@ th {
 }
 
 form input,
-form textarea {
+form textarea,
+form select {
     width: 100%;
     padding: 8px;
     margin-top: 5px;
+}
+
+.action-btn {
+    background-color: #133223;
+    color: white;
+    padding: 10px 20px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.action-btn:hover {
+    background-color: #1c573b;
+}
+
+.edit-btn {
+    background-color: #4c8f36;
+    color: white;
+    padding: 10px 20px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.edit-btn:hover {
+    background-color: #6eaf58;
+    ;
+}
+
+.delete-btn {
+    background-color: #782424;
+    color: white;
+    padding: 10px 20px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background-color: #612424;
+    ;
 }

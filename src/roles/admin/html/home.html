@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../styles/sidebar.css" />
     <link rel="stylesheet" href="../styles/common.css" />
-    <!-- <link rel="stylesheet" href="/src/roles/admin/styles/home.css" /> -->
+    <link rel="stylesheet" href="../styles/home.css" />
     <title>Waste360|Dashboard</title>
   </head>
   <body>
@@ -95,6 +95,56 @@
         </nav>
       </header>
 
+      <div class="top">
+        <div class="left">
+          <div class="calendar">
+            <div class="calendar-header">
+              <button onclick="prevMonth()">‹</button>
+              <h2 id="monthYear"></h2>
+              <button onclick="nextMonth()">›</button>
+            </div>
+            <div class="days">
+              <div class="day">Sun</div>
+              <div class="day">Mon</div>
+              <div class="day">Tue</div>
+              <div class="day">Wed</div>
+              <div class="day">Thu</div>
+              <div class="day">Fri</div>
+              <div class="day">Sat</div>
+            </div>
+            <div class="days" id="dates"></div>
+          </div>
+        </div>
+
+        <!--timee-->
+        <div class="status-section">
+          <div class="time-display">
+            <h3>Current Time</h3>
+            <div id="clock" class="clock">Loading...</div>
+          </div>
+          <div class="metric-grid">
+            <div class="metric-card">
+              <h4>Total Staff</h4>
+              <div class="metric-value">10+</div>
+            </div>
+            <div class="metric-card">
+              <h4>Total Users</h4>
+              <div class="metric-value">100+</div>
+            </div>
+            <div class="metric-card">
+              <h4>Site Performance</h4>
+              <div class="metric-value">
+                <img
+                  src="../assets/graph1.png"
+                  alt="graph"
+                  height="100px"
+                  width="200px"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <!-- <footer>
         <div class="logo">
             <img src="/src/roles/admin/assets/Waste360.png" alt="Waste360">
@@ -102,6 +152,7 @@
         <p>&copy; 2024 Waste360. All rights reserved.</p>
     </footer> -->
       <script src="../javaScript/sidebar.js"></script>
+      <script src="../javaScript/home.js"></script>
     </main>
   </body>
 </html>
