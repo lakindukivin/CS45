@@ -162,6 +162,8 @@ form textarea form select {
     width: 100%;
     padding: 8px;
     margin-top: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
 }
 
 /*table*/
