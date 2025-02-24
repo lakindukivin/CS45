@@ -5,6 +5,9 @@ class Review {
     
     protected $table = 'review';
     protected $allowedColumns = ['Review_id', 'Rating', 'Comment', 'customer_id', 'order_id', 'Date'];
+    
+    // Define ordering properties to avoid undefined variable errors
+    
 
     public function getAllPendingReviews() {
         return $this->query(
@@ -23,23 +26,21 @@ class Review {
     }
 
     public function getReviewDetails($Review_id) {
-        $sql = "SELECT r.review_id, r.rating, r.comment, r.date,
+        $sql = "SELECT r.Review_id, r.Rating, r.Comment, r.Date,
                 c.customer_id, c.name as customer_name,
                 o.order_id
                 FROM review r
                 JOIN customer c ON r.customer_id = c.customer_id
                 JOIN orders o ON r.order_id = o.order_id
-                WHERE r.review_id = :id";
+                WHERE r.Review_id = :id";
                 
         $result = $this->query($sql, ['id' => $Review_id]);
         return $result[0] ?? false;
     }
-    
-    
 
     public function getRepliedReviews() {
         return $this->query(
-            "SELECT r.*, c.name AS customer_name, o.order_id, rp.reply, rp.date AS reply_date
+            "SELECT r.*, c.name AS customer_name, o.order_id, rp.reply, rp.Date AS reply_Date
             FROM $this->table r 
             JOIN customer c ON r.customer_id = c.customer_id 
             JOIN orders o ON r.order_id = o.order_id 
@@ -49,7 +50,7 @@ class Review {
     }
 
     public function addReply($data) {
-        $sql = "INSERT INTO reply (Review_id, reply, date) VALUES (:Review_id, :reply, NOW())";
+        $sql = "INSERT INTO reply (Review_id, reply, Date) VALUES (:Review_id, :reply, NOW())";
         return $this->query($sql, [
             'Review_id' => $data['Review_id'],
             'reply' => $data['reply']
