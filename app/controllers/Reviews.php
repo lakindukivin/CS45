@@ -1,63 +1,73 @@
 <?php
 class Reviews {
+
     use Controller;
 
-    private $reviewModel;
-
-    public function __construct() {
-        $this->reviewModel = new Review();
+    public function index() {
+        $reviewModel = new Review();
+        $data['reviews'] = $reviewModel->getAllPendingReviews();
+        $this->view('customerServiceManager/reviews', $data);
     }
 
-    public function index($id = null) {
-        ini_set('display_errors', 1);
-        error_reporting(E_ALL);
+    public function show($Review_id) {
+        $reviewModel = new Review();
+        $data['review'] = $reviewModel->getReviewDetails($Review_id);
 
-        if (!isset($id) || empty($id)) {
-            die("Error: No ID provided. Redirecting to ManageReviews...");
-            redirect('ManageReviews');
+        if (!$data['review']) {
+            $_SESSION['error'] = "Review not found.";
+            redirect("CSManagerHome");
         }
 
-        $review = $this->reviewModel->getReviewDetails($id);
-
-        if (!$review) {
-            die("Error: Review not found for ID: " . htmlspecialchars($id));
-            redirect('ManageReviews');
-        }
-
-        // Debugging Output
-        echo "<pre>";
-        print_r($review);
-        echo "</pre>";
-        die(); // Stop execution to verify data
-
-        $this->view('customerServiceManager/reviews', ['review' => $review]);
+        $this->view('customerServiceManager/review_details', $data);
     }
 
-    public function reply() {
-        ini_set('display_errors', 1);
-        error_reporting(E_ALL);
+    public function addReply() {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $reviewModel = new Review();
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['review_id'], $_POST['reply'])) {
             $data = [
-                'review_id' => htmlspecialchars($_POST['review_id']),
+                'Review_id' => htmlspecialchars($_POST['Review_id']),
                 'reply' => htmlspecialchars($_POST['reply'])
             ];
 
-            // Debugging Output
-            echo "<pre>";w
-            print_r($data);
-            echo "</pre>";
-            exit(); // Stop execution to verify form data
-
-            if ($this->reviewModel->addReply($data)) {
-                $_SESSION['success_message'] = "Reply added successfully";
+            if ($reviewModel->addReply($data)) {
+                $_SESSION['success'] = "Reply added successfully.";
+                redirect("CompletedReviews");
             } else {
-                $_SESSION['error_message'] = "Failed to add reply";
+                $_SESSION['error'] = "Failed to add reply.";
+                redirect("Reviews/" . $_POST['Review_id']);
             }
-            redirect('ManageReviews');
-        } else {
-            $_SESSION['error_message'] = "Invalid request";
-            redirect('ManageReviews');
         }
+    }
+
+    public function editReply() {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $reviewModel = new Review();
+
+            $data = [
+                'reply_id' => htmlspecialchars($_POST['reply_id']),
+                'reply' => htmlspecialchars($_POST['reply'])
+            ];
+
+            if ($reviewModel->editReply($data)) {
+                $_SESSION['success'] = "Reply updated successfully.";
+                redirect("CompletedReviews");
+            } else {
+                $_SESSION['error'] = "Failed to update reply.";
+                redirect("Reviews/" . $_POST['Review_id']);
+            }
+        }
+    }
+
+    public function deleteReply($reply_id) {
+        $reviewModel = new Review();
+
+        if ($reviewModel->removeReply($reply_id)) {
+            $_SESSION['success'] = "Reply deleted successfully.";
+        } else {
+            $_SESSION['error'] = "Failed to delete reply.";
+        }
+
+        redirect("CompletedReviews");
     }
 }
