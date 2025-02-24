@@ -125,41 +125,46 @@
                 </tbody>
             </table>
 
+            <div id="addModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeAddModal()">&times;</span>
+                    <!-- Ad Form Section -->
 
-            <!-- Ad Form Section -->
+                    <h3>Add Ads/Banners</h3>
 
-            <h3>Add Ads/Banners</h3>
+                    <form id="adFormContent">
+                        <div class="form-group">
+                            <label>Title:
+                                <input type="text" id="adTitle" placeholder="Ad Title" required />
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>Description:
+                                <textarea id="adDescription" placeholder="Ad Description" required></textarea>
+                            </label>
+                        </div>
 
-            <form id="adFormContent">
-                <div class="form-group">
-                    <label>Title:
-                        <input type="text" id="adTitle" placeholder="Ad Title" required />
-                    </label>
+                        <div class="form-group">
+                            <label>Target Audience:
+                                <input type="text" id="adAudience" placeholder="E.g., Customers, Teens, Professionals"
+                                    required />
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>Display Settings:
+                                <input type="text" id="adSettings" placeholder="E.g., Homepage, Sidebar, Banner"
+                                    required />
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>Upload Banner File:
+                                <input type="file" id="adFile" accept="image/*" required />
+                            </label>
+                        </div>
+                        <button type="submit" class="action-btn">Save & Preview</button>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label>Description:
-                        <textarea id="adDescription" placeholder="Ad Description" required></textarea>
-                    </label>
-                </div>
-
-                <div class="form-group">
-                    <label>Target Audience:
-                        <input type="text" id="adAudience" placeholder="E.g., Customers, Teens, Professionals"
-                            required />
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label>Display Settings:
-                        <input type="text" id="adSettings" placeholder="E.g., Homepage, Sidebar, Banner" required />
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label>Upload Banner File:
-                        <input type="file" id="adFile" accept="image/*" required />
-                    </label>
-                </div>
-                <button type="submit" class="action-btn">Save & Preview</button>
-            </form>
+            </div>
         </div>
 
         <!-- <footer>
@@ -171,6 +176,7 @@
     </main>
     <script src="<?= ROOT ?>/assets/js/salesManager/sidebar.js"></script>
     <script src="<?= ROOT ?>/assets/js/salesManager/adsAndBanners.js"></script>
+    <script src="<?= ROOT ?>/assets/js/salesManager/modal.js"></script>
 </body>
 
 </html>

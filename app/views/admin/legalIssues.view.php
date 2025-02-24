@@ -115,8 +115,8 @@
                                 <td><?= htmlspecialchars($issue->description) ?></td>
                                 <td><?= htmlspecialchars($issue->status) ?></td>
                                 <td>
-                                    <button class="edit-btn">Edit</button>
-                                    <button class="delete-btn">Delete</button>
+                                    <button class="edit-btn" onclick="openEditModal()">Edit</button>
+                                    <button class="delete-btn" onclick="openDeleteModal()">Delete</button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
