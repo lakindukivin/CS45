@@ -74,7 +74,7 @@
         <div class="header">
             <h1>Pending Custom Orders</h1>
             <button class="add-button">
-                <a href="<?=ROOT?>/CompletedOrders">View Completed Orders</a>
+                <a href="<?=ROOT?>/CompletedCustomOrders">View Completed Orders</a>
             </button>
         </div>
 

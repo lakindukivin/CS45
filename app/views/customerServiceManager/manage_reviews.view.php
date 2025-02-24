@@ -93,15 +93,16 @@
             <td><?=htmlspecialchars($review->Date)?></td>
             <td>
             <button class="view-btn">
-            <a href="<?=ROOT?>/Reviews/<?=$review->Review_id?>" class="view-btn">View</a>
+            <a href="<?=ROOT?>/Reviews/<?=$review->Review_id?>">View</a>
             </button>
 </td>
         </tr>
         <?php endforeach; ?>
     </tbody>
-</table>
+</table
 
-  </div>
+        </div>
+        
   <script src="<?=ROOT?>/assets/js/customerServiceManager/manage_rev.js"></script>
   <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>
 </body>

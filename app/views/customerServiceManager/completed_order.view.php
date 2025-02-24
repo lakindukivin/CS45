@@ -37,7 +37,7 @@
                 class="sidebar-titles">Returns</span></a>
           </li>
           <li>
-            <a href="#" class="sidebar-active"><img src="<?=ROOT?>/assets/images/manage_order.svg" /><span
+            <a href="<?=ROOT?>/ManageOrders" class="sidebar-active"><img src="<?=ROOT?>/assets/images/manage_order.svg" /><span
                 class="sidebar-titles">Manage Orders</span></a>
           </li>
           <li>
@@ -67,10 +67,7 @@
     <div class="box">
       <div class="container">
         <div class="header">
-          <h2>Pending Orders</h2>
-          <button class="add-button">
-            <a href="<?=ROOT?>/CompletedOrders">View Completed Orders</a>
-          </button>
+          <h2>Completed Orders</h2>
         </div>
         <table>
           <thead>
@@ -94,6 +91,7 @@
               <td><?= $order->Quantity ?></td>
               <td>Rs. <?= number_format($order->Total, 2) ?></td>
               <td><?= date('Y-m-d', strtotime($order->orderDate)) ?></td>
+              <td><?= $order->orderStatus ?></td>
               <td>
                 <button onclick="viewOrderDetails(<?= $order->Order_id ?>)" class="view-btn">View/Update</button>
               </td>
@@ -108,8 +106,6 @@
         </table>
       </div>
     </div>
-
-
   </div>
   </div>
   <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>
