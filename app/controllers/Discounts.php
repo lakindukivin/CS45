@@ -4,11 +4,11 @@
  * sales manager home class
  */
 
-class Discount
+class Discounts
 {
     use Controller;
     public function index()
     {
-        $this->view('salesManager/discount');
+        $this->view('salesManager/discounts');
     }
 }

@@ -7,10 +7,11 @@
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/salesManager/common.css" />
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/salesManager/sidebar.css" />
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/salesManager/adsAndBanners.css" />
-    <title>Waste360 | Ads/Banners</title>
+    <title>Ads/Banners</title>
 </head>
 
 <body>
+
     <?php
     if (isset($_SESSION['user_id'])) {
         $profileLink = ROOT . '/profile';
@@ -18,7 +19,6 @@
         $profileLink = ROOT . '/login';
     }
     ?>
-
     <nav id="sidebar">
         <button id="toggle-btn" onclick="toggleSidebar()" class="toggle-btn">
             <img src="<?= ROOT ?>/assets/images/menu.svg" alt="menu" />
@@ -26,6 +26,8 @@
         <div class="sidebar-container">
             <div class="prof-picture">
                 <img src="<?= ROOT ?>/assets/images/profile-circle.svg" alt="profile" />
+            </div>
+            <div>
                 <span class="user-title">Sales and Marketing Manager</span>
             </div>
 
@@ -48,7 +50,7 @@
                     <li>
                         <a href="<?= ROOT ?>/discounts">
                             <img src="<?= ROOT ?>/assets/images/discount.svg" alt="discounts" />
-                            <span class="sidebar-titles">Discounts</span>
+                            <span class="sidebar-titles">Discount</span>
                         </a>
                     </li>
 
@@ -93,83 +95,80 @@
             </nav>
         </header>
 
-        <div id="ad-management" class="form-container">
-            <h2>Ad/Banner Management</h2>
+        <div id="ad-management" class="container">
+            <!--Table Header-->
 
-            <!-- Ad Form Section -->
-            <div id="adForm" class="input-container">
-                <form id="adFormContent">
-                    <div class="form-group">
-                        <label>Title:
-                            <input type="text" id="adTitle" placeholder="Ad Title" required />
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label>Description:
-                            <textarea id="adDescription" placeholder="Ad Description" required></textarea>
-                        </label>
-                    </div>
+            <div class="table-header">
+                <div>
 
-                    <div class="form-group">
-                        <label>Target Audience:
-                            <input type="text" id="adAudience" placeholder="E.g., Customers, Teens, Professionals"
-                                required />
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label>Display Settings:
-                            <input type="text" id="adSettings" placeholder="E.g., Homepage, Sidebar, Banner" required />
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label>Upload Banner File:
-                            <input type="file" id="adFile" accept="image/*" required />
-                        </label>
-                    </div>
-                    <button type="submit" class="action-btn">Save & Preview</button>
-                </form>
+                </div>
+                <div>
+                    <button class="action-btn" onclick="openAddModal()">Add Ads/Banners</button>
+                </div>
             </div>
 
             <!-- Existing Ads Section -->
-            <div id="adTableSection" class="table-container">
-                <div class="table-title">
-                    <h3>Existing Ads/Banners</h3>
-                </div>
-                <table id="adTable">
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Target Audience</th>
-                            <th>Display Settings</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (!empty($ads)): ?>
-                            <?php foreach ($ads as $ad): ?>
-                                <tr>
-                                    <td><?= htmlspecialchars($ad->title) ?></td>
-                                    <td><?= htmlspecialchars($ad->description) ?></td>
-                                    <td><?= htmlspecialchars($ad->target_audience) ?></td>
-                                    <td><?= htmlspecialchars($ad->display_settings) ?></td>
-                                    <td>
-                                        <button class="edit-btn">Edit</button>
-                                        <button class="delete-btn">Delete</button>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <tr>
-                                <td colspan="5">No ads/banners found.</td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </main>
 
+
+            <table id="adTable">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Target Audience</th>
+                        <th>Display Settings</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows dynamically added -->
+                </tbody>
+            </table>
+
+
+            <!-- Ad Form Section -->
+
+            <h3>Add Ads/Banners</h3>
+
+            <form id="adFormContent">
+                <div class="form-group">
+                    <label>Title:
+                        <input type="text" id="adTitle" placeholder="Ad Title" required />
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>Description:
+                        <textarea id="adDescription" placeholder="Ad Description" required></textarea>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label>Target Audience:
+                        <input type="text" id="adAudience" placeholder="E.g., Customers, Teens, Professionals"
+                            required />
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>Display Settings:
+                        <input type="text" id="adSettings" placeholder="E.g., Homepage, Sidebar, Banner" required />
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>Upload Banner File:
+                        <input type="file" id="adFile" accept="image/*" required />
+                    </label>
+                </div>
+                <button type="submit" class="action-btn">Save & Preview</button>
+            </form>
+        </div>
+
+        <!-- <footer>
+            <div class="logo">
+                <img src="<?= ROOT ?>/assets/images/Waste360.png" alt="Waste360" />
+            </div>
+            <p>&copy; 2024 Waste360. All rights reserved.</p>
+        </footer> -->
+    </main>
     <script src="<?= ROOT ?>/assets/js/salesManager/sidebar.js"></script>
     <script src="<?= ROOT ?>/assets/js/salesManager/adsAndBanners.js"></script>
 </body>

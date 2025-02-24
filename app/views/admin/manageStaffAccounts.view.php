@@ -93,10 +93,8 @@
             </nav>
         </header>
 
-        <div class="table-container">
-            <div class="staff-title">
-                <h2>Staff Details</h2>
-            </div>
+        <div class="container">
+            
 
             <div class="table-header">
                 <div class="search-bar">
