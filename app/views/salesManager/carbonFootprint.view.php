@@ -43,7 +43,7 @@
                     </li>
 
                     <li>
-                        <a href="<?= ROOT ?>/carbonFootprint" class="sidebar-active">
+                        <a href="#" class="sidebar-active">
                             <img src="<?= ROOT ?>/assets/images/carbon-footprint.svg" alt="carbon footprint" />
                             <span class="sidebar-titles">Carbon Footprint</span>
                         </a>
@@ -128,7 +128,19 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody></tbody>
+                    <tbody>
+                        <?php if (!empty($data)): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($data['value']) ?></td>
+                                <td><?= htmlspecialchars($data['unit']) ?></td>
+                                <td><?= htmlspecialchars($data['date']) ?></td>
+                            </tr>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="3">No data available</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
                 </table>
             </div>
         </div>

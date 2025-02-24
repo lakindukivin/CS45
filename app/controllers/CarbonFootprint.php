@@ -1,14 +1,26 @@
 <?php
 
-/**
- * sales manager home class
- */
-
 class CarbonFootprint
 {
     use Controller;
+
     public function index()
     {
-        $this->view('salesManager/carbonFootprint');
+        // // Redirect to login if the user is not logged in
+        // if (!isset($_SESSION['user_id'])) {
+        //     redirect('login');
+        // }
+
+        // Load the CarbonFootprintModel
+        $carbonFootprintModel = new CarbonFootprintModel();
+
+        // Calculate and save the monthly carbon footprint
+        $carbonFootprintModel->calculateAndSaveMonthlyCarbonFootprint();
+
+        // Fetch the current carbon footprint data
+        $data = $carbonFootprintModel->getCurrentCarbonFootprint();
+
+        // Pass the data to the view
+        $this->view('salesManager/carbonFootprint', $data);
     }
 }
