@@ -93,7 +93,7 @@
               <td><?= $order->customerName ?></td>
               <td><?= $order->quantity ?></td>
               <td>Rs. <?= number_format($order->total, 2) ?></td>
-              <td><?= date('Y-m-d', strtotime($order->orderdate)) ?></td>
+              <td><?= date('Y-m-d', strtotime($order->orderDate)) ?></td>
               <td>
                 <button onclick="viewOrderDetails(<?= $order->order_id ?>)" class="view-btn">View/Update</button>
               </td>

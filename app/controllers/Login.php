@@ -20,15 +20,15 @@ class Login
                     // exit();
 
                     // Password check (adjust if using plain text or hashed passwords)
-                    if ($_POST['Password'] === $existingUser->Password) { // Use password_verify() if passwords are hashed
+                    if ($_POST['Password'] === $existingUser->password) { // Use password_verify() if passwords are hashed
 
                         if (session_status() === PHP_SESSION_NONE) {
                             session_start();
                         }
 
-                        $_SESSION['User_id'] = $existingUser->User_id;
-                        $_SESSION['Email'] = $existingUser->Email;
-                        $_SESSION['Role_id'] = $existingUser->Role_id;
+                        $_SESSION['User_id'] = $existingUser->user_id;
+                        $_SESSION['Email'] = $existingUser->email;
+                        $_SESSION['Role_id'] = $existingUser->role_id;
 
                         // Debugging: Check if session variables are set
                         // var_dump($_SESSION);
@@ -40,7 +40,7 @@ class Login
                                 header("Location: adminHome");
                                 break;
                             case 2:  // Sales Manager
-                                header("Location: SalesManagerHome");
+                                header("Location: salesManagerHome");
                                 break;
                             case 3:  // Customer
                                 header("Location: ProductionManagerHome");
@@ -49,7 +49,7 @@ class Login
                                 header("Location: CSManagerHome");
                                 break;
                             case 5:  // Customer Service Manager
-                                header("Location: cSManagerHome.php");
+                                header("Location: profile");
                                 break;
                             default:
                                 echo "Invalid role.";
