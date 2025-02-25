@@ -24,10 +24,7 @@
         </button>
         <div class="sidebar-container">
             <div class="prof-picture">
-                <img src="<?= ROOT ?>/assets/images/profile-circle.svg" alt="profile" />
-
-            </div>
-            <div>
+                <img src="<?= ROOT ?>/assets/images/user.svg" alt="profile" />
                 <span class="user-title">Sales and Marketing Manager</span>
             </div>
 
@@ -75,24 +72,33 @@
     </nav>
 
     <main>
-        <header>
+        <header class="header">
             <div class="logo">
                 <img src="<?= ROOT ?>/assets/images/Waste360.png" alt="Waste360" />
                 <h1>Waste360</h1>
             </div>
-            <div class="page-title">
-                <p>Products</p>
-            </div>
-            <nav class="header-nav">
-                <a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg" alt="" /></a>
-                <a href="#">Profile</a>
-                <a href="#">Log Out</a>
+
+            <h1 class="logo">Product Details</h1>
+
+            <nav class="nav">
+                <ul>
+
+                    <li>
+                        <a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg" alt="" /></a>
+                    </li>
+                    <li>
+                        <a href="#">Profile</a>
+                    </li>
+                    <li>
+                        <a href="#">Log Out</a>
+                    </li>
+                </ul>
             </nav>
         </header>
 
         <div class="content">
             <div class="container">
-                
+
                 <div class="table-header">
                     <div class="search-bar">
                         <img src="<?= ROOT ?>/assets/images/magnifying-glass-solid.svg" class="search-icon"

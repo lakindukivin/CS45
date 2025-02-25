@@ -25,7 +25,7 @@
         </button>
         <div class="sidebar-container">
             <div class="prof-picture">
-                <img src="<?= ROOT ?>/assets/images/profile-circle.svg" alt="profile" />
+                <img src="<?= ROOT ?>/assets/images/user.svg" alt="profile" />
                 <span class="user-title">Admin</span>
             </div>
 
@@ -78,18 +78,26 @@
     </nav>
 
     <main>
-        <header>
+        <header class="header">
             <div class="logo">
                 <img src="<?= ROOT ?>/assets/images/Waste360.png" alt="Waste360" />
                 <h1>Waste360</h1>
             </div>
-            <div class="page-title">
-                <p>Staff Management</p>
-            </div>
-            <nav class="header-nav">
-                <a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg" alt="" /></a>
-                <a href="#">Profile</a>
-                <a href="#">Log Out</a>
+        
+            <h1 class="logo">Staff Accounts</h1>
+        
+            <nav class="nav">
+                <ul>
+                    <li>
+                        <a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg" alt="" /></a>
+                    </li>
+                    <li>
+                        <a href="#">Profile</a>
+                    </li>
+                    <li>
+                        <a href="#">Log Out</a>
+                    </li>
+                </ul>
             </nav>
         </header>
 
