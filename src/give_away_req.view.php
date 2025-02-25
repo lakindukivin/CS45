@@ -81,59 +81,8 @@
         </ul>
       </nav>
     </header>
-  
-      <!-- GiveAwayReqUpdatePopup  -->
-  <div class = " hidden"
-  style = "background-color: rgba(0, 0, 0, 0.7);" id="GiveAwayReqUpdatePopup">
-  <form action = "" method="post" class="bg-white p-5 rounded-md w-full"
-    style = "max-width: 800px; max-height:90vh; overflow-y:scroll;">
-    <div class = "flex justify-between items-center">
-      <h1 class = "text-2xl font-bold text-primary-color">GiveAway Request Update</h1>
-    </div>
-
-    <div class = "flex flex-col gap-5 my-5">
-      <div class = "flex flex-col gap-2">
-        <label for = "customer_id" class = "text-lg font-bold text-primary-color">Customer ID</label>
-        <input type = "text" name = "customer_id" id="customer_id" class = "border border-primary-color rounded-xl p-2" />
-      </div>
-
-      <div class = "flex flex-col gap-2">
-        <label for = "name" class = "text-lg font-bold text-primary-color">Name</label>
-        <input type = "text" name = "name" id="name" class = "border border-primary-color rounded-xl p-2" />
-      </div>
-<!-- 
-      <div class = "flex flex-col gap-2">
-        <label for = "email" class = "text-lg font-bold text-primary-color">Email</label>
-        <input type = "text" name = "email" id="email" class = "border border-primary-color rounded-xl p-2" />
-      </div>
-
-      <div class = "flex flex-col gap-2">
-        <label for = "expected_projects" class = "text-lg font-bold text-primary-color">Expected Projects</label>
-        <input type = "text" name = "expected_projects" id="expected_projects" class = "border border-primary-color rounded-xl p-2" />
-      </div>
-      <div class = "flex flex-col gap-2">
-        <label for = "description" class = "text-lg font-bold text-primary-color">Description</label>
-        <input type = "text" name = "description" id="description" class = "border border-primary-color rounded-xl p-2" />
-      </div>
- -->
-      <div class="flex justify-end gap-5">
-        <input type = "hidden" name="customer_id" id="customer_id" />
-        <button type="button"
-          class="btn-secondary-color rounded-3xl text-center text-white text-base font-medium px-10 py-2"
-          id="GiveAwayReqUpdatePopupClose">Cancel</button>
-
-        <button type="submit"
-          class="btn-primary-color rounded-3xl text-center text-white text-base font-medium px-10 py-2"
-          name="update_supervisor">Save</button>
-      </div>
-    </div>
-  </form>
-</div>
-  
     <div class="box">
-      
       <div class="container">
-        
         <div class="header">
         <h2>Pending Give Away Request</h2>
         <button class="add-button">
@@ -163,9 +112,9 @@
                         <td><?= $giveaway->address ?></td>
                         <td><?= $giveaway->quantity ?></td>
                         <td>
-                        <button class="view-btn"
-                        onclick = 'GiveAwayReqUpdatePopup()<?=json_encode($giveaway)?>)'>
-                        View/Update</button>
+                        <button class="view-btn">
+    <a href="<?=ROOT?>/GiveAwayReqUpdate<?=$giveaway->giveaway_id?>">View/Update</a>
+</button>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -180,20 +129,7 @@
 </div>
     </div>
   </div>
-
-  <script>
-    function GiveAwayReqUpdatePopup(giveaway) {
-      document.getElementById('customer_id').value = giveaway.customer_id;
-      document.getElementById('GiveAwayReqUpdatePopup').classList.remove('hidden')
-
-    }
-    document.getElementById('GiveAwayReqUpdatePopupClose').addEventListner('click', ()=>{
-      document.getElementById('GiveAwayReqUpdatePopup').classList.add('hidden');
-    });
-    
-
-  </script>
   <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>
-  <!-- <script src="<?=ROOT?>/assets/js/customerServiceManager/give_away_request.js"></script> -->
+  <script src="<?=ROOT?>/assets/js/customerServiceManager/give_away_request.js"></script>
 </body>
 </html>

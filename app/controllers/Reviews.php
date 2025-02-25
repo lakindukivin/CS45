@@ -3,11 +3,18 @@ class Reviews {
 
     use Controller;
 
-    public function index() {
-        $reviewModel = new Review();
-        $data['reviews'] = $reviewModel->getAllPendingReviews();
-        $this->view('customerServiceManager/reviews', $data);
+    public function index($id = '') {
+        if($id) {
+            $reviewData = $this->reviewModel->getReviewDetails($id);
+            if($reviewData) {
+                $data['review'] = $reviewData;
+                $this->view('customerServiceManager/reviews', $data);
+                return;
+            }
+        }
+        redirect('ManageReviews');
     }
+    
 
     public function show($Review_id) {
         $reviewModel = new Review();

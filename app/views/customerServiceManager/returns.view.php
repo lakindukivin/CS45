@@ -107,10 +107,10 @@
                   <td><?= $return->order_id ?></td>
                   <td><?= $return->customer_id ?></td>
                   <td><?= $return->customer_name ?></td>
-                  <td><?= $return->Quantity ?></td>
+                  <td><?= $return->quantity ?></td>
                   <td><?= $return->phone ?></td>
                   <td>
-                  <button class="view-btn"><a href="<?=ROOT?>/GiveAwayReqUpdate">View/Edit</a></button>
+                  <button class="view-btn"><a href="<?=ROOT?>/ReturnUpdate">View/Edit</a></button>
                   </td>
                 </tr>
               <?php endforeach; ?>

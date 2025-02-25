@@ -6,11 +6,11 @@ class ManageOrderModel
 
     protected $table = 'orders';
     protected $allowedColumns = [
-        'Order_id',
+        'order_id',
         'product_id', 
         'customer_id',
-        'Quantity',
-        'Total',
+        'quantity',
+        'total',
         'deliveryAddress',
         'billingAddress', 
         'orderDate',
@@ -21,9 +21,9 @@ class ManageOrderModel
     {
         $query = "SELECT o.*, p.productName, c.Name as customerName 
                  FROM orders o 
-                 JOIN product p ON o.product_id = p.Product_id 
-                 JOIN customer c ON o.customer_id = c.Customer_id 
-                 ORDER BY o.Order_id DESC";
+                 JOIN product p ON o.product_id = p.product_id 
+                 JOIN customer c ON o.customer_id = c.customer_id 
+                 ORDER BY o.order_id DESC";
 
         return $this->query($query);
     }
@@ -34,6 +34,6 @@ class ManageOrderModel
             'orderStatus' => $status
         ];
         
-        return $this->update($orderId, $data, 'Order_id');
+        return $this->update($orderId, $data, 'order_id');
     }
 }

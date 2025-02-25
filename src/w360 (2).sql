@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 12, 2025 at 09:12 AM
+-- Generation Time: Feb 24, 2025 at 12:33 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -177,7 +177,10 @@ INSERT INTO `polytheneamount` (`amount_id`, `polytheneamount`, `message`, `month
 (6, 0.03, 'dwjkdmqwdmwl,d', 'August', '2025-02-11 12:27:41'),
 (7, 0.05, 'nakxmlx,', 'August', '2025-02-11 12:28:27'),
 (8, 0.03, 'bjnwkdmw', 'July', '2025-02-11 12:44:56'),
-(9, 0.01, 'bjbn', 'June', '2025-02-11 12:55:20');
+(9, 0.01, 'bjbn', 'June', '2025-02-11 12:55:20'),
+(10, 0.03, 'rgfrfr', 'January', '2025-02-22 03:59:55'),
+(11, 0.02, 'efekfnek', 'December', '2025-02-22 05:01:17'),
+(12, 0.02, 'hefiehfkjekf', 'June', '2025-02-22 12:36:16');
 
 -- --------------------------------------------------------
 
@@ -212,7 +215,9 @@ CREATE TABLE `polythenegiveaway` (
 --
 
 INSERT INTO `polythenegiveaway` (`Giveaway_id`, `Customer_id`, `Type`, `Address`, `quantity`) VALUES
-(1, 1, 'dwmdw', 'wdnwkfmel', 23);
+(1, 1, 'dwmdw', 'wdnwkfmel', 23),
+(2, 1, 'rfrf', 'ffrfft', 45),
+(3, 1, 'hrifhrf', 'fgrfhrkfj', 45);
 
 -- --------------------------------------------------------
 
@@ -280,6 +285,13 @@ CREATE TABLE `return_item` (
   `returnStatus` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `return_item`
+--
+
+INSERT INTO `return_item` (`Return_id`, `order_id`, `returnStatus`) VALUES
+(1, 1, 'pending');
+
 -- --------------------------------------------------------
 
 --
@@ -302,7 +314,12 @@ CREATE TABLE `review` (
 
 INSERT INTO `review` (`Review_id`, `customer_id`, `order_id`, `Rating`, `Comment`, `Date`, `dateModified`) VALUES
 (1, 1, 1, 3, 'gsuchsclwm,m', '2025-02-04 11:19:52', '2025-02-04 11:19:52'),
-(2, 1, 1, 4, 'dhwidjwdjqd', '2025-02-03 15:30:11', '2025-02-04 11:19:52');
+(2, 1, 1, 4, 'dhwidjwdjqd', '2025-02-03 15:30:11', '2025-02-04 11:19:52'),
+(3, 1, 1, 5, 'ffhivjfbmbk', '2025-02-16 19:17:29', '2025-02-04 11:19:52'),
+(4, 2, 1, 4, 'vhbknkbjn', '2025-02-17 19:19:58', '2025-02-12 19:19:58'),
+(5, 1, 1, 4, 'rfgtgt', '2025-02-16 20:01:42', '2025-02-17 20:01:42'),
+(6, 2, 1, 4, 'tgtgtgt', '2025-02-04 11:19:52', '2025-02-04 11:19:52'),
+(7, 2, 1, 6, 'yhujuju', '2025-02-21 12:55:57', '2025-02-21 12:55:57');
 
 -- --------------------------------------------------------
 
@@ -333,6 +350,7 @@ CREATE TABLE `role` (
 
 INSERT INTO `role` (`Role_id`, `Role`) VALUES
 (1, 'customer'),
+(2, 'salesMarketingManager'),
 (3, 'productionManager'),
 (4, 'customerServiceManager');
 
@@ -369,6 +387,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`User_id`, `Email`, `Password`, `Role_id`) VALUES
 (1, 'lakindu@gmail.com', '111111', 1),
+(2, 'chamudi@gmail.com', '222222', 2),
 (3, 'nethmi@gmail.com', '333333', 3),
 (4, 'nimasha@gmail.com', '444444', 4);
 
@@ -545,7 +564,7 @@ ALTER TABLE `pellet`
 -- AUTO_INCREMENT for table `polytheneamount`
 --
 ALTER TABLE `polytheneamount`
-  MODIFY `amount_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `amount_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `polythenecollection`
@@ -557,7 +576,7 @@ ALTER TABLE `polythenecollection`
 -- AUTO_INCREMENT for table `polythenegiveaway`
 --
 ALTER TABLE `polythenegiveaway`
-  MODIFY `Giveaway_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Giveaway_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -581,13 +600,13 @@ ALTER TABLE `report`
 -- AUTO_INCREMENT for table `return_item`
 --
 ALTER TABLE `return_item`
-  MODIFY `Return_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Return_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `review`
 --
 ALTER TABLE `review`
-  MODIFY `Review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `Review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `rewards`

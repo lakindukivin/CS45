@@ -28,7 +28,7 @@
           </li>
 
           <li>
-            <a href="<?=ROOT?>/GiveAwayRequest"><img
+            <a href="<?=ROOT?>/GiveAwayRequest" class="sidebar-active"><img
                 src="<?=ROOT?>/assets/images/give_away.svg" /><span class="sidebar-titles">Give Away</span></a>
           </li>
           <li>
@@ -40,7 +40,7 @@
                 src="<?=ROOT?>/assets/images/manage_order.svg" /><span class="sidebar-titles">Manage order</span></a>
           </li>
           <li>
-            <a href="<?=ROOT?>/ManageReviews" class="sidebar-active"><img src="<?=ROOT?>/assets/images/reviews.svg" /><span
+            <a href="<?=ROOT?>/ManageReviews" ><img src="<?=ROOT?>/assets/images/reviews.svg" /><span
                 class="sidebar-titles">Manage Reviews</span></a>
           </li>
         </ul>
@@ -65,44 +65,47 @@
     </header>
 
     <div class="form">
-      <div class="form-row">
+    <div class="form-row">
         <div class="form-group">
-          <label for="give_away-id">Give Away ID ID</label>
-          <input type="text" id="give_away-id" name="give_away-id"  required>
+            <label for="give_away-id">Give Away ID</label>
+            <input type="text" id="give_away-id" name="give_away-id" value="<?=$data['giveaway']->GiveAway_id?>" readonly>
         </div>
         <div class="form-group">
-          <label for="customer-id">Customer ID</label>
-          <input type="text" id="customer-id" name="customer-id" placeholder="customer ID" required>
+            <label for="customer-id">Customer ID</label>
+            <input type="text" id="customer-id" name="customer-id" value="<?=$data['giveaway']->Customer_id?>" readonly>
         </div>
         <div class="form-group">
-          <label for="name">Customer Name</label>
-          <input type="text" id="name" name="name" required>
+            <label for="name">Customer Name</label>
+            <input type="text" id="name" name="name" value="<?=$data['giveaway']->Name?>" readonly>
         </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="address">Address</label>
-          <input type="address" id="address" name="address" required>
-      </div>
     </div>
     <div class="form-row">
         <div class="form-group">
-          <label for="Type">Type</label>
-          <input type="text" id="type" name="type"  required>
-      </div>
+            <label for="address">Address</label>
+            <input type="address" id="address" name="address" value="<?=$data['giveaway']->Address?>" readonly>
+        </div>
     </div>
     <div class="form-row">
-    <div class="form-group">
-        <label for="quantity">Quantity</label>
-        <input id="quantity" name="quantity" placeholder="quantity" required></input>
-      </div>
-      <div class="form-group">
-        <label for="date">Date</label>
-        <input type="date" id="date" name="date" placeholder="Date" required>
-       </div>
+        <div class="form-group">
+            <label for="Type">Type</label>
+            <input type="text" id="type" name="type" value="<?=$data['giveaway']->Type?>" readonly>
+        </div>
     </div>
-    <button type="Accept" class="accept-button">Accept</button>  
-    <button type="Reject" class="reject-button">Reject</button> 
+    <div class="form-row">
+        <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <input id="quantity" name="quantity" value="<?=$data['giveaway']->quantity?>" readonly>
+        </div>
+        <div class="form-group">
+            <label for="date">Date</label>
+            <input type="date" id="date" name="date" value="<?=$data['giveaway']->Date?>" readonly>
+        </div>
     </div>
+    <div class="buttons">
+        <button class="accept" type="Accept" class="accept-button">Accept</button>  
+        <button class="reject" type="Reject" class="reject-button">Reject</button> 
+    </div> 
+</div>
+
 </body>
 </html>

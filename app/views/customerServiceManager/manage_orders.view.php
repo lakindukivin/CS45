@@ -88,14 +88,14 @@
             <?php if(!empty($orders)): ?>
             <?php foreach($orders as $order): ?>
             <tr>
-              <td><?= $order->Order_id ?></td>
+              <td><?= $order->order_id ?></td>
               <td><?= $order->productName ?></td>
               <td><?= $order->customerName ?></td>
-              <td><?= $order->Quantity ?></td>
-              <td>Rs. <?= number_format($order->Total, 2) ?></td>
-              <td><?= date('Y-m-d', strtotime($order->orderDate)) ?></td>
+              <td><?= $order->quantity ?></td>
+              <td>Rs. <?= number_format($order->total, 2) ?></td>
+              <td><?= date('Y-m-d', strtotime($order->orderdate)) ?></td>
               <td>
-                <button onclick="viewOrderDetails(<?= $order->Order_id ?>)" class="view-btn">View/Update</button>
+                <button onclick="viewOrderDetails(<?= $order->order_id ?>)" class="view-btn">View/Update</button>
               </td>
             </tr>
             <?php endforeach; ?>

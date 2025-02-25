@@ -24,22 +24,21 @@
       <div>
         <ul>
           <li>
-            <a href="<?=ROOT?>/CSManagerHome"><img
-                src="<?=ROOT?>/assets/images/dashboard.svg" alt="dashboard" /><span
+            <a href="<?=ROOT?>/CSManagerHome"><img src="<?=ROOT?>/assets/images/dashboard.svg" alt="dashboard" /><span
                 class="sidebar-titles">Dashboard</span></a>
           </li>
 
           <li>
-            <a href="<?=ROOT?>/GiveAwayRequest"><img
-                src="<?=ROOT?>/assets/images/give_away.svg" /><span class="sidebar-titles">Give Away</span></a>
+            <a href="<?=ROOT?>/GiveAwayRequest"><img src="<?=ROOT?>/assets/images/give_away.svg" /><span
+                class="sidebar-titles">Give Away</span></a>
           </li>
           <li>
-            <a href="<?=ROOT?>/Returns"><img
-                src="<?=ROOT?>/assets/images/returns.svg" /><span class="sidebar-titles">Returns</span></a>
+            <a href="<?=ROOT?>/Returns"><img src="<?=ROOT?>/assets/images/returns.svg" /><span
+                class="sidebar-titles">Returns</span></a>
           </li>
           <li>
-            <a href="<?=ROOT?>/ManageOrders"><img
-                src="<?=ROOT?>/assets/images/manage_order.svg" /><span class="sidebar-titles">Manage order</span></a>
+            <a href="<?=ROOT?>/ManageOrders"><img src="<?=ROOT?>/assets/images/manage_order.svg" /><span
+                class="sidebar-titles">Manage order</span></a>
           </li>
           <li>
             <a href="#" class="sidebar-active"><img src="<?=ROOT?>/assets/images/reviews.svg" /><span
@@ -69,42 +68,42 @@
     <div class="box">
       <div class="container">
         <div class="header">
-        <h2>Pending Reviews</h2>
-        <button class="add-button">
-                <a href="<?=ROOT?>/CompletedReviews">View Replied Reviews</a>
-            </button>
+          <h2>Pending Reviews</h2>
+          <button class="add-button">
+            <a href="<?=ROOT?>/CompletedReviews">View Replied Reviews</a>
+          </button>
         </div>
         <table>
-    <thead>
-        <tr>
-            <th>Customer ID</th>
-            <th>Order ID</th>
-            <th>Rating</th>
-            <th>Date</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach($reviews as $review): ?>
-        <tr>
-            <td><?=htmlspecialchars($review->customer_id)?></td>
-            <td><?=htmlspecialchars($review->order_id)?></td>
-            <td><?=htmlspecialchars($review->Rating)?></td>
-            <td><?=htmlspecialchars($review->Date)?></td>
-            <td>
-            <button class="view-btn">
-            <a href="<?=ROOT?>/Reviews/<?=$review->Review_id?>">View</a>
-            </button>
-</td>
-        </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table
+          <thead>
+            <tr>
+              <th>Customer ID</th>
+              <th>Order ID</th>
+              <th>Rating</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach($reviews as $review): ?>
+            <tr>
+              <td><?=htmlspecialchars($review->customer_id)?></td>
+              <td><?=htmlspecialchars($review->order_id)?></td>
+              <td><?=htmlspecialchars($review->rating)?></td>
+              <td><?=htmlspecialchars($review->date)?></td>
+              <td>
+              <button class="view-btn">
+    <a href="<?=ROOT?>/Reviews/<?=$review->review_id?>">View</a>
+</button>
 
-        </div>
-        
-  <script src="<?=ROOT?>/assets/js/customerServiceManager/manage_rev.js"></script>
-  <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>
+              </td>
+            </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+       </div>
+
+        <script src="<?=ROOT?>/assets/js/customerServiceManager/manage_rev.js"></script>
+        <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>
 </body>
 
 </html>
