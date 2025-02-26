@@ -66,40 +66,39 @@
 
 
     <div class="form">
-    <?php if(isset($review) && $review): ?>
-    <form method="POST" action="<?=ROOT?>/Reviews/reply">
-        <input type="hidden" name="review_id" value="<?=esc($review->review_id)?>">
+    <form >
+        <input type="" name="review_id" >
         
         <div class="form-row">
             <div class="form-group">
                 <label>Review ID</label>
-                <input type="text" value="<?=esc($review->review_id)?>" readonly>
+                <input type="text" >
             </div>
             <div class="form-group">
                 <label>Customer Name</label>
-                <input type="text" value="<?=esc($review->customer_name)?>" readonly>
+                <input type="text"  >
             </div>
             <div class="form-group">
                 <label>Order ID</label>
-                <input type="text" value="<?=esc($review->order_id)?>" readonly>
+                <input type="text" >
             </div>
         </div>
 
         <div class="form-row">
             <div class="form-group">
                 <label>rating</label>
-                <input type="text" value="<?=esc($review->rating)?>" readonly>
+                <input type="text" >
             </div>
             <div class="form-group">
                 <label>date</label>
-                <input type="text" value="<?=esc($review->date)?>" readonly>
+                <input type="text"  >
             </div>
         </div>
 
         <div class="form-row">
             <div class="form-group">
                 <label>Comment</label>
-                <textarea readonly><?=esc($review->comment)?></textarea>
+                <textarea ></textarea>
             </div>
         </div>
 
@@ -112,9 +111,7 @@
 
         <button type="submit">Submit Reply</button>
     </form>
-    <?php else: ?>
-        <p>Review not found</p>
-    <?php endif; ?>
+    
 </div>
 </body>
 </html>

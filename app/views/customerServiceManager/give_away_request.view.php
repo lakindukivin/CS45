@@ -1,199 +1,203 @@
-<!DOCTYPE html>
+<!DOCrequest_date html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="<?=ROOT?>/assets/css/customerServiceManager/sidebar.css">
-    <link rel="stylesheet" href="<?=ROOT?>/assets/css/customerServiceManager/give_away_request.css">
-    <link rel="stylesheet" href="<?=ROOT?>/assets/css/customerServiceManager/common.css">
-    <title>Waste360|Dashboard|CSM</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="<?= ROOT ?>/assets/css/customerServiceManager/sidebar.css">
+  <link rel="stylesheet" href="<?= ROOT ?>/assets/css/customerServiceManager/give_away_request.css">
+  <link rel="stylesheet" href="<?= ROOT ?>/assets/css/customerServiceManager/common.css">
+  <title>Waste360|Dashboard|CSM</title>
 </head>
+
 <body>
-    <nav id="sidebar">
-      <button id="toggle-btn" onclick="toggleSidebar()" class="toggle-btn">
-        <img src="<?=ROOT?>/assets/images/menu.svg" alt="menu" />
-      </button>
-      <div class="sidebar-container">
-        <div class="prof-picture">
-          <img src="<?=ROOT?>/assets/images/user.svg" alt="profile" />
-          <span class="user-title">Customer Service Manager</span>
-        </div>
-
-        <div>
-          <ul>
-            <li>
-              <a href="<?=ROOT?>/CSManagerHome" 
-                ><img src="<?=ROOT?>/assets/images/dashboard.svg" alt="dashboard" /><span
-                  class="sidebar-titles"
-                  >Dashboard</span
-                ></a
-              >
-            </li>
-
-            <li>
-              <a href="#" class="sidebar-active"
-                ><img src="<?=ROOT?>/assets/images/give_away.svg" /><span
-                  class="sidebar-titles"
-                  >Give Away</span
-                ></a
-              >
-            </li>
-            <li>
-              <a href="<?=ROOT?>/Returns"
-                ><img src="<?=ROOT?>/assets/images/returns.svg" /><span
-                  class="sidebar-titles"
-                  >Returns</span
-                ></a
-              >
-            </li>
-            <li>
-              <a href="<?=ROOT?>/ManageOrders"
-                ><img
-                  src="<?=ROOT?>/assets/images/manage_order.svg"
-                /><span class="sidebar-titles">Manage Orders</span></a
-              >
-            </li>
-            <li>
-              <a href="<?=ROOT?>/ManageReviews"
-                ><img src="<?=ROOT?>/assets/images/reviews.svg" /><span
-                  class="sidebar-titles"
-                  >Manage Reviews</span
-                ></a
-              >
-            </li>
-          </ul>
-        </div> 
+  <nav id="sidebar">
+    <button id="toggle-btn" onclick="toggleSidebar()" class="toggle-btn">
+      <img src="<?= ROOT ?>/assets/images/menu.svg" alt="menu" />
+    </button>
+    <div class="sidebar-container">
+      <div class="prof-picture">
+        <img src="<?= ROOT ?>/assets/images/user.svg" alt="profile" />
+        <span class="user-title">Customer Service Manager</span>
       </div>
-    </nav>
+
+      <div>
+        <ul>
+          <li>
+            <a href="<?= ROOT ?>/CSManagerHome"><img src="<?= ROOT ?>/assets/images/dashboard.svg" alt="dashboard" /><span
+                class="sidebar-titles">Dashboard</span></a>
+          </li>
+
+          <li>
+            <a href="#" class="sidebar-active"><img src="<?= ROOT ?>/assets/images/give_away.svg" /><span
+                class="sidebar-titles">Give Away</span></a>
+          </li>
+          <li>
+            <a href="<?= ROOT ?>/Returns"><img src="<?= ROOT ?>/assets/images/returns.svg" /><span
+                class="sidebar-titles">Returns</span></a>
+          </li>
+          <li>
+            <a href="<?= ROOT ?>/ManageOrders"><img
+                src="<?= ROOT ?>/assets/images/manage_order.svg" /><span class="sidebar-titles">Manage Orders</span></a>
+          </li>
+          <li>
+            <a href="<?= ROOT ?>/ManageReviews"><img src="<?= ROOT ?>/assets/images/reviews.svg" /><span
+                class="sidebar-titles">Manage Reviews</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
   <div class="content">
+    <div id="giveAwayReqUpdatePopup">
+      <div class="popup-content">
+        <form action="" method="post" class="bg-white p-5 rounded-md w-full">
+
+          <div class="popup-content">
+            <h1>Give Away Request Update</h1>
+
+            <button type="button" class="btn-secondary-color"
+            id="giveAwayReqUpdatePopupClose">Cancel</button>
+          </div>
+
+
+          <div class="popup-content">
+            <label for="Customer_id" class="">Customer ID: </label>
+            <input type="text" name="customer_id" id="customer_id" />
+          </div>
+
+
+          <div class="popup-content">
+            <label for="Name" class="">Name: </label>
+            <input type="text" name="name" id="name" />
+          </div>
+
+          <div class="popup-content">
+            <label for="Phone">Phone: </label>
+            <input type="text" name="Phone" id="phone" />
+          </div>
+          <div class="popup-content">
+            <label for="request_date">request_date: </label>
+            <input type="text" name="request_date" id="request_date" />
+          </div>
+          <div class="popup-content">
+            <label for="Address">Address: </label>
+            <input type="text" name="Address" id="address" />
+          </div>
+
+          <div class="popup-content">
+            <label for="status">Status: </label>
+            <input type="text" name="status" id="status" />
+          </div>
+
+          <div class="popup-content">
+            <label for="status">Details: </label>
+            <input type="text" name="details" id="details" />
+          </div>
+
+          <div>
+            <button type="submit" class="accept"
+              name="accept_giveaway">Accept</button>
+
+              <button type="submit" class="reject"
+              name="reject_giveaway">Reject</button>
+          </div>
+
+        </form>
+      </div>
+
+
+    </div>
+
     <header class="header">
       <div class="logo">
-      <img src="<?=ROOT?>/assets/images/Waste360.png" alt="logo" />
-      <h1>Waste360</h1>  
-      </div> 
+        <img src="<?= ROOT ?>/assets/images/Waste360.png" alt="logo" />
+        <h1>Waste360</h1>
+      </div>
       <h1 class="logo">DashBoard</h1>
       <nav class="nav">
         <ul>
-          <li><a href="#"><img src="<?=ROOT?>/assets/images/notifications.svg"></a></li>
+          <li><a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg"></a></li>
           <li><a href="#">Profile</a></li>
           <li><a href="#">Logout</a></li>
         </ul>
       </nav>
     </header>
-  
-      <!-- GiveAwayReqUpdatePopup  -->
-  <div class = " hidden"
-  style = "background-color: rgba(0, 0, 0, 0.7);" id="GiveAwayReqUpdatePopup">
-  <form action = "" method="post" class="bg-white p-5 rounded-md w-full"
-    style = "max-width: 800px; max-height:90vh; overflow-y:scroll;">
-    <div class = "flex justify-between items-center">
-      <h1 class = "text-2xl font-bold text-primary-color">GiveAway Request Update</h1>
-    </div>
-
-    <div class = "flex flex-col gap-5 my-5">
-      <div class = "flex flex-col gap-2">
-        <label for = "customer_id" class = "text-lg font-bold text-primary-color">Customer ID</label>
-        <input type = "text" name = "customer_id" id="customer_id" class = "border border-primary-color rounded-xl p-2" />
-      </div>
-
-      <div class = "flex flex-col gap-2">
-        <label for = "name" class = "text-lg font-bold text-primary-color">Name</label>
-        <input type = "text" name = "name" id="name" class = "border border-primary-color rounded-xl p-2" />
-      </div>
-<!-- 
-      <div class = "flex flex-col gap-2">
-        <label for = "email" class = "text-lg font-bold text-primary-color">Email</label>
-        <input type = "text" name = "email" id="email" class = "border border-primary-color rounded-xl p-2" />
-      </div>
-
-      <div class = "flex flex-col gap-2">
-        <label for = "expected_projects" class = "text-lg font-bold text-primary-color">Expected Projects</label>
-        <input type = "text" name = "expected_projects" id="expected_projects" class = "border border-primary-color rounded-xl p-2" />
-      </div>
-      <div class = "flex flex-col gap-2">
-        <label for = "description" class = "text-lg font-bold text-primary-color">Description</label>
-        <input type = "text" name = "description" id="description" class = "border border-primary-color rounded-xl p-2" />
-      </div>
- -->
-      <div class="flex justify-end gap-5">
-        <input type = "hidden" name="customer_id" id="customer_id" />
-        <button type="button"
-          class="btn-secondary-color rounded-3xl text-center text-white text-base font-medium px-10 py-2"
-          id="GiveAwayReqUpdatePopupClose">Cancel</button>
-
-        <button type="submit"
-          class="btn-primary-color rounded-3xl text-center text-white text-base font-medium px-10 py-2"
-          name="update_supervisor">Save</button>
-      </div>
-    </div>
-  </form>
-</div>
-  
     <div class="box">
-      
       <div class="container">
-        
         <div class="header">
-        <h2>Pending Give Away Request</h2>
-        <button class="add-button">
-                <a href="<?=ROOT?>/CompletedGiveAway">View Completed Give Aways</a>
-            </button>
+          <h2>Pending Give Away Request</h2>
+          <button class="add-button">
+            <a href="<?= ROOT ?>/CompletedGiveAway">View Completed Give Aways</a>
+          </button>
         </div>
-        <table id="giveAwayTable">  
-            <thead>
+        <table id="giveAwayTable">
+          <thead>
+            <tr>
+              <th>Customer ID</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>request_date</th>
+              <th>Address</th>
+              <th>status</th>
+              <th>Action </th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php if (isset($data['giveaways']) && is_array($data['giveaways'])): ?>
+              <?php foreach ($data['giveaways'] as $giveaway): ?>
                 <tr>
-                    <th>Customer ID</th>
-                    <th>Name</th>
-                    <th>Phone</th>
-                    <th>Type</th>
-                    <th>Address</th>  
-                    <th>Quantity</th>
-                    <th>Action</th>
+                  <td><?= $giveaway->customer_id ?></td>
+                  <td><?= $giveaway->name ?></td>
+                  <td><?= $giveaway->phone ?></td>
+                  <td><?= $giveaway->request_date ?></td>
+                  <td><?= $giveaway->address ?></td>
+                  <td><?= $giveaway->status ?></td>
+                  <td>
+                    <button class="view-btn" onclick='openGiveAwayReqUpdatePopup(<?= json_encode($giveaway, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) ?>)'>View/Update</button>
+                    <!-- <a href="<?= ROOT ?>/GiveAwayReqUpdate<?= $giveaway->giveaway_id ?>">View/Update</a>
+</button> -->
+                  </td>
                 </tr>
-            </thead>
-            <tbody>
-            <?php if(isset($data['giveaways']) && is_array($data['giveaways'])): ?>
-                <?php foreach($data['giveaways'] as $giveaway): ?>
-                    <tr>
-                        <td><?= $giveaway->customer_id ?></td>
-                        <td><?= $giveaway->name ?></td>
-                        <td><?= $giveaway->phone ?></td>
-                        <td><?= $giveaway->type ?></td>
-                        <td><?= $giveaway->address ?></td>
-                        <td><?= $giveaway->quantity ?></td>
-                        <td>
-                        <button class="view-btn"
-                        onclick = 'GiveAwayReqUpdatePopup()<?=json_encode($giveaway)?>)'>
-                        View/Update</button>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
+              <?php endforeach; ?>
             <?php else: ?>
-                <tr>
-                    <td colspan="7">No give away requests found</td>
-                </tr>
+              <tr>
+                <td colspan="7">No give away requests found</td>
+              </tr>
             <?php endif; ?>
-            </tbody>
+          </tbody>
         </table>
-      </div> 
-</div>
+      </div>
     </div>
   </div>
 
   <script>
-    function GiveAwayReqUpdatePopup(giveaway) {
+    function openGiveAwayReqUpdatePopup(giveaway) {
       document.getElementById('customer_id').value = giveaway.customer_id;
-      document.getElementById('GiveAwayReqUpdatePopup').classList.remove('hidden')
+      document.getElementById('name').value = giveaway.name;
+      document.getElementById('phone').value = giveaway.phone;
+      document.getElementById('request_date').value = giveaway.request_date;
+      document.getElementById('address').value = giveaway.address;
+      document.getElementById('status').value = giveaway.status;
+      document.getElementById('details').value = giveaway.details;
 
+      document.getElementById('customer_id').readOnly = true;
+      document.getElementById('name').readOnly = true;
+      document.getElementById('phone').readOnly = true;
+      document.getElementById('request_date').readOnly = true;
+      document.getElementById('address').readOnly = true;
+      document.getElementById('status').readOnly = true;
+      document.getElementById('details').readOnly = true;
+
+      document.getElementById('giveAwayReqUpdatePopup').style.display = 'flex';
+      document.getElementById('giveAwayReqUpdatePopupClose').addEventListener('click', () => {
+        document.getElementById('giveAwayReqUpdatePopup').style.display = 'none';
+      });
     }
-    document.getElementById('GiveAwayReqUpdatePopupClose').addEventListner('click', ()=>{
-      document.getElementById('GiveAwayReqUpdatePopup').classList.add('hidden');
-    });
-    
-
   </script>
-  <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>
-  <!-- <script src="<?=ROOT?>/assets/js/customerServiceManager/give_away_request.js"></script> -->
+  <script src="<?= ROOT ?>/assets/js/customerServiceManager/sidebar.js"></script>
+  <!-- <script src="<?= ROOT ?>/assets/js/customerServiceManager/give_away_request.js"></script> -->
 </body>
+
 </html>

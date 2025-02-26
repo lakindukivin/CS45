@@ -3,20 +3,20 @@ class Reviews {
 
     use Controller;
 
-    public function index($id = '') {
-        if($id) {
-            $reviewData = $this->reviewModel->getReviewDetails($id);
-            if($reviewData) {
-                $data['review'] = $reviewData;
-                $this->view('customerServiceManager/reviews', $data);
-                return;
-            }
-        }
-        redirect('ManageReviews');
+    public function index() {
+        //if($id) {
+           // $reviewData = $this->reviewModel->getReviewDetails($id);
+            //if($reviewData) {
+                //$data['review'] = $reviewData;
+                $this->view('customerServiceManager/reviews');
+                //return;
+           // }
+       // }
+       // redirect('ManageReviews');
     }
     
-
-    public function show($Review_id) {
+}
+    /*public function show($Review_id) {
         $reviewModel = new Review();
         $data['review'] = $reviewModel->getReviewDetails($Review_id);
 
@@ -77,4 +77,4 @@ class Reviews {
 
         redirect("CompletedReviews");
     }
-}
+}*/

@@ -3,7 +3,7 @@
   --secondary-green: #2d7d4c;
   --accent-green: #34965e;
   --light-green: #e7f6ec;
-  --danger-red: #dc3545;
+  --danger-red: #d9534f;
   --white: #ffffff;
   --gray-100: #f8f9fa;
   --gray-200: #e9ecef;
@@ -116,71 +116,141 @@ th {
   box-shadow: var(--shadow-md);
 }
 
-.modal {
-  display: none;
+/* Background Overlay */
+#giveAwayReqUpdatePopup {
   position: fixed;
-  z-index: 1000;
-  left: 0;
   top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.4);
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  display: none;
+  /* Initially hidden */
+  animation: fadeIn 0.3s ease-in-out;
 }
 
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 50%;
-  border-radius: 5px;
+/* Popup Content */
+.popup-content {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0px4px10pxrgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
 }
 
-.modal-header {
-  position: relative;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #ddd;
+.popup-content h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+  text-align: center;
 }
 
-.close {
-  position: absolute;
-  right: 0;
-  top: 0;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
+/* Form Fields */
+.popup-content label {
+  font-weight: 600;
+  color: #333;
 }
 
-.form-group {
-  margin: 15px 0;
-}
-
-.form-group input, .form-group textarea {
+.popup-content input {
   width: 100%;
-  padding: 8px;
-  margin-top: 5px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border0.3s;
+  margin: 0;
 }
 
-.btn-accept {
-  background-color: #4CAF50;
-  color: white;
+
+/* Button Container */
+.popup-content .button-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+/* Buttons */
+.popup-content button {
   padding: 10px 20px;
   border: none;
-  border-radius: 4px;
+  border-radius: 20px;
+  font-size: 1rem;
   cursor: pointer;
+  transition: all 0.3s;
 }
 
-.btn-reject {
-  background-color: #f44336;
+/* Cancel Button */
+.popup-content .btn-secondary-color {
+  background: var(--danger-red);
   color: white;
-  padding: 10px 20px;
   border: none;
-  border-radius: 4px;
   cursor: pointer;
-  margin-left: 10px;
+  width: 100px;
+  margin-left: 550px;
+  transition: background0.3s;
 }
 
+.popup-content .btn-secondary-color:hover {
+  background: #c9302c;
+}
+
+.popup-content .accept {
+  background: var(--secondary-green);
+  width: 100px;
+  border: none;
+  cursor: pointer;
+  color: var(--white);
+}
+
+.popup-content .accept:hover {
+  background: var(--accent-green);
+}
+
+.popup-content .reject {
+  background: var(--danger-red);
+  width: 100px;
+  border: none;
+  cursor: pointer;
+  color: var(--white);
+}
+
+.popup-content .reject:hover {
+  background: #c9302c;
+}
+
+
+/* Smooth Fade-in Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
+  .popup-content {
+    width: 90%;
+  }
+
   .container {
     width: 90%;
     margin: 1rem auto;
@@ -190,5 +260,4 @@ th {
   .box {
     flex-direction: column;
   }
-  
 }

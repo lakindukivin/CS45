@@ -92,7 +92,7 @@
               <td><?=htmlspecialchars($review->date)?></td>
               <td>
               <button class="view-btn">
-    <a href="<?=ROOT?>/Reviews/<?=$review->review_id?>">View</a>
+    <a href="<?=ROOT?>/Reviews">View</a>
 </button>
 
               </td>
