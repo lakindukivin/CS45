@@ -9,6 +9,9 @@ class AdsAndBanners
     use Controller;
     public function index()
     {
-        $this->view('salesManager/adsAndBanners');
+        //get all ad and banners
+        $adsBannerss = new AdsAndBannersModel();
+        $adsBannerss = $adsBannerss->getAdsAndBanners();
+        $this->view('salesManager/adsAndBanners',[]);
     }
 }
