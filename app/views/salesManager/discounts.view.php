@@ -83,12 +83,12 @@
                 <img src="<?= ROOT ?>/assets/images/Waste360.png" alt="Waste360" />
                 <h1>Waste360</h1>
             </div>
-        
+
             <h1 class="logo">Discounts</h1>
-        
+
             <nav class="nav">
                 <ul>
-        
+
                     <li>
                         <a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg" alt="" /></a>
                     </li>
@@ -124,13 +124,14 @@
                         <th>Discount Percentage</th>
                         <th>Start Date</th>
                         <th>End Date</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if (!empty($discounts)): ?>
                         <?php foreach ($discounts as $discount): ?>
                             <tr>
-                                <td><?= htmlspecialchars($discount->Discount_id) ?></td>
+                                <td><?= htmlspecialchars($discount->discount_id) ?></td>
                                 <td><?= htmlspecialchars($discount->productName) ?></td>
                                 <td><?= htmlspecialchars($discount->productPrice) ?></td>
                                 <td><?= htmlspecialchars($discount->discount_percentage) ?></td>
@@ -138,9 +139,9 @@
                                 <td><?= htmlspecialchars($discount->end_date) ?></td>
                                 <td>
                                     <button class="edit-btn"
-                                        onclick="openEditModal('<?= $discount->Discount_id ?>', '<?= $discount->productName ?>', '<?= $discount->discount_percentage ?>', '<?= $discount->start_date ?>', '<?= $discount->end_date ?>')">Edit</button>
+                                        onclick="openEditModal('<?= $discount->discount_id ?>', '<?= $discount->productName ?>', '<?= $discount->discount_percentage ?>', '<?= $discount->start_date ?>', '<?= $discount->end_date ?>')">Edit</button>
                                     <button class="delete-btn"
-                                        onclick="openDeleteModal('<?= $discount->Discount_id ?>')">Delete</button>
+                                        onclick="openDeleteModal('<?= $discount->discount_id ?>')">Delete</button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -161,11 +162,15 @@
                     <form action="<?= ROOT ?>/discounts/add" method="POST">
                         <div class="form-group">
                             <label>Product:
-                                <select name="Product_id" required>
-                                    <?php foreach ($products as $product): ?>
-                                        <option value="<?= $product->Product_id ?>"><?= $product->productName ?> -
-                                            $<?= $product->productPrice ?></option>
-                                    <?php endforeach; ?>
+                                <select name="product_id" required>
+                                    <option value="">Select a product</option>
+                                    <?php if (isset($products) && is_array($products)): ?>
+                                        <?php foreach ($products as $product): ?>
+                                            <option value="<?= $product->product_id ?>"><?= $product->productName ?></option>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <option value="">No products available</option>
+                                    <?php endif; ?>
                                 </select>
                             </label>
                         </div>
@@ -198,6 +203,8 @@
                     <h3>Edit Discount</h3>
                     <form action="<?= ROOT ?>/discounts/edit" method="POST">
                         <input type="hidden" name="Discount_id" id="edit_discount_id">
+                        <!-- Add this hidden field to maintain Product_id -->
+                        <input type="hidden" name="Product_id" id="edit_product_id">
                         <div class="form-group">
                             <label>Product:
                                 <input type="text" id="edit_product_name" readonly />
