@@ -103,8 +103,9 @@
                         <td>
                             <div class="buttons">
                             <button class="view-btn"><a href="<?=ROOT?>/CustomOrderViewForm">View</a>
-                            </button>                          
-              <button class="update-btn" onclick="updateStatus(<?=$order->customOrder_id?>)">Update</button>
+                            </button> 
+                <!--no need of update button-->                       
+              <!--<button class="update-btn" onclick="updateStatus(<?=$order->customOrder_id?>)">Update</button>--> 
                             </div>
                           </td>
                     </tr>

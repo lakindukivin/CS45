@@ -119,7 +119,10 @@
             </div>
         </div>
 
-        <button type="submit" class="submit-button">Submit Reply</button>
+        <div class="button-group">
+            <button type="submit" class="submit-button">Accept</button>
+            <button type="submit" class="decline-button">Decline</button>
+        </div>
     </form>
 </div>
 
@@ -133,7 +136,7 @@
     </div>
 
     <!-- Status Update Modal -->
-    <div id="statusModal" class="modal">
+    <!--<div id="statusModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
             <h2>Update Order Status</h2>
@@ -151,7 +154,7 @@
                 </div>
             </form>
         </div>
-    </div>
+    </div>-->
   </div> 
   </div>
   <script src="<?= ROOT ?>/assets/js/productionManager/sidebar.js"></script>

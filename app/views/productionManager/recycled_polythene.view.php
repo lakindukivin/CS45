@@ -78,7 +78,7 @@
 
     <div class="container">
       <form action="<?=ROOT?>/RecycledPolythene/updateAmount" method="POST" class="form-card">
-        <h2>Polythene Collection Details</h2>
+        <h2>Recycled Polythene Details</h2>
 
         <div class="form-group">
           <label for="amount">Polythene Amount (Tons):</label>
