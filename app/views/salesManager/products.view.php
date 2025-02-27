@@ -124,7 +124,31 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="productTableBody"></tbody>
+                    <tbody id="productTableBody">
+                        <?php if (!empty($products)): ?>
+                            <?php foreach ($products as $product): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($product->product_id_id) ?></td>
+                                    <td><?= htmlspecialchars($product->productName) ?></td>
+                                    <td><?= htmlspecialchars($product->productImage) ?></td>
+                                    <td><?= htmlspecialchars($product->productPrice) ?></td>
+                                    <td><?= htmlspecialchars($product->description) ?></td>
+                                    <td><?= htmlspecialchars($product->packSize) ?></td>
+                                    <td><?= htmlspecialchars($product->bagSize) ?></td>
+                                    <td>
+                                        <button class="edit-btn"
+                                            onclick="openEditModal('<?= $product->product_id ?>', '<?= $product->productName ?>', '<?= $product->productImage ?>', '<?= $product->productPrice ?>', '<?= $product->description ?>','<?= $product->packSize ?>','<?= $product->bagSize ?>')">Edit</button>
+                                        <button class="delete-btn"
+                                            onclick="openDeleteModal('<?= $product->product_id ?>')">Delete</button>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="6">No products found.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
                 </table>
             </div>
 
