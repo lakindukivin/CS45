@@ -154,6 +154,19 @@
                         <?php endif; ?>
                     </tbody>
                 </table>
+                <!-- Delete Confirmation Modal -->
+                <div id="deleteModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeDeleteModal()">&times;</span>
+                        <h3>Confirm Delete</h3>
+                        <p>Are you sure you want to delete this record?</p>
+                        <form action="<?= ROOT ?>/carbonFootprint/delete" method="POST">
+                            <input type="hidden" name="footprint_id" id="delete_footprint_id">
+                            <button type="submit" class="delete-btn">Delete</button>
+                            <button type="button" class="cancel-btn" onclick="closeDeleteModal()">Cancel</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -165,6 +178,7 @@
       </footer> -->
     </main>
     <script src="<?= ROOT ?>/assets/js/salesManager/sidebar.js"></script>
+    <script src="<?= ROOT ?>/assets/js/salesManager/modal.js"></script>
     <script src="<?= ROOT ?>/assets/js/salesManager/carbonFootprint.js"></script>
 </body>
 
