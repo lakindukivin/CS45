@@ -14,13 +14,17 @@ class CarbonFootprint
         // Load the CarbonFootprintModel
         $carbonFootprintModel = new CarbonFootprintModel();
 
-        // Calculate and save the monthly carbon footprint
-        $carbonFootprintModel->calculateAndSaveMonthlyCarbonFootprint();
+        // // Calculate and save the monthly carbon footprint
+        // $carbonFootprintModel->calculateAndSaveMonthlyCarbonFootprint();
 
-        // Fetch the current carbon footprint data
-        $data = $carbonFootprintModel->getCurrentCarbonFootprint();
+        // // Fetch the current carbon footprint data
+        // $data = $carbonFootprintModel->getCurrentCarbonFootprint();
+
+        $carbonFootprints = $carbonFootprintModel->getAllCarbonFootprints();
 
         // Pass the data to the view
-        $this->view('salesManager/carbonFootprint', $data);
+        $this->view('salesManager/carbonFootprint', [
+            'carbonFootprints' => $carbonFootprints
+        ]);
     }
 }

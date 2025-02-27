@@ -84,12 +84,12 @@
                 <img src="<?= ROOT ?>/assets/images/Waste360.png" alt="Waste360" />
                 <h1>Waste360</h1>
             </div>
-        
+
             <h1 class="logo">Carbon Footprint</h1>
-        
+
             <nav class="nav">
                 <ul>
-        
+
                     <li>
                         <a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg" alt="" /></a>
                     </li>
@@ -129,21 +129,27 @@
                 <table id="carbonFootprintTable">
                     <thead>
                         <tr>
-                            <th>Value</th>
-                            <th>Unit</th>
+                            <th>Month</th>
+                            <th>Amount of Carbon Footprint Saved(in kg)</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if (!empty($data)): ?>
-                            <tr>
-                                <td><?= htmlspecialchars($data['value']) ?></td>
-                                <td><?= htmlspecialchars($data['unit']) ?></td>
-                                <td><?= htmlspecialchars($data['date']) ?></td>
-                            </tr>
+                        <?php if (!empty($carbonFootprints)): ?>
+                            <?php foreach ($carbonFootprints as $carbonFootprint): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($carbonFootprint->month) ?></td>
+                                    <td><?= htmlspecialchars($carbonFootprint->amount) ?></td>
+
+                                    <td>
+                                        <button class="delete-btn"
+                                            onclick="openDeleteModal('<?= $carbonFootprint->discount_id ?>')">Delete</button>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="3">No data available</td>
+                                <td colspan="6">No discounts found.</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
