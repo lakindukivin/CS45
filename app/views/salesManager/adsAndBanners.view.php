@@ -131,7 +131,29 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Rows dynamically added -->
+                    <?php if (!empty($adsAndBanners)): ?>
+                        <?php foreach ($adsAndBanners as $adsAndBanner): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($adsAndBanner->ad_id) ?></td>
+                                <td><?= htmlspecialchars($adsAndBanner->title) ?></td>
+                                <td><?= htmlspecialchars($adsAndBanner->image) ?></td>
+                                <td><?= htmlspecialchars($adsAndBanner->description) ?></td>
+                                <td><?= htmlspecialchars($adsAndBanner->status) ?></td>
+                                <td><?= htmlspecialchars($adsAndBanner->start_date) ?></td>
+                                <td><?= htmlspecialchars($adsAndBanner->end_date) ?></td>
+                                <td>
+                                    <button class="edit-btn"
+                                        onclick="openEditModal('<?= $adsAndBanner->ad_id ?>', '<?= $adsAndBanner->title ?>', '<?= $adsAndBanner->image ?>','<?= $adsAndBanner->description ?>','<?= $adsAndBanner->status ?>', '<?= $adsAndBanner->start_date ?>', '<?= $adsAndBanner->end_date ?>')">Edit</button>
+                                    <button class="delete-btn"
+                                        onclick="openDeleteModal('<?= $adsAndBanner->ad_id ?>')">Delete</button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="6">No data found.</td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
             </table>
 
