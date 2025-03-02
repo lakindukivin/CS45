@@ -80,34 +80,48 @@
         <input type="hidden" name="Review_id">
         
         <div class="form-row">
+            <!--<div class="form-group">
+                <label>Order ID</label>
+                <input type="text" value="<?= htmlspecialchars($data['order']->customOrder_id) ?>" readonly>
+            </div>-->
             <div class="form-group">
                 <label>Customer Name</label>
                 <input type="text" value="<?= htmlspecialchars($data['order']->customer_name) ?>" readonly>
             </div>
             <div class="form-group">
-                <label>Order ID</label>
-                <input type="text" value="<?= htmlspecialchars($data['order']->customOrder_id) ?>" readonly>
+                <label>Company Name</label>
+                <input type="text" value="<?= htmlspecialchars($data['order']->Company_name) ?>" readonly>
             </div>
         </div>
 
         <div class="form-row">
             <div class="form-group">
-                <label>Rating</label>
-                <input type="text"  readonly>
+                <label>Type</label>
+                <input type="text" value="<?= htmlspecialchars($data['order']->Type) ?>" readonly>
             </div>
             <div class="form-group">
-                <label>Date</label>
-                <input type="text" readonly>
+                <label>Quantity</label>
+                <input type="number" value="<?= htmlspecialchars($data['order']->Quantity) ?>" readonly>
             </div>
         </div>
 
         <div class="form-row">
             <div class="form-group">
-                <label>Comment</label>
-                <textarea readonly></textarea>
+                <label>Email</label>
+                <input type="email" value="<?= htmlspecialchars($data['order']->Email) ?>" readonly>
+            </div>
+            <div class="form-group">
+                <label>Phone</label>
+                <input type="tel" value="<?= htmlspecialchars($data['order']->Phone) ?>" readonly>
             </div>
         </div>
 
+        <div class="form-row">
+            <div class="form-group">
+                <label>Specifications</label>
+                <textarea readonly><?= htmlspecialchars($data['order']->Specifications) ?></textarea>   
+            </div>
+        </div>
         <div class="form-row">
             <div class="form-group">
                 <label>Reply</label>
