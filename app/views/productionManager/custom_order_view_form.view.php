@@ -72,25 +72,21 @@
     <div class="box">
     <div class="container">
         <div class="header">
-            <h1>Pending Custom Orders</h1>
+            <h1>Order Details</h1>
         </div>
 
         <div class="form">
-    <form method="POST" action="<?=ROOT?>/Reviews/reply">
+        <form method="POST" action="<?= ROOT ?>/CustomOrderViewForm/<?= $order->customOrder_id ?>">
         <input type="hidden" name="Review_id">
         
         <div class="form-row">
             <div class="form-group">
-                <label>Review ID</label>
-                <input type="text"  readonly>
-            </div>
-            <div class="form-group">
                 <label>Customer Name</label>
-                <input type="text" readonly>
+                <input type="text" value="<?= htmlspecialchars($data['order']->customer_name) ?>" readonly>
             </div>
             <div class="form-group">
                 <label>Order ID</label>
-                <input type="text"  readonly>
+                <input type="text" value="<?= htmlspecialchars($data['order']->customOrder_id) ?>" readonly>
             </div>
         </div>
 
@@ -123,7 +119,7 @@
             <button type="submit" class="submit-button">Accept</button>
             <button type="submit" class="decline-button">Decline</button>
         </div>
-    </form>
+    </>
 </div>
 
     <!-- View Details Modal -->
