@@ -130,10 +130,9 @@
         </div>
 
         <div class="button-group">
-            <button type="submit" class="submit-button">Accept</button>
+            <button type="submit" class="submit-button" onclick="window.location.href='<?= ROOT ?>/CompletedOrders'">Accept</button>
             <button type="submit" class="decline-button">Decline</button>
         </div>
-    </>
 </div>
 
     <!-- View Details Modal -->
@@ -169,5 +168,6 @@
   </div>
   <script src="<?= ROOT ?>/assets/js/productionManager/sidebar.js"></script>
   <script src="<?= ROOT ?>/assets/js/productionManager/pending_custom_order.js"></script>
+  <script src="<?= ROOT ?>/assets/js/productionManager/custom_order_view_form.js"></script>
 </body>
 </html>
