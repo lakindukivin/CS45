@@ -235,6 +235,13 @@ th {
   resize: vertical;
 }
 
+.button-group {
+  display: flex;
+  justify-content: space-between; /* Buttons aligned to left and right */
+  gap: 20px; /* Space between buttons */
+  margin-top: 20px;
+}
+
 .submit-button {
   background-color: var(--primary-green);
   color: white;
@@ -246,7 +253,7 @@ th {
   cursor: pointer;
   transition: background-color 0.2s ease;
   width: 30%;
-  margin-left: 35%;
+  margin-left: 15%;
 }
 
 .submit-button:hover {
@@ -254,7 +261,25 @@ th {
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);}
 
+  .decline-button {
+    background-color: darkred;
+    color: var(--white);
+    padding: 10px 20px ;
+    border: none ;
+    border-radius: 5px ;
+    cursor: pointer ;
+    font-size: 16px ;
+    font-weight: 600 ;
+    width:30%;
+    transition: var(--transition) ;
+    margin-right: 15%;
+}
 
+.decline-button:hover {
+    background-color: rgb(240, 56, 56);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
 
 .modal {
   display: none;
