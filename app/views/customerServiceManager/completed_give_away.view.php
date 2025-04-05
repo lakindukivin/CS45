@@ -31,7 +31,7 @@
             </li>
 
             <li>
-              <a href="#" class="sidebar-active"
+              <a href="<?=ROOT?>/GiveAwayRequest" class="sidebar-active"
                 ><img src="<?=ROOT?>/assets/images/give_away.svg" /><span
                   class="sidebar-titles"
                   >Give Away</span
