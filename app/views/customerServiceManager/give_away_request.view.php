@@ -197,7 +197,7 @@
     }
   </script>
   <script src="<?= ROOT ?>/assets/js/customerServiceManager/sidebar.js"></script>
-  <!-- <script src="<?= ROOT ?>/assets/js/customerServiceManager/give_away_request.js"></script> -->
+  <script src="<?= ROOT ?>/assets/js/customerServiceManager/give_away_request.js"></script>
 </body>
 
 </html>
