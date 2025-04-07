@@ -4,70 +4,53 @@ class Review {
     use Model;
     
     protected $table = 'review';
-    protected $allowedColumns = ['review_id', 'rating', 'comment', 'customer_id', 'order_id', 'date'];
     
-    // Define ordering properties to avoid undefined variable errors
-    
-
     public function getAllPendingReviews() {
-        return $this->query(
-            "SELECT r.*, c.name AS customer_name, o.order_id 
-            FROM $this->table r 
-            JOIN customer c ON r.customer_id = c.customer_id 
-            JOIN orders o ON r.order_id = o.order_id 
-            LEFT JOIN reply rp ON r.review_id = rp.review_id 
-            WHERE rp.reply_id IS NULL 
-            ORDER BY r.date DESC"
-        );
+        $query = "SELECT r.*, r.customer_id, r.order_id, r.comment, r.rating, r.date, r.dateModified,c.name, c.phone, c.address
+        FROM review r 
+        JOIN customer c ON r.customer_id = c.customer_id
+        WHERE r.status = 'pending'";
+        return $this->query($query);
     }
 
-    public function getReview($review_id) {
-        return $this->first(['review_id' => $review_id]);
+    public function addReply($reviewId, $replyText) {
+        $query = "INSERT INTO reply (review_id, reply, date, dateModified) 
+              VALUES (:review_id, :reply, NOW(), NOW())";
+        $params = [
+        'review_id' => $reviewId,
+        'reply' => $replyText
+        ];
+        return $this->query($query, $params);
     }
 
-    public function getReviewDetails($review_id) {
-        $sql = "SELECT r.review_id, r.rating, r.comment, r.date,
-                c.customer_id, c.name as customer_name,
-                o.order_id
-                FROM review r
-                JOIN customer c ON r.customer_id = c.customer_id
-                JOIN orders o ON r.order_id = o.order_id
-                WHERE r.review_id = :review_id";
-                
-        $result = $this->query($sql, ['review_id' => $review_id]);
-        return $result[0] ?? false;
+    public function updateReply($reviewId, $replyText) {
+        $query = "UPDATE reply 
+                  SET reply = :reply, dateModified = NOW() 
+                  WHERE review_id = :review_id";
+        $params = [
+            'review_id' => $reviewId,
+            'reply' => $replyText
+        ];
+        return $this->query($query, $params);
+    }
+
+    public function updateReviewStatus($reviewId, $status) {
+        $query = "UPDATE review 
+                  SET status = :status, dateModified = NOW() 
+                  WHERE review_id = :review_id";
+        $params = [
+            'review_id' => $reviewId,
+            'status' => $status
+        ];
+        return $this->query($query, $params);
+    }
+
+    public function getAllCompletedReviews() {
+        $query = "SELECT r.*, r.customer_id, r.order_id, r.comment, r.rating, r.date, r.dateModified,c.name, c.phone, c.address
+        FROM review r 
+        JOIN customer c ON r.customer_id = c.customer_id
+        WHERE r.status = 'replied'";
+        return $this->query($query);
     }
     
-
-    public function getRepliedReviews() {
-        return $this->query(
-            "SELECT r.*, c.name AS customer_name, o.order_id, rp.reply, rp.date AS reply_Date
-            FROM $this->table r 
-            JOIN customer c ON r.customer_id = c.customer_id 
-            JOIN orders o ON r.order_id = o.order_id 
-            JOIN reply rp ON r.review_id = rp.review_id 
-            ORDER BY r.$this->order_column $this->order_type"
-        );
-    }
-
-    public function addReply($data) {
-        $sql = "INSERT INTO reply (review_id, reply, date) VALUES (:review_id, :reply, NOW())";
-        return $this->query($sql, [
-            'review_id' => $data['review_id'],
-            'reply' => $data['reply']
-        ]);
-    }
-
-    public function editReply($data) {
-        $query = "UPDATE reply SET reply = :reply WHERE reply_id = :reply_id";
-        return $this->query($query, [
-            'reply' => $data['reply'],
-            'reply_id' => $data['reply_id']
-        ]);
-    }
-
-    public function removeReply($reply_id) {
-        $query = "DELETE FROM reply WHERE reply_id = :reply_id";
-        return $this->query($query, ['reply_id' => $reply_id]);
-    }
 }

@@ -208,3 +208,19 @@ th {
 .reject:hover {
   background-color: var(--light-red);
 }
+
+/* Background Overlay */
+#reviewUpdatePopup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  display: none;
+  /* Initially hidden */
+  animation: fadeIn 0.3s ease-in-out;
+}
