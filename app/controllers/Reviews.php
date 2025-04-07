@@ -44,7 +44,7 @@ class Reviews {
             ];
 
             // Debugging Output
-            echo "<pre>";w
+            echo "<pre>";
             print_r($data);
             echo "</pre>";
             exit(); // Stop execution to verify form data
