@@ -50,6 +50,57 @@
   </nav>
 
   <div class="content">
+    <div id="manageOrderUpdatePopup">
+      <div class="popup-content">
+        <form action="" method="post" class="bg-white p-5 rounded-md w-full">
+          <div class="popup-content">
+            <h1>Order Update</h1>
+            <button type="button" class="btn-secondary-color" id="closePopupBtn">Close</button>
+          </div>
+
+          <div class="popup-content">
+            <label for="Order-id" class="">Order ID:</label>
+            <input type="text" id="order_id" name="orderId" class="input-field" readonly>
+          </div>
+
+          <div class="popup-content">
+            <label for="Name" class="">Name:</label>
+            <input type="text" id="customerName" name="customerName" class="input-field" readonly>
+          </div>
+
+          <div class="popup-content">
+            <label for="Product-name" class="">Product Name:</label>
+            <input type="text" id="productName" name="productName" class="input-field" readonly>
+          </div>
+
+          <div class="popup-content">
+            <label for="Quantity" class="">Quantity:</label>
+            <input type="text" id="quantity" name="quantity" class="input-field" readonly>
+          </div>
+
+          <div class="popup-content">
+            <label for="Total" class="">Total:</label>
+            <input type="text" id="total" name="total" class="input-field" readonly>
+          </div>
+
+          <div class="popup-content">
+            <label for="Order-date" class="">Order Date:</label>
+            <input type="text" id="orderDate" name="orderDate" class="input-field" readonly>
+          </div>
+
+          <div class="popup-content">
+            <label for="Delivery-address" class="">Delivery Address:</label>
+            <input type="text" id="deliveryAddress" name="deliveryAddress" class="input-field" readonly>
+          </div>
+
+          <div class="popup-content">
+            <label for="Billing-address" class="">Billing Address:</label>
+            <input type="text" id="billingAddress" name="billingAddress" class="input-field" readonly>  
+          </div>
+  
+        </form>
+      </div>
+    </div>
     <header class="header">
       <div class="logo">
         <img src="<?=ROOT?>/assets/images/Waste360.png" alt="logo" />
@@ -72,7 +123,7 @@
             <a href="<?=ROOT?>/CompletedOrders">View Completed Orders</a>
           </button>
         </div>
-        <table>
+        <table id="ordersTable">
           <thead>
             <tr>
               <th>Order ID</th>
@@ -85,8 +136,8 @@
             </tr>
           </thead>
           <tbody>
-            <?php if(!empty($orders)): ?>
-            <?php foreach($orders as $order): ?>
+            <?php if(isset($data['orders']) && is_array($data['orders'])): ?>
+            <?php foreach($data['orders'] as $order): ?>
             <tr>
               <td><?= $order->order_id ?></td>
               <td><?= $order->productName ?></td>
@@ -95,7 +146,7 @@
               <td>Rs. <?= number_format($order->total, 2) ?></td>
               <td><?= date('Y-m-d', strtotime($order->orderDate)) ?></td>
               <td>
-                <button onclick="viewOrderDetails(<?= $order->order_id ?>)" class="view-btn">View/Update</button>
+              <button onclick="openManageOrderUpdatePopup(<?= htmlspecialchars(json_encode($order), ENT_QUOTES, 'UTF-8') ?>)" class="view-btn">View/Update</button>              
               </td>
             </tr>
             <?php endforeach; ?>
@@ -108,10 +159,29 @@
         </table>
       </div>
     </div>
-
-
   </div>
-  </div>
+
+  <script>
+    function openManageOrderUpdatePopup(order) {
+      // Populate the popup fields with the order details
+      document.getElementById('order_id').value = order.order_id || '';
+      document.getElementById('productName').value = order.productName || '';
+      document.getElementById('customerName').value = order.customerName || '';
+      document.getElementById('quantity').value = order.quantity || '';
+      document.getElementById('total').value = order.total || '';
+      document.getElementById('deliveryAddress').value = order.deliveryAddress || '';
+      document.getElementById('billingAddress').value = order.billingAddress || '';
+      document.getElementById('orderDate').value = order.orderDate || '';
+
+      // Display the popup
+      document.getElementById('manageOrderUpdatePopup').style.display = 'flex';
+
+      // Add event listener to close the popup
+      document.getElementById('closePopupBtn').addEventListener('click', () => {
+        document.getElementById('manageOrderUpdatePopup').style.display = 'none';
+      });
+    }
+  </script>
   <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>
   <script src="<?=ROOT?>/assets/js/customerServiceManager/manage_orders.js"></script>
 </body>

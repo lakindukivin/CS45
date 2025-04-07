@@ -88,150 +88,22 @@ th {
 }
 
 
-/* Modal Styles */
-.modal {
+/* Background Overlay */
+#manageOrderUpdatePopup {
   position: fixed;
-  z-index: 1000;
-  margin: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  display: flex;
+  background: rgba(0, 0, 0, 0.7);
+  justify-content: center;
   align-items: center;
-  justify-content: center;
+  z-index: 1000;
+  display: none;
+  /* Initially hidden */
+  animation: fadeIn 0.3s ease-in-out;
 }
 
-.modal-content {
-  background-color: var(--white);
-  padding: 2rem;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 700px;
-  box-shadow: var(--shadow-md);
-  position: relative;
-  animation: modalSlide 0.3s ease-out;
-}
-
-@keyframes modalSlide {
-  from { transform: translateY(-30px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-.close {
-  position: absolute;
-  right: 1.5rem;
-  top: 1rem;
-  color: var(--primary-green);
-  font-size: 1.5rem;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.close:hover {
-  color: var(--danger-red);
-  transform: rotate(90deg);
-}
-
-/* Status Details */
-.status-details {
-  margin: 1.5rem 0;
-}
-
-.status-details p {
-  margin: 0.75rem 0;
-  color: var(--primary-green);
-  font-size: 1.1rem;
-}
-
-/* Timeline Styles */
-.status-timeline {
-  margin-top: 2rem;
-  position: relative;
-  padding: 1.5rem 0;
-}
-
-.timeline-item {
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 1.5rem;
-  position: relative;
-  padding-left: 2rem;
-}
-
-.timeline-item::before {
-  content: '';
-  position: absolute;
-  left: 6px;
-  top: 24px;
-  height: calc(100% + 12px);
-  width: 2px;
-  background-color: var(--gray-300);
-}
-
-.timeline-point {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background-color: var(--gray-300);
-  border: 2px solid var(--white);
-  box-shadow: var(--shadow-sm);
-  margin-right: 1rem;
-  transition: var(--transition);
-}
-
-.timeline-item.active .timeline-point {
-  background-color: var(--accent-green);
-  transform: scale(1.2);
-}
-
-.timeline-content {
-  color: var(--gray-800);
-  font-size: 1rem;
-  padding: 0.25rem 0;
-}
-
-.timeline-item.active .timeline-content {
-  color: var(--primary-green);
-  font-weight: 600;
-}
-
-/* Button Styles */
-.operation {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  margin-top: 2rem;
-}
-
-.operation button {
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  border: none;
-  font-weight: 500;
-  cursor: pointer;
-  transition: var(--transition);
-  min-width: 120px;
-}
-
-.operation button:first-child {
-  background-color: var(--accent-green);
-  color: var(--white);
-}
-
-.operation button:first-child:hover {
-  background-color: var(--secondary-green);
-  transform: translateY(-2px);
-}
-
-.operation .reject {
-  background-color: var(--danger-red);
-  color: var(--white);
-}
-
-.operation .reject:hover {
-  background-color: #c82333;
-  transform: translateY(-2px);
-}
 
 .view-btn {
   background-color: var( --gray-800);
@@ -264,24 +136,6 @@ th {
   display: flex;
   gap: 10px;
   justify-content: center;
-}
-
-.accept-btn {
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.reject-btn {
-  background-color: #f44336;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
 }
 
 @media (max-width: 768px) {
