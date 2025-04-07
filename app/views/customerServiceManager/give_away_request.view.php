@@ -64,36 +64,36 @@
 
           <div class="popup-content">
             <label for="Customer_id" class="">Customer ID: </label>
-            <input type="text" name="customer_id" id="customer_id" />
+            <input type="text" name="customer_id" id="customer_id" readonly/>
           </div>
 
 
           <div class="popup-content">
             <label for="Name" class="">Name: </label>
-            <input type="text" name="name" id="name" />
+            <input type="text" name="name" id="name" readonly/>
           </div>
 
           <div class="popup-content">
             <label for="Phone">Phone: </label>
-            <input type="text" name="Phone" id="phone" />
+            <input type="text" name="Phone" id="phone" readonly/>
           </div>
           <div class="popup-content">
             <label for="request_date">request_date: </label>
-            <input type="text" name="request_date" id="request_date" />
+            <input type="text" name="request_date" id="request_date" readonly/>
           </div>
           <div class="popup-content">
             <label for="Address">Address: </label>
-            <input type="text" name="Address" id="address" />
+            <input type="text" name="Address" id="address" readonly/>
           </div>
 
           <div class="popup-content">
             <label for="status">Status: </label>
-            <input type="text" name="status" id="status" />
+            <input type="text" name="status" id="status" readonly/>
           </div>
 
           <div class="popup-content">
             <label for="status">Details: </label>
-            <input type="text" name="details" id="details" />
+            <input type="text" name="details" id="details" readonly/>
           </div>
 
           <div>
@@ -106,8 +106,6 @@
 
         </form>
       </div>
-
-
     </div>
 
     <header class="header">
@@ -155,9 +153,7 @@
                   <td><?= $giveaway->address ?></td>
                   <td><?= $giveaway->status ?></td>
                   <td>
-                    <button class="view-btn" onclick='openGiveAwayReqUpdatePopup(<?= json_encode($giveaway, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) ?>)'>View/Update</button>
-                    <!-- <a href="<?= ROOT ?>/GiveAwayReqUpdate<?= $giveaway->giveaway_id ?>">View/Update</a>
-</button> -->
+                    <button class="view-btn" onclick="openGiveAwayReqUpdatePopup(<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8')?>)">View/Update</button>
                   </td>
                 </tr>
               <?php endforeach; ?>
@@ -182,14 +178,7 @@
       document.getElementById('status').value = giveaway.status;
       document.getElementById('details').value = giveaway.details;
 
-      document.getElementById('customer_id').readOnly = true;
-      document.getElementById('name').readOnly = true;
-      document.getElementById('phone').readOnly = true;
-      document.getElementById('request_date').readOnly = true;
-      document.getElementById('address').readOnly = true;
-      document.getElementById('status').readOnly = true;
-      document.getElementById('details').readOnly = true;
-
+      
       document.getElementById('giveAwayReqUpdatePopup').style.display = 'flex';
       document.getElementById('giveAwayReqUpdatePopupClose').addEventListener('click', () => {
         document.getElementById('giveAwayReqUpdatePopup').style.display = 'none';
