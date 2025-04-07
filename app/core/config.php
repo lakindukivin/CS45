@@ -3,7 +3,7 @@
 if ($_SERVER['SERVER_NAME'] == 'localhost') {
 
     /** database config **/
-    define('DBNAME', 'w360');
+    define('DBNAME', 'waste360t');
     define('DBHOST', 'localhost');
     define('DBUSER', 'root');
     define('DBPASS', '');
