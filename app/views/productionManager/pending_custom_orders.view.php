@@ -102,11 +102,9 @@
                         <td><?=htmlspecialchars($order->customOrder_status)?></td>
                         <td>
                             <div class="buttons">
-                            <button class="view-btn"><a href="<?=ROOT?>/CustomOrderViewForm">View</a>
-                            </button>                          
-              <button class="update-btn" onclick="updateStatus(<?=$order->customOrder_id?>)">Update</button>
+                            <button class="view-btn" onclick="window.location.href='<?= ROOT ?>/CustomOrderViewForm/index/<?= $order->customOrder_id ?>'">View</button>
                             </div>
-                          </td>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             <?php endif; ?>
