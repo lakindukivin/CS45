@@ -76,8 +76,23 @@
           </div>
 
           <div class="popup-content">
+            <label for="Return-id" class="">Return ID:</label>
+            <input type="text" id="return_id" name="returnId" class="input-field" readonly>
+          </div>
+
+          <div class="popup-content">
             <label for="Order-id" class="">Order ID:</label>
             <input type="text" id="order_id" name="orderId" class="input-field" readonly>
+          </div>
+
+          <div class="popup-content">
+            <label for="Product-id" class="">Product ID:</label>
+            <input type="text" id="product_id" name="productId" class="input-field" readonly>
+          </div>
+
+          <div class="popup-content">
+            <label for="Customer-id" class="">Customer ID:</label>
+            <input type="text" id="customer_id" name="customerId" class="input-field" readonly>
           </div>
 
           <div class="popup-content">
@@ -106,8 +121,39 @@
           </div>
 
           <div class="popup-content">
+            <label for="Phone" class="">Phone:</label>
+            <input type="text" id="phone" name="phone" class="input-field" readonly>
+          </div>
+
+          <div class="popup-content">
             <label for="Return-Details" class="">Return Details:</label>
             <input type="text" id="returnDetails" name="returnDetails" class="input-field" readonly>
+          </div>
+
+          <div class="popup-content">
+            <label for="Customer-Requirements" class="">Customer Requirements:</label>
+            <input type="text" id="cus_requirements" name="cus_requirements" class="input-field" readonly>
+          </div>
+
+          <div class="popup-content">
+            <label for="decision_reason" class="">Decision Reason:</label>
+            <textarea id="decision_reason" name="decision_reason" class="input-field"></textarea>
+          </div>
+
+          <div class="popup-content">
+            <label for="message_to_customer" class="">Message to Customer:</label>
+            <textarea id="message_to_customer" name="message_to_customer" class="input-field"></textarea>
+          </div>
+
+          <div class="popup-content">
+            <label for="returnStatus" class="">Status:</label>
+            <input type="hidden" id="return_status" name="returnStatus">
+          </div>
+
+          <div>
+            <button type="submit" class="accept" name="accept_return">Accept</button>
+            <button type="submit" class="reject" name="reject_return">Reject</button>
+            <button type="submit" class="return" name="mark_as_returned">Mark as Returned</button>
           </div>
 
   
@@ -163,7 +209,7 @@
               <?php endforeach; ?>
             <?php else: ?>
                 <tr>
-                    <td colspan="7">No give away requests found</td>
+                    <td colspan="6">No pending return requests found</td>
                 </tr>
             <?php endif; ?>
             </tbody>
@@ -172,24 +218,7 @@
     </div>
   </div> 
 
-  <script>
-    function openReturnUpdatePopup(returnData) {
-        document.getElementById('order_id').value = returnData.order_id;
-        document.getElementById('customerName').value = returnData.customerName;
-        document.getElementById('productName').value = returnData.productName;
-        document.getElementById('quantity').value = returnData.quantity;
-        document.getElementById('total').value = returnData.total;
-        document.getElementById('orderDate').value = returnData.orderDate;
-        document.getElementById('returnDetails').value = returnData.returnDetails;
-
-        document.getElementById('returnUpdatePopup').style.display = 'flex';
-
-        // Add event listener to close the popup
-      document.getElementById('closePopupBtn').addEventListener('click', () => {
-        document.getElementById('returnUpdatePopup').style.display = 'none';
-      });
-    }
-  </script>
+  
   <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>  
   <script src="<?=ROOT?>/assets/js/customerServiceManager/returns.js"></script>  
 </body>
