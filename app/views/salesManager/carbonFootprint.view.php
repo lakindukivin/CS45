@@ -177,8 +177,8 @@
         <p>&copy; 2024 Waste360. All rights reserved.</p>
       </footer> -->
     </main>
-    <script src="<?= ROOT ?>/assets/js/salesManager/sidebar.js"></script>
-    <script src="<?= ROOT ?>/assets/js/salesManager/modal.js"></script>
+    <script src="<?= ROOT ?>/assets/js/sidebar.js"></script>
+    <script src="<?= ROOT ?>/assets/js/modal.js"></script>
     <script src="<?= ROOT ?>/assets/js/salesManager/carbonFootprint.js"></script>
 </body>
 

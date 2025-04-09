@@ -164,9 +164,9 @@
         </div>
     </main>
 
-    <script src="<?= ROOT ?>/assets/js/salesManager/sidebar.js"></script>
+    <script src="<?= ROOT ?>/assets/js/sidebar.js"></script>
     <script src="<?= ROOT ?>/assets/js/salesManager/generateReports.js"></script>
-    <script src="<?= ROOT ?>/assets/js/salesManager/modal.js"></script>
+    <script src="<?= ROOT ?>/assets/js/modal.js"></script>
 </body>
 
 </html>
