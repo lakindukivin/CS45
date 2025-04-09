@@ -1,38 +1,14 @@
-const modal = document.getElementById("giveawayModal");
+function openCompletedGiveAwayPopup(giveaway) {
+    document.getElementById('customer_id').value = giveaway.customer_id;
+    document.getElementById('name').value = giveaway.name;
+    document.getElementById('phone').value = giveaway.phone;
+    document.getElementById('request_date').value = giveaway.request_date;
+    document.getElementById('address').value = giveaway.address;
+    document.getElementById('status').value = giveaway.status;
+    document.getElementById('details').value = giveaway.details;
 
-function viewGiveaway(id) {
-    fetch(`<?=ROOT?>/GiveAwayRequest/getDetails/${id}`)
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('giveaway_id').value = data.giveaway_id;
-            document.getElementById('details').textContent = data.details;
-            modal.style.display = "block";
-        });
-}
-
-function closeModal() {
-    modal.style.display = "none";
-}
-
-window.onclick = function(event) {
-    if (event.target == modal) {
-        closeModal();
-    }
-}
-
-function updateStatus(status) {
-    const formData = new FormData(document.getElementById('giveawayForm'));
-    formData.append('status', status);
-
-    fetch('<?=ROOT?>/GiveAwayRequest/updateStatus', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if(data.success) {
-            closeModal();
-            location.reload();
-        }
+    document.getElementById('completedGiveAwayPopup').style.display = 'block';
+    document.getElementById('completedGiveAwayPopupClose').addEventListener('click', () => {
+      document.getElementById('completedGiveAwayPopup').style.display = 'none';
     });
-}
+  }

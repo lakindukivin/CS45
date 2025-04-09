@@ -67,6 +67,64 @@
     </nav>
 
   <div class="content">
+  <div id="completedGiveAwayPopup">
+      <div class="popup-content">
+        <form action="" method="post" class="bg-white p-5 rounded-md w-full">
+
+          <div class="popup-content">
+            <h1>Give Away Request Update</h1>
+
+            <button type="button" class="btn-secondary-color"
+            id="completedGiveAwayPopupClose">Cancel</button>
+          </div>
+
+
+          <div class="popup-content">
+            <label for="Customer_id" class="">Customer ID: </label>
+            <input type="text" name="customer_id" id="customer_id" readonly/>
+          </div>
+
+
+          <div class="popup-content">
+            <label for="Name" class="">Name: </label>
+            <input type="text" name="name" id="name" readonly/>
+          </div>
+
+          <div class="popup-content">
+            <label for="Phone">Phone: </label>
+            <input type="text" name="Phone" id="phone" readonly/>
+          </div>
+          <div class="popup-content">
+            <label for="request_date">request_date: </label>
+            <input type="text" name="request_date" id="request_date" readonly/>
+          </div>
+          <div class="popup-content">
+            <label for="Address">Address: </label>
+            <input type="text" name="Address" id="address" readonly/>
+          </div>
+
+          <div class="popup-content">
+            <label for="status">Status: </label>
+            <input type="text" name="status" id="status" readonly/>
+          </div>
+
+          <div class="popup-content">
+            <label for="status">Details: </label>
+            <input type="text" name="details" id="details" readonly/>
+          </div>
+
+          <div>
+            <button type="submit" class="accept"
+              name="accept_giveaway">Accept</button>
+
+              <button type="submit" class="reject"
+              name="reject_giveaway">Reject</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
     <header class="header">
       <div class="logo">
       <img src="<?=ROOT?>/assets/images/Waste360.png" alt="logo" />
@@ -89,41 +147,41 @@
         <table id="giveAwayTable">  
             <thead>
                 <tr>
-                    <th>Customer ID</th>
-                    <th>Name</th>
-                    <th>Phone</th>
-                    <th>Type</th>
-                    <th>Address</th>  
-                    <th>Quantity</th>
-                    <th>Action</th>
+                <th>Customer ID</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Request Date</th>
+                <th>Address</th>
+                <th>Status</th>
+                <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-            <?php if(isset($data['giveaways']) && is_array($data['giveaways'])): ?>
-                <?php foreach($data['giveaways'] as $giveaway): ?>
-                    <tr>
-                        <td><?= $giveaway->Customer_id ?></td>
-                        <td><?= $giveaway->Name ?></td>
-                        <td><?= $giveaway->Phone ?></td>
-                        <td><?= $giveaway->Type ?></td>
-                        <td><?= $giveaway->Address ?></td>
-                        <td><?= $giveaway->quantity ?></td>
-                        <td>
-                        <button class="view-btn"><a href="<?=ROOT?>/GiveAwayReqUpdate">View/Edit</a></button>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
+            <?php if (isset($data['giveaway']) && is_array($data['giveaway'])): ?>
+              <?php foreach ($data['giveaway'] as $giveaway): ?>
                 <tr>
-                    <td colspan="7">No give away requests found</td>
+                  <td><?= $giveaway->customer_id ?></td>
+                  <td><?= $giveaway->name ?></td>
+                  <td><?= $giveaway->phone ?></td>
+                  <td><?= $giveaway->request_date ?></td>
+                  <td><?= $giveaway->address ?></td>
+                  <td><?= $giveaway->status ?></td>
+                  <td>
+                    <button class="view-btn" onclick="openCompletedGiveAwayPopup(<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8')?>)">View/Update</button>
+                  </td>
                 </tr>
+              <?php endforeach; ?>
+            <?php else: ?>
+              <tr>
+                <td colspan="7">No give away requests found</td>
+              </tr>
             <?php endif; ?>
             </tbody>
         </table>
       </div> 
-</div>
     </div>
   </div>
+
   <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>
   <script src="<?=ROOT?>/assets/js/customerServiceManager/give_away_request.js"></script>
 </body>
