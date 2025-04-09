@@ -8,12 +8,13 @@ trait Controller
             extract($data);
         }
 
-        $filename = "../app/views/" . $name . ".view.php";
+        $filename = "../app/views/$name.view.php";
         if (file_exists($filename)) {
-            require $filename;
+            require_once $filename;
         } else {
             $filename = "../app/views/404.view.php";
             require $filename;
         }
     }
 }
+
