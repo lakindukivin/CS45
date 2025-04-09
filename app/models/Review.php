@@ -23,12 +23,12 @@ class Review {
         return $this->query($query, $params);
     }
 
-    public function updateReply($reviewId, $replyText) {
+    public function updateReply($replyId, $replyText) {
         $query = "UPDATE reply 
                   SET reply = :reply, dateModified = NOW() 
-                  WHERE review_id = :review_id";
+                  WHERE reply_id = :reply_id";
         $params = [
-            'review_id' => $reviewId,
+            'reply_id' => $replyId,
             'reply' => $replyText
         ];
         return $this->query($query, $params);
@@ -46,10 +46,10 @@ class Review {
     }
 
     public function getAllCompletedReviews() {
-        $query = "SELECT r.*, r.customer_id, r.order_id, r.comment, r.rating, r.date, r.dateModified,c.name, c.phone, c.address
-        FROM review r 
-        JOIN customer c ON r.customer_id = c.customer_id
-        WHERE r.status = 'replied'";
+        $query = "SELECT rp.*, r.customer_id, r.order_id, r.comment, r.rating, r.date, r.dateModified,c.name, c.phone, c.address
+        FROM reply rp 
+        JOIN review r ON rp.review_id = r.review_id
+        JOIN customer c ON r.customer_id = c.customer_id";
         return $this->query($query);
     }
     
