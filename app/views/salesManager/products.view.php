@@ -119,8 +119,6 @@
                             <th>Product image</th>
                             <th>price</th>
                             <th>Description</th>
-                            <th>Pack Size</th>
-                            <th>Bag Size</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -128,18 +126,17 @@
                         <?php if (!empty($products)): ?>
                             <?php foreach ($products as $product): ?>
                                 <tr>
-                                    <td><?= htmlspecialchars($product->product_id_id) ?></td>
+                                    <td><?= htmlspecialchars($product->Product_id) ?></td>
                                     <td><?= htmlspecialchars($product->productName) ?></td>
                                     <td><?= htmlspecialchars($product->productImage) ?></td>
                                     <td><?= htmlspecialchars($product->productPrice) ?></td>
-                                    <td><?= htmlspecialchars($product->description) ?></td>
-                                    <td><?= htmlspecialchars($product->packSize) ?></td>
-                                    <td><?= htmlspecialchars($product->bagSize) ?></td>
+                                    <td><?= htmlspecialchars($product->productDescription) ?></td>
+                                    
                                     <td>
                                         <button class="edit-btn"
-                                            onclick="openEditModal('<?= $product->product_id ?>', '<?= $product->productName ?>', '<?= $product->productImage ?>', '<?= $product->productPrice ?>', '<?= $product->description ?>','<?= $product->packSize ?>','<?= $product->bagSize ?>')">Edit</button>
+                                            onclick="openEditModal('<?= $product->Product_id ?>', '<?= $product->productName ?>', '<?= $product->productImage ?>', '<?= $product->productPrice ?>', '<?= $product->productDescription ?>')">Edit</button>
                                         <button class="delete-btn"
-                                            onclick="openDeleteModal('<?= $product->product_id ?>')">Delete</button>
+                                            onclick="openDeleteModal('<?= $product->Product_id ?>')">Delete</button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -177,24 +174,7 @@
                             <label for="description">Description:</label>
                             <textarea id="description" rows="4" name="description" minlength="3" required></textarea>
                         </div>
-                        <div class="form-group">
-                            <label for="packSize">Pack Size:</label>
-                            <select id="packSize" name="packSize" required>
-                                <option value="none">None</option>
-                                <option value="small">Small</option>
-                                <option value="medium">Medium</option>
-                                <option value="large">Large</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="bagSize">Bag Size:</label>
-                            <select id="bagSize" name="bagSize" required>
-                                <option value="none">None</option>
-                                <option value="small">Small</option>
-                                <option value="medium">Medium</option>
-                                <option value="large">Large</option>
-                            </select>
-                        </div>
+                         
                         <button type="submit" class="action-btn">Add</button>
                     </form>
                 </div>
@@ -205,7 +185,7 @@
                     <span class="close" onclick="closeEditModal()">&times;</span>
                     <h3>Edit Product</h3>
                     <form id="editProductForm" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="product_id" id="editProductID" />
+                        <input type="hidden" name="Product_id" id="editProductID" />
                         <div class="form-group">
                             <label for="editProductName">Product Name:</label>
                             <input name="product_name" type="text" id="editProductName" placeholder="Enter product Name"
@@ -278,8 +258,8 @@
     </footer>
 
     <script src="<?= ROOT ?>/assets/js/sidebar.js"></script>
-    <script src="<?= ROOT ?>/assets/js/modal.js"></script>
-    <script src="<?= ROOT ?>/assets/js/products.js"></script>
+    <!-- <script src="<?= ROOT ?>/assets/js/modal.js"></script> -->
+    <script src="<?= ROOT ?>/assets/js/salesManager/product.js"></script>
 </body>
 
 </html>
