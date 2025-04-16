@@ -56,7 +56,24 @@ class ProductModel
         try {
             $query = 'UPDATE product SET productStatus =0 WHERE Product_id = :Product_id;';
             $params = ['Product_id' => $Product_id];
-            return $this->query($query, $params);
+         $this->query($query, $params);
+         return true;
+
+        } catch (Exception $e) {
+            error_log("Error adding products: " . $e->getMessage());
+            return false;
+        }
+    }
+
+
+    public function RestoreProduct($Product_id)
+    {
+
+        try {
+            $query = 'UPDATE product SET productStatus =1 WHERE Product_id = :Product_id;';
+            $params = ['Product_id' => $Product_id];
+            $this->query($query, $params);
+            return true;
 
         } catch (Exception $e) {
             error_log("Error adding products: " . $e->getMessage());

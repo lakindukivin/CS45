@@ -36,7 +36,7 @@ function openEditModal(
   productId,
   productName,
   productImage,
-  productPrice,
+  //   productPrice,
   description
 ) {
   currentProductId = productId;
@@ -44,7 +44,7 @@ function openEditModal(
   document.getElementById('editProductID').value = productId;
   document.getElementById('editProductName').value = productName;
   document.getElementById('existingImage').src = '<?= ROOT ?>' + productImage;
-  document.getElementById('editProductPrice').value = productPrice;
+  //   document.getElementById('editProductPrice').value = productPrice;
   document.getElementById('editDescription').value = description;
 
   document.getElementById('editModal').style.display = 'block';
@@ -57,7 +57,7 @@ function closeEditModal() {
 }
 
 function openDeleteModal(productId) {
-  currentProductId = productId;
+  document.getElementById('deleteProductID').value = productId;
   document.getElementById('deleteConfirmationModal').style.display = 'block';
 }
 
@@ -146,7 +146,7 @@ function closeResponseModal() {
 //     });
 // }
 
-// function showResponse(message) {
-//   document.getElementById('responseMessage').textContent = message;
-//   document.getElementById('responseModal').style.display = 'block';
-// }
+function showResponse(message) {
+  document.getElementById('responseMessage').textContent = message;
+  document.getElementById('responseModal').style.display = 'block';
+}

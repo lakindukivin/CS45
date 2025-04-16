@@ -109,6 +109,12 @@
                     <div>
                         <button class="action-btn" onclick="openAddModal()">Add Product</button>
                     </div>
+                    <div>
+                        <button class="action-btn" href="<?= ROOT ?>/bagSizes">Bag Sizes</button>
+                    </div>
+                    <div>
+                        <button class="action-btn" href="<?= ROOT ?>/packSizes">Pack Sizes</button>
+                    </div>
                 </div>
 
                 <table id="productTable">
@@ -117,8 +123,8 @@
                             <th>Product ID</th>
                             <th>Product Name</th>
                             <th>Product image</th>
-                            <th>price</th>
                             <th>Description</th>
+                            <th>Product Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -129,12 +135,13 @@
                                     <td><?= htmlspecialchars($product->Product_id) ?></td>
                                     <td><?= htmlspecialchars($product->productName) ?></td>
                                     <td><?= htmlspecialchars($product->productImage) ?></td>
-                                    <td><?= htmlspecialchars($product->productPrice) ?></td>
+                                    <!-- <td><?= htmlspecialchars($product->productPrice) ?></td> -->
                                     <td><?= htmlspecialchars($product->productDescription) ?></td>
-                                    
+                                    <td><?= htmlspecialchars($product->productStatus) ?></td>
+
                                     <td>
                                         <button class="edit-btn"
-                                            onclick="openEditModal('<?= $product->Product_id ?>', '<?= $product->productName ?>', '<?= $product->productImage ?>', '<?= $product->productPrice ?>', '<?= $product->productDescription ?>')">Edit</button>
+                                            onclick="openEditModal('<?= $product->Product_id ?>', '<?= $product->productName ?>', '<?= $product->productImage ?>', '<?= $product->productDescription ?>')">Edit</button>
                                         <button class="delete-btn"
                                             onclick="openDeleteModal('<?= $product->Product_id ?>')">Delete</button>
                                     </td>
@@ -155,7 +162,8 @@
                 <div class="modal-content">
                     <span class="close" onclick="closeAddModal()">&times;</span>
                     <h3>Add Product</h3>
-                    <form id="productForm" enctype="multipart/form-data" method="post">
+                    <form action="<?= ROOT ?>/Products/add" id="productForm" enctype="multipart/form-data"
+                        method="post">
                         <div class="form-group">
                             <label for="productName">Product Name:</label>
                             <input name="productName" type="text" id="productName" placeholder="Enter product Name"
@@ -166,15 +174,10 @@
                             <input name="img" type="file" id="img" accept="image/*" required />
                         </div>
                         <div class="form-group">
-                            <label for="productPrice">Product Price:</label>
-                            Rs.<input name="productPrice" type="number" id="productPrice"
-                                placeholder="Enter product Price" min="0" required />
-                        </div>
-                        <div class="form-group">
                             <label for="description">Description:</label>
                             <textarea id="description" rows="4" name="description" minlength="3" required></textarea>
                         </div>
-                         
+
                         <button type="submit" class="action-btn">Add</button>
                     </form>
                 </div>
@@ -184,45 +187,31 @@
                 <div class="modal-content">
                     <span class="close" onclick="closeEditModal()">&times;</span>
                     <h3>Edit Product</h3>
-                    <form id="editProductForm" method="post" enctype="multipart/form-data">
+                    <form action="<?= ROOT ?>/Products/update" id="editProductForm" method="post"
+                        enctype="multipart/form-data">
                         <input type="hidden" name="Product_id" id="editProductID" />
                         <div class="form-group">
                             <label for="editProductName">Product Name:</label>
-                            <input name="product_name" type="text" id="editProductName" placeholder="Enter product Name"
+                            <input name="productName" type="text" id="editProductName" placeholder="Enter product Name"
                                 required />
                         </div>
                         <div class="form-group">
                             <label for="editProductImage">Product Image:</label>
                             <img id="existingImage" src="" alt="Product Image" style="width: 100px; height: auto" />
-                            <input type="text" name="existing_image" id="existingImage" accept="image/*" />
-                        </div>
-                        <div class="form-group">
-                            <label for="editProductPrice">Product Price:</label>
-                            Rs.<input name="product_price" type="number" min="0" id="editProductPrice"
-                                placeholder="Enter product Price" required />
+                            <input type="file" name="img" id="existingImage" accept="image/*" />
                         </div>
                         <div class="form-group">
                             <label for="editDescription">Description:</label>
                             <textarea id="editDescription" rows="4" name="description" required></textarea>
                         </div>
+
                         <div class="form-group">
-                            <label for="editPackSize">Pack Size:</label>
-                            <select id="packSize" name="packSize" required>
-                                <option value="none">None</option>
-                                <option value="small">Small</option>
-                                <option value="medium">Medium</option>
-                                <option value="large">Large</option>
-                            </select>
+                            <label for="editStatus">Status</label>
+                            <input type="checkbox" id="status" name="status" value="">
+
                         </div>
-                        <div class="form-group">
-                            <label for="editBagSize">Bag Size:</label>
-                            <select id="bagSize" name="bagSize" required>
-                                <option value="none">None</option>
-                                <option value="small">Small</option>
-                                <option value="medium">Medium</option>
-                                <option value="large">Large</option>
-                            </select>
-                        </div>
+                        <button class="cancel-btn" onclick="closeDeleteModal()">Cancel</button>
+
                         <button type="submit" class="action-btn">Update</button>
                     </form>
                 </div>
@@ -233,10 +222,13 @@
                     <span class="close" onclick="closeDeleteModal()">&times;</span>
                     <h3>Confirm Delete</h3>
                     <p>Are you sure you want to delete this product?</p>
-                    <div class="delete-modal-actions">
-                        <button class="cancel-btn" onclick="closeDeleteModal()">Cancel</button>
-                        <button class="confirm-btn" onclick="confirmDelete()">Confirm</button>
-                    </div>
+                    <form action="<?= ROOT ?>/Products/delete" id="deleteProductForm" method="post">
+                        <input type="hidden" name="Product_id" id="deleteProductID" />
+                        <div class="delete-modal-actions">
+                            <button class="cancel-btn" onclick="closeDeleteModal()">Cancel</button>
+                            <button type="submit" class="confirm-btn">Confirm</button>
+                        </div>
+                    </form>
                 </div>
             </div>
 
