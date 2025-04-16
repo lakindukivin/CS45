@@ -143,7 +143,7 @@
                                 <td><?= htmlspecialchars($adsAndBanner->end_date) ?></td>
                                 <td>
                                     <button class="edit-btn"
-                                        onclick="openEditModal('<?= $adsAndBanner->ad_id ?>', '<?= $adsAndBanner->title ?>', '<?= $adsAndBanner->image ?>','<?= $adsAndBanner->description ?>','<?= $adsAndBanner->status ?>', '<?= $adsAndBanner->start_date ?>', '<?= $adsAndBanner->end_date ?>')">Edit</button>
+                                        onclick="openEditModal('<?= $adsAndBanner->ad_id ?>', '<?= $adsAndBanner->title ?>', '<?= $adsAndBanner->image ?>','<?= $adsAndBanner->description ?>','<?= $adsAndBanner->start_date ?>', '<?= $adsAndBanner->end_date ?>')">Edit</button>
                                     <button class="delete-btn"
                                         onclick="openDeleteModal('<?= $adsAndBanner->ad_id ?>')">Delete</button>
                                 </td>
@@ -162,34 +162,12 @@
                     <span class="close" onclick="closeAddModal()">&times;</span>
                     <h3>Add Ads/Banners</h3>
 
-                    <form id="adForm" enctype="multipart/form-data">
+                    <form action="<?= ROOT ?>/AdsAndBanners/add" id="adForm" enctype="multipart/form-data"
+                        method="post">
                         <input type="hidden" id="adId" name="adId" value="" />
                         <div class="form-group">
                             <label>Title:
                                 <input type="text" id="adTitle" name="title" placeholder="Ad Title" required />
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <label>Description:
-                                <textarea id="adDescription" name="description" placeholder="Ad Description"
-                                    required></textarea>
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <label>Status:
-                                <select id="adStatus" name="status" required>
-                                    <option value="active">Active</option>
-                                    <option value="inactive">Inactive</option>
-                                    <option value="scheduled">Scheduled</option>
-                                </select>
-                            </label>
-                        </div>
-                        <div class="form-group date-inputs" id="scheduledDateContainer">
-                            <label>Start Date:
-                                <input type="date" id="adStartDate" name="startDate" />
-                            </label>
-                            <label>End Date:
-                                <input type="date" id="adEndDate" name="endDate" />
                             </label>
                         </div>
                         <div class="form-group">
@@ -198,6 +176,31 @@
                             </label>
                             <div id="imagePreview" class="image-preview"></div>
                         </div>
+                        <div class="form-group">
+                            <label>Description:
+                                <textarea id="adDescription" name="description" placeholder="Ad Description"
+                                    required></textarea>
+                            </label>
+                        </div>
+
+                        <div class="form-group date-inputs" id="scheduledDateContainer">
+                            <label>Start Date:
+                                <input type="date" id="adStartDate" name="startDate" />
+                            </label>
+                            <label>End Date:
+                                <input type="date" id="adEndDate" name="endDate" />
+                            </label>
+                        </div>
+                        <!-- <div class="form-group">
+                            <label>Status:
+                                <select id="adStatus" name="status" required>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                    <option value="scheduled">Scheduled</option>
+                                </select>
+                            </label>
+                        </div> -->
+
                         <div class="form-actions">
                             <button type="submit" class="action-btn" id="saveAdBtn">Save</button>
                             <button type="button" class="cancel-btn" onclick="closeAddModal()">Cancel</button>
@@ -211,37 +214,15 @@
                     <span class="close" onclick="closeEditModal()">&times;</span>
                     <h3>Edit Ads/Banner</h3>
 
-                    <form id="editAdForm" enctype="multipart/form-data">
+                    <form id="editAdForm" enctype="multipart/form-data" action="<?= ROOT ?>/AdsAndBanners/update"
+                        method="post">
                         <input type="hidden" id="editAdId" name="adId" />
                         <div class="form-group">
                             <label>Title:
                                 <input type="text" id="editAdTitle" name="title" placeholder="Ad Title" required />
                             </label>
                         </div>
-                        <div class="form-group">
-                            <label>Description:
-                                <textarea id="editAdDescription" name="description" placeholder="Ad Description"
-                                    required></textarea>
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <label>Status:
-                                <select id="editAdStatus" name="status" required>
-                                    <option value="active">Active</option>
-                                    <option value="inactive">Inactive</option>
-                                    <option value="scheduled">Scheduled</option>
-                                </select>
-                            </label>
-                        </div>
-                        <div class="form-group date-inputs" id="editScheduledDateContainer" style="display:none;">
-                            <label>Start Date:
-                                <input type="date" id="editAdStartDate" name="startDate" />
-                            </label>
-                            <label>End Date:
-                                <input type="date" id="editAdEndDate" name="endDate" />
-                            </label>
-                        </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>Current Image:</label>
                             <div id="currentImagePreview" class="image-preview"></div>
                         </div>
@@ -250,7 +231,36 @@
                                 <input type="file" id="editAdImage" name="adImage" accept="image/*" />
                             </label>
                             <div id="editImagePreview" class="image-preview"></div>
+                        </div> -->
+                        <div class="form-group">
+                            <label for="editAdImage">Ad Image:</label>
+                            <img id="editAdImage" src="" alt="AD Image" style="width: 100px; height: auto" />
+                            <input type="file" name="adImage" id="editAdImage" accept="image/*" />
                         </div>
+                        <div class="form-group">
+                            <label>Description:
+                                <textarea id="editAdDescription" name="description" placeholder="Ad Description"
+                                    required></textarea>
+                            </label>
+                        </div>
+                        <!-- <div class="form-group">
+                            <label>Status:
+                                <select id="editAdStatus" name="status" required>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                    <option value="scheduled">Scheduled</option>
+                                </select>
+                            </label>
+                        </div> -->
+                        <div class="form-group date-inputs" id="editScheduledDateContainer">
+                            <label>Start Date:
+                                <input type="date" id="editAdStartDate" name="startDate" />
+                            </label>
+                            <label>End Date:
+                                <input type="date" id="editAdEndDate" name="endDate" />
+                            </label>
+                        </div>
+
                         <div class="form-actions">
                             <button type="submit" class="action-btn">Update</button>
                             <button type="button" class="cancel-btn" onclick="closeEditModal()">Cancel</button>
@@ -265,11 +275,13 @@
                     <span class="close" onclick="closeDeleteModal()">&times;</span>
                     <h3>Confirm Deletion</h3>
                     <p>Are you sure you want to delete this ad/banner? This action cannot be undone.</p>
-                    <input type="hidden" id="deleteAdId" />
-                    <div class="form-actions">
-                        <button type="button" class="delete-btn" onclick="confirmDelete()">Delete</button>
-                        <button type="button" class="cancel-btn" onclick="closeDeleteModal()">Cancel</button>
-                    </div>
+                    <form action="<?= ROOT ?>/AdsAndBanners/delete" id="deleteAdForm" method="post">
+
+                        <input type="hidden" id="deleteAdId" name="adId" />
+                        <div class="form-actions">
+                            <button type="submit" class="confirm-btn">Delete</button>
+                            <button type="button" class="cancel-btn" onclick="closeDeleteModal()">Cancel</button>
+                        </div>
                 </div>
             </div>
         </div>
@@ -283,7 +295,6 @@
     </main>
     <script src="<?= ROOT ?>/assets/js/sidebar.js"></script>
     <script src="<?= ROOT ?>/assets/js/salesManager/adsAndBanners.js"></script>
-    <script src="<?= ROOT ?>/assets/js/modal.js"></script>
 </body>
 
 </html>

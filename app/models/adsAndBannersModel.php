@@ -4,61 +4,64 @@ class AdsAndBannersModel
 {
     use Model;
 
-    protected $table = 'adsandbanners';
+    protected $table = 'ads_and_banners';
     protected $allowedColumns = ['ad_id', 'title', 'image', 'description', 'status', 'start_date', 'end_date'];
 
     public function getAdsAndBanners()
     {
-        // Fixed SQL query with proper table aliases and selected columns
-        // $query = "SELECT ad_id, title, image, description, status, start_date, end_date 
-        //          FROM adsAndBanners";
-        // return $this->query($query);
 
-        $query = "SELECT * FROM {$this->table}";
-        return $this->query($query);
+        try {
+            return $this->findAll('ad_id');
+        } catch (Exception $e) {
+            error_log("Error fetching products: " . $e->getMessage());
+            return false;
+        }
     }
-    // //get single product
+    //get a single ad  in the database by category id
 
-    // public function getSingleAdsAndBanners($adsAndBanners_id)
-    // {
-    //     return $this->first(['ad_id' => $adsAndBanners_id]);
-    // }
-
-    // // Get adsAndBanners by adsAndBanners ID
-    // public function getAdsAndBannersById($adsAndBanners_id)
-    // {
-    //     $query = "SELECT * FROM adsAndBanners  WHERE ad_id = :ad_id";
-    //     $params = ['ad_id' => $adsAndBanners_id];
-    //     return $this->query($query, $params);
-    // }
-
-    // // Check if a adsAndBanners exists by its ID
-    // public function findById($adsAndBanners_id)
-    // {
-    //     return $this->first(['ad_id' => $adsAndBanners_id]);
-    // }
-
-    // // add new adsAndBanners
-
-    // public function addAdsAndBanners($data)
-    // {
-    //     return $this->insert($data);
-    // }
-
-    // // edit existing adsAndBanners
-    // public function editAdsAndBanners($id, $data, $id_column = 'ad_id')
-    // {
-    //     // Ensure only allowed columns are updated
-    //     if (!empty($this->allowedColumns)) {
-    //         $data = array_intersect_key($data, array_flip($this->allowedColumns));
-    //     }
-    //     //save the edited data
-    //     return $this->update($id, $data, $id_column);
-    // }
-
-    // //delete exisiting adsAndBanners
-    // public function deleteAdsAndBanners($id)
-    // {
-    //     return $this->delete($id);
-    // }
+    public function findById($adId)
+    {
+        return $this->first(['ad_id' => $adId]);
     }
+
+
+    // add new adsAndBanners
+
+    public function addAdsAndBanners($data)
+    {
+        try {
+            $this->insert($data);
+            return true;
+
+
+        } catch (Exception $e) {
+            error_log("Error adding ad/banner: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    // edit existing adsAndBanners
+    public function editAdsAndBanners($id, $data)
+    {
+        // Ensure only allowed columns are updated
+        try {
+            $this->update($id, $data, 'ad_id');
+            return true;
+        } catch (Exception $e) {
+            error_log("Error adding ad/banner: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    //delete exisiting adsAndBanners
+    public function deleteAdsAndBanners($id)
+    {
+        try {
+            $this->delete($id,'ad_id');
+            return true;
+        } catch (Exception $e) {
+            error_log("Error adding products: " . $e->getMessage());
+            return false;
+        }
+    }
+}
