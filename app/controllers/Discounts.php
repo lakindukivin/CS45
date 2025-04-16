@@ -6,10 +6,7 @@ class Discounts
 
     public function __construct()
     {
-        // if (!Auth::isLoggedIn() || !Auth::isSalesManager()) {
-        //         redirect('login');
-        //     }
-
+        
         $this->discountModel = new DiscountModel();
     }
 
@@ -28,13 +25,25 @@ class Discounts
         ]);
     }
 
+    public function getSingleDiscount()
+    {
+
+        if (isset($_POST['ad_id'])) {
+            $model = new DiscountModel();
+            $singleDiscount = $model->findById($_POST['Discount_id']);
+            echo json_encode($singleDiscount);
+            exit;
+        }
+
+    }
+
     public function add()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+            // $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
             
             $data = [
-                'product_id' => $_POST['product_id'],
+                'product_id' => $_POST['Product_id'],
                 'discount_percentage' => $_POST['discount_percentage'],
                 'start_date' => $_POST['start_date'],
                 'end_date' => $_POST['end_date'],
@@ -54,7 +63,7 @@ class Discounts
                     $data['product_id_err'] = 'Selected product does not exist';
                 } else {
                     // Check for overlapping discount dates for this product
-                    $existingDiscounts = $this->discountModel->getDiscountsByProductId($data['product_id']);
+                    $existingDiscounts = $this->discountModel->findById($data['product_id']);
 
                     if (!empty($existingDiscounts)) {
                         foreach ($existingDiscounts as $discount) {
@@ -82,8 +91,8 @@ class Discounts
             }
 
 
-            if (empty($data['discount_percentage']) || $data['discount_percentage'] < 1 || $data['discount_percentage'] > 100) {
-                $data['discount_percentage_err'] = 'Please enter a valid discount percentage between 1 and 100';
+            if (empty($data['discount_percentage']) || $data['discount_percentage'] < 0 || $data['discount_percentage'] > 1) {
+                $data['discount_percentage_err'] = 'Please enter a valid discount percentage between 0 and 1';
             }
 
             if (empty($data['start_date'])) {
@@ -145,29 +154,29 @@ class Discounts
         redirect('discounts');
     }
 
-    public function edit()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $data = [
-                'discount_percentage' => $_POST['discount_percentage'],
-                'start_date' => $_POST['start_date'],
-                'end_date' => $_POST['end_date']
-            ];
+    // public function edit()
+    // {
+    //     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    //         $data = [
+    //             'discount_percentage' => $_POST['discount_percentage'],
+    //             'start_date' => $_POST['start_date'],
+    //             'end_date' => $_POST['end_date']
+    //         ];
 
-            if ($this->discountModel->editDiscount($_POST['discount_id'], $data)) {
-                redirect('discounts');
-            }
-        }
-        redirect('discounts');
-    }
+    //         if ($this->discountModel->editDiscount($_POST['discount_id'], $data)) {
+    //             redirect('discounts');
+    //         }
+    //     }
+    //     redirect('discounts');
+    // }
 
-    public function delete()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if ($this->discountModel->deleteDiscount($_POST['discount_id'])) {
-                redirect('discounts');
-            }
-        }
-        redirect('discounts');
-    }
+    // public function delete()
+    // {
+    //     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    //         if ($this->discountModel->deleteDiscount($_POST['discount_id'])) {
+    //             redirect('discounts');
+    //         }
+    //     }
+    //     redirect('discounts');
+    // }
 }

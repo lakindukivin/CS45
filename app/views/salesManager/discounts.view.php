@@ -120,7 +120,6 @@
                     <tr>
                         <th>Discount ID</th>
                         <th>Product Name</th>
-                        <th>Product Price</th>
                         <th>Discount Percentage</th>
                         <th>Start Date</th>
                         <th>End Date</th>
@@ -131,17 +130,16 @@
                     <?php if (!empty($discounts)): ?>
                         <?php foreach ($discounts as $discount): ?>
                             <tr>
-                                <td><?= htmlspecialchars($discount->discount_id) ?></td>
+                                <td><?= htmlspecialchars($discount->Discount_id) ?></td>
                                 <td><?= htmlspecialchars($discount->productName) ?></td>
-                                <td><?= htmlspecialchars($discount->productPrice) ?></td>
-                                <td><?= htmlspecialchars($discount->discount_percentage) ?></td>
+                                <td><?= htmlspecialchars($discount->discountPercentage) ?></td>
                                 <td><?= htmlspecialchars($discount->start_date) ?></td>
                                 <td><?= htmlspecialchars($discount->end_date) ?></td>
                                 <td>
                                     <button class="edit-btn"
-                                        onclick="openEditModal('<?= $discount->discount_id ?>', '<?= $discount->productName ?>', '<?= $discount->discount_percentage ?>', '<?= $discount->start_date ?>', '<?= $discount->end_date ?>')">Edit</button>
+                                        onclick="openEditModal('<?= $discount->Discount_id ?>', '<?= $discount->productName ?>', '<?= $discount->discountPercentage ?>', '<?= $discount->start_date ?>', '<?= $discount->end_date ?>')">Edit</button>
                                     <button class="delete-btn"
-                                        onclick="openDeleteModal('<?= $discount->discount_id ?>')">Delete</button>
+                                        onclick="openDeleteModal('<?= $discount->Discount_id ?>')">Delete</button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -176,8 +174,8 @@
                         </div>
                         <div class="form-group">
                             <label>Discount Percentage:
-                                <input type="number" name="discount_percentage" placeholder="E.g., 10, 20" min="1"
-                                    max="100" required />
+                                <input type="number" name="discount_percentage" placeholder="E.g., 0.2,0.4" min="0"
+                                    max="1" required />
                             </label>
                         </div>
                         <div class="form-group">
