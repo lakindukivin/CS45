@@ -225,8 +225,8 @@
                     <form action="<?= ROOT ?>/Products/delete" id="deleteProductForm" method="post">
                         <input type="hidden" name="Product_id" id="deleteProductID" />
                         <div class="delete-modal-actions">
-                            <button class="cancel-btn" onclick="closeDeleteModal()">Cancel</button>
                             <button type="submit" class="confirm-btn">Confirm</button>
+                            <button class="cancel-btn" onclick="closeDeleteModal()">Cancel</button>
                         </div>
                     </form>
                 </div>
