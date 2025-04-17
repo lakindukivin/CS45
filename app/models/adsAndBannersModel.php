@@ -60,7 +60,7 @@ class AdsAndBannersModel
             $this->delete($id,'ad_id');
             return true;
         } catch (Exception $e) {
-            error_log("Error adding products: " . $e->getMessage());
+            error_log("Error deleting products: " . $e->getMessage());
             return false;
         }
     }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * sales manager home class
+ * ads and banners class
  */
 
 class AdsAndBanners
@@ -28,9 +28,9 @@ class AdsAndBanners
     public function getSingleAd()
     {
 
-        if (isset($_POST['ad_id'])) {
-            $model = new ProductModel();
-            $singleAd = $model->findById($_POST['ad_id']);
+        if (isset($_POST['adId'])) {
+            $model = new AdsAndBannersModel();
+            $singleAd = $model->findById($_POST['adId']);
             echo json_encode($singleAd);
             exit;
         }
