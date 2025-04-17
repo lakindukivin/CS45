@@ -61,7 +61,7 @@
                     </li>
 
                     <li>
-                        <a href="<?= ROOT ?>/legalIssues">
+                        <a href="<?= ROOT ?>/issues">
                             <img src="<?= ROOT ?>/assets/images/legal-issues.svg" alt="legal issues" />
                             <span class="sidebar-titles">Issues</span>
                         </a>
