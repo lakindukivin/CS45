@@ -83,9 +83,9 @@
                 <img src="<?= ROOT ?>/assets/images/Waste360.png" alt="Waste360" />
                 <h1>Waste360</h1>
             </div>
-        
+
             <h1 class="logo">Staff Accounts</h1>
-        
+
             <nav class="nav">
                 <ul>
                     <li>
@@ -95,14 +95,14 @@
                         <a href="#">Profile</a>
                     </li>
                     <li>
-                        <a href="#">Log Out</a>
+                        <a href="<?= ROOT ?>/Logout">Log Out</a>
                     </li>
                 </ul>
             </nav>
         </header>
 
         <div class="container">
-            
+
 
             <div class="table-header">
                 <div class="search-bar">

@@ -90,7 +90,7 @@
                         <a href="#">Profile</a>
                     </li>
                     <li>
-                        <a href="#">Log Out</a>
+                        <a href="<?= ROOT ?>/Logout">Log Out</a>
                     </li>
                 </ul>
             </nav>

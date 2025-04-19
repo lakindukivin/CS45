@@ -95,7 +95,7 @@
                         <a href="#">Profile</a>
                     </li>
                     <li>
-                        <a href="#">Log Out</a>
+                        <a href="<?= ROOT ?>/Logout">Log Out</a>
                     </li>
                 </ul>
             </nav>
@@ -170,7 +170,8 @@
                 <div class="modal-content">
                     <span class="close" onclick="closeEditModal()">&times;</span>
                     <h3>Manage Issues</h3>
-                    <form id="editIssueForm" enctype="multipart/form-data" action="<?= ROOT ?>/Issues/update" method="post">
+                    <form id="editIssueForm" enctype="multipart/form-data" action="<?= ROOT ?>/Issues/update"
+                        method="post">
                         <input type="hidden" id="issueId" name="editIssueId" />
                         <input type="hidden" id="description" name="description" />
                         <div class="form-group">
