@@ -67,6 +67,104 @@
     </nav>
 
   <div class="content">
+  <div id="returnUpdatePopup">
+      <div class="popup-content">
+        <form action="" method="post" class="bg-white p-5 rounded-md w-full">
+          <div class="popup-content">
+          <span class="close" id="closePopupBtn">&times;</span>
+            <h1>Return Update</h1>
+          </div>
+
+          <div class="popup-content">
+          <div>
+            <label for="Return-id" class="">Return ID:</label>
+            <input type="text" id="return_id" name="returnId" class="input-field" readonly>
+          </div>
+
+          <div>
+            <label for="Order-id" class="">Order ID:</label>
+            <input type="text" id="order_id" name="orderId" class="input-field" readonly>
+          </div>
+          </div>
+          
+          <div class="popup-content">
+          <div>
+            <label for="Product-id" class="">Product ID:</label>
+            <input type="text" id="product_id" name="productId" class="input-field" readonly>
+          </div>
+
+          <div >
+            <label for="Customer-id" class="">Customer ID:</label>
+            <input type="text" id="customer_id" name="customerId" class="input-field" readonly>
+          </div>
+          </div>
+          
+
+          <div class="popup-content">
+            <label for="Name" class="">Name:</label>
+            <input type="text" id="customerName" name="customerName" class="input-field" readonly>
+          </div>
+
+          <div class="popup-content">
+            <label for="Product-name" class="">Product Name:</label>
+            <input type="text" id="productName" name="productName" class="input-field" readonly>
+          </div>
+
+          <div class="popup-content">
+            <label for="Quantity" class="">Quantity:</label>
+            <input type="text" id="quantity" name="quantity" class="input-field" readonly>
+          </div>
+
+          <div class="popup-content">
+            <label for="Total" class="">Total:</label>
+            <input type="text" id="total" name="total" class="input-field" readonly>
+          </div>
+
+          <div class="popup-content">
+            <label for="Order-date" class="">Order Date:</label>
+            <input type="text" id="orderDate" name="orderDate" class="input-field" readonly>
+          </div>
+
+          <div class="popup-content">
+            <label for="Phone" class="">Phone:</label>
+            <input type="text" id="phone" name="phone" class="input-field" readonly>
+          </div>
+
+          <div class="popup-content">
+            <label for="Return-Details" class="">Return Details:</label>
+            <input type="text" id="returnDetails" name="returnDetails" class="input-field" readonly>
+          </div>
+
+          <div class="popup-content">
+            <label for="Customer-Requirements" class="">Customer Requirements:</label>
+            <input type="text" id="cus_requirements" name="cus_requirements" class="input-field" readonly>
+          </div>
+
+          <div class="popup-content">
+            <label for="decision_reason" class="">Decision Reason:</label>
+            <textarea id="decision_reason" name="decision_reason" class="input-field"></textarea>
+          </div>
+
+          <div class="popup-content">
+            <label for="message_to_customer" class="">Message to Customer:</label>
+            <textarea id="message_to_customer" name="message_to_customer" class="input-field"></textarea>
+          </div>
+
+          <div class="popup-content">
+            <label for="returnStatus" class="">Status:</label>
+            <input type="text" id="return_status" name="returnStatus">
+          </div>
+
+          <div class="button-container">
+            <button type="submit" class="accept" name="accept_return">Accept</button>
+            <button type="submit" class="reject" name="reject_return">Reject</button>
+            <button type="submit" class="return" name="mark_as_returned">Mark as Returned</button>
+          </div>
+
+  
+        </form>
+      </div>
+    </div>
     <header class="header">
       <div class="logo">
       <img src="<?=ROOT?>/assets/images/Waste360.png" alt="logo" />
@@ -89,7 +187,7 @@
                 <a href="<?=ROOT?>/CompletedReturns">View Completed Returns</a>
             </button>
         </div>
-        <table>
+        <table id="returnTable">
             <thead>
                 <tr>
                     <th>Order ID</th>
@@ -100,52 +198,32 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody id="orderTableBody">
+            <tbody>
             <?php if(isset($data['returns']) && is_array($data['returns'])): ?>
               <?php foreach ($data['returns'] as $return) : ?>
                 <tr>
                   <td><?= $return->order_id ?></td>
                   <td><?= $return->customer_id ?></td>
-                  <td><?= $return->customer_name ?></td>
-                  <td><?= $return->Quantity ?></td>
+                  <td><?= $return->customerName ?></td>
+                  <td><?= $return->quantity ?></td>
                   <td><?= $return->phone ?></td>
                   <td>
-                  <button class="view-btn"><a href="<?=ROOT?>/GiveAwayReqUpdate">View/Edit</a></button>
+                  <button class="view-btn" onclick="openReturnUpdatePopup(<?= htmlspecialchars(json_encode($return), ENT_QUOTES, 'UTF-8')?>)">View/Edit</button>
                   </td>
                 </tr>
               <?php endforeach; ?>
             <?php else: ?>
                 <tr>
-                    <td colspan="7">No give away requests found</td>
+                    <td colspan="6">No pending return requests found</td>
                 </tr>
             <?php endif; ?>
             </tbody>
         </table>
       </div>
-  
-  
-  
-      <!-- Add this modal HTML -->
-      <div id="statusModal" class="modal">
-        <div class="modal-content">
-
-          <span class="close">×</span>
-          <h2>Return Status</h2>
-          <div class="status-details">
-            <p><strong>Order ID:</strong> <span id="orderId"></span></p>
-            <p><strong>Status:</strong> <span id="orderStatus"></span></p>
-            <p><strong>Created Date:</strong> <span id="orderDate"></span></p>
-            <p><strong>Customer:</strong> <span id="customerName"></span></p>
-            <p><strong>Description:</strong> <span id="orderDescription"></span></p>
-          </div>
-            <div class="operation">
-              <button class="accept">Accept</button>
-              <button class="reject">Reject</button>
-              </div>
-          </div>
-      </div>
     </div>
-  </div>  </div>
+  </div> 
+
+  
   <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>  
   <script src="<?=ROOT?>/assets/js/customerServiceManager/returns.js"></script>  
 </body>

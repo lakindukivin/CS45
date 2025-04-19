@@ -66,39 +66,39 @@
 
 
     <div class="form">
-    <form method="POST" action="<?=ROOT?>/Reviews/reply">
-        <input type="hidden" name="Review_id" value="<?=esc($review->Review_id)?>">
+    <form >
+        <input type="" name="review_id" >
         
         <div class="form-row">
             <div class="form-group">
                 <label>Review ID</label>
-                <input type="text" value="<?=esc($review->Review_id)?>" readonly>
+                <input type="text" >
             </div>
             <div class="form-group">
                 <label>Customer Name</label>
-                <input type="text" value="<?=esc($review->customer_name)?>" readonly>
+                <input type="text"  >
             </div>
             <div class="form-group">
                 <label>Order ID</label>
-                <input type="text" value="<?=esc($review->order_id)?>" readonly>
+                <input type="text" >
             </div>
         </div>
 
         <div class="form-row">
             <div class="form-group">
-                <label>Rating</label>
-                <input type="text" value="<?=esc($review->Rating)?>" readonly>
+                <label>rating</label>
+                <input type="text" >
             </div>
             <div class="form-group">
-                <label>Date</label>
-                <input type="text" value="<?=esc($review->Date)?>" readonly>
+                <label>date</label>
+                <input type="text"  >
             </div>
         </div>
 
         <div class="form-row">
             <div class="form-group">
                 <label>Comment</label>
-                <textarea readonly><?=esc($review->comment)?></textarea>
+                <textarea ></textarea>
             </div>
         </div>
 
@@ -111,8 +111,7 @@
 
         <button type="submit">Submit Reply</button>
     </form>
+    
 </div>
-
-</div> 
 </body>
 </html>

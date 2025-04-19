@@ -1,3 +1,4 @@
+<!-- filepath: c:\xampp\htdocs\CS45\app\views\customerServiceManager\manage_reviews.view.php -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,22 +25,21 @@
       <div>
         <ul>
           <li>
-            <a href="<?=ROOT?>/CSManagerHome"><img
-                src="<?=ROOT?>/assets/images/dashboard.svg" alt="dashboard" /><span
+            <a href="<?=ROOT?>/CSManagerHome"><img src="<?=ROOT?>/assets/images/dashboard.svg" alt="dashboard" /><span
                 class="sidebar-titles">Dashboard</span></a>
           </li>
 
           <li>
-            <a href="<?=ROOT?>/GiveAwayRequest"><img
-                src="<?=ROOT?>/assets/images/give_away.svg" /><span class="sidebar-titles">Give Away</span></a>
+            <a href="<?=ROOT?>/GiveAwayRequest"><img src="<?=ROOT?>/assets/images/give_away.svg" /><span
+                class="sidebar-titles">Give Away</span></a>
           </li>
           <li>
-            <a href="<?=ROOT?>/Returns"><img
-                src="<?=ROOT?>/assets/images/returns.svg" /><span class="sidebar-titles">Returns</span></a>
+            <a href="<?=ROOT?>/Returns"><img src="<?=ROOT?>/assets/images/returns.svg" /><span
+                class="sidebar-titles">Returns</span></a>
           </li>
           <li>
-            <a href="<?=ROOT?>/ManageOrders"><img
-                src="<?=ROOT?>/assets/images/manage_order.svg" /><span class="sidebar-titles">Manage order</span></a>
+            <a href="<?=ROOT?>/ManageOrders"><img src="<?=ROOT?>/assets/images/manage_order.svg" /><span
+                class="sidebar-titles">Manage order</span></a>
           </li>
           <li>
             <a href="#" class="sidebar-active"><img src="<?=ROOT?>/assets/images/reviews.svg" /><span
@@ -51,6 +51,58 @@
   </nav>
 
   <div class="content">
+  <div id="reviewUpdatePopup" style="display: none;">
+    <div class="popup-content">
+        <form action="<?=ROOT?>/ManageReviews/addReply" method="POST" class="bg-white p-5 rounded-md w-full">
+            <div class="popup-content">
+            <span class="close" id="closePopup">&times;</span>
+
+                <h1>Update Review</h1>
+            </div>
+            <div class="popup-content">
+            <div>
+                <label for="review_id">Review ID:</label>
+                <input type="text" id="review_id" name="review_id" readonly>
+            </div>
+
+            <div>
+                <label for="customer_id">Customer ID:</label>
+                <input type="text" id="customer_id" name="customer_id" readonly>
+            </div>
+
+            <div>
+                <label for="order_id">Order ID:</label>
+                <input type="text" id="order_id" name="order_id" readonly>
+            </div>
+            </div>
+            
+
+            <div class="popup-content">
+                <label for="rating">Rating:</label>
+                <input type="text" id="rating" name="rating" readonly>
+            </div>
+
+            <div class="popup-content">
+                <label for="date">Date:</label>
+                <input type="text" id="date" name="date" readonly>
+            </div>
+
+            <div class="popup-content">
+                <label for="review">Review:</label>
+                <textarea id="comment" name="comment" rows="4" cols="50" readonly></textarea>
+            </div>
+
+            <div class="popup-content">
+                <label for="reply">Reply:</label>
+                <textarea id="reply" name="reply" rows="4" cols="50"></textarea>
+            </div>
+
+            <div class="button-container">
+                <button type="submit" class="accept">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
     <header class="header">
       <div class="logo">
         <img src="<?=ROOT?>/assets/images/Waste360.png" alt="logo" />
@@ -69,41 +121,56 @@
     <div class="box">
       <div class="container">
         <div class="header">
-        <h2>Pending Reviews</h2>
-        <button class="add-button">
-                <a href="<?=ROOT?>/CompletedReviews">View Replied Reviews</a>
-            </button>
+          <h2>Pending Reviews</h2>
+          <button class="add-button">
+            <a href="<?=ROOT?>/CompletedReviews">View Replied Reviews</a>
+          </button>
         </div>
         <table>
-    <thead>
-        <tr>
-            <th>Customer ID</th>
-            <th>Order ID</th>
-            <th>Rating</th>
-            <th>Date</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach($reviews as $review): ?>
-        <tr>
-            <td><?=htmlspecialchars($review->customer_id)?></td>
-            <td><?=htmlspecialchars($review->order_id)?></td>
-            <td><?=htmlspecialchars($review->Rating)?></td>
-            <td><?=htmlspecialchars($review->Date)?></td>
-            <td>
-            <button class="view-btn">
-            <a href="<?=ROOT?>/Reviews/<?=$review->Review_id?>" class="view-btn">View</a>
-            </button>
-</td>
-        </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
-
+          <thead>
+            <tr>
+              <th>Customer ID</th>
+              <th>Order ID</th>
+              <th>Rating</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php if(isset($data['reviews']) && is_array($data['reviews'])): ?>
+            <?php foreach($data['reviews'] as $review): ?>
+            <tr>
+              <td><?=$review->customer_id?></td>
+              <td><?=$review->order_id?></td>
+              <td><?=$review->rating?></td>
+              <td><?=$review->date?></td>
+              <td>
+              <button class="view-btn" onclick="openReviewUpdatePopup(<?= htmlspecialchars(json_encode($review),ENT_QUOTES,'UTF-8')?>)">View/Reply</button>
+              </td>
+            </tr>
+            <?php endforeach; ?>
+            <?php else: ?>
+              <tr>
+                <td colspan="7">No give away requests found</td>
+              </tr>
+            <?php endif; ?>  
+          </tbody>
+        </table>
+       </div>
+    </div>
   </div>
-  <script src="<?=ROOT?>/assets/js/customerServiceManager/manage_rev.js"></script>
+
+<div id="successMessage" class="success-message" style="display: none;">
+    <div class="icon">✅</div>
+    <p class="message-text">The reply was successfully added!</p>
+</div>
+
+<div id="errorMessage" class="error-message" style="display: none;">
+    <div class="icon">❌</div>
+    <p class="message-text">The reply cannot be empty!</p>
+</div>
+
+  <script src="<?=ROOT?>/assets/js/customerServiceManager/manage_reviews.js"></script>
   <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>
 </body>
-
 </html>

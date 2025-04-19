@@ -51,6 +51,61 @@
   </nav>
 
   <div class="content">
+  <div id="reviewUpdatePopup" style="display: none;">
+    <div class="popup-content">
+        <form action="<?=ROOT?>/CompletedReviews/updateReply" method="POST" class="bg-white p-5 rounded-md w-full">
+            <div class="popup-content">
+                <h1>Update Review</h1>
+                <span  class="close" id="closePopup">&times;</span>
+            </div>
+
+            <div class="popup-content">
+                <label for="review_id">Review ID:</label>
+                <input type="text" id="review_id" name="review_id" readonly>
+            </div>
+
+            <div class="popup-content">
+                <label for="reply_id">Reply ID:</label>
+                <input type="text" id="reply_id" name="reply_id" readonly>
+            </div>
+
+            <div class="popup-content">
+                <label for="customer_id">Customer ID:</label>
+                <input type="text" id="customer_id" name="customer_id" readonly>
+            </div>
+
+            <div class="popup-content">
+                <label for="order_id">Order ID:</label>
+                <input type="text" id="order_id" name="order_id" readonly>
+            </div>
+
+            <div class="popup-content">
+                <label for="rating">Rating:</label>
+                <input type="text" id="rating" name="rating" readonly>
+            </div>
+
+            <div class="popup-content">
+                <label for="date">Date:</label>
+                <input type="text" id="date" name="date" readonly>
+            </div>
+
+            <div class="popup-content">
+                <label for="review">Review:</label>
+                <textarea id="comment" name="comment" rows="4" cols="50" readonly></textarea>
+            </div>
+
+            <div class="popup-content">
+                <label for="reply">Reply:</label>
+                <textarea id="reply" name="reply" rows="4" cols="50"></textarea>
+            </div>
+
+            <div class="popup-content">
+                <button type="submit" class="accept">Update</button>
+            </div>
+        </form>
+    </div>
+</div>
+
     <header class="header">
       <div class="logo">
         <img src="<?=ROOT?>/assets/images/Waste360.png" alt="logo" />
@@ -82,22 +137,39 @@
         </tr>
     </thead>
     <tbody>
-        <?php foreach($reviews as $review): ?>
-        <tr>
-            <td><?=htmlspecialchars($review->customer_id)?></td>
-            <td><?=htmlspecialchars($review->order_id)?></td>
-            <td><?=htmlspecialchars($review->rating)?></td>
-            <td><?=htmlspecialchars($review->date)?></td>
-            <td>
-            <button class="view-btn"><a href="<?=ROOT?>/Reviews<?=$review->review_id?>">View</a></button>
-            </td>
-        </tr>
-        <?php endforeach; ?>
+    <?php if(isset($data['reviews']) && is_array($data['reviews'])): ?>
+            <?php foreach($data['reviews'] as $review): ?>
+            <tr>
+              <td><?=$review->customer_id?></td>
+              <td><?=$review->order_id?></td>
+              <td><?=$review->rating?></td>
+              <td><?=$review->date?></td>
+              <td>
+              <button class="view-btn" onclick="openCompletedReviewsPopup(<?= htmlspecialchars(json_encode($review),ENT_QUOTES,'UTF-8')?>)">View/Reply</button>
+              </td>
+            </tr>
+            <?php endforeach; ?>
+            <?php else: ?>
+              <tr>
+                <td colspan="7">No give away requests found</td>
+              </tr>
+            <?php endif; ?> 
     </tbody>
 </table>
+</div>
+</div>
+</div>
 
-  </div>
-  <script src="<?=ROOT?>/assets/js/customerServiceManager/manage_rev.js"></script>
+  <div id="successMessage" class="success-message" style="display: none;">
+    <div class="icon">✅</div>
+    <p class="message-text">The reply was successfully updated!</p>
+</div>
+
+<div id="errorMessage" class="error-message" style="display: none;">
+    <div class="icon">❌</div>
+    <p class="message-text">The reply cannot be empty!</p>
+</div>
+  <script src="<?=ROOT?>/assets/js/customerServiceManager/manage_reviews.js"></script>
   <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>
 </body>
 
