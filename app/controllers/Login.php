@@ -4,58 +4,66 @@ class Login
 {
     use Controller;
 
-    public function index($data = [])
+    public function index($data)
     {
         $user = new User();
 
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
-            if (empty($_POST['email']) || empty($_POST['password'])) {
-                $data['errors'] = ["Email and Password are required."];
-            } else {
-                $arr['email'] = $_POST['email'];
+            if (isset($_POST['Email']) && isset($_POST['Password'])) {
+                $arr['Email'] = $_POST['Email'];
+
                 $existingUser = $user->first($arr);
 
                 if ($existingUser) {
-                    // Verify password (hashed)
-                    if (password_verify($_POST['password'], $existingUser->password)) {
-                        // Start session if not already started
+                    // Debugging: Check if the correct user is retrieved
+                    // var_dump($existingUser);
+                    // exit();
+
+                    // Password check (adjust if using plain text or hashed passwords)
+                    if ($_POST['Password'] === $existingUser->password) { // Use password_verify() if passwords are hashed
+
                         if (session_status() === PHP_SESSION_NONE) {
                             session_start();
                         }
 
-                        $_SESSION['user_id'] = $existingUser->user_id;
-                        $_SESSION['email'] = $existingUser->email;
-                        $_SESSION['role_id'] = $existingUser->role_id;
+                        $_SESSION['User_id'] = $existingUser->user_id;
+                        $_SESSION['Email'] = $existingUser->email;
+                        $_SESSION['Role_id'] = $existingUser->role_id;
 
-                        // Redirect based on role_id
-                        switch ($_SESSION['role_id']) {
+                        // Debugging: Check if session variables are set
+                        // var_dump($_SESSION);
+                        // exit();
+
+                        // Redirect based on numeric Role_id
+                        switch ($_SESSION['Role_id']) {
                             case 1:  // Admin
-                                header("Location: adminHome.php");
+                                header("Location: adminHome");
                                 break;
                             case 2:  // Sales Manager
-                                header("Location: salesManagerHome.php");
+                                header("Location: salesManagerHome");
                                 break;
                             case 3:  // Customer
-                                header("Location: customerHome.php");
+                                header("Location: ProductionManagerHome");
                                 break;
                             case 4:  // Production Manager
-                                header("Location: productionManagerHome.php");
+                                header("Location: CSManagerHome");
                                 break;
                             case 5:  // Customer Service Manager
-                                header("Location: csManagerHome.php");
+                                header("Location: profile");
                                 break;
                             default:
-                                $data['errors'] = ["Invalid user role."];
-                                $this->view('customer/login', $data);
+                                echo "Invalid role.";
                                 exit();
                         }
                         exit();
                     } else {
-                        $data['errors'] = ["Invalid email or password."];
+                        $data['errors'][] = "Invalid password.";
                     }
                 } else {
-                    $data['errors'] = ["Invalid email or password."];
+                    $data['errors'][] = "No account found with that email.";
                 }
+            } else {
+                $data['errors'][] = "Email and Password are required.";
             }
         }
 

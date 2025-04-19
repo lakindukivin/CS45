@@ -8,7 +8,7 @@ class User
     use Model;
 
     protected $table = 'user';
-    protected $allowedColumns = ['email', 'password', 'role_id'];
+    protected $allowedColumns = ['email', 'password', 'role'];
 
     public $errors = [];
     public $processedData = [];
@@ -34,16 +34,14 @@ class User
         // Password validation
         if (empty($data['password'])) {
             $this->errors['password'] = "Password is required";
-        } elseif (strlen($data['password']) < 8) {
-            $this->errors['password'] = "Password must be at least 8 characters";
         }
 
-        // If validation passes, set processed data with hashed password
+        // If validation passes, set processed data without hashing the password
         if (empty($this->errors)) {
             $this->processedData = [
                 'email' => $data['email'],
-                'password' => password_hash($data['password'], PASSWORD_DEFAULT),
-                'role_id' => 3, // Default to customer role (numeric)
+                'password' => $data['password'], // Plain text password (not secure)
+                'role' => 'customer',
             ];
             return true;
         }
