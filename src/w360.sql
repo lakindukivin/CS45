@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 19, 2025 at 05:29 AM
+-- Generation Time: Apr 19, 2025 at 09:46 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -24,13 +24,49 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ads_and_banners`
+--
+
+CREATE TABLE `ads_and_banners` (
+  `ad_id` int(11) NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `ads_and_banners`
+--
+
+INSERT INTO `ads_and_banners` (`ad_id`, `title`, `image`, `description`, `status`, `start_date`, `end_date`) VALUES
+(1, 'ad1', NULL, 'ad1', 1, '2025-04-01', '2025-04-30'),
+(2, 'add2', NULL, 'ad2', 1, '2025-04-14', '2025-04-26'),
+(3, 'ad3', NULL, 'ad3', 1, '2025-04-26', '2025-04-26');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bag_size`
+--
+
+CREATE TABLE `bag_size` (
+  `bag_id` int(11) NOT NULL,
+  `bag_size` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `carbon_footprint`
 --
 
 CREATE TABLE `carbon_footprint` (
   `id` int(11) NOT NULL,
-  `value` decimal(10,2) NOT NULL,
-  `unit` varchar(10) NOT NULL,
+  `giveaway_amount` decimal(10,2) DEFAULT 0.00,
+  `purchased_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
   `date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -152,6 +188,17 @@ INSERT INTO `customer` (`customer_id`, `user_id`, `address`, `phone`, `mobile`, 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `customer_has_carbon_footprint`
+--
+
+CREATE TABLE `customer_has_carbon_footprint` (
+  `customer_id` int(11) DEFAULT NULL,
+  `carbon_footprint_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `custom_order`
 --
 
@@ -216,6 +263,28 @@ INSERT INTO `giveawayrequests` (`giveaway_id`, `customer_id`, `request_date`, `g
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `issue`
+--
+
+CREATE TABLE `issue` (
+  `issue_id` int(11) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `status` varchar(255) DEFAULT 'Pending',
+  `action_taken` varchar(255) DEFAULT 'None'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `issue`
+--
+
+INSERT INTO `issue` (`issue_id`, `description`, `status`, `action_taken`) VALUES
+(1, 'error1', 'Pending', 'None'),
+(2, 'error2', 'Pending', 'None'),
+(3, 'sysytem is not working', 'Pending', 'None');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `orders`
 --
 
@@ -246,6 +315,17 @@ INSERT INTO `orders` (`order_id`, `product_id`, `customer_id`, `quantity`, `tota
 (9, 5, 8, 2, 1900.00, '888 Brown St', '888 Brown St', '2025-03-08', 'rejected'),
 (10, 6, 9, 1, 300.00, '777 Black St', '777 Black St', '2025-03-09', 'rejected'),
 (11, 4, 10, 2, 1600.00, '666 Silver St', '666 Silver St', '2025-03-10', 'accepted');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pack_size`
+--
+
+CREATE TABLE `pack_size` (
+  `pack_id` int(11) NOT NULL,
+  `pack_size` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -303,10 +383,7 @@ CREATE TABLE `product` (
   `product_id` int(11) NOT NULL,
   `productName` varchar(255) DEFAULT NULL,
   `productImage` varchar(255) DEFAULT NULL,
-  `productPrice` decimal(10,2) DEFAULT NULL,
   `productDescription` text DEFAULT NULL,
-  `productPackSize` varchar(255) DEFAULT NULL,
-  `productBagSize` varchar(255) DEFAULT NULL,
   `productStatus` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -314,10 +391,22 @@ CREATE TABLE `product` (
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`product_id`, `productName`, `productImage`, `productPrice`, `productDescription`, `productPackSize`, `productBagSize`, `productStatus`) VALUES
-(4, 'Oxo-Degradable Garbage Bag', 'oxo_bag.jpg', 450.00, 'Eco-conscious garbage bags made with oxo-degradable material that breaks down over time.', 'Roll of 30', 'Large', 'Active'),
-(5, 'Bio-Degradable Garbage Bag', 'bio_bag.jpg', 500.00, 'Compostable garbage bags made from natural materials, safe for the environment.', 'Roll of 25', 'Medium', 'Active'),
-(6, 'Hydrogen Garbage Bag', 'hydrogen_bag.jpg', 600.00, 'Innovative hydrogen-based garbage bags designed for enhanced odor control and decomposition.', 'Roll of 20', 'Large', 'Active');
+INSERT INTO `product` (`product_id`, `productName`, `productImage`, `productDescription`, `productStatus`) VALUES
+(4, 'Oxo-Degradable Garbage Bag', 'oxo_bag.jpg', 'Eco-conscious garbage bags made with oxo-degradable material that breaks down over time.', 'Active'),
+(5, 'Bio-Degradable Garbage Bag', 'bio_bag.jpg', 'Compostable garbage bags made from natural materials, safe for the environment.', 'Active'),
+(6, 'Hydrogen Garbage Bag', 'hydrogen_bag.jpg', 'Innovative hydrogen-based garbage bags designed for enhanced odor control and decomposition.', 'Active');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_has_bag_sizes`
+--
+
+CREATE TABLE `product_has_bag_sizes` (
+  `product_id` int(11) NOT NULL,
+  `bag_id` int(11) NOT NULL,
+  `price` decimal(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -459,6 +548,21 @@ INSERT INTO `role` (`role_id`, `role`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `staff`
+--
+
+CREATE TABLE `staff` (
+  `staff_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL,
+  `role_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `stock`
 --
 
@@ -480,23 +584,34 @@ CREATE TABLE `user` (
   `user_id` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role_id` int(11) NOT NULL,
-  `user_name` varchar(255) DEFAULT NULL
+  `role_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `email`, `password`, `role_id`, `user_name`) VALUES
-(1, 'admin@gmail.com', '123456', 1, 'Chamudi'),
-(2, 'upeka@gmail.com', '1234', 5, 'Upeka'),
-(3, 'lakindu@gmail.com', '5555555', 5, NULL),
-(4, 'nimasha@gmail.com', '444444', 4, NULL);
+INSERT INTO `user` (`user_id`, `email`, `password`, `role_id`) VALUES
+(1, 'admin@gmail.com', '123456', 1),
+(2, 'upeka@gmail.com', '1234', 5),
+(3, 'lakindu@gmail.com', '5555555', 5),
+(4, 'nimasha@gmail.com', '444444', 4);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `ads_and_banners`
+--
+ALTER TABLE `ads_and_banners`
+  ADD PRIMARY KEY (`ad_id`);
+
+--
+-- Indexes for table `bag_size`
+--
+ALTER TABLE `bag_size`
+  ADD PRIMARY KEY (`bag_id`);
 
 --
 -- Indexes for table `carbon_footprint`
@@ -534,6 +649,13 @@ ALTER TABLE `customer`
   ADD KEY `User_id` (`user_id`);
 
 --
+-- Indexes for table `customer_has_carbon_footprint`
+--
+ALTER TABLE `customer_has_carbon_footprint`
+  ADD KEY `customer_id` (`customer_id`),
+  ADD KEY `carbon_footprint_id` (`carbon_footprint_id`);
+
+--
 -- Indexes for table `custom_order`
 --
 ALTER TABLE `custom_order`
@@ -555,12 +677,24 @@ ALTER TABLE `giveawayrequests`
   ADD KEY `customer_id` (`customer_id`);
 
 --
+-- Indexes for table `issue`
+--
+ALTER TABLE `issue`
+  ADD PRIMARY KEY (`issue_id`);
+
+--
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`order_id`),
   ADD KEY `product_id` (`product_id`),
   ADD KEY `customer_id` (`customer_id`);
+
+--
+-- Indexes for table `pack_size`
+--
+ALTER TABLE `pack_size`
+  ADD PRIMARY KEY (`pack_id`);
 
 --
 -- Indexes for table `payment`
@@ -587,6 +721,13 @@ ALTER TABLE `polythenecollection`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`product_id`);
+
+--
+-- Indexes for table `product_has_bag_sizes`
+--
+ALTER TABLE `product_has_bag_sizes`
+  ADD PRIMARY KEY (`product_id`,`bag_id`),
+  ADD KEY `bag_id` (`bag_id`);
 
 --
 -- Indexes for table `reply`
@@ -633,6 +774,14 @@ ALTER TABLE `role`
   ADD PRIMARY KEY (`role_id`);
 
 --
+-- Indexes for table `staff`
+--
+ALTER TABLE `staff`
+  ADD PRIMARY KEY (`staff_id`),
+  ADD KEY `role_id` (`role_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indexes for table `stock`
 --
 ALTER TABLE `stock`
@@ -649,6 +798,18 @@ ALTER TABLE `user`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `ads_and_banners`
+--
+ALTER TABLE `ads_and_banners`
+  MODIFY `ad_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `bag_size`
+--
+ALTER TABLE `bag_size`
+  MODIFY `bag_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `carbon_footprint`
@@ -699,10 +860,22 @@ ALTER TABLE `giveawayrequests`
   MODIFY `giveaway_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
+-- AUTO_INCREMENT for table `issue`
+--
+ALTER TABLE `issue`
+  MODIFY `issue_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
   MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `pack_size`
+--
+ALTER TABLE `pack_size`
+  MODIFY `pack_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `payment`
@@ -765,6 +938,12 @@ ALTER TABLE `role`
   MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `staff`
+--
+ALTER TABLE `staff`
+  MODIFY `staff_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `stock`
 --
 ALTER TABLE `stock`
@@ -805,6 +984,13 @@ ALTER TABLE `customer`
   ADD CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
 
 --
+-- Constraints for table `customer_has_carbon_footprint`
+--
+ALTER TABLE `customer_has_carbon_footprint`
+  ADD CONSTRAINT `customer_has_carbon_footprint_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`),
+  ADD CONSTRAINT `customer_has_carbon_footprint_ibfk_2` FOREIGN KEY (`carbon_footprint_id`) REFERENCES `carbon_footprint` (`id`);
+
+--
 -- Constraints for table `custom_order`
 --
 ALTER TABLE `custom_order`
@@ -842,6 +1028,13 @@ ALTER TABLE `pellet`
   ADD CONSTRAINT `pellet_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`);
 
 --
+-- Constraints for table `product_has_bag_sizes`
+--
+ALTER TABLE `product_has_bag_sizes`
+  ADD CONSTRAINT `product_has_bag_sizes_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `product_has_bag_sizes_ibfk_2` FOREIGN KEY (`bag_id`) REFERENCES `bag_size` (`bag_id`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `reply`
 --
 ALTER TABLE `reply`
@@ -872,6 +1065,13 @@ ALTER TABLE `review`
 --
 ALTER TABLE `rewards`
   ADD CONSTRAINT `rewards_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`);
+
+--
+-- Constraints for table `staff`
+--
+ALTER TABLE `staff`
+  ADD CONSTRAINT `staff_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`),
+  ADD CONSTRAINT `staff_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
 
 --
 -- Constraints for table `stock`
