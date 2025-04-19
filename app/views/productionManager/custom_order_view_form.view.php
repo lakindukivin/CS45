@@ -90,29 +90,29 @@
             </div>
             <div class="form-group">
                 <label>Company Name</label>
-                <input type="text" value="<?= htmlspecialchars($data['order']->Company_name) ?>" readonly>
+                <input type="text" value="<?= htmlspecialchars($data['order']->company_name) ?>" readonly>
             </div>
         </div>
 
         <div class="form-row">
             <div class="form-group">
                 <label>Type</label>
-                <input type="text" value="<?= htmlspecialchars($data['order']->Type) ?>" readonly>
+                <input type="text" value="<?= htmlspecialchars($data['order']->type) ?>" readonly>
             </div>
             <div class="form-group">
                 <label>Quantity</label>
-                <input type="number" value="<?= htmlspecialchars($data['order']->Quantity) ?>" readonly>
+                <input type="number" value="<?= htmlspecialchars($data['order']->quantity) ?>" readonly>
             </div>
         </div>
 
         <div class="form-row">
             <div class="form-group">
                 <label>Email</label>
-                <input type="email" value="<?= htmlspecialchars($data['order']->Email) ?>" readonly>
+                <input type="email" value="<?= htmlspecialchars($data['order']->email) ?>" readonly>
             </div>
             <div class="form-group">
                 <label>Phone</label>
-                <input type="tel" value="<?= htmlspecialchars($data['order']->Phone) ?>" readonly>
+                <input type="tel" value="<?= htmlspecialchars($data['order']->phone) ?>" readonly>
             </div>
         </div>
 

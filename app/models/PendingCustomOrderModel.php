@@ -28,14 +28,14 @@ class PendingCustomOrderModel {
 
     public function getOrderDetails($orderId) 
     {
-        $query = "SELECT * FROM custom_orders WHERE customOrder_id = :id";
+        $query = "SELECT * FROM custom_order WHERE customOrder_id = :id";
         $params = ['id' => $orderId];
         
         return $this->query($query, $params);
     }
     public function updateOrderStatus($orderId, $status) 
     {
-        $query = "UPDATE custom_orders SET customOrder_status = :status WHERE customOrder_id = :id";
+        $query = "UPDATE custom_order SET customOrder_status = :status WHERE customOrder_id = :id";
         $params = [
             'status' => $status,
             'id' => $orderId
