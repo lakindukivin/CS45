@@ -25,7 +25,7 @@
         </button>
         <div class="sidebar-container">
             <div class="prof-picture">
-                <img src="<?= ROOT ?>/assets/images/profile-circle.svg" alt="profile" />
+                <img src="<?= ROOT ?>/assets/images/user.svg" alt="profile" />
                 <span class="user-title">Admin</span>
             </div>
 
@@ -61,7 +61,7 @@
                     </li>
 
                     <li>
-                        <a href="<?= ROOT ?>/legalIssues">
+                        <a href="<?= ROOT ?>/issues">
                             <img src="<?= ROOT ?>/assets/images/legal-issues.svg" alt="legal issues" />
                             <span class="sidebar-titles">Issues</span>
                         </a>
@@ -78,18 +78,26 @@
     </nav>
 
     <main>
-        <header>
+        <header class="header">
             <div class="logo">
                 <img src="<?= ROOT ?>/assets/images/Waste360.png" alt="Waste360" />
                 <h1>Waste360</h1>
             </div>
-            <div class="page-title">
-                <p>Customer Management</p>
-            </div>
-            <nav class="header-nav">
-                <a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg" alt="" /></a>
-                <a href="#">Profile</a>
-                <a href="#">Log Out</a>
+
+            <h1 class="logo">Customer Accounts</h1>
+
+            <nav class="nav">
+                <ul>
+                    <li>
+                        <a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg" alt="" /></a>
+                    </li>
+                    <li>
+                        <a href="#">Profile</a>
+                    </li>
+                    <li>
+                        <a href="<?= ROOT ?>/Logout">Log Out</a>
+                    </li>
+                </ul>
             </nav>
         </header>
 
@@ -153,7 +161,26 @@
                     </div>
 
                     <button type="button" class="action-btn">Update</button>
+                    <button type="button" class="cancel-btn">Cancel</button>
                 </form>
+            </div>
+
+            <!-- Delete Confirmation Modal -->
+            <div id="deleteModal" class="modal">
+                <div class="modal-content">
+                    <p>Are you sure you want to delete this customer?</p>
+                    <button id="confirmDelete" class="confirm-btn">Yes, Delete</button>
+                    <button id="cancelDelete" class="cancel-btn">Cancel</button>
+                </div>
+            </div>
+
+            <!-- Success Message Modal -->
+            <div id="successMessage" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeSuccessMessage()">&times;</span>
+                    <p>Customer deleted successfully!</p>
+                    <button id="closeSuccess" class="close">Close</button>
+                </div>
             </div>
         </div>
     </main>

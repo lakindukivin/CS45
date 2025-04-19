@@ -15,3 +15,13 @@ function openEditModal() {
 function closeEditModal() {
   document.getElementById('editModal').style.display = 'none';
 }
+
+//delete Control
+function openDeleteModal() {
+  document.getElementById('deleteModal').style.display = 'block';
+}
+
+function closeDeleteModal() {
+  document.getElementById('deleteModal').style.display = 'none';
+}
+

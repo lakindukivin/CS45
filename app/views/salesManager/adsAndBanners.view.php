@@ -25,9 +25,7 @@
         </button>
         <div class="sidebar-container">
             <div class="prof-picture">
-                <img src="<?= ROOT ?>/assets/images/profile-circle.svg" alt="profile" />
-            </div>
-            <div>
+                <img src="<?= ROOT ?>/assets/images/user.svg" alt="profile" />
                 <span class="user-title">Sales and Marketing Manager</span>
             </div>
 
@@ -80,18 +78,27 @@
     </nav>
 
     <main>
-        <header>
+        <header class="header">
             <div class="logo">
                 <img src="<?= ROOT ?>/assets/images/Waste360.png" alt="Waste360" />
                 <h1>Waste360</h1>
             </div>
-            <div class="page-title">
-                <p>Ads/Banners</p>
-            </div>
-            <nav class="header-nav">
-                <a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg" alt="" /></a>
-                <a href="#">Profile</a>
-                <a href="#">Log Out</a>
+
+            <h1 class="logo">Ads / Banners</h1>
+
+            <nav class="nav">
+                <ul>
+
+                    <li>
+                        <a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg" alt="" /></a>
+                    </li>
+                    <li>
+                        <a href="#">Profile</a>
+                    </li>
+                    <li>
+                        <a href="<?= ROOT ?>/Logout">Log Out</a>
+                    </li>
+                </ul>
             </nav>
         </header>
 
@@ -113,53 +120,170 @@
             <table id="adTable">
                 <thead>
                     <tr>
+                        <th>Ads/Banner ID</th>
                         <th>Title</th>
+                        <th>Image</th>
                         <th>Description</th>
-                        <th>Target Audience</th>
-                        <th>Display Settings</th>
+                        <th>Status</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Rows dynamically added -->
+                    <?php if (!empty($adsAndBanners)): ?>
+                        <?php foreach ($adsAndBanners as $adsAndBanner): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($adsAndBanner->ad_id) ?></td>
+                                <td><?= htmlspecialchars($adsAndBanner->title) ?></td>
+                                <td><?= htmlspecialchars($adsAndBanner->image) ?></td>
+                                <td><?= htmlspecialchars($adsAndBanner->description) ?></td>
+                                <td><?= htmlspecialchars($adsAndBanner->status) ?></td>
+                                <td><?= htmlspecialchars($adsAndBanner->start_date) ?></td>
+                                <td><?= htmlspecialchars($adsAndBanner->end_date) ?></td>
+                                <td>
+                                    <button class="edit-btn"
+                                        onclick="openEditModal('<?= $adsAndBanner->ad_id ?>', '<?= $adsAndBanner->title ?>', '<?= $adsAndBanner->image ?>','<?= $adsAndBanner->description ?>','<?= $adsAndBanner->start_date ?>', '<?= $adsAndBanner->end_date ?>')">Edit</button>
+                                    <button class="delete-btn"
+                                        onclick="openDeleteModal('<?= $adsAndBanner->ad_id ?>')">Delete</button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="6">No data found.</td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
             </table>
 
+            <div id="addModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeAddModal()">&times;</span>
+                    <h3>Add Ads/Banners</h3>
 
-            <!-- Ad Form Section -->
+                    <form action="<?= ROOT ?>/AdsAndBanners/add" id="adForm" enctype="multipart/form-data"
+                        method="post">
+                        <input type="hidden" id="adId" name="adId" value="" />
+                        <div class="form-group">
+                            <label>Title:
+                                <input type="text" id="adTitle" name="title" placeholder="Ad Title" required />
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>Upload Banner File:
+                                <input type="file" id="adImage" name="adImage" accept="image/*" required />
+                            </label>
+                            <div id="imagePreview" class="image-preview"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Description:
+                                <textarea id="adDescription" name="description" placeholder="Ad Description"
+                                    required></textarea>
+                            </label>
+                        </div>
 
-            <h3>Add Ads/Banners</h3>
+                        <div class="form-group date-inputs" id="scheduledDateContainer">
+                            <label>Start Date:
+                                <input type="date" id="adStartDate" name="startDate" />
+                            </label>
+                            <label>End Date:
+                                <input type="date" id="adEndDate" name="endDate" />
+                            </label>
+                        </div>
+                        <!-- <div class="form-group">
+                            <label>Status:
+                                <select id="adStatus" name="status" required>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                    <option value="scheduled">Scheduled</option>
+                                </select>
+                            </label>
+                        </div> -->
 
-            <form id="adFormContent">
-                <div class="form-group">
-                    <label>Title:
-                        <input type="text" id="adTitle" placeholder="Ad Title" required />
-                    </label>
+                        <div class="form-actions">
+                            <button type="submit" class="action-btn" id="saveAdBtn">Save</button>
+                            <button type="button" class="cancel-btn" onclick="closeAddModal()">Cancel</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label>Description:
-                        <textarea id="adDescription" placeholder="Ad Description" required></textarea>
-                    </label>
-                </div>
+            </div>
 
-                <div class="form-group">
-                    <label>Target Audience:
-                        <input type="text" id="adAudience" placeholder="E.g., Customers, Teens, Professionals"
-                            required />
-                    </label>
+            <div id="editModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeEditModal()">&times;</span>
+                    <h3>Edit Ads/Banner</h3>
+
+                    <form id="editAdForm" enctype="multipart/form-data" action="<?= ROOT ?>/AdsAndBanners/update"
+                        method="post">
+                        <input type="hidden" id="editAdId" name="adId" />
+                        <div class="form-group">
+                            <label>Title:
+                                <input type="text" id="editAdTitle" name="title" placeholder="Ad Title" required />
+                            </label>
+                        </div>
+                        <!-- <div class="form-group">
+                            <label>Current Image:</label>
+                            <div id="currentImagePreview" class="image-preview"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Replace Image (Optional):
+                                <input type="file" id="editAdImage" name="adImage" accept="image/*" />
+                            </label>
+                            <div id="editImagePreview" class="image-preview"></div>
+                        </div> -->
+                        <div class="form-group">
+                            <label for="editAdImage">Ad Image:</label>
+                            <img id="editAdImage" src="" alt="AD Image" style="width: 100px; height: auto" />
+                            <input type="file" name="adImage" id="editAdImage" accept="image/*" />
+                        </div>
+                        <div class="form-group">
+                            <label>Description:
+                                <textarea id="editAdDescription" name="description" placeholder="Ad Description"
+                                    required></textarea>
+                            </label>
+                        </div>
+                        <!-- <div class="form-group">
+                            <label>Status:
+                                <select id="editAdStatus" name="status" required>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                    <option value="scheduled">Scheduled</option>
+                                </select>
+                            </label>
+                        </div> -->
+                        <div class="form-group date-inputs" id="editScheduledDateContainer">
+                            <label>Start Date:
+                                <input type="date" id="editAdStartDate" name="startDate" />
+                            </label>
+                            <label>End Date:
+                                <input type="date" id="editAdEndDate" name="endDate" />
+                            </label>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="action-btn">Update</button>
+                            <button type="button" class="cancel-btn" onclick="closeEditModal()">Cancel</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label>Display Settings:
-                        <input type="text" id="adSettings" placeholder="E.g., Homepage, Sidebar, Banner" required />
-                    </label>
+            </div>
+
+            <!-- Delete Confirmation Modal -->
+            <div id="deleteModal" class="modal">
+                <div class="modal-content delete-modal">
+                    <span class="close" onclick="closeDeleteModal()">&times;</span>
+                    <h3>Confirm Deletion</h3>
+                    <p>Are you sure you want to delete this ad/banner? This action cannot be undone.</p>
+                    <form action="<?= ROOT ?>/AdsAndBanners/delete" id="deleteAdForm" method="post">
+
+                        <input type="hidden" id="deleteAdId" name="adId" />
+                        <div class="form-actions">
+                            <button type="submit" class="confirm-btn">Delete</button>
+                            <button type="button" class="cancel-btn" onclick="closeDeleteModal()">Cancel</button>
+                        </div>
                 </div>
-                <div class="form-group">
-                    <label>Upload Banner File:
-                        <input type="file" id="adFile" accept="image/*" required />
-                    </label>
-                </div>
-                <button type="submit" class="action-btn">Save & Preview</button>
-            </form>
+            </div>
         </div>
 
         <!-- <footer>
@@ -169,7 +293,7 @@
             <p>&copy; 2024 Waste360. All rights reserved.</p>
         </footer> -->
     </main>
-    <script src="<?= ROOT ?>/assets/js/salesManager/sidebar.js"></script>
+    <script src="<?= ROOT ?>/assets/js/sidebar.js"></script>
     <script src="<?= ROOT ?>/assets/js/salesManager/adsAndBanners.js"></script>
 </body>
 

@@ -24,9 +24,7 @@
         </button>
         <div class="sidebar-container">
             <div class="prof-picture">
-                <img src="<?= ROOT ?>/assets/images/profile-circle.svg" alt="profile" />
-            </div>
-            <div>
+                <img src="<?= ROOT ?>/assets/images/user.svg" alt="profile" />
                 <span class="user-title">Sales and Marketing Manager</span>
             </div>
             <div>
@@ -73,18 +71,27 @@
     </nav>
 
     <main>
-        <header>
+        <header class="header">
             <div class="logo">
                 <img src="<?= ROOT ?>/assets/images/Waste360.png" alt="Waste360" />
                 <h1>Waste360</h1>
             </div>
-            <div class="page-title">
-                <p>Reports</p>
-            </div>
-            <nav class="header-nav">
-                <a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg" alt="" /></a>
-                <a href="#">Profile</a>
-                <a href="#">Log Out</a>
+
+            <h1 class="logo">Reports</h1>
+
+            <nav class="nav">
+                <ul>
+
+                    <li>
+                        <a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg" alt="" /></a>
+                    </li>
+                    <li>
+                        <a href="#">Profile</a>
+                    </li>
+                    <li>
+                        <a href="<?= ROOT ?>/Logout">Log Out</a>
+                    </li>
+                </ul>
             </nav>
         </header>
 
@@ -115,45 +122,51 @@
                 </thead>
                 <tbody></tbody>
             </table>
+            <div id="addModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeAddModal()">&times;</span>
+                    <!-- report form -->
+                    <h2>Generate Reports</h2>
 
-            <!-- report form -->
-            <h2>Generate Reports</h2>
+                    <form id="reportForm">
+                        <div class="form-group">
+                            <label for="reportType">Select Report Type:</label>
+                            <select id="reportType" required>
+                                <option value="" disabled selected>Select Report Type</option>
+                                <option value="sales">Sales Report</option>
+                                <option value="performance">Performance Report</option>
+                                <option value="conversion">Conversion Report</option>
+                            </select>
+                        </div>
 
-            <form id="reportForm">
-                <div class="form-group">
-                    <label for="reportType">Select Report Type:</label>
-                    <select id="reportType" required>
-                        <option value="" disabled selected>Select Report Type</option>
-                        <option value="sales">Sales Report</option>
-                        <option value="performance">Performance Report</option>
-                        <option value="conversion">Conversion Report</option>
-                    </select>
+                        <div class="form-group">
+                            <label>Date Range:</label>
+                            <div class="date-range">
+                                <input type="date" id="startDate" required /> to
+                                <input type="date" id="endDate" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Specific Metrics:
+                                <input type="text" id="metrics" placeholder="E.g., Revenue, Clicks" />
+                            </label>
+                        </div>
+
+                        <button id="generateReport" class="action-btn">Generate Report</button>
+                        <button id="cancel" class="cancel-btn">Cancel</button>
+                    </form>
+
+
+
                 </div>
-
-                <div class="form-group">
-                    <label>Date Range:</label>
-                    <div class="date-range">
-                        <input type="date" id="startDate" required /> to
-                        <input type="date" id="endDate" required />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Specific Metrics:
-                        <input type="text" id="metrics" placeholder="E.g., Revenue, Clicks" />
-                    </label>
-                </div>
-
-                <button id="generateReport" class="action-btn">Generate Report</button>
-            </form>
-
-
-
+            </div>
         </div>
         </div>
     </main>
 
-    <script src="<?= ROOT ?>/assets/js/salesManager/sidebar.js"></script>
+    <script src="<?= ROOT ?>/assets/js/sidebar.js"></script>
     <script src="<?= ROOT ?>/assets/js/salesManager/generateReports.js"></script>
+    <script src="<?= ROOT ?>/assets/js/modal.js"></script>
 </body>
 
 </html>
