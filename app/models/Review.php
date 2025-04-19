@@ -4,68 +4,53 @@ class Review {
     use Model;
     
     protected $table = 'review';
-    protected $allowedColumns = ['Review_id', 'Rating', 'Comment', 'customer_id', 'order_id', 'Date'];
-
+    
     public function getAllPendingReviews() {
-        return $this->query(
-            "SELECT r.*, c.name AS customer_name, o.order_id 
-            FROM $this->table r 
-            JOIN customer c ON r.customer_id = c.customer_id 
-            JOIN orders o ON r.order_id = o.order_id 
-            LEFT JOIN reply rp ON r.Review_id = rp.Review_id 
-            WHERE rp.reply_id IS NULL 
-            ORDER BY r.Date DESC"
-        );
+        $query = "SELECT r.*, r.customer_id, r.order_id, r.comment, r.rating, r.date, r.dateModified,c.name, c.phone, c.address
+        FROM review r 
+        JOIN customer c ON r.customer_id = c.customer_id
+        WHERE r.status = 'pending'";
+        return $this->query($query);
     }
 
-    public function getReview($Review_id) {
-        return $this->first(['Review_id' => $Review_id]);
+    public function addReply($reviewId, $replyText) {
+        $query = "INSERT INTO reply (review_id, reply, date, dateModified) 
+              VALUES (:review_id, :reply, NOW(), NOW())";
+        $params = [
+        'review_id' => $reviewId,
+        'reply' => $replyText
+        ];
+        return $this->query($query, $params);
     }
 
-    public function getReviewDetails($Review_id) {
-        $sql = "SELECT r.review_id, r.rating, r.comment, r.date,
-                c.customer_id, c.name as customer_name,
-                o.order_id
-                FROM review r
-                JOIN customer c ON r.customer_id = c.customer_id
-                JOIN orders o ON r.order_id = o.order_id
-                WHERE r.review_id = :id";
-                
-        $result = $this->query($sql, ['id' => $Review_id]);
-        return $result[0] ?? false;
+    public function updateReply($replyId, $replyText) {
+        $query = "UPDATE reply 
+                  SET reply = :reply, dateModified = NOW() 
+                  WHERE reply_id = :reply_id";
+        $params = [
+            'reply_id' => $replyId,
+            'reply' => $replyText
+        ];
+        return $this->query($query, $params);
+    }
+
+    public function updateReviewStatus($reviewId, $status) {
+        $query = "UPDATE review 
+                  SET status = :status, dateModified = NOW() 
+                  WHERE review_id = :review_id";
+        $params = [
+            'review_id' => $reviewId,
+            'status' => $status
+        ];
+        return $this->query($query, $params);
+    }
+
+    public function getAllCompletedReviews() {
+        $query = "SELECT rp.*, r.customer_id, r.order_id, r.comment, r.rating, r.date, r.dateModified,c.name, c.phone, c.address
+        FROM reply rp 
+        JOIN review r ON rp.review_id = r.review_id
+        JOIN customer c ON r.customer_id = c.customer_id";
+        return $this->query($query);
     }
     
-    
-
-    public function getRepliedReviews() {
-        return $this->query(
-            "SELECT r.*, c.name AS customer_name, o.order_id, rp.reply, rp.date AS reply_date
-            FROM $this->table r 
-            JOIN customer c ON r.customer_id = c.customer_id 
-            JOIN orders o ON r.order_id = o.order_id 
-            JOIN reply rp ON r.Review_id = rp.Review_id 
-            ORDER BY r.$this->order_column $this->order_type"
-        );
-    }
-
-    public function addReply($data) {
-        $sql = "INSERT INTO reply (Review_id, reply, date) VALUES (:Review_id, :reply, NOW())";
-        return $this->query($sql, [
-            'Review_id' => $data['Review_id'],
-            'reply' => $data['reply']
-        ]);
-    }
-
-    public function editReply($data) {
-        $query = "UPDATE reply SET reply = :reply WHERE reply_id = :reply_id";
-        return $this->query($query, [
-            'reply' => $data['reply'],
-            'reply_id' => $data['reply_id']
-        ]);
-    }
-
-    public function removeReply($reply_id) {
-        $query = "DELETE FROM reply WHERE reply_id = :reply_id";
-        return $this->query($query, ['reply_id' => $reply_id]);
-    }
 }

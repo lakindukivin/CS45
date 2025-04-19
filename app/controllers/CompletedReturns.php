@@ -5,7 +5,11 @@ class CompletedReturns {
     use Controller;
     
     public function index() {
-        $this->view('customerServiceManager/completed_returns');
-    }
+       
+            $completedReturnModel = new ReturnModel();
+            $data['completedReturns'] = $completedReturnModel->getAllCompletedReturns();
+            $this->view('customerServiceManager/completed_returns', $data);
+
 
   }
+}

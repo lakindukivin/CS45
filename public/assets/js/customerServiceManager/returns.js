@@ -1,180 +1,24 @@
-const orders = [
-  { 
-    id: 1, 
-    name: 'Item 1',
-    status: 'Pending',
-    date: '2024-03-19',
-    customer: 'John Doe',
-    bag_size: 'small',
-    bag_color: 'blue',
-    pack_size: '100',
-    Quantity: '50',
-    description: 'Custom plastic container with specific dimensions'
-  },
-  { 
-    id: 1, 
-    name: 'Item 1',
-    status: 'Pending',
-    date: '2024-03-19',
-    customer: 'John Doe',
-    bag_size: 'small',
-    bag_color: 'blue',
-    pack_size: '100',
-    Quantity: '50',
-    description: 'Custom plastic container with specific dimensions'
-  },
-  { 
-    id: 1, 
-    name: 'Item 1',
-    status: 'Pending',
-    date: '2024-03-19',
-    customer: 'John Doe',
-    bag_size: 'small',
-    bag_color: 'blue',
-    pack_size: '100',
-    Quantity: '50',
-    description: 'Custom plastic container with specific dimensions'
-  },
-  { 
-    id: 1, 
-    name: 'Item 1',
-    status: 'Pending',
-    date: '2024-03-19',
-    customer: 'John Doe',
-    bag_size: 'small',
-    bag_color: 'blue',
-    pack_size: '100',
-    Quantity: '50',
-    description: 'Custom plastic container with specific dimensions'
-  },
-  { 
-    id: 1, 
-    name: 'Item 1',
-    status: 'Pending',
-    date: '2024-03-19',
-    customer: 'John Doe',
-    bag_size: 'small',
-    bag_color: 'blue',
-    pack_size: '100',
-    Quantity: '50',
-    description: 'Custom plastic container with specific dimensions'
-  },
-  { 
-    id: 1, 
-    name: 'Item 1',
-    status: 'Pending',
-    date: '2024-03-19',
-    customer: 'John Doe',
-    bag_size: 'small',
-    bag_color: 'blue',
-    pack_size: '100',
-    Quantity: '50',
-    description: 'Custom plastic container with specific dimensions'
-  },
-  { 
-    id: 1, 
-    name: 'Item 1',
-    status: 'Pending',
-    date: '2024-03-19',
-    customer: 'John Doe',
-    bag_size: 'small',
-    bag_color: 'blue',
-    pack_size: '100',
-    Quantity: '50',
-    description: 'Custom plastic container with specific dimensions'
-  },
-  { 
-    id: 1, 
-    name: 'Item 1',
-    status: 'Pending',
-    date: '2024-03-19',
-    customer: 'John Doe',
-    bag_size: 'small',
-    bag_color: 'blue',
-    pack_size: '100',
-    Quantity: '50',
-    description: 'Custom plastic container with specific dimensions'
-  },
-  { 
-    id: 1, 
-    name: 'Item 1',
-    status: 'Pending',
-    date: '2024-03-19',
-    customer: 'John Doe',
-    bag_size: 'small',
-    bag_color: 'blue',
-    pack_size: '100',
-    Quantity: '50',
-    description: 'Custom plastic container with specific dimensions'
-  },
-  { 
-    id: 1, 
-    name: 'Item 1',
-    status: 'Pending',
-    date: '2024-03-19',
-    customer: 'John Doe',
-    bag_size: 'small',
-    bag_color: 'blue',
-    pack_size: '100',
-    Quantity: '50',
-    description: 'Custom plastic container with specific dimensions'
-  },
-  // Add more items as needed
-];
 
-const orderList = document.getElementById('orderList');
-const orderList1 = document.getElementById('orderList1');
-const modal = document.getElementById('statusModal');
-const closeBtn = document.getElementsByClassName('close')[0];
+    function openReturnUpdatePopup(returnData) {
+        document.getElementById('return_id').value = returnData.return_id;
+        document.getElementById('order_id').value = returnData.order_id;
+        document.getElementById('product_id').value = returnData.product_id;
+        document.getElementById('customer_id').value = returnData.customer_id;
+        document.getElementById('customerName').value = returnData.customerName;
+        document.getElementById('productName').value = returnData.productName;
+        document.getElementById('quantity').value = returnData.quantity;
+        document.getElementById('total').value = returnData.total;
+        document.getElementById('orderDate').value = returnData.orderDate;
+        document.getElementById('returnDetails').value = returnData.returnDetails;
+        document.getElementById('cus_requirements').value = returnData.cus_requirements;
+        document.getElementById('phone').value = returnData.phone;
+        document.getElementById('return_status').value = returnData.returnStatus;
 
-// Set initial modal state to hidden
-modal.style.display = 'none';
 
-// Function to add orders to the list
-function addOrders() {
-  orders.forEach(order => {
-    const li = document.createElement('li');
-    li.textContent = order.name;
-    li.setAttribute('data-id', order.id);
-    li.addEventListener('click', () => openOrderStatus(order));
-    orderList.appendChild(li);
-  });
-}
+        document.getElementById('returnUpdatePopup').style.display = 'flex';
 
-function addOrders1() {
-  orders.forEach(order => {
-    const li = document.createElement('li');
-    li.textContent = order.name;
-    li.setAttribute('data-id', order.id);
-    li.addEventListener('click', () => openOrderStatus(order));
-    orderList1.appendChild(li);
-  });
-}
-
-function openOrderStatus(order) {
-  // Update modal content with order details
-  document.getElementById('orderId').textContent = order.id;
-  document.getElementById('orderStatus').textContent = order.status;
-  document.getElementById('orderDate').textContent = order.date;
-  document.getElementById('customerName').textContent = order.customer;
-  document.getElementById('quantity').textContent = order.Quantity;
-  document.getElementById('orderDescription').textContent = order.description;
-  // Show the modal
-  modal.style.display = 'block';
-}
-
-// Close modal when clicking the close button
-closeBtn.onclick = function() {
-  modal.style.display = 'none';
-}
-
-// Close modal when clicking outside of it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = 'none';
-  }
-}
-
-// Initialize the lists
-addOrders();
-addOrders1();
+        // Add event listener to close the popup
+      document.getElementById('closePopupBtn').addEventListener('click', () => {
+        document.getElementById('returnUpdatePopup').style.display = 'none';
+      });
+    }
