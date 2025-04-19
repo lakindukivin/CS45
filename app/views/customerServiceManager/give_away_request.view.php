@@ -57,8 +57,13 @@
           <div class="popup-content">
             <h1>Give Away Request Update</h1>
 
-            <button type="button" class="btn-secondary-color"
-            id="giveAwayReqUpdatePopupClose">Cancel</button>
+            <span class="close"
+            id="giveAwayReqUpdatePopupClose">&times;</span>
+          </div>
+
+          <div class="popup-content">
+            <label for="Order-id" class="">Give Away ID:</label>
+            <input type="text" name="giveaway_id" id="giveaway_id" readonly/>
           </div>
 
 
@@ -83,17 +88,37 @@
           </div>
           <div class="popup-content">
             <label for="Address">Address: </label>
-            <input type="text" name="Address" id="address" readonly/>
+            <input type="text" name="address" id="address" readonly/>
           </div>
 
           <div class="popup-content">
-            <label for="status">Status: </label>
-            <input type="text" name="status" id="status" readonly/>
+            <label for="giveawayStatus">Status: </label>
+            <input type="text" name="giveawayStatus" id="giveaway_status" readonly/>
           </div>
 
           <div class="popup-content">
-            <label for="status">Details: </label>
+            <label for="details">Details: </label>
             <input type="text" name="details" id="details" readonly/>
+          </div>
+
+          <div class="popup-content">
+            <label for="request-date">Request Date:</label>
+            <input type="text" name="request_date" id="request_date" readonly/>
+          </div>
+
+          <div class="popup-content">
+            <label for="decision-date">Decision date:</label>
+            <input type="date" name="decision_date" id="decision_date" required/>
+          </div>
+
+          <div class="popup-content">
+            <label for="decision-reason">Decision reason:</label>
+            <input type="text" name="decision_reason" id="decision_reason"/>
+          </div>
+
+          <div class="popup-content">
+            <label for="message_to_customer">Message to Customer:</label>
+            <textarea id="message_to_customer" name="message_to_customer" class="input-field"></textarea>
           </div>
 
           <div>
@@ -151,7 +176,7 @@
                   <td><?= $giveaway->phone ?></td>
                   <td><?= $giveaway->request_date ?></td>
                   <td><?= $giveaway->address ?></td>
-                  <td><?= $giveaway->status ?></td>
+                  <td><?= $giveaway->giveawayStatus ?></td>
                   <td>
                     <button class="view-btn" onclick="openGiveAwayReqUpdatePopup(<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8')?>)">View/Update</button>
                   </td>
@@ -170,12 +195,13 @@
 
   <script>
     function openGiveAwayReqUpdatePopup(giveaway) {
+      document.getElementById('giveaway_id').value = giveaway.giveaway_id;
       document.getElementById('customer_id').value = giveaway.customer_id;
       document.getElementById('name').value = giveaway.name;
       document.getElementById('phone').value = giveaway.phone;
       document.getElementById('request_date').value = giveaway.request_date;
       document.getElementById('address').value = giveaway.address;
-      document.getElementById('status').value = giveaway.status;
+      document.getElementById('giveaway_status').value = giveaway.giveawayStatus;
       document.getElementById('details').value = giveaway.details;
 
       
