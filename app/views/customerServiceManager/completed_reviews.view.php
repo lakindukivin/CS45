@@ -56,7 +56,7 @@
         <form action="<?=ROOT?>/CompletedReviews/updateReply" method="POST" class="bg-white p-5 rounded-md w-full">
             <div class="popup-content">
                 <h1>Update Review</h1>
-                <button type="button" class="btn-secondary-color" id="closePopup">Close</button>
+                <span  class="close" id="closePopup">&times;</span>
             </div>
 
             <div class="popup-content">

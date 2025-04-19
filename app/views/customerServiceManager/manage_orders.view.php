@@ -55,7 +55,7 @@
         <form action="" method="post" class="bg-white p-5 rounded-md w-full">
           <div class="popup-content">
             <h1>Order Update</h1>
-            <button type="button" class="btn-secondary-color" id="closePopupBtn">Close</button>
+            <span  class="close" id="closePopupBtn">&times;</span>
           </div>
 
           <div class="popup-content">
@@ -96,6 +96,24 @@
           <div class="popup-content">
             <label for="Billing-address" class="">Billing Address:</label>
             <input type="text" id="billingAddress" name="billingAddress" class="input-field" readonly>  
+          </div>
+
+          <div class="popup-content">
+            <label for="order status">Status:</label>
+            <input type="text" id="orderStatus" name="orderStatus" class="input-field" readonly>
+          </div>
+
+          <div class="popup-content">
+            <label for="message_to_customer">Message to Customer:</label>
+            <textarea id="message_to_customer" name="message_to_customer" class="input-field"></textarea>
+          </div>
+
+          <div>
+            <button type="submit" class="accept"
+              name="accept_order">Accept</button>
+
+              <button type="submit" class="reject"
+              name="reject_order">Reject</button>
           </div>
   
         </form>
@@ -172,6 +190,7 @@
       document.getElementById('deliveryAddress').value = order.deliveryAddress || '';
       document.getElementById('billingAddress').value = order.billingAddress || '';
       document.getElementById('orderDate').value = order.orderDate || '';
+      document.getElementById('orderStatus').value = order.orderStatus || '';
 
       // Display the popup
       document.getElementById('manageOrderUpdatePopup').style.display = 'flex';

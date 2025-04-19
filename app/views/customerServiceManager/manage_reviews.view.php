@@ -55,24 +55,27 @@
     <div class="popup-content">
         <form action="<?=ROOT?>/ManageReviews/addReply" method="POST" class="bg-white p-5 rounded-md w-full">
             <div class="popup-content">
-                <h1>Update Review</h1>
-                <button type="button" class="btn-secondary-color" id="closePopup">Close</button>
-            </div>
+            <span class="close" id="closePopup">&times;</span>
 
+                <h1>Update Review</h1>
+            </div>
             <div class="popup-content">
+            <div>
                 <label for="review_id">Review ID:</label>
                 <input type="text" id="review_id" name="review_id" readonly>
             </div>
 
-            <div class="popup-content">
+            <div>
                 <label for="customer_id">Customer ID:</label>
                 <input type="text" id="customer_id" name="customer_id" readonly>
             </div>
 
-            <div class="popup-content">
+            <div>
                 <label for="order_id">Order ID:</label>
                 <input type="text" id="order_id" name="order_id" readonly>
             </div>
+            </div>
+            
 
             <div class="popup-content">
                 <label for="rating">Rating:</label>
@@ -94,7 +97,7 @@
                 <textarea id="reply" name="reply" rows="4" cols="50"></textarea>
             </div>
 
-            <div class="popup-content">
+            <div class="button-container">
                 <button type="submit" class="accept">Submit</button>
             </div>
         </form>

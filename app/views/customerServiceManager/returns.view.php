@@ -71,29 +71,34 @@
       <div class="popup-content">
         <form action="" method="post" class="bg-white p-5 rounded-md w-full">
           <div class="popup-content">
+          <span class="close" id="closePopupBtn">&times;</span>
             <h1>Return Update</h1>
-            <button type="button" class="btn-secondary-color" id="closePopupBtn">Close</button>
           </div>
 
           <div class="popup-content">
+          <div>
             <label for="Return-id" class="">Return ID:</label>
             <input type="text" id="return_id" name="returnId" class="input-field" readonly>
           </div>
 
-          <div class="popup-content">
+          <div>
             <label for="Order-id" class="">Order ID:</label>
             <input type="text" id="order_id" name="orderId" class="input-field" readonly>
           </div>
-
+          </div>
+          
           <div class="popup-content">
+          <div>
             <label for="Product-id" class="">Product ID:</label>
             <input type="text" id="product_id" name="productId" class="input-field" readonly>
           </div>
 
-          <div class="popup-content">
+          <div >
             <label for="Customer-id" class="">Customer ID:</label>
             <input type="text" id="customer_id" name="customerId" class="input-field" readonly>
           </div>
+          </div>
+          
 
           <div class="popup-content">
             <label for="Name" class="">Name:</label>
@@ -147,10 +152,10 @@
 
           <div class="popup-content">
             <label for="returnStatus" class="">Status:</label>
-            <input type="hidden" id="return_status" name="returnStatus">
+            <input type="text" id="return_status" name="returnStatus">
           </div>
 
-          <div>
+          <div class="button-container">
             <button type="submit" class="accept" name="accept_return">Accept</button>
             <button type="submit" class="reject" name="reject_return">Reject</button>
             <button type="submit" class="return" name="mark_as_returned">Mark as Returned</button>

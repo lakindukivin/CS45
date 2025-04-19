@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 09, 2025 at 10:01 AM
+-- Generation Time: Apr 19, 2025 at 05:29 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -45,10 +45,46 @@ CREATE TABLE `completedgiveaway` (
   `giveaway_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `completion_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `status` enum('Approved','Rejected') NOT NULL,
-  `manager_name` varchar(255) DEFAULT NULL,
-  `comments` text DEFAULT NULL
+  `status` enum('accepted','rejected') NOT NULL,
+  `decision_reason` text DEFAULT NULL,
+  `message_to_customer` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `completedgiveaway`
+--
+
+INSERT INTO `completedgiveaway` (`completed_id`, `giveaway_id`, `customer_id`, `completion_date`, `status`, `decision_reason`, `message_to_customer`) VALUES
+(1, 6, 6, '2025-04-14 02:08:27', '', 'hiii', 'boo'),
+(2, 5, 5, '2025-04-14 02:12:49', 'rejected', 'jiii', 'kkk'),
+(3, 2, 2, '2025-04-16 06:24:28', 'rejected', 'nice', 'hii'),
+(4, 8, 8, '2025-04-16 06:25:42', '', 'oho', 'noo'),
+(5, 9, 9, '2025-04-16 06:28:29', 'accepted', 'come', 'now');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `completed_orders`
+--
+
+CREATE TABLE `completed_orders` (
+  `completed_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `status` enum('accepted','rejected','processing','shipped','delivered') NOT NULL,
+  `message_to_customer` text DEFAULT NULL,
+  `date_completed` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `completed_orders`
+--
+
+INSERT INTO `completed_orders` (`completed_id`, `order_id`, `status`, `message_to_customer`, `date_completed`) VALUES
+(1, 11, 'accepted', '', '2025-04-10 11:01:40'),
+(2, 10, 'rejected', 'noo', '2025-04-10 11:07:52'),
+(3, 9, 'rejected', 'yes no', '2025-04-10 15:29:34'),
+(4, 8, 'shipped', 'hii', '2025-04-10 17:34:55'),
+(5, 4, 'processing', 'hii', '2025-04-17 07:06:40');
 
 -- --------------------------------------------------------
 
@@ -57,6 +93,7 @@ CREATE TABLE `completedgiveaway` (
 --
 
 CREATE TABLE `completed_returns` (
+  `completed_id` int(11) NOT NULL,
   `return_id` int(11) NOT NULL,
   `order_id` int(11) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
@@ -71,11 +108,15 @@ CREATE TABLE `completed_returns` (
 -- Dumping data for table `completed_returns`
 --
 
-INSERT INTO `completed_returns` (`return_id`, `order_id`, `product_id`, `customer_id`, `status`, `decision_reason`, `date_completed`, `message_to_customer`) VALUES
-(2, 2, 4, 1, 'accepted', 'yess', '2025-04-09 07:40:34', 'nooo'),
-(5, 5, 4, 4, 'accepted', 'baby', '2025-04-09 07:47:41', 'love u'),
-(8, 7, 4, 6, 'rejected', 'wow', '2025-04-09 07:57:44', 'ok'),
-(9, 8, 5, 7, 'rejected', 'yes', '2025-04-09 07:41:55', 'ohoo');
+INSERT INTO `completed_returns` (`completed_id`, `return_id`, `order_id`, `product_id`, `customer_id`, `status`, `decision_reason`, `date_completed`, `message_to_customer`) VALUES
+(1, 2, 2, 4, 1, 'accepted', 'yess', '2025-04-09 07:40:34', 'nooo'),
+(2, 3, 3, 5, 2, 'accepted', 'bye', '2025-04-10 09:55:35', 'gn'),
+(3, 5, 5, 4, 4, 'accepted', 'baby', '2025-04-09 07:47:41', 'love u'),
+(4, 8, 7, 4, 6, 'rejected', 'wow', '2025-04-09 07:57:44', 'ok'),
+(5, 9, 8, 5, 7, 'rejected', 'yes', '2025-04-09 07:41:55', 'ohoo'),
+(6, 7, 11, 6, 10, 'accepted', 'mom', '2025-04-10 16:25:08', 'yes'),
+(7, 6, 6, 5, 5, 'accepted', 'byeeeeeee', '2025-04-10 16:57:46', 'ggoooo'),
+(8, 4, 4, 6, 3, 'accepted', 'booo', '2025-04-12 10:01:45', 'heyy');
 
 -- --------------------------------------------------------
 
@@ -150,45 +191,27 @@ CREATE TABLE `giveawayrequests` (
   `giveaway_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `request_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `status` enum('Pending','Approved','Rejected') DEFAULT 'Pending',
+  `giveawayStatus` enum('pending','accepted','rejected') DEFAULT 'pending',
   `details` text DEFAULT NULL,
-  `manager_name` varchar(255) DEFAULT NULL,
-  `comments` text DEFAULT NULL,
-  `decision_date` timestamp NULL DEFAULT NULL
+  `decision_date` timestamp NULL DEFAULT NULL,
+  `decision_reason` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `giveawayrequests`
 --
 
-INSERT INTO `giveawayrequests` (`giveaway_id`, `customer_id`, `request_date`, `status`, `details`, `manager_name`, `comments`, `decision_date`) VALUES
-(1, 1, '2025-04-09 07:18:23', 'Pending', 'Requesting eco tote bag for local school event.', NULL, NULL, NULL),
-(2, 2, '2025-04-09 07:18:23', 'Pending', 'Need water bottles for community clean-up.', NULL, 'Approved by Sarah', '2025-03-01 08:30:00'),
-(3, 3, '2025-04-09 07:18:23', 'Pending', 'Looking for LED lights for a community project.', NULL, 'Out of stock', '2025-03-02 06:00:00'),
-(4, 4, '2025-04-09 07:18:23', 'Pending', 'Request for compost bins for apartment residents.', NULL, NULL, NULL),
-(5, 5, '2025-04-09 07:18:23', 'Pending', 'Giveaway items for environmental awareness campaign.', NULL, 'Manager approved', '2025-03-03 04:15:00'),
-(6, 6, '2025-04-09 07:18:23', 'Pending', 'Trying to get notebooks for school kids.', NULL, 'Incomplete info provided', '2025-03-04 10:50:00'),
-(7, 7, '2025-04-09 07:18:23', 'Pending', 'Reusable straw sets for local volunteers.', NULL, NULL, NULL),
-(8, 8, '2025-04-09 07:18:23', 'Pending', 'Soap bars for NGO hygiene kits.', NULL, 'Approved - send next week', '2025-03-05 04:45:00'),
-(9, 9, '2025-04-09 07:18:23', 'Pending', 'Requesting giveaway without event details.', NULL, 'Declined due to missing context', '2025-03-06 07:30:00'),
-(10, 10, '2025-04-09 07:18:23', 'Pending', 'Eco pens for office staff awareness drive.', NULL, NULL, NULL);
-
---
--- Triggers `giveawayrequests`
---
-DELIMITER $$
-CREATE TRIGGER `moveToCompleted` AFTER UPDATE ON `giveawayrequests` FOR EACH ROW BEGIN
-    -- If the request is marked as "Approved" or "Rejected", move it to CompletedGiveaway
-    IF NEW.status IN ('Approved', 'Rejected') THEN
-        INSERT INTO completedGiveaway (request_id, customer_id, completion_date, status, manager_name, comments)
-        VALUES (NEW.giveaway_id, NEW.customer_id, NOW(), NEW.status, NEW.manager_name, NEW.comments);
-        
-        -- Remove the request from GiveawayRequests
-        DELETE FROM giveawayRequests WHERE giveaway_id = NEW.giveaway_id;
-    END IF;
-END
-$$
-DELIMITER ;
+INSERT INTO `giveawayrequests` (`giveaway_id`, `customer_id`, `request_date`, `giveawayStatus`, `details`, `decision_date`, `decision_reason`) VALUES
+(1, 1, '2025-04-09 07:18:23', '', 'Requesting eco tote bag for local school event.', NULL, 'yes'),
+(2, 2, '2025-04-09 07:18:23', 'rejected', 'Need water bottles for community clean-up.', '2025-03-01 08:30:00', 'nice'),
+(3, 3, '2025-04-09 07:18:23', '', 'Looking for LED lights for a community project.', '2025-03-02 06:00:00', 'yes'),
+(4, 4, '2025-04-09 07:18:23', '', 'Request for compost bins for apartment residents.', NULL, 'yes'),
+(5, 5, '2025-04-09 07:18:23', 'rejected', 'Giveaway items for environmental awareness campaign.', '2025-03-03 04:15:00', 'jiii'),
+(6, 6, '2025-04-09 07:18:23', '', 'Trying to get notebooks for school kids.', '2025-03-04 10:50:00', 'hiii'),
+(7, 7, '2025-04-09 07:18:23', 'pending', 'Reusable straw sets for local volunteers.', NULL, ''),
+(8, 8, '2025-04-09 07:18:23', '', 'Soap bars for NGO hygiene kits.', '2025-03-05 04:45:00', 'oho'),
+(9, 9, '2025-04-09 07:18:23', 'accepted', 'Requesting giveaway without event details.', '2025-03-06 07:30:00', 'come'),
+(10, 10, '2025-04-09 07:18:23', 'pending', 'Eco pens for office staff awareness drive.', NULL, '');
 
 -- --------------------------------------------------------
 
@@ -205,7 +228,7 @@ CREATE TABLE `orders` (
   `deliveryAddress` varchar(255) DEFAULT NULL,
   `billingAddress` varchar(255) DEFAULT NULL,
   `orderDate` date DEFAULT NULL,
-  `orderStatus` varchar(50) DEFAULT NULL
+  `orderStatus` enum('pending','accepted','rejected','shipped','delivered') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -213,16 +236,16 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`order_id`, `product_id`, `customer_id`, `quantity`, `total`, `deliveryAddress`, `billingAddress`, `orderDate`, `orderStatus`) VALUES
-(2, 4, 1, 2, 1700.00, '123 Green St', '123 Green St', '2025-03-01', 'delivered'),
+(2, 4, 1, 2, 1700.00, '123 Green St', '123 Green St', '2025-03-01', 'pending'),
 (3, 5, 2, 1, 650.00, '456 Blue Ln', '456 Blue Ln', '2025-03-02', 'pending'),
 (4, 6, 3, 3, 750.00, '789 Red Rd', '789 Red Rd', '2025-03-03', 'accepted'),
 (5, 4, 4, 1, 3200.00, '321 Yellow Ave', '321 Yellow Ave', '2025-03-04', 'delivered'),
 (6, 5, 5, 2, 2400.00, '654 Orange Blvd', '654 Orange Blvd', '2025-03-05', 'delivered'),
 (7, 6, 6, 1, 1800.00, '222 Purple Dr', '222 Purple Dr', '2025-03-06', 'rejected'),
-(8, 4, 7, 5, 750.00, '999 White St', '999 White St', '2025-03-07', 'pending'),
-(9, 5, 8, 2, 1900.00, '888 Brown St', '888 Brown St', '2025-03-08', 'accepted'),
-(10, 6, 9, 1, 300.00, '777 Black St', '777 Black St', '2025-03-09', 'delivered'),
-(11, 4, 10, 2, 1600.00, '666 Silver St', '666 Silver St', '2025-03-10', 'pending');
+(8, 4, 7, 5, 750.00, '999 White St', '999 White St', '2025-03-07', 'accepted'),
+(9, 5, 8, 2, 1900.00, '888 Brown St', '888 Brown St', '2025-03-08', 'rejected'),
+(10, 6, 9, 1, 300.00, '777 Black St', '777 Black St', '2025-03-09', 'rejected'),
+(11, 4, 10, 2, 1600.00, '666 Silver St', '666 Silver St', '2025-03-10', 'accepted');
 
 -- --------------------------------------------------------
 
@@ -356,11 +379,11 @@ CREATE TABLE `return_item` (
 
 INSERT INTO `return_item` (`return_id`, `order_id`, `product_id`, `returnStatus`, `returnDetails`, `cus_requirements`, `date`, `decision_reason`) VALUES
 (2, 2, 4, 'accepted', 'Product damaged on arrival', 'refund', '2025-04-09 07:40:34', ''),
-(3, 3, 5, 'pending', 'Wrong item delivered', 'refund', '2025-04-09 07:23:24', ''),
-(4, 4, 6, 'pending', 'Not as described', 'refund', '2025-04-09 07:23:55', ''),
+(3, 3, 5, 'accepted', 'Wrong item delivered', 'refund', '2025-04-10 09:55:35', 'bye'),
+(4, 4, 6, 'accepted', 'Not as described', 'refund', '2025-04-12 10:01:45', 'booo'),
 (5, 5, 4, 'accepted', 'No valid reason provided', 'refund', '2025-04-09 07:47:41', 'baby'),
-(6, 6, 5, 'pending', 'Box was opened', 'refund', '2025-04-09 07:24:26', ''),
-(7, 11, 6, 'pending', 'Color mismatch', 'refund', '2025-04-09 07:23:24', ''),
+(6, 6, 5, 'accepted', 'Box was opened', 'refund', '2025-04-10 16:57:46', 'byeeeeeee'),
+(7, 11, 6, 'accepted', 'Color mismatch', 'refund', '2025-04-10 16:25:08', 'mom'),
 (8, 7, 4, 'rejected', 'Received late', 'refund', '2025-04-09 07:57:44', 'wow'),
 (9, 8, 5, 'rejected', 'Found it cheaper elsewhere', 'refund', '2025-04-09 07:41:55', ''),
 (10, 9, 6, 'pending', 'Changed my mind', 'refund', '2025-04-09 07:23:24', ''),
@@ -486,13 +509,22 @@ ALTER TABLE `carbon_footprint`
 --
 ALTER TABLE `completedgiveaway`
   ADD PRIMARY KEY (`completed_id`),
-  ADD KEY `customer_id` (`customer_id`);
+  ADD KEY `customer_id` (`customer_id`),
+  ADD KEY `giveaway_id` (`giveaway_id`);
+
+--
+-- Indexes for table `completed_orders`
+--
+ALTER TABLE `completed_orders`
+  ADD PRIMARY KEY (`completed_id`),
+  ADD KEY `order_id` (`order_id`);
 
 --
 -- Indexes for table `completed_returns`
 --
 ALTER TABLE `completed_returns`
-  ADD PRIMARY KEY (`return_id`);
+  ADD PRIMARY KEY (`completed_id`),
+  ADD UNIQUE KEY `return_id` (`return_id`);
 
 --
 -- Indexes for table `customer`
@@ -628,7 +660,19 @@ ALTER TABLE `carbon_footprint`
 -- AUTO_INCREMENT for table `completedgiveaway`
 --
 ALTER TABLE `completedgiveaway`
-  MODIFY `completed_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `completed_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `completed_orders`
+--
+ALTER TABLE `completed_orders`
+  MODIFY `completed_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `completed_returns`
+--
+ALTER TABLE `completed_returns`
+  MODIFY `completed_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `customer`
@@ -741,6 +785,12 @@ ALTER TABLE `user`
 --
 ALTER TABLE `completedgiveaway`
   ADD CONSTRAINT `completedgiveaway_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `completed_orders`
+--
+ALTER TABLE `completed_orders`
+  ADD CONSTRAINT `completed_orders_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`);
 
 --
 -- Constraints for table `completed_returns`
