@@ -25,4 +25,34 @@ class CustomOrderViewForm {
         $this->view('productionManager/custom_order_view_form', $data);
     }
 
+    public function post($order_id) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $action = $_POST['action'] ?? '';
+            $reply = trim($_POST['reply'] ?? '');
+    
+            $orderModel = new PendingCustomOrderModel();
+            
+            try {
+                if ($action === 'decline' && empty($reply)) {
+                    throw new Exception("Please provide a reason for declining.");
+                }
+    
+                // Process the action
+                if ($action === 'accept') {
+                    $orderModel->updateOrderStatus($order_id, 'completed');
+                    $_SESSION['success'] = "Order #$order_id has been accepted and marked as completed.";
+                } 
+                elseif ($action === 'decline') {
+                    $orderModel->updateOrderStatus($order_id, 'declined', $reply);
+                    $_SESSION['success'] = "Order #$order_id has been declined.";
+                }
+    
+                redirect('CompletedCustomOrders');
+                
+            } catch (Exception $e) {
+                $_SESSION['error'] = $e->getMessage();
+                redirect("CustomOrderViewForm/$order_id");
+            }
+        }
+    }
 }

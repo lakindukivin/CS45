@@ -125,13 +125,13 @@
         <div class="form-row">
             <div class="form-group">
                 <label>Reply</label>
-                <textarea name="reply" required></textarea>
+                <textarea name="reply"></textarea>
             </div>
         </div>
 
         <div class="button-group">
-            <button type="submit" class="submit-button" onclick="window.location.href='<?= ROOT ?>/CompletedCustomOrders'">Accept</button>
-            <button type="submit" class="decline-button" onclick="window.location.href='<?= ROOT ?>/CompletedCustomOrders'">Decline</button>
+            <button type="submit" name="accept" class="submit-button" id="acceptBtn">Accept</button>
+            <button type="submit" name="decline" class="decline-button" id="declineBtn">Decline</button>
         </div>
 </div>
 

@@ -33,7 +33,7 @@ class PendingCustomOrderModel {
         
         return $this->query($query, $params);
     }
-    public function updateOrderStatus($orderId, $status) 
+    public function updateOrderStatus($orderId, $status, $reply=null) 
     {
         $query = "UPDATE custom_order SET customOrder_status = :status WHERE customOrder_id = :id";
         $params = [
