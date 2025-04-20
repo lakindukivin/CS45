@@ -170,20 +170,26 @@ form textarea form select {
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
-    border: 1px solid black;
+    margin-top: 10px;
 }
 
 th,
 td {
-    padding: 10px;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
 
-    text-align: left;
-    border: 1px solid black;
+td {
+    color: var(--gray-800);
 }
 
 th {
-    background-color: #f0f0f0;
+    background-color: var(--gray-300);
+    color: var(--primary-green);
+    font-weight: 600;
 }
 
 .action-btn {
