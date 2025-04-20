@@ -130,8 +130,8 @@
         </div>
 
         <div class="button-group">
-            <button type="submit" class="submit-button" onclick="window.location.href='<?= ROOT ?>/CompletedOrders'">Accept</button>
-            <button type="submit" class="decline-button">Decline</button>
+            <button type="submit" class="submit-button" onclick="window.location.href='<?= ROOT ?>/CompletedCustomOrders'">Accept</button>
+            <button type="submit" class="decline-button" onclick="window.location.href='<?= ROOT ?>/CompletedCustomOrders'">Decline</button>
         </div>
 </div>
 
