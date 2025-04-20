@@ -95,9 +95,6 @@
     <div class="container">
         <div class="header">
             <h1>Completed Custom Orders</h1>
-            <button class="add-button">
-                <a href="<?=ROOT?>/CompletedOrders">View Completed Orders</a>
-            </button>
         </div>
 
         <table>
