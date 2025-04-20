@@ -76,7 +76,7 @@
         </div>
 
         <div class="form">
-        <form method="POST" action="<?= ROOT ?>/CustomOrderViewForm/<?= $order->customOrder_id ?>">
+        <form method="POST" action="<?= ROOT ?>/CustomOrderViewForm/post/<?= $order->customOrder_id ?>">
         <input type="hidden" name="Review_id">
         
         <div class="form-row">
@@ -125,7 +125,7 @@
         <div class="form-row">
             <div class="form-group">
                 <label>Reply</label>
-                <textarea name="reply"></textarea>
+                <textarea name="reply" placeholder="Reason for declining"></textarea>
             </div>
         </div>
 
