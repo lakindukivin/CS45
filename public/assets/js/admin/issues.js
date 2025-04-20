@@ -6,11 +6,20 @@ function closeAddModal() {
   document.getElementById('issueForm').reset();
 }
 
-function openEditModal(issue_id, description, status, action_taken) {
+function openEditModal(
+  issue_id,
+  description,
+  email,
+  phone,
+  status,
+  action_taken
+) {
   currentadId = issue_id;
 
   document.getElementById('issueId').value = issue_id;
   document.getElementById('description').value = description;
+  document.getElementById('email').value = email;
+  document.getElementById('phone').value = phone;
   document.getElementById('status').value = status;
   document.getElementById('actionsTaken').value = action_taken;
   document.getElementById('editModal').style.display = 'block';
