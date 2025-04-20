@@ -31,30 +31,24 @@
                     </li>
 
                     <li>
-                        <button onclick="toggleSubMenu()" class="dropdown-button">
-                            <img src="<?= ROOT ?>/assets/images/manage-accounts.svg" alt="" />
-                            <span class="sidebar-titles">Manage Accounts</span>
-                            <img src="<?= ROOT ?>/assets/images/dropdownbtn.svg" alt="dropdown-button"
-                                id="dropdownbtn-img" />
-                        </button>
-
-                        <ul id="sub-menu" class="sub-menu">
-                            <li>
-                                <a class="sidebar-titles" href="<?= ROOT ?>/manageCustomerAccounts">
-                                    Manage Customer Accounts
-                                </a>
-                            </li>
-                            <li>
-                                <a class="sidebar-titles" href="<?= ROOT ?>/manageStaffAccounts">
-                                    Manage Staff Accounts
-                                </a>
-                            </li>
-                        </ul>
+                        <a href="<?= ROOT ?>/manageCustomerAccounts">
+                            <img src="<?= ROOT ?>/assets/images/customer-account.svg" alt="customer" />
+                            <span class="sidebar-titles">Customer Management</span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="<?= ROOT ?>/manageStaffAccounts">
+                            <img src="<?= ROOT ?>/assets/images/staff-account.svg" alt="staff" />
+                            <span class="sidebar-titles">Staff Management</span>
+                        </a>
+                    
+                    
                     </li>
 
                     <li>
-                        <a href="<?= ROOT ?>/issues" class="sidebar-active">
-                            <img src="<?= ROOT ?>/assets/images/legal-issues.svg" alt="legal issues" />
+                        <a href="#">
+                            <img src="<?= ROOT ?>/assets/images/legal-issues.svg" alt="issues" />
                             <span class="sidebar-titles">Issues</span>
                         </a>
                     </li>
