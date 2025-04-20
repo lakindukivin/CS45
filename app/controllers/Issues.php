@@ -1,7 +1,7 @@
 <?php
 
 /**
- * issues class
+ * issues contoller class
  */
 
 class Issues
@@ -17,6 +17,20 @@ class Issues
 
     public function index()
     {
+        // Ensure session is active
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // Redirect to login if user is not authenticated
+        if (!isset($_SESSION['user_id'])) {
+            redirect('login');
+        }
+
+        // Check if the user has the right role to access this page
+        if ($_SESSION['role_id'] != 1) {
+            redirect('login');
+        }
         // Fetch all issues from the database
         $issues = $this->IssueModel->getAllIssues();
 
@@ -27,9 +41,9 @@ class Issues
     public function getSingleIssue()
     {
 
-        if (isset($_POST['editIssueId'])) {
+        if (isset($_POST['issueId'])) {
             $model = new IssuesModel();
-            $singleIssue = $model->findById($_POST['editIssueId']);
+            $singleIssue = $model->findById($_POST['issueId']);
             echo json_encode($singleIssue);
             exit;
         }
@@ -37,17 +51,16 @@ class Issues
     }
 
     //add issue
-
     public function add()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $data = [
 
-                'title' => $_POST['issueId'],
                 'description' => $_POST['description'],
-                'status' => 'Pending',
+                'email' => $_POST['email'],
+                'phone' => $_POST['phone'],
+                'status' => 0,
                 'action_taken' => 'None'
-
             ];
 
 
@@ -55,12 +68,15 @@ class Issues
                 $_SESSION['success'] = "Successfully Added!";
                 header("Location: " . ROOT . "/issues");
                 exit();
+            } else {
+                $_SESSION['error'] = "Failed to add issue!";
+                header("Location: " . ROOT . "/issues");
+                exit();
             }
         }
     }
 
     //edit issue 
-
     public function update()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -68,14 +84,20 @@ class Issues
                 $data = [
 
                     'issue_id' => $_POST['editIssueId'],
-                    'description' => $_POST['description'] ?? '',
-                    'status' => $_POST['status']?? null,
-                    'action_taken' => $_POST['actionsTaken']?? null
+                    'description' => $_POST['description'],
+                    'email' => $_POST['email'],
+                    'phone' => $_POST['phone'],
+                    'status' => $_POST['status'],
+                    'action_taken' => $_POST['actionsTaken'] 
 
                 ];
 
                 if ($this->IssueModel->editIssues($_POST['editIssueId'], $data)) {
                     $_SESSION['success'] = "Successfully updated!";
+                    header("Location: " . ROOT . "/issues");
+                    exit();
+                } else {
+                    $_SESSION['error'] = "Failed to update issue!";
                     header("Location: " . ROOT . "/issues");
                     exit();
                 }
@@ -84,6 +106,7 @@ class Issues
 
     }
 
+    //delete issue
     public function delete()
     {
 
@@ -93,9 +116,11 @@ class Issues
                 $_SESSION['success'] = "Successfully deleted!";
                 header("Location: " . ROOT . "/issues");
                 exit();
+            } else {
+                $_SESSION['error'] = "Failed to delete issue!";
+                header("Location: " . ROOT . "/issues");
+                exit();
             }
         }
-
-
     }
 }
