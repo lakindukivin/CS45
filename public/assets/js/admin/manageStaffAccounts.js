@@ -1,133 +1,70 @@
-const staffDetails = [
+// Modal functions
+function openAddModal() {
+  document.getElementById('addModal').style.display = 'block';
+}
+
+function closeAddModal() {
+  document.getElementById('addModal').style.display = 'none';
+  document.getElementById('addStaffForm').reset();
+}
+
+function openEditModal(
+  staff_id,
+  name,
+  image,
+  email,
+  phone,
+  address,
+  role,
+  status) 
   {
-    staffId: '001',
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    contactNo: '123-456-7890',
-    address: '123 Main St, Cityville',
-    role: 'Manager',
-    status: 'Active',
-    duties: 'Operations, HR',
-  },
-  {
-    staffId: '002',
-    name: 'Jane Smith',
-    email: 'jane.smith@example.com',
-    contactNo: '987-654-3210',
-    address: '456 Elm St, Townsville',
-    role: 'Supervisor',
-    status: 'Active',
-    duties: 'Quality Control',
-  },
-  {
-    staffId: '003',
-    name: 'Michael Brown',
-    email: 'michael.brown@example.com',
-    contactNo: '555-123-4567',
-    address: '789 Pine St, Villagetown',
-    role: 'Technician',
-    status: 'Active',
-    duties: 'Maintenance',
-  },
-  {
-    staffId: '004',
-    name: 'Emily Davis',
-    email: 'emily.davis@example.com',
-    contactNo: '111-222-3333',
-    address: '101 Maple St, Hamlet City',
-    role: 'Analyst',
-    status: 'Inactive',
-    duties: 'Data Analysis',
-  },
-  {
-    staffId: '005',
-    name: 'Chris Johnson',
-    email: 'chris.johnson@example.com',
-    contactNo: '666-777-8888',
-    address: '202 Oak St, Metropolis',
-    role: 'Administrator',
-    status: 'Active',
-    duties: 'IT Support',
-  },
-];
 
-const fetchStaffDetails = async () => {
-  try {
-    // const response = await fetch();
-    //  if (!response.ok) throw new Error('Failed to fetch products');
+  document.getElementById('staff_id').value = staff_id;
+  document.getElementById('editStaffName').value =   name;
+  document.getElementById('editImage').src = '<?= ROOT ?>' + image;
+  document.getElementById('editStaffEmail').value = email;
+  document.getElementById('editStaffContactNo').value = phone;
+  document.getElementById('editStaffAddress').value = address;
+  document.getElementById('editStafrole').value = role;
+  document.getElementById('status').value = status;
 
-    //  const customerDetails = await response.json();
-    const tableBody = document.getElementById('staffTableBody');
-
-    tableBody.innerHTML = staffDetails
-      .map((staff) => {
-        return `<tr>
-          <td>${staff.staffId}</td>
-          <td>${staff.name}</td>
-          <td>${staff.email}</td>
-          <td>${staff.contactNo}</td>
-          <td>${staff.address}</td>
-          <td>${staff.role}</td>
-          <td>${staff.status}</td>
-          <td>${staff.duties}</td>
-          <td>
-            <button class="edit-btn" onclick="editStaff('${staff.staffId}')">Edit</button>
-            <button class="delete-btn" onclick="openDeleteModal('${staff.staffId}')">Delete</button>
-          </td>
-        </tr>`;
-      })
-      .join('');
-
-    // document.getElementById('totalUsers').textContent = staffDetails.length;
-  } catch (error) {
-    console.error('Error:', error);
-  }
-};
-fetchStaffDetails();
-
-const editStaff = async (staffId) => {
-  try {
-    openEditModal();
-
-    const staff = staffDetails.find((s) => s.staffId === staffId);
-
-    document.getElementById('editStaffAccounts').userId.value = staff.staffId;
-    document.getElementById('editStaffAccounts').editStaffName.value =
-      staff.name;
-    document.getElementById('editStaffAccounts').editStaffEmail.value =
-      staff.email;
-    document.getElementById('editStaffAccounts').editStaffContactNo.value =
-      staff.contactNo;
-    document.getElementById('editStaffAccounts').editStaffAddress.value =
-      staff.address;
-  } catch (error) {
-    console.error('Error editing staff:', error);
-  }
-};
-
-const openEditModal = () => {
   document.getElementById('editModal').style.display = 'block';
-};
+}
 
-const closeEditModal = () => {
+function closeEditModal() {
   document.getElementById('editModal').style.display = 'none';
-};
+  document.getElementById('editStaffAccounts').reset();
+  
+}
 
-const openDeleteModal = (staffId) => {
-  const confirmDelete = confirm(
-    `Are you sure you want to delete staff ID: ${staffId}?`
-  );
-  if (confirmDelete) {
-    deleteStaff(staffId);
-  }
-};
+function openDeleteModal(staff_id) {
+  document.getElementById('deleteStaffId').value = staff_id;
+  document.getElementById('deleteConfirmationModal').style.display = 'block';
+}
 
-const deleteStaff = (staffId) => {
-  const index = staffDetails.findIndex((s) => s.staffId === staffId);
-  if (index !== -1) {
-    staffDetails.splice(index, 1);
-    fetchStaffDetails();
-  }
-};
+function closeDeleteModal() {
+  document.getElementById('deleteConfirmationModal').style.display = 'none';
+}
 
+function closeResponseModal() {
+  document.getElementById('responseModal').style.display = 'none';
+  location.reload(); // Refresh the page to see changes
+}
 
+function showResponse(message) {
+  document.getElementById('responseMessage').textContent = message;
+  document.getElementById('responseModal').style.display = 'block';
+}
+
+// Add this to manageStaffAccounts.js
+document.getElementById('addStaffForm').addEventListener('submit', function(e) {
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirm_password').value;
+    if (password !== confirmPassword) {
+        e.preventDefault();
+        alert('Passwords do not match!');
+        return false;
+    }
+    // Additional validation can be added here
+    return true;
+});
