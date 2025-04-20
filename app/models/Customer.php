@@ -4,7 +4,7 @@ class Customer
 {
     use Model;
 
-    protected $table = 'Customers'; // Ensure this matches the table name
+    protected $table = 'customer'; // Ensure this matches the table name
     protected $allowedColumns = ['user_id', 'address', 'phone_number'];
 
     // Fetch customer by user ID
