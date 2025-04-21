@@ -13,24 +13,21 @@ function openEditModal(
   productId,
   productName,
   productImage,
-  //   productPrice,
-  description
+  description,
+  status
 ) {
-  currentProductId = productId;
 
   document.getElementById('editProductID').value = productId;
   document.getElementById('editProductName').value = productName;
   document.getElementById('existingImage').src = '<?= ROOT ?>' + productImage;
-  //   document.getElementById('editProductPrice').value = productPrice;
   document.getElementById('editDescription').value = description;
-
+  document.getElementById('editStatus').value = status;
   document.getElementById('editModal').style.display = 'block';
 }
 
 function closeEditModal() {
   document.getElementById('editModal').style.display = 'none';
   document.getElementById('editProductForm').reset();
-  currentProductId = null;
 }
 
 function openDeleteModal(productId) {
@@ -40,7 +37,8 @@ function openDeleteModal(productId) {
 
 function closeDeleteModal() {
   document.getElementById('deleteConfirmationModal').style.display = 'none';
-  currentProductId = null;
+    document.getElementById('deleteProductForm').reset();
+
 }
 
 function closeResponseModal() {

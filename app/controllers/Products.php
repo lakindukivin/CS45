@@ -19,6 +19,20 @@ class Products
     // Send data to vie page
     public function index()
     {
+        // Ensure session is active
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // Redirect to login if user is not authenticated
+        if (!isset($_SESSION['user_id'])) {
+            redirect('login');
+        }
+
+        // Check if the user has the right role to access this page
+        if ($_SESSION['role_id'] != 2) {
+            redirect('login');
+        }
         $products = $this->productModel->getAllProducts();
 
         $this->view('salesManager/products', [
@@ -30,9 +44,9 @@ class Products
     public function getSingleProduct()
     {
 
-        if (isset($_POST['Product_id'])) {
+        if (isset($_POST['product_id'])) {
             $model = new ProductModel();
-            $singleProduct = $model->findById($_POST['Product_id']);
+            $singleProduct = $model->findById($_POST['product_id']);
             echo json_encode($singleProduct);
             exit;
         }
@@ -46,13 +60,16 @@ class Products
             $data = [
                 'productName' => $_POST['productName'],
                 'productImage' => $_POST['img'],
-                // 'productPrice' => $_POST['productPrice'],
                 'productDescription' => $_POST['description'],
                 'productStatus' => 1
             ];
 
             if ($this->productModel->addNewProduct($data)) {
                 $_SESSION['success'] = "Successfully Added!";
+                header("Location: " . ROOT . "/products");
+                exit();
+            }else {
+                $_SESSION['error'] = "Failed to add product!";
                 header("Location: " . ROOT . "/products");
                 exit();
             }
@@ -63,16 +80,21 @@ class Products
     public function update()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if (isset($_POST['Product_id'])) {
+            if (isset($_POST['editProductID'])) {
                 $data = [
-                    'Product_id' => $_POST['Product_id'],
-                    'productName' => $_POST['productName'],
-                    'productImage' => $_POST['img'],
-                    'productDescription' => $_POST['description']
+                    'product_id' => $_POST['editProductID'],
+                    'productName' => $_POST['editProductName'],
+                    // 'productImage' => $_POST['editImage'],
+                    'productDescription' => $_POST['editDescription'],
+                    'productStatus' => $_POST['editStatus']
                 ];
 
-                if ($this->productModel->updateProduct($_POST['Product_id'], $data)) {
+                if ($this->productModel->updateProduct($_POST['editProductID'], $data)) {
                     $_SESSION['success'] = "Successfully updated!";
+                    header("Location: " . ROOT . "/products");
+                    exit();
+                }else {
+                    $_SESSION['error'] = "Failed to update product!";
                     header("Location: " . ROOT . "/products");
                     exit();
                 }
@@ -85,10 +107,14 @@ class Products
     public function delete()
     {
 
-        if (isset($_POST['Product_id'])) {
+        if (isset($_POST['deleteProductID'])) {
 
-            if ($this->productModel->DeleteProduct($_POST['Product_id'])) {
+            if ($this->productModel->DeleteProduct($_POST['deleteProductID'])) {
                 $_SESSION['success'] = "Successfully deleted!";
+                header("Location: " . ROOT . "/products");
+                exit();
+            }else {
+                $_SESSION['error'] = "Failed to delete product!";
                 header("Location: " . ROOT . "/products");
                 exit();
             }
@@ -101,9 +127,9 @@ class Products
     public function restore()
     {
 
-        if (isset($_POST['Product_id'])) {
+        if (isset($_POST['product_id'])) {
 
-            if ($this->productModel->RestoreProduct($_POST['Product_id'])) {
+            if ($this->productModel->RestoreProduct($_POST['product_id'])) {
                 $_SESSION['success'] = "Successfully deleted!";
                 header("Location: " . ROOT . "/products");
                 exit();

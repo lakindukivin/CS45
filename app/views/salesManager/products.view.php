@@ -11,13 +11,7 @@
 </head>
 
 <body>
-    <?php
-    if (isset($_SESSION['user_id'])) {
-        $profileLink = ROOT . '/profile';
-    } else {
-        $profileLink = ROOT . '/login';
-    }
-    ?>
+
     <nav id="sidebar">
         <button id="toggle-btn" onclick="toggleSidebar()" class="toggle-btn">
             <img src="<?= ROOT ?>/assets/images/menu.svg" alt="menu" />
@@ -109,12 +103,6 @@
                     <div>
                         <button class="action-btn" onclick="openAddModal()">Add Product</button>
                     </div>
-                    <div>
-                        <button class="action-btn" href="<?= ROOT ?>/bagSizes">Bag Sizes</button>
-                    </div>
-                    <div>
-                        <button class="action-btn" href="<?= ROOT ?>/packSizes">Pack Sizes</button>
-                    </div>
                 </div>
 
                 <table id="productTable">
@@ -132,18 +120,17 @@
                         <?php if (!empty($products)): ?>
                             <?php foreach ($products as $product): ?>
                                 <tr>
-                                    <td><?= htmlspecialchars($product->Product_id) ?></td>
+                                    <td><?= htmlspecialchars($product->product_id) ?></td>
                                     <td><?= htmlspecialchars($product->productName) ?></td>
                                     <td><?= htmlspecialchars($product->productImage) ?></td>
-                                    <!-- <td><?= htmlspecialchars($product->productPrice) ?></td> -->
                                     <td><?= htmlspecialchars($product->productDescription) ?></td>
-                                    <td><?= htmlspecialchars($product->productStatus) ?></td>
+                                    <td><?= htmlspecialchars($product->productStatus == 1 ? 'Active' : 'Inactive') ?></td>
 
                                     <td>
                                         <button class="edit-btn"
-                                            onclick="openEditModal('<?= $product->Product_id ?>', '<?= $product->productName ?>', '<?= $product->productImage ?>', '<?= $product->productDescription ?>')">Edit</button>
+                                            onclick="openEditModal('<?= $product->product_id ?>', '<?= $product->productName ?>', '<?= $product->productImage ?>', '<?= $product->productDescription ?>','<?= $product->productStatus ?>')">Edit</button>
                                         <button class="delete-btn"
-                                            onclick="openDeleteModal('<?= $product->Product_id ?>')">Delete</button>
+                                            onclick="openDeleteModal('<?= $product->product_id ?>')">Delete</button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -189,25 +176,28 @@
                     <h3>Edit Product</h3>
                     <form action="<?= ROOT ?>/Products/update" id="editProductForm" method="post"
                         enctype="multipart/form-data">
-                        <input type="hidden" name="Product_id" id="editProductID" />
+                        <input type="hidden" name="editProductID" id="editProductID" />
                         <div class="form-group">
                             <label for="editProductName">Product Name:</label>
-                            <input name="productName" type="text" id="editProductName" placeholder="Enter product Name"
-                                required />
+                            <input name="editProductName" type="text" id="editProductName"
+                                placeholder="Enter product Name" required />
                         </div>
                         <div class="form-group">
                             <label for="editProductImage">Product Image:</label>
                             <img id="existingImage" src="" alt="Product Image" style="width: 100px; height: auto" />
-                            <input type="file" name="img" id="existingImage" accept="image/*" />
+                            <input type="file" name="editImage" id="existingImage" accept="image/*" />
                         </div>
                         <div class="form-group">
                             <label for="editDescription">Description:</label>
-                            <textarea id="editDescription" rows="4" name="description" required></textarea>
+                            <textarea id="editDescription" rows="4" name="editDescription" required></textarea>
                         </div>
 
                         <div class="form-group">
                             <label for="editStatus">Status</label>
-                            <input type="checkbox" id="status" name="status" value="">
+                            <select name="editStatus" id="editStatus">
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
 
                         </div>
                         <button class="cancel-btn" onclick="closeDeleteModal()">Cancel</button>
@@ -223,7 +213,7 @@
                     <h3>Confirm Delete</h3>
                     <p>Are you sure you want to delete this product?</p>
                     <form action="<?= ROOT ?>/Products/delete" id="deleteProductForm" method="post">
-                        <input type="hidden" name="Product_id" id="deleteProductID" />
+                        <input type="hidden" name="deleteProductID" id="deleteProductID" />
                         <div class="delete-modal-actions">
                             <button type="submit" class="confirm-btn">Confirm</button>
                             <button class="cancel-btn" onclick="closeDeleteModal()">Cancel</button>
@@ -243,14 +233,9 @@
         </div>
     </main>
 
-    <footer>
-        <div class="footer-content">
-            <p>© 2024 Waste360. All rights reserved.</p>
-        </div>
-    </footer>
+
 
     <script src="<?= ROOT ?>/assets/js/sidebar.js"></script>
-    <!-- <script src="<?= ROOT ?>/assets/js/modal.js"></script> -->
     <script src="<?= ROOT ?>/assets/js/salesManager/product.js"></script>
 </body>
 
