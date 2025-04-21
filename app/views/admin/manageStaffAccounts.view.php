@@ -11,7 +11,7 @@
 </head>
 
 <body>
-      <nav id="sidebar">
+    <nav id="sidebar">
         <button id="toggle-btn" onclick="toggleSidebar()" class="toggle-btn">
             <img src="<?= ROOT ?>/assets/images/menu.svg" alt="menu" />
         </button>
@@ -36,14 +36,14 @@
                             <span class="sidebar-titles">Customer Management</span>
                         </a>
                     </li>
-                    
+
                     <li>
                         <a href="#">
                             <img src="<?= ROOT ?>/assets/images/staff-account.svg" alt="staff" />
                             <span class="sidebar-titles">Staff Management</span>
                         </a>
-                    
-                    
+
+
                     </li>
 
                     <li>
@@ -97,7 +97,7 @@
                     <button>Search</button>
                 </div>
                 <div class="total-users">
-                    Total Staff: <span id="totalUsers">0</span>
+                    Total Staff: <span id="totalUsers"><?= isset($staffAccounts) ? count($staffAccounts) : 0 ?></span>
                 </div>
                 <div>
                     <button class="action-btn" onclick="openAddModal()">Add Staff</button>
@@ -157,7 +157,7 @@
                         <label for="name">Name:</label>
                         <input name="name" type="text" id="name" placeholder="Enter Staff Name" required />
                     </div>
-<!-- 
+                    <!-- 
                     <div class="form-group">
                         <label for="image">Profile Image:</label>
                         <input name="image" type="file" id="image" accept="image/*" required />
