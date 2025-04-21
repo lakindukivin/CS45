@@ -1,11 +1,12 @@
 <?php
 
+
 class IssuesModel
 {
     use Model;
 
     protected $table = 'issue'; // The table this model interacts with
-    protected $allowedColumns = ['issue_id', 'description', 'status','action_taken'];
+    protected $allowedColumns = ['issue_id', 'description','email','phone', 'status','action_taken'];
 
    //get all issues in db
     public function getAllIssues()
@@ -36,49 +37,49 @@ class IssuesModel
             return false;
         }
     }
+// sales manager update details of issues
+    public function editIssues($id, $data)
+    {
+        // Ensure only allowed columns are updated
+        try {
+            $this->update($id, $data, 'issue_id');
+            return true;
+        } catch (Exception $e) {
+            error_log("Error editing: " . $e->getMessage());
+            return false;
+        }
+
+    }
 
     // public function editIssues($id, $data)
     // {
-    //     // Ensure only allowed columns are updated
-    //     try {
-    //         $this->update($id, $data, 'issue_id');
-    //         return true;
-    //     } catch (Exception $e) {
-    //         error_log("Error editing: " . $e->getMessage());
-    //         return false;
+    //     // Only allow status and action_taken to be updated
+    //     $allowedFields = ['status', 'action_taken'];
+    //     $setParts = [];
+    //     $params = [];
+
+    //     foreach ($allowedFields as $field) {
+    //         if (isset($data[$field])) {
+    //             $setParts[] = "$field = :$field";
+    //             $params[$field] = $data[$field];
+    //         }
     //     }
 
+    //     if (empty($setParts)) {
+    //         return false; // Nothing to update
+    //     }
+
+    //     $sql = "UPDATE {$this->table} SET " . implode(', ', $setParts) . " WHERE issue_id = :issue_id";
+    //     $params['issue_id'] = $id;
+
+    //     try {
+    //         $this->query($sql, $params);
+    //         return true;
+    //     } catch (Exception $e) {
+    //         error_log("Error updating issue: " . $e->getMessage());
+    //         return false;
+    //     }
     // }
-
-    public function editIssues($id, $data)
-    {
-        // Only allow status and action_taken to be updated
-        $allowedFields = ['status', 'action_taken'];
-        $setParts = [];
-        $params = [];
-
-        foreach ($allowedFields as $field) {
-            if (isset($data[$field])) {
-                $setParts[] = "$field = :$field";
-                $params[$field] = $data[$field];
-            }
-        }
-
-        if (empty($setParts)) {
-            return false; // Nothing to update
-        }
-
-        $sql = "UPDATE {$this->table} SET " . implode(', ', $setParts) . " WHERE issue_id = :issue_id";
-        $params['issue_id'] = $id;
-
-        try {
-            $this->query($sql, $params);
-            return true;
-        } catch (Exception $e) {
-            error_log("Error updating issue: " . $e->getMessage());
-            return false;
-        }
-    }
 
     //delete a record
     public function deleteIssues($id)

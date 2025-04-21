@@ -8,7 +8,7 @@ class User
     use Model;
 
     protected $table = 'user';
-    protected $allowedColumns = ['email', 'password', 'role'];
+    protected $allowedColumns = ['email', 'password', 'role_id'];
 
     public $errors = [];
     public $processedData = [];
@@ -41,11 +41,27 @@ class User
             $this->processedData = [
                 'email' => $data['email'],
                 'password' => $data['password'], // Plain text password (not secure)
-                'role' => 'customer',
+                'role_id' => $data['role_id'] ?? null, // Optional role_id
             ];
             return true;
         }
 
         return false;
     }
+
+    public function addUser($data)
+    {
+        try {
+            $this->insert($data);
+            $user_id = $this->get_row("SELECT user_id FROM user WHERE email = :email", ['email' => $data['email']])->user_id;
+            return $user_id;
+            
+        // Return the inserted user ID
+        } catch (Exception $e) {
+            error_log("Error adding user: " . $e->getMessage());
+            return false;
+        }
+    }
+
+
 }

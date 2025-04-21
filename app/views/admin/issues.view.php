@@ -11,14 +11,6 @@
 </head>
 
 <body>
-    <?php
-    if (isset($_SESSION['user_id'])) {
-        $profileLink = ROOT . '/profile';
-    } else {
-        $profileLink = ROOT . '/login';
-    }
-    ?>
-
     <nav id="sidebar">
         <button id="toggle-btn" onclick="toggleSidebar()" class="toggle-btn">
             <img src="<?= ROOT ?>/assets/images/menu.svg" alt="menu" />
@@ -39,30 +31,24 @@
                     </li>
 
                     <li>
-                        <button onclick="toggleSubMenu()" class="dropdown-button">
-                            <img src="<?= ROOT ?>/assets/images/manage-accounts.svg" alt="" />
-                            <span class="sidebar-titles">Manage Accounts</span>
-                            <img src="<?= ROOT ?>/assets/images/dropdownbtn.svg" alt="dropdown-button"
-                                id="dropdownbtn-img" />
-                        </button>
-
-                        <ul id="sub-menu" class="sub-menu">
-                            <li>
-                                <a class="sidebar-titles" href="<?= ROOT ?>/manageCustomerAccounts">
-                                    Manage Customer Accounts
-                                </a>
-                            </li>
-                            <li>
-                                <a class="sidebar-titles" href="<?= ROOT ?>/manageStaffAccounts">
-                                    Manage Staff Accounts
-                                </a>
-                            </li>
-                        </ul>
+                        <a href="<?= ROOT ?>/manageCustomerAccounts">
+                            <img src="<?= ROOT ?>/assets/images/customer-account.svg" alt="customer" />
+                            <span class="sidebar-titles">Customer Management</span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="<?= ROOT ?>/manageStaffAccounts">
+                            <img src="<?= ROOT ?>/assets/images/staff-account.svg" alt="staff" />
+                            <span class="sidebar-titles">Staff Management</span>
+                        </a>
+                    
+                    
                     </li>
 
                     <li>
-                        <a href="<?= ROOT ?>/issues" class="sidebar-active">
-                            <img src="<?= ROOT ?>/assets/images/legal-issues.svg" alt="legal issues" />
+                        <a href="#">
+                            <img src="<?= ROOT ?>/assets/images/legal-issues.svg" alt="issues" />
                             <span class="sidebar-titles">Issues</span>
                         </a>
                     </li>
@@ -103,15 +89,13 @@
 
         <div class="container">
 
-            <div>
-                <button class="action-btn" onclick="openAddModal()">issues(this is used only to test the crud)</button>
-            </div>
-
             <table id="issuesTable">
                 <thead>
                     <tr>
                         <th>Issue ID</th>
                         <th>Description</th>
+                        <th>Email</th>
+                        <th>Contact No.</th>
                         <th>Status</th>
                         <th>Action Taken</th>
                         <th>Actions</th>
@@ -123,11 +107,13 @@
                             <tr>
                                 <td><?= htmlspecialchars($issue->issue_id) ?></td>
                                 <td><?= htmlspecialchars($issue->description) ?></td>
-                                <td><?= htmlspecialchars($issue->status) ?></td>
+                                <td><?= htmlspecialchars($issue->email) ?></td>
+                                <td><?= htmlspecialchars($issue->phone) ?></td>
+                                <td><?= htmlspecialchars($issue->status == 1 ? 'Resolved' : 'Pending') ?></td>
                                 <td><?= htmlspecialchars($issue->action_taken) ?></td>
                                 <td>
                                     <button class="edit-btn"
-                                        onclick="openEditModal('<?= $issue->issue_id ?>','<?= $issue->description ?>','<?= $issue->status ?>','<?= $issue->action_taken ?>')">Edit</button>
+                                        onclick="openEditModal('<?= $issue->issue_id ?>','<?= $issue->description ?>','<?= $issue->email ?>','<?= $issue->phone ?>','<?= $issue->status ?>','<?= $issue->action_taken ?>')">Edit</button>
                                     <button class="delete-btn"
                                         onclick="openDeleteModal('<?= $issue->issue_id ?>')">Delete</button>
                                 </td>
@@ -141,13 +127,12 @@
                 </tbody>
             </table>
 
-            <div id="addModal" class="modal">
+            <!-- <div id="addModal" class="modal">
                 <div class="modal-content">
                     <span class="close" onclick="closeAddModal()">&times;</span>
                     <h3>Report your Problem here</h3>
 
                     <form action="<?= ROOT ?>/Issues/add" id="issueForm" enctype="multipart/form-data" method="post">
-                        <input type="hidden" id="issueId" name="issueId" value="" />
 
                         <div class="form-group">
                             <label>Description:
@@ -164,28 +149,29 @@
                         </div>
                     </form>
                 </div>
-            </div>
+            </div> -->
 
             <div id="editModal" class="modal">
                 <div class="modal-content">
                     <span class="close" onclick="closeEditModal()">&times;</span>
                     <h3>Manage Issues</h3>
-                    <form id="editIssueForm" enctype="multipart/form-data" action="<?= ROOT ?>/Issues/update"
-                        method="post">
+                    <form id="editIssueForm" action="<?= ROOT ?>/Issues/update" method="post">
                         <input type="hidden" id="issueId" name="editIssueId" />
                         <input type="hidden" id="description" name="description" />
+                        <input type="hidden" id="email" name="email" />
+                        <input type="hidden" id="phone" name="phone" />
                         <div class="form-group">
                             <label for="status">Status:</label>
-                            <select id="status" required>
-                                <option value="" disabled selected>Select Status</option>
-                                <option value="Pending">Pending</option>
-                                <option value="Resolved">Resolved</option>
-                                <option value="Escalated">Escalated</option>
+                            <select id="status" name="status" required>
+                                <option disabled>Select Status</option>
+                                <option value='0'>Pending</option>
+                                <option value='1'>Resolved</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="actionsTaken">Actions Taken:</label>
-                            <textarea id="actionsTaken" rows="4" placeholder="Document actions taken"></textarea>
+                            <textarea name="actionsTaken" id="actionsTaken" rows="4"
+                                placeholder="Document actions taken"></textarea>
                         </div>
                         <button type="submit" class="action-btn">Save & Update</button>
                         <button type="button" class="cancel-btn" onclick="closeEditModal()">Cancel</button>
@@ -211,7 +197,6 @@
             </div>
         </div>
     </main>
-    <!-- <script src="<?= ROOT ?>/assets/js/admin/modal.js"></script> -->
     <script src="<?= ROOT ?>/assets/js/sidebar.js"></script>
     <script src="<?= ROOT ?>/assets/js/admin/issues.js"></script>
 </body>

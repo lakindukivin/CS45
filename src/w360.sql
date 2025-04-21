@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 19, 2025 at 09:46 AM
+-- Generation Time: Apr 21, 2025 at 11:54 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.1.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -165,25 +165,27 @@ CREATE TABLE `customer` (
   `user_id` int(11) NOT NULL,
   `address` varchar(255) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
-  `mobile` varchar(20) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL
+  `image` varchar(20) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `customer`
 --
 
-INSERT INTO `customer` (`customer_id`, `user_id`, `address`, `phone`, `mobile`, `name`) VALUES
-(1, 2, '123 Green St', '0112233445', '0771234567', 'Alice Perera'),
-(2, 3, '456 Blue Ln', '0113344556', '0772345678', 'Nimal Silva'),
-(3, 2, '789 Red Rd', '0114455667', '0773456789', 'Kamal Fernando'),
-(4, 3, '321 Yellow Ave', '0115566778', '0774567890', 'Sunil Rajapaksha'),
-(5, 2, '654 Orange Blvd', '0116677889', '0775678901', 'Diana Abeywardena'),
-(6, 3, '222 Purple Dr', '0117788990', '0776789012', 'Hasini Wijesinghe'),
-(7, 2, '999 White St', '0118899001', '0777890123', 'Ruwan Jayasuriya'),
-(8, 2, '888 Brown St', '0119900112', '0778901234', 'Thilini Gamage'),
-(9, 3, '777 Black St', '0111011223', '0779012345', 'Chamika Karunaratne'),
-(10, 2, '666 Silver St', '0112122334', '0770123456', 'Sajith Wickramasinghe');
+INSERT INTO `customer` (`customer_id`, `user_id`, `address`, `phone`, `name`, `image`, `status`) VALUES
+(1, 2, '123 Green St', '0112233445', 'Alice Perera', NULL, 1),
+(2, 3, '456 Blue Ln', '0113344556', 'Nimal Silva', NULL, 1),
+(3, 2, '789 Red Rd', '0114455667', 'Kamal Fernando', NULL, 1),
+(4, 3, '321 Yellow Ave', '0115566778', 'Sunil Rajapaksha', NULL, 1),
+(5, 2, '654 Orange Blvd', '0116677889', 'Diana Abeywardena', NULL, 1),
+(6, 3, '222 Purple Dr', '0117788990', 'Hasini Wijesinghe', NULL, 1),
+(7, 2, '999 White St', '0118899001', 'Ruwan Jayasuriya', NULL, 1),
+(8, 2, '888 Brown St', '0119900112', 'Thilini Gamage', NULL, 1),
+(9, 3, '777 Black St', '0111011223', 'Chamika Karunaratne', NULL, 1),
+(10, 2, '666 Silver St', '0112122334', 'Sajith Wickramasinghe', NULL, 1);
+
 
 -- --------------------------------------------------------
 
@@ -269,7 +271,9 @@ INSERT INTO `giveawayrequests` (`giveaway_id`, `customer_id`, `request_date`, `g
 CREATE TABLE `issue` (
   `issue_id` int(11) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
-  `status` varchar(255) DEFAULT 'Pending',
+  `email` varchar(20) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `status` tinyint(1) DEFAULT 0,
   `action_taken` varchar(255) DEFAULT 'None'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -277,10 +281,10 @@ CREATE TABLE `issue` (
 -- Dumping data for table `issue`
 --
 
-INSERT INTO `issue` (`issue_id`, `description`, `status`, `action_taken`) VALUES
-(1, 'error1', 'Pending', 'None'),
-(2, 'error2', 'Pending', 'None'),
-(3, 'sysytem is not working', 'Pending', 'None');
+INSERT INTO `issue` (`issue_id`, `description`, `email`, `phone`, `status`, `action_taken`) VALUES
+(1, 'error1', '', '', 1, '123456'),
+(2, 'error2', 'wwwef', 'dcdva', NULL, NULL),
+(4, 'error1', 'adsc', 'cfedf', 1, '123456');
 
 -- --------------------------------------------------------
 
@@ -384,7 +388,7 @@ CREATE TABLE `product` (
   `productName` varchar(255) DEFAULT NULL,
   `productImage` varchar(255) DEFAULT NULL,
   `productDescription` text DEFAULT NULL,
-  `productStatus` varchar(50) DEFAULT NULL
+  `productStatus` tinyint(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -392,9 +396,19 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`product_id`, `productName`, `productImage`, `productDescription`, `productStatus`) VALUES
-(4, 'Oxo-Degradable Garbage Bag', 'oxo_bag.jpg', 'Eco-conscious garbage bags made with oxo-degradable material that breaks down over time.', 'Active'),
-(5, 'Bio-Degradable Garbage Bag', 'bio_bag.jpg', 'Compostable garbage bags made from natural materials, safe for the environment.', 'Active'),
-(6, 'Hydrogen Garbage Bag', 'hydrogen_bag.jpg', 'Innovative hydrogen-based garbage bags designed for enhanced odor control and decomposition.', 'Active');
+(4, 'Oxo-Degradable Garbage Bag', 'oxo_bag.jpg', 'Eco-conscious garbage bags made with oxo-degradable material that breaks down over time.', 0),
+(5, 'Bio-Degradable Garbage Bag', 'bio_bag.jpg', 'Compostable garbage bags made from natural materials, safe for the environment.', 0),
+(6, 'Hydrogen Garbage Bag', 'hydrogen_bag.jpg', 'Innovative hydrogen-based garbage bags designed for enhanced odor control and decomposition.', 1),
+(7, 'p1', NULL, 'this is dummy data', 1),
+(8, 'p2', 'none.png', 'dummy2', 1),
+(9, 'p3', 'nonee.png', 'dummy3', 1),
+(10, 'p4', 'none.png', 'dummy4', 1),
+(11, 'p5', NULL, NULL, 1),
+(12, 'p6', NULL, NULL, 1),
+(13, 'p6', NULL, NULL, 1),
+(14, 'p7', NULL, NULL, 1),
+(15, 'p8', NULL, NULL, 1),
+(16, 'p9', NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -556,9 +570,22 @@ CREATE TABLE `staff` (
   `name` varchar(255) NOT NULL,
   `address` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
+  `image` varchar(20) DEFAULT NULL,
   `role_id` int(11) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL
+  `user_id` int(11) DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `staff`
+--
+
+INSERT INTO `staff` (`staff_id`, `name`, `address`, `phone`, `image`, `role_id`, `user_id`, `status`) VALUES
+(1, 'Chamudi', '21e2e', '0711234567', NULL, 1, 1, 1),
+(2, 'Chamudi', 'fchjyty', '0711234567', NULL, NULL, NULL, 1),
+(3, 'b', 'jbbj', '0711234567', NULL, NULL, NULL, 1),
+(4, 'upeka', 'upemks', '0711234567', NULL, 2, NULL, 1),
+(6, 'nethmi', 'hi ', '0711234567', NULL, 4, 10, 1);
 
 -- --------------------------------------------------------
 
@@ -595,7 +622,9 @@ INSERT INTO `user` (`user_id`, `email`, `password`, `role_id`) VALUES
 (1, 'admin@gmail.com', '123456', 1),
 (2, 'upeka@gmail.com', '1234', 5),
 (3, 'lakindu@gmail.com', '5555555', 5),
-(4, 'nimasha@gmail.com', '444444', 4);
+(4, 'nimasha@gmail.com', '444444', 4),
+(8, 'kumarage@gmail.com', '2001', 2)
+;
 
 --
 -- Indexes for dumped tables
@@ -863,7 +892,7 @@ ALTER TABLE `giveawayrequests`
 -- AUTO_INCREMENT for table `issue`
 --
 ALTER TABLE `issue`
-  MODIFY `issue_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `issue_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -899,7 +928,7 @@ ALTER TABLE `polythenecollection`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `reply`
@@ -941,7 +970,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `staff`
 --
 ALTER TABLE `staff`
-  MODIFY `staff_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `staff_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `stock`
@@ -953,7 +982,7 @@ ALTER TABLE `stock`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables

@@ -11,14 +11,6 @@
 </head>
 
 <body>
-    <?php
-    if (isset($_SESSION['user_id'])) {
-        $profileLink = ROOT . '/profile';
-    } else {
-        $profileLink = ROOT . '/login';
-    }
-    ?>
-
     <nav id="sidebar">
         <button id="toggle-btn" onclick="toggleSidebar()" class="toggle-btn">
             <img src="<?= ROOT ?>/assets/images/menu.svg" alt="menu" />
@@ -28,7 +20,6 @@
                 <img src="<?= ROOT ?>/assets/images/user.svg" alt="profile" />
                 <span class="user-title">Admin</span>
             </div>
-
             <div>
                 <ul>
                     <li>
@@ -37,32 +28,21 @@
                             <span class="sidebar-titles">Dashboard</span>
                         </a>
                     </li>
-
                     <li>
-                        <button onclick="toggleSubMenu()" class="dropdown-button">
-                            <img src="<?= ROOT ?>/assets/images/manage-accounts.svg" alt="" />
-                            <span class="sidebar-titles">Manage Accounts</span>
-                            <img src="<?= ROOT ?>/assets/images/dropdownbtn.svg" alt="dropdown-button"
-                                id="dropdownbtn-img" />
-                        </button>
-
-                        <ul id="sub-menu" class="sub-menu">
-                            <li>
-                                <a class="sidebar-titles sidebar-active" href="<?= ROOT ?>/manageCustomerAccounts">
-                                    Manage Customer Accounts
-                                </a>
-                            </li>
-                            <li>
-                                <a class="sidebar-titles" href="<?= ROOT ?>/manageStaffAccounts">
-                                    Manage Staff Accounts
-                                </a>
-                            </li>
-                        </ul>
+                        <a href="<?= ROOT ?>/manageCustomerAccounts">
+                            <img src="<?= ROOT ?>/assets/images/customer-account.svg" alt="customer" />
+                            <span class="sidebar-titles">Customer Management</span>
+                        </a>
                     </li>
-
+                    <li>
+                        <a href="<?= ROOT ?>/manageStaffAccounts">
+                            <img src="<?= ROOT ?>/assets/images/staff-account.svg" alt="staff" />
+                            <span class="sidebar-titles">Staff Management</span>
+                        </a>
+                    </li>
                     <li>
                         <a href="<?= ROOT ?>/issues">
-                            <img src="<?= ROOT ?>/assets/images/legal-issues.svg" alt="legal issues" />
+                            <img src="<?= ROOT ?>/assets/images/legal-issues.svg" alt="issues" />
                             <span class="sidebar-titles">Issues</span>
                         </a>
                     </li>
@@ -83,9 +63,7 @@
                 <img src="<?= ROOT ?>/assets/images/Waste360.png" alt="Waste360" />
                 <h1>Waste360</h1>
             </div>
-
             <h1 class="logo">Customer Accounts</h1>
-
             <nav class="nav">
                 <ul>
                     <li>
@@ -102,90 +80,111 @@
         </header>
 
         <div class="container">
-
             <div class="table-header">
                 <div class="search-bar">
                     <img src="<?= ROOT ?>/assets/images/magnifying-glass-solid.svg" class="search-icon" />
-                    <input type="text" />
+                    <input type="text" placeholder="Search by name, email, or phone..." />
                     <button>Search</button>
                 </div>
-
                 <div class="total-users">
-                    Total Customers: <span id="totalUsers">0</span>
+                    Total Customers: <span
+                        id="totalUsers"><?= isset($customerAccounts) ? count($customerAccounts) : 0 ?></span>
                 </div>
+                
             </div>
 
             <table id="customerTable">
                 <thead>
                     <tr>
-                        <th>User ID</th>
+                        <th>Customer ID</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Contact No.</th>
                         <th>Address</th>
-                        <th>Give Away Amount</th>
-                        <th>Purchased Amount</th>
-                        <th>Saved Carbon Footprint</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody id="customerTableBody"></tbody>
+                <tbody>
+                    <?php if (!empty($customerAccounts)): ?>
+                        <?php foreach ($customerAccounts as $customer): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($customer->customer_id) ?></td>
+                                <td><?= htmlspecialchars($customer->name) ?></td>
+                                <td><?= htmlspecialchars($customer->email) ?></td>
+                                <td><?= htmlspecialchars($customer->phone) ?></td>
+                                <td><?= htmlspecialchars($customer->address) ?></td>
+                                <td><?= $customer->status == 1 ? 'Active' : 'Inactive' ?></td>
+                                <td class="action-buttons">
+                                    <button class="edit-btn"
+                                        onclick="openEditModal('<?= $customer->customer_id ?>','<?= $customer->name  ?>','<?= $customer->image ?>','<?= $customer->phone ?>','<?= $customer->address ?>','<?= $customer->status ?>')">Edit</button>
+                                    <button class="delete-btn"
+                                        onclick="openDeleteModal('<?= $customer->customer_id ?>')">Delete</button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="7">No customer accounts found.</td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
             </table>
         </div>
 
+        <!-- Edit Customer Modal -->
         <div id="editModal" class="modal">
             <div class="modal-content">
                 <span class="close" onclick="closeEditModal()">&times;</span>
                 <h3>Edit Customer Details</h3>
-                <form id="editCustomerAccounts" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="userId" id="userId" />
+                <form id="editCustomerForm" action="<?= ROOT ?>/ManageCustomerAccounts/update" method="post">
+                    <input type="hidden" name="editCustomerId" id="editCustomerId" />
                     <div class="form-group">
-                        <label for="editCustomerName">Customer Name:</label>
-                        <input name="editCustomerName" type="text" id="editCustomerName"
-                            placeholder="Enter customer Name" required />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="editCustomerEmail">Customer Email</label>
-                        <input name="editCustomerEmail" type="email" id="editCustomerEmail"
-                            placeholder="Enter customer Email" required />
+                        <label for="editCustomerName">Name:</label>
+                        <input name="editCustomerName" type="text" id="editCustomerName" required />
                     </div>
                     <div class="form-group">
-                        <label for="editCustomerContactNo">Contact No</label>
-                        <input name="editCustomerContactNo" type="text" id="editCustomerContactNo"
-                            placeholder="Enter customer Contact Number" required />
+                        <label for="editCustomerImage">Image:</label>
+                        <input name="editCustomerImage" type="file" id="editCustomerImage" required />
                     </div>
                     <div class="form-group">
-                        <label for="editCustomerAddress">Address</label>
+                        <label for="editCustomerContactNo">Contact No:</label>
+                        <input name="editCustomerContactNo" type="text" id="editCustomerContactNo" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="editCustomerAddress">Address:</label>
                         <textarea name="editCustomerAddress" id="editCustomerAddress" required></textarea>
                     </div>
-
-                    <button type="button" class="action-btn">Update</button>
-                    <button type="button" class="cancel-btn">Cancel</button>
+                    <div class="form-group">
+                        <label for="editCustomerStatus">Status:</label>
+                        <select name="editCustomerStatus" id="editCustomerStatus" required>
+                            <option value="1">Active</option>
+                            <option value="0">Inactive</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="action-btn">Update</button>
+                    <button type="button" class="action-btn" onclick="closeEditModal()">Cancel</button>
                 </form>
             </div>
+        </div>
 
-            <!-- Delete Confirmation Modal -->
-            <div id="deleteModal" class="modal">
-                <div class="modal-content">
-                    <p>Are you sure you want to delete this customer?</p>
-                    <button id="confirmDelete" class="confirm-btn">Yes, Delete</button>
-                    <button id="cancelDelete" class="cancel-btn">Cancel</button>
-                </div>
-            </div>
-
-            <!-- Success Message Modal -->
-            <div id="successMessage" class="modal">
-                <div class="modal-content">
-                    <span class="close" onclick="closeSuccessMessage()">&times;</span>
-                    <p>Customer deleted successfully!</p>
-                    <button id="closeSuccess" class="close">Close</button>
+        <!-- Delete Confirmation Modal -->
+        <div id="deleteConfirmationModal" class="modal">
+            <div class="modal-content delete-modal">
+                <span class="close" onclick="closeDeleteModal()">&times;</span>
+                <h3>Confirm Delete Customer</h3>
+                <p>Are you sure you want to delete this customer? This action cannot be undone.</p>
+                <div class="action-buttons">
+                    <form id="deleteCustomerForm" action="<?= ROOT ?>/ManageCustomerAccounts/delete" method="post">
+                        <input type="hidden" name="deleteCustomerId" id="deleteCustomerId" />
+                        <button type="button" class="action-btn cancel-btn" onclick="closeDeleteModal()">Cancel</button>
+                        <button type="submit" class="action-btn delete-btn">Delete Customer</button>
+                    </form>
                 </div>
             </div>
         </div>
     </main>
 
-    <script src="<?= ROOT ?>/assets/js/admin/modal.js"></script>
     <script src="<?= ROOT ?>/assets/js/admin/sidebar.js"></script>
     <script src="<?= ROOT ?>/assets/js/admin/manageCustomerAccounts.js"></script>
 </body>
