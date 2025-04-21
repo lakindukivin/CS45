@@ -77,8 +77,7 @@
 
         <div class="form">
         <form method="POST" action="<?= ROOT ?>/CustomOrderViewForm/post/<?= $order->customOrder_id ?>">
-        <input type="hidden" name="Review_id">
-        
+        <input type="hidden" name="order_id" value="<?= $order->customOrder_id ?>">
         <div class="form-row">
             <!--<div class="form-group">
                 <label>Order ID</label>
@@ -130,9 +129,10 @@
         </div>
 
         <div class="button-group">
-            <button type="submit" name="accept" class="submit-button" id="acceptBtn">Accept</button>
-            <button type="submit" name="decline" class="decline-button" id="declineBtn">Decline</button>
+            <button type="submit" name="action" value="accept" class="submit-button" id="acceptBtn">Accept</button>
+            <button type="submit" name="action" value="decline" class="decline-button" id="declineBtn">Decline</button>
         </div>
+        </form>
 </div>
 
     <!-- View Details Modal -->
