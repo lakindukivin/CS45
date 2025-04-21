@@ -33,7 +33,7 @@
                     <li>
                         <a href="<?= ROOT ?>/carbonFootprint">
                             <img src="<?= ROOT ?>/assets/images/carbon-footprint.svg" alt="carbon-footprint" />
-                            <span class="sidebar-titles">Carbon footprint</span>
+                            <span class="sidebar-titles">Carbon Footprint</span>
                         </a>
                     </li>
                     <li>
@@ -129,15 +129,19 @@
 
                                     <td>
                                         <button class="edit-btn"
-                                            onclick="openEditModal('<?= $product->product_id ?>', '<?= $product->productName ?>', '<?= $product->productImage ?>', '<?= $product->productDescription ?>','<?= $product->productStatus ?>')">Edit</button>
-                                        <button class="delete-btn"
-                                            onclick="openDeleteModal('<?= $product->product_id ?>')">Delete</button>
+                                            onclick="openEditModal('<?= $product->product_id ?>', '<?= $product->productName ?>', '<?= $product->productImage ?>', '<?= $product->productDescription ?>','<?= $product->productStatus ?>')">
+                                            <img src="<?= ROOT ?>/assets/images/edit-btn.svg"" alt=" edit">
+                                        </button>
+                                        <button class="delete-btn" onclick="openDeleteModal('<?= $product->product_id ?>')">
+                                            <img src="<?= ROOT ?>/assets/images/delete-btn.svg"" alt=" delete">
+                                        </button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="6">No products found.</td>
+                                <td colspan=" 6">No products found.
+                                </td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
