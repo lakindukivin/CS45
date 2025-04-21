@@ -33,11 +33,30 @@ class Products
         if ($_SESSION['role_id'] != 2) {
             redirect('login');
         }
-        $products = $this->productModel->getAllProducts();
+
+        // Pagination setup
+        $limit = 5;
+        $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+        $offset = ($page - 1) * $limit;
+        $search = isset($_GET['search']) ? trim($_GET['search']) : '';
+
+        if ($search !== '') {
+            $products = $this->productModel->searchProducts($search, $limit, $offset);
+            $totalProducts = $this->productModel->searchProductsCount($search);
+        } else {
+            $products = $this->productModel->getProductsPaginated($limit, $offset);
+            $totalProducts = $this->productModel->getProductsCount();
+        }
+        $totalPages = ceil($totalProducts / $limit);
 
         $this->view('salesManager/products', [
             'products' => $products,
+            'currentPage' => $page,
+            'totalPages' => $totalPages,
+            'search' => $search,
         ]);
+
+
     }
 
     //Get single product 
@@ -68,7 +87,7 @@ class Products
                 $_SESSION['success'] = "Successfully Added!";
                 header("Location: " . ROOT . "/products");
                 exit();
-            }else {
+            } else {
                 $_SESSION['error'] = "Failed to add product!";
                 header("Location: " . ROOT . "/products");
                 exit();
@@ -93,7 +112,7 @@ class Products
                     $_SESSION['success'] = "Successfully updated!";
                     header("Location: " . ROOT . "/products");
                     exit();
-                }else {
+                } else {
                     $_SESSION['error'] = "Failed to update product!";
                     header("Location: " . ROOT . "/products");
                     exit();
@@ -113,7 +132,7 @@ class Products
                 $_SESSION['success'] = "Successfully deleted!";
                 header("Location: " . ROOT . "/products");
                 exit();
-            }else {
+            } else {
                 $_SESSION['error'] = "Failed to delete product!";
                 header("Location: " . ROOT . "/products");
                 exit();

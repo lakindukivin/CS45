@@ -94,12 +94,13 @@
             <div class="container">
 
                 <div class="table-header">
-                    <div class="search-bar">
+                    <form class="search-bar" method="get" action="">
                         <img src="<?= ROOT ?>/assets/images/magnifying-glass-solid.svg" class="search-icon"
-                            width="50px" />
-                        <input type="text" />
-                        <button>Search</button>
-                    </div>
+                            width="20px" />
+                        <input type="text" name="search" value="<?= isset($search) ? htmlspecialchars($search) : '' ?>"
+                            placeholder="Search products..." />
+                        <button type="submit">Search</button>
+                    </form>
                     <div>
                         <button class="action-btn" onclick="openAddModal()">Add Product</button>
                     </div>
@@ -143,6 +144,17 @@
                 </table>
             </div>
 
+            <!-- Pagination Controls -->
+            <div class="pagination">
+                <?php if (isset($totalPages) && $totalPages > 1): ?>
+                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                        <a href="?<?= isset($search) && $search !== '' ? 'search=' . urlencode($search) . '&' : '' ?>page=<?= $i ?>"
+                            class="<?= (isset($currentPage) && $currentPage == $i) ? 'active' : '' ?>">
+                            <?= $i ?>
+                        </a>
+                    <?php endfor; ?>
+                <?php endif; ?>
+            </div>
 
 
             <div id="addModal" class="modal">
