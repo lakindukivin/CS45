@@ -31,29 +31,76 @@ class ManageOrderModel
 
     public function getOrderById($order_id)
     {
-        $query = "SELECT * FROM orders WHERE order_id = :order_id";
+        // First try to get the order with completed status
+        $query = "SELECT o.*, co.status, co.message_to_customer, p.productName, c.name AS customerName
+                  FROM orders o
+                  LEFT JOIN completed_orders co ON o.order_id = co.order_id
+                  LEFT JOIN product p ON o.product_id = p.product_id
+                  LEFT JOIN customer c ON o.customer_id = c.customer_id
+                  WHERE o.order_id = :order_id";
+                  
         $data = [
             'order_id' => $order_id,
         ];
-        return $this->query($query, $data);
+        
+        $result = $this->query($query, $data);
+
+        // Debugging: Log the query and result
+        if (!$result) {
+            error_log("Order not found for order_id: " . $order_id);
+            error_log("Query executed: " . $query);
+            error_log("Data passed: " . json_encode($data));
+            return false;
+        }
+
+        error_log("Order found: " . json_encode($result[0]));
+        return $result[0]; // Return the first result
     }
 
     public function addCompletedOrder($data)
     {
-        // Check if the order_id already exists in completed_orders
+        // Ensure the order exists in the `orders` table
+        $orderExists = $this->query("SELECT * FROM orders WHERE order_id = :order_id", ['order_id' => $data['order_id']]);
+        if (!$orderExists) {
+            error_log("Order ID does not exist in the orders table: " . $data['order_id']);
+            throw new Exception("Order ID does not exist in the orders table.");
+        }
+
+        // Check if the order already exists in `completed_orders`
         $existingOrder = $this->query("SELECT * FROM completed_orders WHERE order_id = :order_id", ['order_id' => $data['order_id']]);
         if ($existingOrder) {
-            // If it exists, update the existing record instead of inserting
+            // Update the existing record in `completed_orders`
             $query = "UPDATE completed_orders 
-                      SET status = :status, message_to_customer = :message_to_customer 
+                      SET status = :status, message_to_customer = :message_to_customer, date_completed = NOW() 
                       WHERE order_id = :order_id";
         } else {
-            // If it doesn't exist, insert a new record
+            // Insert a new record into `completed_orders`
             $query = "INSERT INTO completed_orders 
-                      (order_id, status, message_to_customer) 
-                      VALUES (:order_id, :status, :message_to_customer)";
+                      (order_id, status, message_to_customer, date_completed) 
+                      VALUES (:order_id, :status, :message_to_customer, NOW())";
         }
-        return $this->query($query, $data);
+
+        $result = $this->query($query, $data);
+
+        // Debugging: Log the query and result
+        if (!$result) {
+            error_log("Failed to add or update completed order for order_id: " . $data['order_id']);
+            return false;
+        }
+
+        // Update the `orderStatus` field in the `orders` table
+        $updateOrderStatusQuery = "UPDATE orders SET orderStatus = :status WHERE order_id = :order_id";
+        $updateResult = $this->query($updateOrderStatusQuery, [
+            'status' => $data['status'],
+            'order_id' => $data['order_id'],
+        ]);
+
+        if (!$updateResult) {
+            error_log("Failed to update orderStatus in orders table for order_id: " . $data['order_id']);
+            return false;
+        }
+
+        return true;
     }
 
     public function getAllCompletedOrders()
@@ -75,14 +122,7 @@ class ManageOrderModel
         return $this->query($query, array_merge($data, ['orderId' => $orderId]));
     }
 
-    public function getOrderByCustomerId($customerId)
-    {
-        $query = "SELECT * FROM orders WHERE customer_id = :customerId";
-        $data = [
-            'customerId' => $customerId,
-        ];
-        return $this->query($query, $data);
-    }
+    
 
     // Add this new method to get orders by status
     public function getCompletedOrdersByStatus($status)
@@ -112,6 +152,24 @@ class ManageOrderModel
         
         $result = $this->query($query, ['orderId' => $orderId]);
         return $result ? $result[0] : false;
+    }
+
+    
+
+    public function countByDate($date)
+    {
+        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
+            throw new Exception("Invalid date format. Expected YYYY-MM-DD.");
+        }
+        $query = "SELECT COUNT(order_id) as count FROM orders WHERE DATE(orderDate) = :date";
+        $result = $this->query($query, ['date' => $date]);
+
+        // Access the result as an object
+        if (isset($result[0]->count)) {
+            return $result[0]->count;
+        }
+
+        return 0;
     }
 
 }

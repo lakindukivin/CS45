@@ -138,6 +138,8 @@ th {
   justify-content: center;
 }
 
+
+
 @media (max-width: 768px) {
   .container {
     width: 90%;

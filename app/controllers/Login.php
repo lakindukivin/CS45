@@ -26,16 +26,16 @@ class Login
                             session_start();
                         }
 
-                        $_SESSION['User_id'] = $existingUser->user_id;
-                        $_SESSION['Email'] = $existingUser->email;
-                        $_SESSION['Role_id'] = $existingUser->role_id;
+                        $_SESSION['user_id'] = $existingUser->user_id;
+                        $_SESSION['email'] = $existingUser->email;
+                        $_SESSION['role_id'] = $existingUser->role_id;
 
                         // Debugging: Check if session variables are set
                         // var_dump($_SESSION);
                         // exit();
 
                         // Redirect based on numeric Role_id
-                        switch ($_SESSION['Role_id']) {
+                        switch ($_SESSION['role_id']) {
                             case 1:  // Admin
                                 header("Location: adminHome");
                                 break;
