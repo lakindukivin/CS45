@@ -41,6 +41,12 @@ function renderCalendar() {
             date.classList.add('today');
         }
 
+        // Add click event to fetch data for the selected day
+        date.addEventListener('click', () => {
+            const selectedDate = new Date(year, month, i);
+            fetchDayData(selectedDate);
+        });
+
         dates.appendChild(date);
     }
 
@@ -87,3 +93,45 @@ setInterval(updateClock, 1000);
 
 // Initial call to display clock immediately
 updateClock();
+
+// Fetch data for the selected day
+function fetchDayData(date) {
+    const formattedDate = date.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+    fetch(`${ROOT}/CSManagerHome/getDayData?date=${formattedDate}`)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch data.');
+            }
+            return response.json();
+        })
+        .then((data) => {
+            if (data.error) {
+                throw new Error(data.error);
+            }
+            displayDayData(data);
+        })
+        .catch((error) => {
+            console.error('Error fetching day data:', error);
+            const metricGrid = document.querySelector('.metric-grid');
+            metricGrid.innerHTML = `<p class="error-message">Failed to load data: ${error.message}</p>`;
+        });
+}
+
+// Display data for the selected day
+function displayDayData(data) {
+    // Ensure data is always a number, default to 0 if undefined/null
+    const giveaways = (typeof data.giveaways === 'number') ? data.giveaways : (parseInt(data.giveaways) || 0);
+    const returns = (typeof data.returns === 'number') ? data.returns : (parseInt(data.returns) || 0);
+    const orders = (typeof data.orders === 'number') ? data.orders : (parseInt(data.orders) || 0);
+    const reviews = (typeof data.reviews === 'number') ? data.reviews : (parseInt(data.reviews) || 0);
+
+    document.getElementById('giveaways-count').textContent = giveaways;
+    document.getElementById('returns-count').textContent = returns;
+    document.getElementById('orders-count').textContent = orders;
+    document.getElementById('reviews-count').textContent = reviews;
+}
+
+// Ensure the calendar is re-rendered after changing months
+document.addEventListener('DOMContentLoaded', () => {
+    renderCalendar();
+});

@@ -31,6 +31,9 @@ class ManageOrders {
                     'status' => 'accepted',
                     'message_to_customer' => $_POST['message_to_customer'],
                 ]);
+                // Redirect with success flag
+                header('Location: ' . ROOT . '/ManageOrders?success=1');
+                exit();
             } elseif (isset($_POST['reject_order'])) {
                 $orderModel->updateOrderStatus($order_id, 'rejected');
                 $orderModel->addCompletedOrder([
@@ -38,25 +41,12 @@ class ManageOrders {
                     'status' => 'rejected',
                     'message_to_customer' => $_POST['message_to_customer'],
                 ]);
+                // Redirect with error flag
+                header('Location: ' . ROOT . '/ManageOrders?error=1');
+                exit();
             }
-
-            // Handle other actions as needed
-            // For example, if you want to mark an order as shipped
-            // elseif (isset($_POST['mark_as_shipped'])) {
-            //     $orderModel->updateOrderStatus($order_id, 'shipped')
-            //     $orderModel->addCompletedOrder([
-            //         'order_id' => $order_id,
-            //         'status' => 'shipped',
-            //         'message_to_customer' => $_POST['message_to_customer'],
-            //     ]);
-            // }
-            // Redirect or refresh the page after processing the form
-            header('Location: ' . ROOT . '/ManageOrders');
-            exit();
-
         }
         $this->view('customerServiceManager/manage_orders', $data);
     }
-
-    }
+}
 

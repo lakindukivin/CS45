@@ -193,24 +193,16 @@
     </div>
   </div>
 
-  <script>
-    function openGiveAwayReqUpdatePopup(giveaway) {
-      document.getElementById('giveaway_id').value = giveaway.giveaway_id;
-      document.getElementById('customer_id').value = giveaway.customer_id;
-      document.getElementById('name').value = giveaway.name;
-      document.getElementById('phone').value = giveaway.phone;
-      document.getElementById('request_date').value = giveaway.request_date;
-      document.getElementById('address').value = giveaway.address;
-      document.getElementById('giveaway_status').value = giveaway.giveawayStatus;
-      document.getElementById('details').value = giveaway.details;
+  <div id="successMessage" class="success-message" style="display: none;">
+    <div class="icon">✅</div>
+    <p class="message-text">The order was successfully accepted!</p>
+</div>
 
-      
-      document.getElementById('giveAwayReqUpdatePopup').style.display = 'flex';
-      document.getElementById('giveAwayReqUpdatePopupClose').addEventListener('click', () => {
-        document.getElementById('giveAwayReqUpdatePopup').style.display = 'none';
-      });
-    }
-  </script>
+<div id="errorMessage" class="error-message" style="display: none;">
+    <div class="icon">❌</div>
+    <p class="message-text">The order was rejected!</p>
+</div>
+
   <script src="<?= ROOT ?>/assets/js/customerServiceManager/sidebar.js"></script>
   <script src="<?= ROOT ?>/assets/js/customerServiceManager/give_away_request.js"></script>
 </body>

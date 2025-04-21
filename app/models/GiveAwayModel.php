@@ -64,4 +64,21 @@ class GiveAwayModel {
                   WHERE giveaway_id = :giveaway_id";
         return $this->query($query, array_merge(['giveaway_id' => $giveaway_id], $data));
     }
+
+
+    public function countByDate($date)
+    {
+        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
+            throw new Exception("Invalid date format. Expected YYYY-MM-DD.");
+        }
+        $query = "SELECT COUNT(giveaway_id) as count FROM giveawayrequests WHERE DATE(request_date) = :date";
+        $result = $this->query($query, ['date' => $date]);
+
+        // Access the result as an object
+        if (isset($result[0]->count)) {
+            return $result[0]->count;
+        }
+
+        return 0; // Default to 0 if no valid result is found
+    }
 }

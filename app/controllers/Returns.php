@@ -41,6 +41,9 @@ class Returns {
                     'decision_reason' => $decision_reason,
                     'message_to_customer' => $_POST['message_to_customer'],
                 ]);
+
+                header("Location: " . ROOT . "/Returns?success=1");
+                exit;
             } elseif (isset($_POST['reject_return'])) {
                 $returnModel->updateReturnStatus($return_id, 'rejected', $decision_reason);
                 $returnModel->addCompletedReturn([
@@ -52,6 +55,9 @@ class Returns {
                     'decision_reason' => $decision_reason,
                     'message_to_customer' => $_POST['message_to_customer'],
                 ]);
+
+                header("Location: " . ROOT . "/Returns?error=1");
+                exit;
             } elseif (isset($_POST['mark_as_returned'])) {
                 $returnModel->updateReturnStatus($return_id, 'returned');
                 $returnModel->updateCompletedReturn($return_id, [
@@ -61,7 +67,7 @@ class Returns {
             }
 
             // Redirect to avoid form resubmission
-            header("Location: " . ROOT . "/Returns");
+            header("Location: " . ROOT . "/Returns?success=1");
             exit;
         }
 

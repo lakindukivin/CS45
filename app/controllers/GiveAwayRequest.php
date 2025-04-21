@@ -41,6 +41,11 @@ class GiveAwayRequest {
                     'decision_reason' => $decision_reason,
                     'message_to_customer' => $_POST['message_to_customer'],
                 ]);
+
+                // Redirect with success flag
+                header("Location: " . ROOT . "/GiveAwayRequest?success=1");
+                exit;
+
             } elseif (isset($_POST['reject_giveaway'])) {
                 $giveAwayModel->updateGiveAwayStatus($giveaway_id, 'rejected', $decision_reason);
                 $giveAwayModel->addCompletedGiveAway([
@@ -50,6 +55,10 @@ class GiveAwayRequest {
                     'decision_reason' => $decision_reason,
                     'message_to_customer' => $_POST['message_to_customer'],
                 ]);
+
+                // Redirect with error flag
+                header("Location: " . ROOT . "/GiveAwayRequest?error=1");
+                exit;
             }
         }
         $this->view('customerServiceManager/give_away_request', $data);

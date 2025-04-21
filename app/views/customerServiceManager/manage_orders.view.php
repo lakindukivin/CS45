@@ -179,6 +179,16 @@
     </div>
   </div>
 
+  <div id="successMessage" class="success-message" style="display: none;">
+    <div class="icon">✅</div>
+    <p class="message-text">The order was successfully accepted!</p>
+</div>
+
+<div id="errorMessage" class="error-message" style="display: none;">
+    <div class="icon">❌</div>
+    <p class="message-text">The order was rejected!</p>
+</div>
+
   <script>
     function openManageOrderUpdatePopup(order) {
       // Populate the popup fields with the order details

@@ -72,4 +72,22 @@ class ReturnModel {
         return $this->query($query, $data)[0] ?? null;
     }
 
+    
+
+    public function countByDate($date)
+    {
+        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
+            throw new Exception("Invalid date format. Expected YYYY-MM-DD.");
+        }
+        $query = "SELECT COUNT(return_id) as count FROM return_item WHERE DATE(date) = :date";
+        $result = $this->query($query, ['date' => $date]);
+
+        // Access the result as an object
+        if (isset($result[0]->count)) {
+            return $result[0]->count;
+        }
+
+        return 0; // Default to 0 if no valid result is found
+    }
+
 }

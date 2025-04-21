@@ -224,6 +224,17 @@
   </div> 
 
   
+  <div id="successMessage" class="success-message" style="display: none;">
+    <div class="icon">✅</div>
+    <p class="message-text">The order was successfully accepted!</p>
+</div>
+
+<div id="errorMessage" class="error-message" style="display: none;">
+    <div class="icon">❌</div>
+    <p class="message-text">The order was rejected!</p>
+</div>
+
+  
   <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>  
   <script src="<?=ROOT?>/assets/js/customerServiceManager/returns.js"></script>  
 </body>
