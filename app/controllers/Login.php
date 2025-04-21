@@ -9,8 +9,8 @@ class Login
         $user = new User();
 
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
-            if (isset($_POST['Email']) && isset($_POST['Password'])) {
-                $arr['Email'] = $_POST['Email'];
+            if (isset($_POST['email']) && isset($_POST['password'])) {
+                $arr['email'] = $_POST['email'];
 
                 $existingUser = $user->first($arr);
 
@@ -20,22 +20,22 @@ class Login
                     // exit();
 
                     // Password check (adjust if using plain text or hashed passwords)
-                    if ($_POST['Password'] === $existingUser->password) { // Use password_verify() if passwords are hashed
+                    if ($_POST['password'] === $existingUser->password) { // Use password_verify() if passwords are hashed
 
                         if (session_status() === PHP_SESSION_NONE) {
                             session_start();
                         }
 
-                        $_SESSION['User_id'] = $existingUser->user_id;
-                        $_SESSION['Email'] = $existingUser->email;
-                        $_SESSION['Role_id'] = $existingUser->role_id;
+                        $_SESSION['user_id'] = $existingUser->user_id;
+                        $_SESSION['email'] = $existingUser->email;
+                        $_SESSION['role_id'] = $existingUser->role_id;
 
                         // Debugging: Check if session variables are set
                         // var_dump($_SESSION);
                         // exit();
 
                         // Redirect based on numeric Role_id
-                        switch ($_SESSION['Role_id']) {
+                        switch ($_SESSION['role_id']) {
                             case 1:  // Admin
                                 header("Location: adminHome");
                                 break;
