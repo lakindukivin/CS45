@@ -4,13 +4,14 @@ class ManageCustomerAccountsModel
     use Model;
 
     protected $table = "customer";
-    protected $allowedColumns = ['customer_id', 'name', 'address', 'phone', 'email', 'status'];
+    protected $allowedColumns = ['customer_id', 'name', 'address', 'phone', 'image', 'user_id', 'status'];
 
     //get all customer accounts
     public function getAllCustomer()
     {
-        $query = "SELECT s.customer_id,s.name,s.address,s.phone,r.role,u.email,s.status
-                  FROM customer s JOIN user u ON  s.user_id=u.user_id";
+        $query = "SELECT c.customer_id, c.name, c.address, c.phone,c.image, u.email, c.status
+                  FROM customer c 
+                  JOIN user u ON c.user_id = u.user_id";
         return $this->query($query);
     }
 
@@ -18,7 +19,6 @@ class ManageCustomerAccountsModel
     public function findById($customer_id)
     {
         return $this->first(['customer_id' => $customer_id]);
-
     }
 
     //Add new customer
@@ -28,7 +28,7 @@ class ManageCustomerAccountsModel
             $this->insert($data);
             return true;
         } catch (Exception $e) {
-            error_log("Error adding the person: " . $e->getMessage());
+            error_log("Error adding the customer: " . $e->getMessage());
             return false;
         }
     }
@@ -45,7 +45,7 @@ class ManageCustomerAccountsModel
         }
     }
 
-    //Delete customer
+    //Delete customer (soft delete)
     public function DeleteCustomer($customer_id)
     {
         try {
