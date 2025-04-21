@@ -47,7 +47,7 @@
                     </li>
 
                     <li>
-                        <a href="#">
+                        <a href="#"class="sidebar-active">
                             <img src="<?= ROOT ?>/assets/images/legal-issues.svg" alt="issues" />
                             <span class="sidebar-titles">Issues</span>
                         </a>

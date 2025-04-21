@@ -38,7 +38,7 @@
                     </li>
 
                     <li>
-                        <a href="#">
+                        <a href="#" class="sidebar-active">
                             <img src="<?= ROOT ?>/assets/images/staff-account.svg" alt="staff" />
                             <span class="sidebar-titles">Staff Management</span>
                         </a>

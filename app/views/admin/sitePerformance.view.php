@@ -50,7 +50,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="#" class="sidebar-active">
                             <img src="<?= ROOT ?>/assets/images/site-performance.svg" alt="site Performance" />
                             <span class="sidebar-titles">Site Performance</span>
                         </a>

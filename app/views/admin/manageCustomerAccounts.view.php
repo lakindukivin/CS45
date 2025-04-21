@@ -29,7 +29,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="<?= ROOT ?>/manageCustomerAccounts">
+                        <a href="#" class="sidebar-active">
                             <img src="<?= ROOT ?>/assets/images/customer-account.svg" alt="customer" />
                             <span class="sidebar-titles">Customer Management</span>
                         </a>
