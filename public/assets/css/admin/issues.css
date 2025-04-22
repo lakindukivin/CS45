@@ -3,18 +3,7 @@ h3 {
     text-align: center;
 }
 
-form label {
-    display: block;
-    margin: 10px 0 5px;
-}
 
-form input,
-form textarea,
-form select {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-}
 
 .action-btn {
     background-color: #133223;
