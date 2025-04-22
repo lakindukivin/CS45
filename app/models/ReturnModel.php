@@ -106,6 +106,7 @@ class ReturnModel {
         if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
             throw new Exception("Invalid date format. Expected YYYY-MM-DD.");
         }
+        // Fix the query to use the correct date column name
         $query = "SELECT COUNT(return_id) as count FROM return_item WHERE DATE(date) = :date";
         $result = $this->query($query, ['date' => $date]);
 

@@ -4,44 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="root-url" content="<?= ROOT ?>">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/customerServiceManager/sidebar.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/customerServiceManager/home.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/customerServiceManager/common.css">
     <title>Waste360|Dashboard|CSM</title>
-    <script>
-        async function fetchDayData(date) {
-            try {
-                const response = await fetch(`<?= ROOT ?>/CSManagerHome/getDayData?date=${date}`);
-                const data = await response.json();
-
-                if (data.error) {
-                    alert(data.error);
-                } else {
-                    document.getElementById('giveaways-count').textContent = data.giveaways;
-                    document.getElementById('returns-count').textContent = data.returns;
-                    document.getElementById('orders-count').textContent = data.orders;
-                    document.getElementById('reviews-count').textContent = data.reviews;
-                }
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                alert('Failed to fetch data for the selected date.');
-            }
-        }
-
-        function onDateClick(event) {
-            const selectedDate = event.target.getAttribute('data-date');
-            if (selectedDate) {
-                fetchDayData(selectedDate);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const dateElements = document.querySelectorAll('#dates .date');
-            dateElements.forEach(dateElement => {
-                dateElement.addEventListener('click', onDateClick);
-            });
-        });
-    </script>
+    
 </head>
 
 <body>

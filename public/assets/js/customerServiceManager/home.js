@@ -20,9 +20,13 @@ function renderCalendar() {
 
     // Add previous month's dates
     for (let i = firstDayOfMonth; i > 0; i--) {
+        const prevMonth = month === 0 ? 11 : month - 1;
+        const prevYear = month === 0 ? year - 1 : year;
         const date = document.createElement('div');
         date.classList.add('date', 'other-month');
         date.textContent = lastDateOfPrevMonth - i + 1;
+        const formattedDate = `${prevYear}-${String(prevMonth + 1).padStart(2, '0')}-${String(lastDateOfPrevMonth - i + 1).padStart(2, '0')}`;
+        date.setAttribute('data-date', formattedDate);
         dates.appendChild(date);
     }
 
@@ -31,6 +35,10 @@ function renderCalendar() {
         const date = document.createElement('div');
         date.classList.add('date');
         date.textContent = i;
+        
+        // Format date as YYYY-MM-DD
+        const formattedDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+        date.setAttribute('data-date', formattedDate);
 
         // Highlight today
         if (
@@ -41,24 +49,45 @@ function renderCalendar() {
             date.classList.add('today');
         }
 
-        // Add click event to fetch data for the selected day
-        date.addEventListener('click', () => {
-            const selectedDate = new Date(year, month, i);
-            fetchDayData(selectedDate);
-        });
-
         dates.appendChild(date);
     }
 
-    // Calculate the remaining cells after the last date of the month
-    const remainingCells = 42 - (firstDayOfMonth + lastDateOfMonth);
-
     // Add next month's dates
+    const remainingCells = 42 - (firstDayOfMonth + lastDateOfMonth);
     for (let i = 1; i <= remainingCells; i++) {
+        const nextMonth = month === 11 ? 0 : month + 1;
+        const nextYear = month === 11 ? year + 1 : year;
         const date = document.createElement('div');
         date.classList.add('date', 'other-month');
         date.textContent = i;
+        const formattedDate = `${nextYear}-${String(nextMonth + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+        date.setAttribute('data-date', formattedDate);
         dates.appendChild(date);
+    }
+    
+    // Add click events to all dates after they're created
+    addDateClickEvents();
+}
+
+function addDateClickEvents() {
+    const dateElements = document.querySelectorAll('#dates .date');
+    dateElements.forEach(dateElement => {
+        dateElement.addEventListener('click', onDateClick);
+    });
+}
+
+function onDateClick(event) {
+    // Remove 'selected' class from all dates
+    document.querySelectorAll('#dates .date').forEach(date => {
+        date.classList.remove('selected');
+    });
+    
+    // Add 'selected' class to clicked date
+    event.target.classList.add('selected');
+    
+    const selectedDate = event.target.getAttribute('data-date');
+    if (selectedDate) {
+        fetchDayData(selectedDate);
     }
 }
 
@@ -95,25 +124,31 @@ setInterval(updateClock, 1000);
 updateClock();
 
 // Fetch data for the selected day
-function fetchDayData(date) {
-    const formattedDate = date.toISOString().split('T')[0]; // Format as YYYY-MM-DD
-    fetch(`${ROOT}/CSManagerHome/getDayData?date=${formattedDate}`)
-        .then((response) => {
+function fetchDayData(formattedDate) {
+    // Get the base URL from a hidden input or other source
+    const rootUrl = document.querySelector('meta[name="root-url"]')?.getAttribute('content') || '';
+    
+    fetch(`${rootUrl}/CSManagerHome/getDayData?date=${formattedDate}`)
+        .then(response => {
             if (!response.ok) {
-                throw new Error('Failed to fetch data.');
+                throw new Error('Network response was not ok');
             }
             return response.json();
         })
-        .then((data) => {
+        .then(data => {
             if (data.error) {
-                throw new Error(data.error);
+                console.error('Error from server:', data.error);
+                return;
             }
-            displayDayData(data);
+            
+            // Update the dashboard with the new data
+            document.getElementById('giveaways-count').textContent = data.giveaways;
+            document.getElementById('returns-count').textContent = data.returns;
+            document.getElementById('orders-count').textContent = data.orders;
+            document.getElementById('reviews-count').textContent = data.reviews;
         })
-        .catch((error) => {
-            console.error('Error fetching day data:', error);
-            const metricGrid = document.querySelector('.metric-grid');
-            metricGrid.innerHTML = `<p class="error-message">Failed to load data: ${error.message}</p>`;
+        .catch(error => {
+            console.error('Error fetching data:', error);
         });
 }
 
