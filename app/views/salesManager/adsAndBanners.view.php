@@ -106,9 +106,12 @@
             <!--Table Header-->
 
             <div class="table-header">
-                <div>
-
-                </div>
+                <form class="search-bar" method="get" action="">
+                    <img src="<?= ROOT ?>/assets/images/magnifying-glass-solid.svg" class="search-icon" width="20px" />
+                    <input type="text" name="search" value="<?= isset($search) ? htmlspecialchars($search) : '' ?>"
+                        placeholder="Search ads by title,description or dates..." />
+                    <button type="submit">Search</button>
+                </form>
                 <div>
                     <button class="action-btn" onclick="openAddModal()">Add Ads/Banners</button>
                 </div>
@@ -138,14 +141,15 @@
                                 <td><?= htmlspecialchars($adsAndBanner->title) ?></td>
                                 <td><?= htmlspecialchars($adsAndBanner->image) ?></td>
                                 <td><?= htmlspecialchars($adsAndBanner->description) ?></td>
-                                <td><?= htmlspecialchars($adsAndBanner->status) ?></td>
                                 <td><?= htmlspecialchars($adsAndBanner->start_date) ?></td>
                                 <td><?= htmlspecialchars($adsAndBanner->end_date) ?></td>
+                                <td><?= htmlspecialchars($adsAndBanner->status == 1 ? 'Active' : 'Inactive') ?></td>
                                 <td>
                                     <button class="edit-btn"
-                                        onclick="openEditModal('<?= $adsAndBanner->ad_id ?>', '<?= $adsAndBanner->title ?>', '<?= $adsAndBanner->image ?>','<?= $adsAndBanner->description ?>','<?= $adsAndBanner->start_date ?>', '<?= $adsAndBanner->end_date ?>')">Edit</button>
-                                    <button class="delete-btn"
-                                        onclick="openDeleteModal('<?= $adsAndBanner->ad_id ?>')">Delete</button>
+                                        onclick="openEditModal('<?= $adsAndBanner->ad_id ?>', '<?= $adsAndBanner->title ?>', '<?= $adsAndBanner->image ?>','<?= $adsAndBanner->description ?>','<?= $adsAndBanner->start_date ?>', '<?= $adsAndBanner->end_date ?>','<?= $adsAndBanner->status ?>')"><img
+                                            src="<?= ROOT ?>/assets/images/edit-btn.svg"" alt=" edit"></button>
+                                    <button class="delete-btn" onclick="openDeleteModal('<?= $adsAndBanner->ad_id ?>')"><img
+                                            src="<?= ROOT ?>/assets/images/delete-btn.svg"" alt=" delete"></button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -156,6 +160,19 @@
                     <?php endif; ?>
                 </tbody>
             </table>
+
+
+            <!-- Pagination Controls -->
+            <div class="pagination">
+                <?php if (isset($totalPages) && $totalPages > 1): ?>
+                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                        <a href="?<?= isset($search) && $search !== '' ? 'search=' . urlencode($search) . '&' : '' ?>page=<?= $i ?>"
+                            class="<?= (isset($currentPage) && $currentPage == $i) ? 'active' : '' ?>">
+                            <?= $i ?>
+                        </a>
+                    <?php endfor; ?>
+                <?php endif; ?>
+            </div>
 
             <div id="addModal" class="modal">
                 <div class="modal-content">
@@ -191,15 +208,6 @@
                                 <input type="date" id="adEndDate" name="endDate" />
                             </label>
                         </div>
-                        <!-- <div class="form-group">
-                            <label>Status:
-                                <select id="adStatus" name="status" required>
-                                    <option value="active">Active</option>
-                                    <option value="inactive">Inactive</option>
-                                    <option value="scheduled">Scheduled</option>
-                                </select>
-                            </label>
-                        </div> -->
 
                         <div class="form-actions">
                             <button type="submit" class="action-btn" id="saveAdBtn">Save</button>
@@ -243,15 +251,7 @@
                                     required></textarea>
                             </label>
                         </div>
-                        <!-- <div class="form-group">
-                            <label>Status:
-                                <select id="editAdStatus" name="status" required>
-                                    <option value="active">Active</option>
-                                    <option value="inactive">Inactive</option>
-                                    <option value="scheduled">Scheduled</option>
-                                </select>
-                            </label>
-                        </div> -->
+
                         <div class="form-group date-inputs" id="editScheduledDateContainer">
                             <label>Start Date:
                                 <input type="date" id="editAdStartDate" name="startDate" />
@@ -259,6 +259,14 @@
                             <label>End Date:
                                 <input type="date" id="editAdEndDate" name="endDate" />
                             </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="editStatus">Status</label>
+                            <select name="editStatus" id="editStatus">
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+
                         </div>
 
                         <div class="form-actions">
@@ -286,12 +294,7 @@
             </div>
         </div>
 
-        <!-- <footer>
-            <div class="logo">
-                <img src="<?= ROOT ?>/assets/images/Waste360.png" alt="Waste360" />
-            </div>
-            <p>&copy; 2024 Waste360. All rights reserved.</p>
-        </footer> -->
+
     </main>
     <script src="<?= ROOT ?>/assets/js/sidebar.js"></script>
     <script src="<?= ROOT ?>/assets/js/salesManager/adsAndBanners.js"></script>

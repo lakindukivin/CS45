@@ -35,3 +35,11 @@ function updateTable(data) {
 
   tableBody.appendChild(row);
 }
+//refresh searchbar
+document
+  .querySelector('input[name="search"]')
+  .addEventListener('input', function (e) {
+    if (e.target.value.trim() === '') {
+      window.location.href = window.location.pathname;
+    }
+  });

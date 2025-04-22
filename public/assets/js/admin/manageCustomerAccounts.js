@@ -1,5 +1,3 @@
-
-
 function openEditModal(customer_id, name, image, phone, address, status) {
   document.getElementById('editCustomerId').value = customer_id;
   document.getElementById('editCustomerName').value = name;
@@ -35,5 +33,11 @@ function showResponse(message) {
   document.getElementById('responseMessage').textContent = message;
   document.getElementById('responseModal').style.display = 'block';
 }
-
-
+//refresh searchbar
+document
+  .querySelector('input[name="search"]')
+  .addEventListener('input', function (e) {
+    if (e.target.value.trim() === '') {
+      window.location.href = window.location.pathname;
+    }
+  });

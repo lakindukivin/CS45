@@ -11,14 +11,6 @@
 </head>
 
 <body>
-
-    <?php
-    if (isset($_SESSION['user_id'])) {
-        $profileLink = ROOT . '/profile';
-    } else {
-        $profileLink = ROOT . '/login';
-    }
-    ?>
     <nav id="sidebar">
         <button id="toggle-btn" onclick="toggleSidebar()" class="toggle-btn">
             <img src="<?= ROOT ?>/assets/images/menu.svg" alt="menu" />
@@ -106,9 +98,12 @@
             <!--Table Header-->
 
             <div class="table-header">
-                <div>
-
-                </div>
+                <form class="search-bar" method="get" action="">
+                    <img src="<?= ROOT ?>/assets/images/magnifying-glass-solid.svg" class="search-icon" width="20px" />
+                    <input type="text" name="search" value="<?= isset($search) ? htmlspecialchars($search) : '' ?>"
+                        placeholder="Search..." />
+                    <button type="submit">Search</button>
+                </form>
                 <div>
                     <button class="action-btn" onclick="openAddModal()">Add Discount</button>
                 </div>
@@ -123,6 +118,7 @@
                         <th>Discount Percentage</th>
                         <th>Start Date</th>
                         <th>End Date</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -130,16 +126,18 @@
                     <?php if (!empty($discounts)): ?>
                         <?php foreach ($discounts as $discount): ?>
                             <tr>
-                                <td><?= htmlspecialchars($discount->Discount_id) ?></td>
+                                <td><?= htmlspecialchars($discount->discount_id) ?></td>
                                 <td><?= htmlspecialchars($discount->productName) ?></td>
-                                <td><?= htmlspecialchars($discount->discountPercentage) ?></td>
+                                <td><?= htmlspecialchars($discount->discount_percentage) ?></td>
                                 <td><?= htmlspecialchars($discount->start_date) ?></td>
                                 <td><?= htmlspecialchars($discount->end_date) ?></td>
+                                <td><?= htmlspecialchars($discount->status == 1 ? 'Active' : 'Inactive') ?></td>
                                 <td>
                                     <button class="edit-btn"
-                                        onclick="openEditModal('<?= $discount->Discount_id ?>', '<?= $discount->productName ?>', '<?= $discount->discountPercentage ?>', '<?= $discount->start_date ?>', '<?= $discount->end_date ?>')">Edit</button>
-                                    <button class="delete-btn"
-                                        onclick="openDeleteModal('<?= $discount->Discount_id ?>')">Delete</button>
+                                        onclick="openEditModal('<?= $discount->discount_id ?>', '<?= $discount->productName ?>', '<?= $discount->discount_percentage ?>', '<?= $discount->start_date ?>', ,'<?= $discount->status ?>')"><img
+                                            src="<?= ROOT ?>/assets/images/edit-btn.svg"" alt=" edit"></button>
+                                    <button class="delete-btn" onclick="openDeleteModal('<?= $discount->discount_id ?>')"><img
+                                            src="<?= ROOT ?>/assets/images/delete-btn.svg"" alt=" delete"></button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -150,6 +148,18 @@
                     <?php endif; ?>
                 </tbody>
             </table>
+
+            <!-- Pagination Controls -->
+            <div class="pagination">
+                <?php if (isset($totalPages) && $totalPages > 1): ?>
+                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                        <a href="?<?= isset($search) && $search !== '' ? 'search=' . urlencode($search) . '&' : '' ?>page=<?= $i ?>"
+                            class="<?= (isset($currentPage) && $currentPage == $i) ? 'active' : '' ?>">
+                            <?= $i ?>
+                        </a>
+                    <?php endfor; ?>
+                <?php endif; ?>
+            </div>
 
 
             <!-- Update the Add Discount Modal -->
@@ -224,6 +234,14 @@
                                 <input type="date" name="end_date" id="edit_end_date" required />
                             </label>
                         </div>
+                        <div class="form-group">
+                            <label for="editStatus">Status</label>
+                            <select name="editStatus" id="editStatus">
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+
+                        </div>
                         <button type="submit" class="action-btn">Update Discount</button>
                         <button type="button" class="cancel-btn" onclick="closeEditModal()">Cancel</button>
                     </form>
@@ -245,17 +263,9 @@
             </div>
 
         </div>
-
-        <!-- <footer>
-            <div class="logo">
-                <img src="<?= ROOT ?>/assets/images/Waste360.png" alt="Waste360" />
-            </div>
-            <p>&copy; 2024 Waste360. All rights reserved.</p>
-        </footer> -->
     </main>
     <script src="<?= ROOT ?>/assets/js/sidebar.js"></script>
-    <script src="<?= ROOT ?>/assets/js/modal.js"></script>
-    <!-- <script src="<?= ROOT ?>/assets/js/salesManager/discounts.js"></script> -->
+    <script src="<?= ROOT ?>/assets/js/salesManager/discounts.js"></script>
 </body>
 
 </html>

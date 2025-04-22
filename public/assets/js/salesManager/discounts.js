@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', function () {
   // Get the add discount form
   const addDiscountForm = document.querySelector('#addModal form');
@@ -67,7 +66,8 @@ function openEditModal(
 ) {
   document.getElementById('edit_discount_id').value = discountId;
   document.getElementById('edit_product_name').value = productName;
-  document.getElementById('edit_discount_percentage').value = discount_percentage;
+  document.getElementById('edit_discount_percentage').value =
+    discount_percentage;
   document.getElementById('edit_start_date').value = start_date;
   document.getElementById('edit_end_date').value = end_date;
   document.getElementById('editModal').style.display = 'block';
@@ -85,3 +85,11 @@ function openDeleteModal(discountId) {
 function closeDeleteModal() {
   document.getElementById('deleteModal').style.display = 'none';
 }
+//refresh searchbar
+document
+  .querySelector('input[name="search"]')
+  .addEventListener('input', function (e) {
+    if (e.target.value.trim() === '') {
+      window.location.href = window.location.pathname;
+    }
+  });

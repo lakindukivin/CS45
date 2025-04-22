@@ -33,9 +33,26 @@ class ManageCustomerAccounts
         if ($_SESSION['role_id'] != 1) {
             redirect('login');
         }
-        $customerAccounts = $this->manageCustomerAccountsModel->getAllCustomer();
+
+        $limit = 10;
+        $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+        $offset = ($page - 1) * $limit;
+        $search = isset($_GET['search']) ? trim($_GET['search']) : '';
+
+        if ($search !== '') {
+            $customers = $this->manageCustomerAccountsModel->searchCustomers($search, $limit, $offset);
+            $totalCustomers = $this->manageCustomerAccountsModel->searchCustomersCount($search);
+        } else {
+            $customers = $this->manageCustomerAccountsModel->getCustomersPaginated($limit, $offset);
+            $totalCustomers = $this->manageCustomerAccountsModel->getCustomersCount();
+        }
+        $totalPages = ceil($totalCustomers / $limit);
         $this->view('admin/manageCustomerAccounts', [
-            'customerAccounts' => $customerAccounts,
+            'customerAccounts' => $customers,
+            'currentPage' => $page,
+            'totalPages' => $totalPages,
+            'search' => $search,
+
         ]);
     }
 

@@ -15,8 +15,33 @@ class IssuesModel
         try {
             return $this->findAll('issue_id');
         } catch (Exception $e) {
-            error_log("Error fetching products: " . $e->getMessage());
+            error_log("Error fetching Issues: " . $e->getMessage());
             return false;
+        }
+    }
+
+//get all issues in db with pagination
+    public function getIssuesPaginated($limit, $offset)
+    {
+        try {
+            $this->limit = $limit;
+            $this->offset = $offset;
+            return $this->findAll('issue_id');
+        } catch (Exception $e) {
+            error_log("Error fetching paginated Issues: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function getIssuesCount()
+    {
+        try {
+            $query = "SELECT COUNT(*) as count FROM $this->table";
+            $result = $this->query($query);
+            return $result ? $result[0]->count : 0;
+        } catch (Exception $e) {
+            error_log("Error counting Issues: " . $e->getMessage());
+            return 0;
         }
     }
 //get one issue by id
@@ -51,35 +76,7 @@ class IssuesModel
 
     }
 
-    // public function editIssues($id, $data)
-    // {
-    //     // Only allow status and action_taken to be updated
-    //     $allowedFields = ['status', 'action_taken'];
-    //     $setParts = [];
-    //     $params = [];
-
-    //     foreach ($allowedFields as $field) {
-    //         if (isset($data[$field])) {
-    //             $setParts[] = "$field = :$field";
-    //             $params[$field] = $data[$field];
-    //         }
-    //     }
-
-    //     if (empty($setParts)) {
-    //         return false; // Nothing to update
-    //     }
-
-    //     $sql = "UPDATE {$this->table} SET " . implode(', ', $setParts) . " WHERE issue_id = :issue_id";
-    //     $params['issue_id'] = $id;
-
-    //     try {
-    //         $this->query($sql, $params);
-    //         return true;
-    //     } catch (Exception $e) {
-    //         error_log("Error updating issue: " . $e->getMessage());
-    //         return false;
-    //     }
-    // }
+    
 
     //delete a record
     public function deleteIssues($id)
@@ -91,5 +88,26 @@ class IssuesModel
             error_log("Error deleting issue updates: " . $e->getMessage());
             return false;
         }
+    }
+
+    public function searchIssues($search, $limit, $offset)
+    {
+        $search = '%' . $search . '%';
+        $limit = (int) $limit;
+        $offset = (int) $offset;
+        $query = "SELECT * FROM $this->table WHERE description LIKE :search OR action_taken LIKE :search ORDER BY issue_id DESC LIMIT $limit OFFSET $offset";
+        $params = [
+            'search' => $search
+        ];
+        return $this->query($query, $params);
+    }
+
+    public function searchIssuesCount($search)
+    {
+        $search = '%' . $search . '%';
+        $query = "SELECT COUNT(*) as count FROM $this->table WHERE description LIKE :search OR action_taken LIKE :search";
+        $params = ['search' => $search];
+        $result = $this->query($query, $params);
+        return $result ? $result[0]->count : 0;
     }
 }

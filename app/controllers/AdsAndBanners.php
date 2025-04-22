@@ -15,12 +15,41 @@ class AdsAndBanners
         $this->AdsAndBannersModel = new AdsAndBannersModel();
     }
     public function index()
-    {
-        //get all ad and banners
+    { // Ensure session is active
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
 
-        $adsBanners = $this->AdsAndBannersModel->getAdsAndBanners();
+        // Redirect to login if user is not authenticated
+        if (!isset($_SESSION['user_id'])) {
+            redirect('login');
+        }
+
+        // Check if the user has the right role to access this page
+        if ($_SESSION['role_id'] != 2) {
+            redirect('login');
+        }
+
+        // Pagination setup
+        $limit = 5;
+        $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+        $offset = ($page - 1) * $limit;
+        $search = isset($_GET['search']) ? trim($_GET['search']) : '';
+
+        if ($search !== '') {
+            $adsAndBanners = $this->AdsAndBannersModel->searchAds($search, $limit, $offset);
+            $totaladsAndBanners = $this->AdsAndBannersModel->searchAdsCount($search);
+        } else {
+            $adsAndBanners = $this->AdsAndBannersModel->getAdsPaginated($limit, $offset);
+            $totaladsAndBanners = $this->AdsAndBannersModel->getAdsCount();
+        }
+        $totalPages = ceil($totaladsAndBanners / $limit);
+
         $this->view('salesManager/adsAndBanners', [
-            'adsAndBanners' => $adsBanners
+            'adsAndBanners' => $adsAndBanners,
+            'currentPage' => $page,
+            'totalPages' => $totalPages,
+            'search' => $search,
         ]);
     }
 
@@ -71,7 +100,8 @@ class AdsAndBanners
                     'image' => $_POST['adImage'],
                     'description' => $_POST['description'],
                     'start_date' => $_POST['startDate'],
-                    'end_date' => $_POST['endDate']
+                    'end_date' => $_POST['endDate'],
+                    'status'=> $_POST['status']
                 ];
 
                 if ($this->AdsAndBannersModel->editAdsAndBanners($_POST['adId'], $data)) {

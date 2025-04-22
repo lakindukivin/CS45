@@ -36,18 +36,18 @@
                             <span class="sidebar-titles">Customer Management</span>
                         </a>
                     </li>
-                    
+
                     <li>
                         <a href="<?= ROOT ?>/manageStaffAccounts">
                             <img src="<?= ROOT ?>/assets/images/staff-account.svg" alt="staff" />
                             <span class="sidebar-titles">Staff Management</span>
                         </a>
-                    
-                    
+
+
                     </li>
 
                     <li>
-                        <a href="#">
+                        <a href="#" class="sidebar-active">
                             <img src="<?= ROOT ?>/assets/images/legal-issues.svg" alt="issues" />
                             <span class="sidebar-titles">Issues</span>
                         </a>
@@ -86,48 +86,70 @@
                 </ul>
             </nav>
         </header>
+        <div class="content">
+            <div class="container">
+                <div class="table-header">
+                    <form class="search-bar" method="get" action="">
+                        <img src="<?= ROOT ?>/assets/images/magnifying-glass-solid.svg" class="search-icon"
+                            width="20px" />
+                        <input type="text" name="search" value="<?= isset($search) ? htmlspecialchars($search) : '' ?>"
+                            placeholder="Search products..." />
+                        <button type="submit">Search</button>
+                    </form>
 
-        <div class="container">
+                </div>
 
-            <table id="issuesTable">
-                <thead>
-                    <tr>
-                        <th>Issue ID</th>
-                        <th>Description</th>
-                        <th>Email</th>
-                        <th>Contact No.</th>
-                        <th>Status</th>
-                        <th>Action Taken</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if (!empty($issues)): ?>
-                        <?php foreach ($issues as $issue): ?>
-                            <tr>
-                                <td><?= htmlspecialchars($issue->issue_id) ?></td>
-                                <td><?= htmlspecialchars($issue->description) ?></td>
-                                <td><?= htmlspecialchars($issue->email) ?></td>
-                                <td><?= htmlspecialchars($issue->phone) ?></td>
-                                <td><?= htmlspecialchars($issue->status == 1 ? 'Resolved' : 'Pending') ?></td>
-                                <td><?= htmlspecialchars($issue->action_taken) ?></td>
-                                <td>
-                                    <button class="edit-btn"
-                                        onclick="openEditModal('<?= $issue->issue_id ?>','<?= $issue->description ?>','<?= $issue->email ?>','<?= $issue->phone ?>','<?= $issue->status ?>','<?= $issue->action_taken ?>')">Edit</button>
-                                    <button class="delete-btn"
-                                        onclick="openDeleteModal('<?= $issue->issue_id ?>')">Delete</button>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php else: ?>
+                <table id="issuesTable">
+                    <thead>
                         <tr>
-                            <td colspan="4">No issues found.</td>
+                            <th>Issue ID</th>
+                            <th>Description</th>
+                            <th>Email</th>
+                            <th>Contact No.</th>
+                            <th>Status</th>
+                            <th>Action Taken</th>
+                            <th>Actions</th>
                         </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (!empty($issues)): ?>
+                            <?php foreach ($issues as $issue): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($issue->issue_id) ?></td>
+                                    <td><?= htmlspecialchars($issue->description) ?></td>
+                                    <td><?= htmlspecialchars($issue->email) ?></td>
+                                    <td><?= htmlspecialchars($issue->phone) ?></td>
+                                    <td><?= htmlspecialchars($issue->status == 1 ? 'Resolved' : 'Pending') ?></td>
+                                    <td><?= htmlspecialchars($issue->action_taken) ?></td>
+                                    <td>
+                                        <button class="edit-btn"
+                                            onclick="openEditModal('<?= $issue->issue_id ?>','<?= $issue->description ?>','<?= $issue->email ?>','<?= $issue->phone ?>','<?= $issue->status ?>','<?= $issue->action_taken ?>')"><img
+                                                src="<?= ROOT ?>/assets/images/edit-btn.svg"" alt=" edit"></button>
+                                        <button class="delete-btn" onclick="openDeleteModal('<?= $issue->issue_id ?>')"><img
+                                                src="<?= ROOT ?>/assets/images/delete-btn.svg"" alt=" delete"></button>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="4">No issues found.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+                <!-- Pagination Controls -->
+                <div class="pagination">
+                    <?php if (isset($totalPages) && $totalPages > 1): ?>
+                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                            <a href="?<?= isset($search) && $search !== '' ? 'search=' . urlencode($search) . '&' : '' ?>page=<?= $i ?>"
+                                class="<?= (isset($currentPage) && $currentPage == $i) ? 'active' : '' ?>">
+                                <?= $i ?>
+                            </a>
+                        <?php endfor; ?>
                     <?php endif; ?>
-                </tbody>
-            </table>
+                </div>
 
-            <!-- <div id="addModal" class="modal">
+                <!-- <div id="addModal" class="modal">
                 <div class="modal-content">
                     <span class="close" onclick="closeAddModal()">&times;</span>
                     <h3>Report your Problem here</h3>
@@ -151,48 +173,49 @@
                 </div>
             </div> -->
 
-            <div id="editModal" class="modal">
-                <div class="modal-content">
-                    <span class="close" onclick="closeEditModal()">&times;</span>
-                    <h3>Manage Issues</h3>
-                    <form id="editIssueForm" action="<?= ROOT ?>/Issues/update" method="post">
-                        <input type="hidden" id="issueId" name="editIssueId" />
-                        <input type="hidden" id="description" name="description" />
-                        <input type="hidden" id="email" name="email" />
-                        <input type="hidden" id="phone" name="phone" />
-                        <div class="form-group">
-                            <label for="status">Status:</label>
-                            <select id="status" name="status" required>
-                                <option disabled>Select Status</option>
-                                <option value='0'>Pending</option>
-                                <option value='1'>Resolved</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="actionsTaken">Actions Taken:</label>
-                            <textarea name="actionsTaken" id="actionsTaken" rows="4"
-                                placeholder="Document actions taken"></textarea>
-                        </div>
-                        <button type="submit" class="action-btn">Save & Update</button>
-                        <button type="button" class="cancel-btn" onclick="closeEditModal()">Cancel</button>
-                    </form>
+                <div id="editModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeEditModal()">&times;</span>
+                        <h3>Manage Issues</h3>
+                        <form id="editIssueForm" action="<?= ROOT ?>/Issues/update" method="post">
+                            <input type="hidden" id="issueId" name="editIssueId" />
+                            <input type="hidden" id="description" name="description" />
+                            <input type="hidden" id="email" name="email" />
+                            <input type="hidden" id="phone" name="phone" />
+                            <div class="form-group">
+                                <label for="status">Status:</label>
+                                <select id="status" name="status" required>
+                                    <option disabled>Select Status</option>
+                                    <option value='0'>Pending</option>
+                                    <option value='1'>Resolved</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="actionsTaken">Actions Taken:</label>
+                                <textarea name="actionsTaken" id="actionsTaken" rows="4"
+                                    placeholder="Document actions taken"></textarea>
+                            </div>
+                            <button type="submit" class="action-btn">Save & Update</button>
+                            <button type="button" class="cancel-btn" onclick="closeEditModal()">Cancel</button>
+                        </form>
+                    </div>
                 </div>
-            </div>
 
 
-            <!-- Delete Confirmation Modal -->
-            <div id="deleteModal" class="modal">
-                <div class="modal-content delete-modal">
-                    <span class="close" onclick="closeDeleteModal()">&times;</span>
-                    <h3>Confirm Deletion</h3>
-                    <p>Are you sure you want to delete this issue record? This action cannot be undone.</p>
-                    <form action="<?= ROOT ?>/Issues/delete" id="deleteIssueForm" method="post">
+                <!-- Delete Confirmation Modal -->
+                <div id="deleteModal" class="modal">
+                    <div class="modal-content delete-modal">
+                        <span class="close" onclick="closeDeleteModal()">&times;</span>
+                        <h3>Confirm Deletion</h3>
+                        <p>Are you sure you want to delete this issue record? This action cannot be undone.</p>
+                        <form action="<?= ROOT ?>/Issues/delete" id="deleteIssueForm" method="post">
 
-                        <input type="hidden" id="deleteIssueId" name="deleteIssueId" />
-                        <div class="form-actions">
-                            <button type="submit" class="confirm-btn">Delete</button>
-                            <button type="button" class="cancel-btn" onclick="closeDeleteModal()">Cancel</button>
-                        </div>
+                            <input type="hidden" id="deleteIssueId" name="deleteIssueId" />
+                            <div class="form-actions">
+                                <button type="submit" class="confirm-btn">Delete</button>
+                                <button type="button" class="cancel-btn" onclick="closeDeleteModal()">Cancel</button>
+                            </div>
+                    </div>
                 </div>
             </div>
         </div>

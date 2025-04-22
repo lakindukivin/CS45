@@ -29,7 +29,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="<?= ROOT ?>/manageCustomerAccounts">
+                        <a href="#" class="sidebar-active">
                             <img src="<?= ROOT ?>/assets/images/customer-account.svg" alt="customer" />
                             <span class="sidebar-titles">Customer Management</span>
                         </a>
@@ -81,11 +81,12 @@
 
         <div class="container">
             <div class="table-header">
-                <div class="search-bar">
-                    <img src="<?= ROOT ?>/assets/images/magnifying-glass-solid.svg" class="search-icon" />
-                    <input type="text" placeholder="Search by name, email, or phone..." />
-                    <button>Search</button>
-                </div>
+                <form class="search-bar" method="get" action="">
+                        <img src="<?= ROOT ?>/assets/images/magnifying-glass-solid.svg" class="search-icon" width="20px" />
+                    <input type="text" name="search" value="<?= isset($search) ? htmlspecialchars($search) : '' ?>"
+                        placeholder="Search customer by name,email.." />
+                    <button type="submit">Search</button>
+                </form>
                 <div class="total-users">
                     Total Customers: <span
                         id="totalUsers"><?= isset($customerAccounts) ? count($customerAccounts) : 0 ?></span>
@@ -117,9 +118,9 @@
                                 <td><?= $customer->status == 1 ? 'Active' : 'Inactive' ?></td>
                                 <td class="action-buttons">
                                     <button class="edit-btn"
-                                        onclick="openEditModal('<?= $customer->customer_id ?>','<?= $customer->name  ?>','<?= $customer->image ?>','<?= $customer->phone ?>','<?= $customer->address ?>','<?= $customer->status ?>')">Edit</button>
+                                        onclick="openEditModal('<?= $customer->customer_id ?>','<?= $customer->name  ?>','<?= $customer->image ?>','<?= $customer->phone ?>','<?= $customer->address ?>','<?= $customer->status ?>')"><img src="<?= ROOT ?>/assets/images/edit-btn.svg"" alt=" edit"></button>
                                     <button class="delete-btn"
-                                        onclick="openDeleteModal('<?= $customer->customer_id ?>')">Delete</button>
+                                        onclick="openDeleteModal('<?= $customer->customer_id ?>')"><img src="<?= ROOT ?>/assets/images/delete-btn.svg"" alt=" delete"></button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -130,6 +131,18 @@
                     <?php endif; ?>
                 </tbody>
             </table>
+        </div>
+
+          <!-- Pagination Controls -->
+            <div class="pagination">
+            <?php if (isset($totalPages) && $totalPages > 1): ?>
+                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                    <a href="?<?= isset($search) && $search !== '' ? 'search=' . urlencode($search) . '&' : '' ?>page=<?= $i ?>"
+                        class="<?= (isset($currentPage) && $currentPage == $i) ? 'active' : '' ?>">
+                        <?= $i ?>
+                    </a>
+                <?php endfor; ?>
+            <?php endif; ?>
         </div>
 
         <!-- Edit Customer Modal -->
