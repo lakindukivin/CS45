@@ -325,6 +325,26 @@ th {
     width: 40%;
 }
 
+.active-btn{
+    background-color: var(--secondary-green);
+    color: white;
+    padding: 5px 10px;
+     border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.inactive-btn{
+    background-color: #c9302c;
+    color: white;
+    padding: 5px 10px;
+     border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
 @media (max-width: 768px) {
     body {
         grid-template-columns: 1fr;
