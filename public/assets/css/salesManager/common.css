@@ -12,6 +12,13 @@
     --transition: all 0.3s ease;
 }
 
+@font-face {
+    font-family: "Poppins";
+    src: url("../../fonts/Poppins.ttf") format("truetype");
+    /* font-weight: 400; */
+    font-style: normal;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -230,7 +237,7 @@ th {
     background-color: var(--secondary-green);
     color: white;
     padding: 10px 20px;
-     border: none;
+    border: none;
     border-radius: 4px;
     cursor: pointer;
 }
@@ -294,9 +301,9 @@ th {
     animation: fadeIn 0.3s;
 }
 
-.delete-modal{
+.delete-modal {
     width: 600px;
-    height:200px;
+    height: 200px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
