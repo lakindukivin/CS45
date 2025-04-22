@@ -32,9 +32,25 @@ class ManageStaffAccounts
         if ($_SESSION['role_id'] != 1) {
             redirect('login');
         }
-        $staffAccounts = $this->manageStaffAccountsModel->getAllStaff();
+
+        $limit = 10;
+        $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+        $offset = ($page - 1) * $limit;
+        $search = isset($_GET['search']) ? trim($_GET['search']) : '';
+
+        if ($search !== '') {
+            $staffAccounts = $this->manageStaffAccountsModel->searchStaff($search, $limit, $offset);
+            $totalStaff = $this->manageStaffAccountsModel->searchStaffCount($search);
+        } else {
+            $staffAccounts = $this->manageStaffAccountsModel->getStaffPaginated($limit, $offset);
+            $totalStaff = $this->manageStaffAccountsModel->getStaffCount();
+        }
+        $totalPages = ceil($totalStaff / $limit);
         $this->view('admin/manageStaffAccounts', [
             'staffAccounts' => $staffAccounts,
+            'currentPage' => $page,
+            'totalPages' => $totalPages,
+            'search' => $search,
         ]);
     }
 

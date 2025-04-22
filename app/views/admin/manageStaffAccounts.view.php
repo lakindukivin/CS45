@@ -91,11 +91,12 @@
 
 
             <div class="table-header">
-                <div class="search-bar">
-                    <img src="<?= ROOT ?>/assets/images/magnifying-glass-solid.svg" class="search-icon" />
-                    <input type="text" />
-                    <button>Search</button>
-                </div>
+                <form class="search-bar" method="get" action="">
+                    <img src="<?= ROOT ?>/assets/images/magnifying-glass-solid.svg" class="search-icon" width="20px" />
+                    <input type="text" name="search" value="<?= isset($search) ? htmlspecialchars($search) : '' ?>"
+                        placeholder="Search staff by name,email,role.." />
+                    <button type="submit">Search</button>
+                </form>
                 <div class="total-users">
                     Total Staff: <span id="totalUsers"><?= isset($staffAccounts) ? count($staffAccounts) : 0 ?></span>
                 </div>
@@ -131,9 +132,10 @@
                                 <td><?= $staff->status == 1 ? 'Active' : 'Inactive' ?></td>
                                 <td class="action-buttons">
                                     <button class="edit-btn"
-                                        onclick="openEditModal('<?= $staff->staff_id ?>','<?= $staff->name ?>','<?= $staff->image ?>','<?= $staff->email ?>','<?= $staff->phone ?>','<?= $staff->address ?>','<?= $staff->role ?>','<?= $staff->status ?>')">Edit</button>
-                                    <button class="delete-btn"
-                                        onclick="openDeleteModal(<?= $staff->staff_id ?>)">Delete</button>
+                                        onclick="openEditModal('<?= $staff->staff_id ?>','<?= $staff->name ?>','<?= $staff->image ?>','<?= $staff->email ?>','<?= $staff->phone ?>','<?= $staff->address ?>','<?= $staff->role ?>','<?= $staff->status ?>')"><img
+                                            src="<?= ROOT ?>/assets/images/edit-btn.svg"" alt=" edit"></button>
+                                    <button class="delete-btn" onclick="openDeleteModal(<?= $staff->staff_id ?>)"><img
+                                            src="<?= ROOT ?>/assets/images/delete-btn.svg"" alt=" delete"></button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -145,6 +147,19 @@
                 </tbody>
             </table>
         </div>
+
+        <!-- Pagination Controls -->
+        <div class="pagination">
+            <?php if (isset($totalPages) && $totalPages > 1): ?>
+                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                    <a href="?<?= isset($search) && $search !== '' ? 'search=' . urlencode($search) . '&' : '' ?>page=<?= $i ?>"
+                        class="<?= (isset($currentPage) && $currentPage == $i) ? 'active' : '' ?>">
+                        <?= $i ?>
+                    </a>
+                <?php endfor; ?>
+            <?php endif; ?>
+        </div>
+
 
         <!-- Add Staff Modal -->
         <div id="addModal" class="modal">
