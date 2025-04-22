@@ -2,14 +2,6 @@ const table = document.getElementById('collectionTable');
 const modal = document.getElementById('modal');
 const form = document.getElementById('scheduleForm');
 
-// Populate table with sample data
-const sampleData = [
-    { area: 'Area 1', date: '2023-05-01', time: '10:00' },
-    { area: 'Area 2', date: '2023-05-02', time: '11:30' },
-    { area: 'Area 3', date: '2023-05-03', time: '14:00' },
-    // Add more sample data as needed
-];
-
 function populateTable() {
     sampleData.forEach(data => {
         const row = table.insertRow();
@@ -39,9 +31,9 @@ function openModal(data = null) {
         saveBtn.textContent = 'Update';
         saveBtn.addEventListener('click', () => updateSchedule(data));
         
-        const deleteBtn = document.createElement('button');
+        const deleteBtn = document.createElement('.dlt-btn');
         deleteBtn.textContent = 'Delete';
-        deleteBtn.className = 'delete-btn';
+        deleteBtn.className = 'dlt-btn';
         deleteBtn.addEventListener('click', () => deleteSchedule(data));
         saveBtn.parentNode.appendChild(deleteBtn);
     } else {
@@ -51,7 +43,7 @@ function openModal(data = null) {
         saveBtn.textContent = 'Save';
         saveBtn.removeEventListener('click', updateSchedule);
         
-        const deleteBtn = document.querySelector('.delete-btn');
+        const deleteBtn = document.querySelector('.dlt-btn');
         if (deleteBtn) {
             deleteBtn.parentNode.removeChild(deleteBtn);
         }
