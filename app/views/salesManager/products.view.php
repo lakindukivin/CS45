@@ -114,7 +114,7 @@
                             <th>Product image</th>
                             <th>Description</th>
                             <th>Product Status</th>
-                            <th>Actions</th>
+                            <th style="width:100px">Actions</th>
                         </tr>
                     </thead>
                     <tbody id="productTableBody">
@@ -123,9 +123,16 @@
                                 <tr>
                                     <td><?= htmlspecialchars($product->product_id) ?></td>
                                     <td><?= htmlspecialchars($product->productName) ?></td>
-                                    <td><?= htmlspecialchars($product->productImage) ?></td>
+                                    <td>
+                                        <?php if (!empty($product->productImage)): ?>
+                                            <img src="<?= ROOT . $product->productImage ?>" alt="Product Image"
+                                                style="width: 90px; height: 90px;" />
+                                        <?php else: ?>
+                                            No image
+                                        <?php endif; ?>
+                                    </td>
                                     <td><?= htmlspecialchars($product->productDescription) ?></td>
-                                    <td><?= $product->productStatus == 1 ? "<a href=Products/setInactive?product_id=".$product->product_id." class='active-btn'>Active</a>" : "<a  href=Products/setActive?product_id=".$product->product_id." class='inactive-btn'>Inactive</a>"; ?>
+                                    <td><?= $product->productStatus == 1 ? "<a href=Products/setInactive?product_id=" . $product->product_id . " class='active-btn'>Active</a>" : "<a  href=Products/setActive?product_id=" . $product->product_id . " class='inactive-btn'>Inactive</a>"; ?>
                                     </td>
 
                                     <td>
@@ -194,6 +201,7 @@
                     <form action="<?= ROOT ?>/Products/update" id="editProductForm" method="post"
                         enctype="multipart/form-data">
                         <input type="hidden" name="editProductID" id="editProductID" />
+                        <input type="hidden" name="existingImagePath" id="existingImagePath" />
                         <div class="form-group">
                             <label for="editProductName">Product Name:</label>
                             <input name="editProductName" type="text" id="editProductName"
@@ -202,23 +210,19 @@
                         <div class="form-group">
                             <label for="editProductImage">Product Image:</label>
                             <img id="existingImage" src="" alt="Product Image" style="width: 100px; height: auto" />
-                            <input type="file" name="editImage" id="existingImage" accept="image/*" />
+                            <input type="file" name="editImage" id="editImage" accept="image/*" />
                         </div>
                         <div class="form-group">
                             <label for="editDescription">Description:</label>
                             <textarea id="editDescription" rows="4" name="editDescription" required></textarea>
                         </div>
-
                         <div class="form-group">
                             <label for="editStatus">Status</label>
                             <select name="editStatus" id="editStatus">
                                 <option value="1">Active</option>
                                 <option value="0">Inactive</option>
                             </select>
-
                         </div>
-                        <button class="cancel-btn" onclick="closeDeleteModal()">Cancel</button>
-
                         <button type="submit" class="action-btn">Update</button>
                     </form>
                 </div>
@@ -226,14 +230,13 @@
 
             <div id="deleteConfirmationModal" class="modal">
                 <div class="modal-content delete-modal">
-                    <span class="close" onclick="closeDeleteModal()">&times;</span>
                     <h3>Confirm Delete</h3>
                     <p>Are you sure you want to delete this product?</p>
                     <form action="<?= ROOT ?>/Products/delete" id="deleteProductForm" method="post">
                         <input type="hidden" name="deleteProductID" id="deleteProductID" />
                         <div class="delete-modal-actions">
                             <button type="submit" class="confirm-btn">Confirm</button>
-                            <button class="cancel-btn" onclick="closeDeleteModal()">Cancel</button>
+                            <button type="button" class="cancel-btn" onclick="closeDeleteModal()">Cancel</button>
                         </div>
                     </form>
                 </div>

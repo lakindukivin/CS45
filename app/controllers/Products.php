@@ -75,9 +75,22 @@ class Products
     public function add()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $imagePath = '';
+            if (isset($_FILES['img']) && $_FILES['img']['error'] == UPLOAD_ERR_OK) {
+                $uploadDir = 'uploads/products/';
+                if (!is_dir($uploadDir)) {
+                    mkdir($uploadDir, 0777, true);
+                }
+                $fileName = uniqid() . '_' . basename($_FILES['img']['name']);
+                $targetFile = $uploadDir . $fileName;
+                if (move_uploaded_file($_FILES['img']['tmp_name'], $targetFile)) {
+                    $imagePath = '/' . $targetFile; // Save relative path
+                }
+            }
+
             $data = [
                 'productName' => $_POST['productName'],
-                'productImage' => $_POST['img'],
+                'productImage' => $imagePath,
                 'productDescription' => $_POST['description'],
                 'productStatus' => 1
             ];
@@ -93,16 +106,28 @@ class Products
             }
         }
     }
-
-    //Update product 
+    //update product
     public function update()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['editProductID'])) {
+                $imagePath = $_POST['existingImagePath'] ?? '';
+                if (isset($_FILES['editImage']) && $_FILES['editImage']['error'] == UPLOAD_ERR_OK) {
+                    $uploadDir = 'app/uploads/products/';
+                    if (!is_dir($uploadDir)) {
+                        mkdir($uploadDir, 0777, true);
+                    }
+                    $fileName = uniqid() . '_' . basename($_FILES['editImage']['name']);
+                    $targetFile = $uploadDir . $fileName;
+                    if (move_uploaded_file($_FILES['editImage']['tmp_name'], $targetFile)) {
+                        $imagePath = '/' . $targetFile;
+                    }
+                }
+
                 $data = [
                     'product_id' => $_POST['editProductID'],
                     'productName' => $_POST['editProductName'],
-                    // 'productImage' => $_POST['editImage'],
+                    'productImage' => $imagePath,
                     'productDescription' => $_POST['editDescription'],
                     'productStatus' => $_POST['editStatus']
                 ];
@@ -116,7 +141,6 @@ class Products
                     header("Location: " . ROOT . "/products");
                     exit();
                 }
-
             }
         }
     }
