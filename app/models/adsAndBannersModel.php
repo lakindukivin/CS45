@@ -13,8 +13,34 @@ class AdsAndBannersModel
         try {
             return $this->findAll('ad_id');
         } catch (Exception $e) {
-            error_log("Error fetching products: " . $e->getMessage());
+            error_log("Error fetching Ads: " . $e->getMessage());
             return false;
+        }
+    }
+
+
+    //pagination funtions
+    public function getAdsPaginated($limit, $offset)
+    {
+        try {
+            $this->limit = $limit;
+            $this->offset = $offset;
+            return $this->findAll('ad_id');
+        } catch (Exception $e) {
+            error_log("Error fetching paginated Ads: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function getAdsCount()
+    {
+        try {
+            $query = "SELECT COUNT(*) as count FROM $this->table";
+            $result = $this->query($query);
+            return $result ? $result[0]->count : 0;
+        } catch (Exception $e) {
+            error_log("Error counting Ads: " . $e->getMessage());
+            return 0;
         }
     }
     //get a single ad  in the database by category id
@@ -57,11 +83,34 @@ class AdsAndBannersModel
     public function deleteAdsAndBanners($id)
     {
         try {
-            $this->delete($id,'ad_id');
+            $this->delete($id, 'ad_id');
             return true;
         } catch (Exception $e) {
-            error_log("Error deleting products: " . $e->getMessage());
+            error_log("Error deleting Ads: " . $e->getMessage());
             return false;
         }
     }
+
+    //search functions
+    public function searchAds($search, $limit, $offset)
+    {
+        $search = '%' . $search . '%';
+        $limit = (int) $limit;
+        $offset = (int) $offset;
+        $query = "SELECT * FROM $this->table WHERE  title LIKE :search OR description LIKE :search OR start_date LIKE :search OR end_date LIKE :search ORDER BY ad_id DESC LIMIT $limit OFFSET $offset";
+        $params = [
+            'search' => $search
+        ];
+        return $this->query($query, $params);
+    }
+
+    public function searchAdsCount($search)
+    {
+        $search = '%' . $search . '%';
+        $query = "SELECT COUNT(*) as count FROM $this->table WHERE title LIKE :search OR description LIKE :search OR start_date LIKE :search OR end_date LIKE :search";
+        $params = ['search' => $search];
+        $result = $this->query($query, $params);
+        return $result ? $result[0]->count : 0;
+    }
+
 }

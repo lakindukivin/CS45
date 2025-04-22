@@ -106,9 +106,12 @@
             <!--Table Header-->
 
             <div class="table-header">
-                <div>
-
-                </div>
+                <form class="search-bar" method="get" action="">
+                    <img src="<?= ROOT ?>/assets/images/magnifying-glass-solid.svg" class="search-icon" width="20px" />
+                    <input type="text" name="search" value="<?= isset($search) ? htmlspecialchars($search) : '' ?>"
+                        placeholder="Search ads by title,description or dates..." />
+                    <button type="submit">Search</button>
+                </form>
                 <div>
                     <button class="action-btn" onclick="openAddModal()">Add Ads/Banners</button>
                 </div>
@@ -156,6 +159,19 @@
                     <?php endif; ?>
                 </tbody>
             </table>
+
+
+            <!-- Pagination Controls -->
+            <div class="pagination">
+                <?php if (isset($totalPages) && $totalPages > 1): ?>
+                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                        <a href="?<?= isset($search) && $search !== '' ? 'search=' . urlencode($search) . '&' : '' ?>page=<?= $i ?>"
+                            class="<?= (isset($currentPage) && $currentPage == $i) ? 'active' : '' ?>">
+                            <?= $i ?>
+                        </a>
+                    <?php endfor; ?>
+                <?php endif; ?>
+            </div>
 
             <div id="addModal" class="modal">
                 <div class="modal-content">
