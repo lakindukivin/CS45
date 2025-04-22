@@ -54,17 +54,6 @@ class ManageStaffAccounts
         ]);
     }
 
-    public function getSingleStaff()
-    {
-
-        if (isset($_POST['staff_id'])) {
-            $singleStaff = $this->manageStaffAccountsModel->findById($_POST['staff_id']);
-            echo json_encode($singleStaff);
-            exit;
-        }
-
-    }
-
     public function add()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -92,6 +81,19 @@ class ManageStaffAccounts
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+            $imagePath = '';
+            if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
+                $uploadDir = 'uploads/staff/';
+                if (!is_dir($uploadDir)) {
+                    mkdir($uploadDir, 0777, true);
+                }
+                $fileName = uniqid() . '_' . basename($_FILES['image']['name']);
+                $targetFile = $uploadDir . $fileName;
+                if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)) {
+                    $imagePath = '/' . $targetFile; // Save relative path
+                }
+            }
+
             // 1. Insert into user table
             $userData = [
                 'email' => $_POST['email'],
@@ -108,7 +110,7 @@ class ManageStaffAccounts
                 'name' => $_POST['name'],
                 'address' => $_POST['address'],
                 'phone' => $_POST['phone'],
-                // 'image' => $_POST['image'],
+                'image' => $imagePath,
                 'role_id' => $_POST['role'],
                 'user_id' => $user_id, // Use the user_id from the user table
                 'status' => 1
@@ -140,19 +142,35 @@ class ManageStaffAccounts
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['staff_id'])) {
+
+                $imagePath = $_POST['existingImagePath'] ?? '';
+                if (isset($_FILES['editStaffImage']) && $_FILES['editStaffImage']['error'] == UPLOAD_ERR_OK) {
+                    $uploadDir = 'uploads/adsAndBanners/';
+                    if (!is_dir($uploadDir)) {
+                        mkdir($uploadDir, 0777, true);
+                    }
+                    $fileName = uniqid() . '_' . basename($_FILES['editStaffImage']['name']);
+                    $targetFile = $uploadDir . $fileName;
+                    if (move_uploaded_file($_FILES['editStaffImage']['tmp_name'], $targetFile)) {
+                        $imagePath = '/' . $targetFile;
+                    }
+                }
                 $data = [
                     'staff_id' => $_POST['staff_id'],
                     'name' => $_POST['editStaffName'],
-                    'image' => $_POST['editImage'],
-                    'email' => $_POST['editStaffEmail'],
+                    'image' => $imagePath,
                     'phone' => $_POST['editStaffContactNo'],
                     'address' => $_POST['editStaffAddress'],
                     'role' => $_POST['editStafrole'],
-                    'status' => $_POST['status']
+                    'status' => $_POST['editStaffStatus']
                 ];
 
                 if ($this->manageStaffAccountsModel->updateStaff($_POST['staff_id'], $data)) {
                     $_SESSION['success'] = "Successfully updated!";
+                    header("Location: " . ROOT . "/manageStaffAccounts");
+                    exit();
+                }else {
+                    $_SESSION['error'] = "Failed to update staff!";
                     header("Location: " . ROOT . "/manageStaffAccounts");
                     exit();
                 }
@@ -168,6 +186,10 @@ class ManageStaffAccounts
                 $_SESSION['success'] = "Successfully deleted!";
                 header("Location: " . ROOT . "/manageStaffAccounts");
                 exit();
+            }else {
+                $_SESSION['error'] = "Failed to delete staff!";
+                header("Location: " . ROOT . "/manageStaffAccounts");
+                exit();
             }
         }
     }
@@ -179,7 +201,43 @@ class ManageStaffAccounts
                 $_SESSION['success'] = "Successfully restored!";
                 header("Location: " . ROOT . "/manageStaffAccounts");
                 exit();
+            }else { 
+                $_SESSION['error'] = "Failed to restore staff!";
+                header("Location: " . ROOT . "/manageStaffAccounts");
+                exit();
             }
         }
+    }
+
+    public function setActive()
+    {
+        if (isset($_GET['staff_id'])) {
+            if ($this->manageStaffAccountsModel->setActive($_GET['staff_id'])) {
+                $_SESSION['success'] = "Successfully activated!";
+                header("Location: " . ROOT . "/manageStaffAccounts");
+                exit();
+            } else {
+                $_SESSION['error'] = "Failed to activate product!";
+                header("Location: " . ROOT . "/manageStaffAccounts");
+                exit();
+            }
+        }
+
+    }
+
+    public function setInactive()
+    {
+        if (isset($_GET['staff_id'])) {
+            if ($this->manageStaffAccountsModel->setInactive($_GET['staff_id'])) {
+                $_SESSION['success'] = "Successfully deactivated!";
+                header("Location: " . ROOT . "/manageStaffAccounts");
+                exit();
+            } else {
+                $_SESSION['error'] = "Failed to deactivate product!";
+                header("Location: " . ROOT . "/manageStaffAccounts");
+                exit();
+            }
+        }
+
     }
 }
