@@ -131,7 +131,8 @@
                                 <td><?= htmlspecialchars($discount->discount_percentage) ?></td>
                                 <td><?= htmlspecialchars($discount->start_date) ?></td>
                                 <td><?= htmlspecialchars($discount->end_date) ?></td>
-                                <td><?= htmlspecialchars($discount->status == 1 ? 'Active' : 'Inactive') ?></td>
+                                <td><?= $discount->status == 1 ? "<a href=discounts/setInactive?discount_id=" . $discount->discount_id . " class='active-btn'>Active</a>" : "<a  href=discounts/setActive?discount_id=" . $discount->discount_id . " class='inactive-btn'>Inactive</a>"; ?>
+                                </td>
                                 <td>
                                     <button class="edit-btn"
                                         onclick="openEditModal('<?= $discount->discount_id ?>', '<?= $discount->productName ?>', '<?= $discount->discount_percentage ?>', '<?= $discount->start_date ?>', ,'<?= $discount->status ?>')"><img

@@ -81,10 +81,39 @@ class Discounts
                 'status' => $_POST['status'],
 
             ];
-
-
-
-
         }
+    }
+
+
+    public function setActive()
+    {
+        if (isset($_GET['discount_id'])) {
+            if ($this->discountModel->setActive($_GET['discount_id'])) {
+                $_SESSION['success'] = "Successfully activated!";
+                header("Location: " . ROOT . "/discounts");
+                exit();
+            } else {
+                $_SESSION['error'] = "Failed to activate product!";
+                header("Location: " . ROOT . "/discounts");
+                exit();
+            }
+        }
+
+    }
+
+    public function setInactive()
+    {
+        if (isset($_GET['discount_id'])) {
+            if ($this->discountModel->setInactive($_GET['discount_id'])) {
+                $_SESSION['success'] = "Successfully deactivated!";
+                header("Location: " . ROOT . "/discounts");
+                exit();
+            } else {
+                $_SESSION['error'] = "Failed to deactivate product!";
+                header("Location: " . ROOT . "/discounts");
+                exit();
+            }
+        }
+
     }
 }
