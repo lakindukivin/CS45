@@ -100,7 +100,8 @@ class AdsAndBanners
                     'image' => $_POST['adImage'],
                     'description' => $_POST['description'],
                     'start_date' => $_POST['startDate'],
-                    'end_date' => $_POST['endDate']
+                    'end_date' => $_POST['endDate'],
+                    'status'=> $_POST['status']
                 ];
 
                 if ($this->AdsAndBannersModel->editAdsAndBanners($_POST['adId'], $data)) {
