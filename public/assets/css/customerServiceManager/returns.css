@@ -234,7 +234,7 @@ th {
   color: #664d03;
 }
 
-.status-badge.delivered {
+.status-badge.returned {
   background-color: #d1e7dd;
   color: #0f5132;
 }
@@ -396,4 +396,45 @@ th {
 
 .btn-secondary-color:hover {
   background-color: var(--gray-200);
+}
+
+/* Status update popup styles */
+#statusUpdatePopup .modal-content {
+  max-width: 500px;
+}
+
+#statusUpdatePopup .form-group {
+  margin-bottom: 20px;
+}
+
+#statusUpdatePopup label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: var(--gray-800);
+}
+
+#statusUpdatePopup .input-field {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--gray-300);
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+#statusUpdatePopup textarea.input-field {
+  resize: vertical;
+  min-height: 100px;
+}
+
+#statusUpdatePopup .action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+/* Add padding to messages to contain text properly */
+.message-popup {
+  padding: 15px 25px;
 }

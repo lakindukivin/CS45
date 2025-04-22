@@ -53,8 +53,12 @@
 
 <body>
 <!-- Success and Error message popups - moved outside of any other container -->
-<div id="successMessage" class="message-popup success-message">Order successfully updated!</div>
-<div id="errorMessage" class="message-popup error-message">Failed to update order!</div>
+<div id="successMessage" class="message-popup success-message">
+  <span class="message-text">Return successfully updated!</span>
+</div>
+<div id="errorMessage" class="message-popup error-message">
+  <span class="message-text">Failed to update return!</span>
+</div>
 <div id="modalOverlay" class="modal-overlay"></div>
 
 <nav id="sidebar">
@@ -135,18 +139,18 @@
         <div class="header">
           <h2>Completed Return Requests</h2>
           <button class="add-button">
-            <a href="<?=ROOT?>/Returns">View Pending Orders</a>
+            <a href="<?=ROOT?>/Returns">View Pending Returns</a>
           </button>
         </div>
 
          <!-- Order status tabs -->
          <div class="status-tabs">
           <button class="status-tab active" data-status="accepted">Accepted</button>
-          <button class="status-tab" data-status="returned">Mark_as_Returned</button>
+          <button class="status-tab" data-status="returned">Mark as Returned</button>
           <button class="status-tab" data-status="rejected">Rejected</button>
         </div>
 
-        <div class="tab-content active" id="accepted">
+        <div class="tab-content active" id="accepted-orders">
         <table>
             <thead>
                 <tr>
@@ -182,7 +186,7 @@
         </table>
       </div>
 
-      <div class="tab-content">
+      <div class="tab-content" id="returned-orders">
       <table>
             <thead>
                 <tr>
@@ -203,7 +207,7 @@
                   <td><?= $return->product_id ?></td>
                   <td><?= $return->customer_id ?></td>
                   <td><?= $return->date_completed ?></td>
-                  <td><span class="status-badge accepted">Returned</span></td>
+                  <td><span class="status-badge returned">Returned</span></td>
                   <td>
                     <button class="view-btn" data-id="<?= $return->return_id ?>">View Details</button>
                   </td>
@@ -218,7 +222,7 @@
         </table>
       </div>
 
-      <div class="tab-content">
+      <div class="tab-content" id="rejected-orders">
       <table>
             <thead>
                 <tr>
@@ -239,7 +243,7 @@
                   <td><?= $return->product_id ?></td>
                   <td><?= $return->customer_id ?></td>
                   <td><?= $return->date_completed ?></td>
-                  <td><span class="status-badge accepted">Accepted</span></td>
+                  <td><span class="status-badge rejected">Rejected</span></td>
                   <td>
                     <button class="view-btn" data-id="<?= $return->return_id ?>">View Details</button>
                   </td>
@@ -311,26 +315,24 @@
      <div id="statusUpdatePopup" class="modal">
       <div class="modal-content">
         <span class="close" id="closeStatusPopup">&times;</span>
-        <h2>Update Order Status</h2>
+        <h2>Update Return Status</h2>
         <form id="updateStatusForm">
-          <input type="hidden" name="order_id" id="popup-order-id">
+          <input type="hidden" name="return_id" id="popup-return-id">
 
           <div class="form-group">
             <label for="status">Status:</label>
             <select name="status" id="status" class="input-field">
-              <option value="processing">Processing</option>
-              <option value="shipped">Shipped</option>
-              <option value="delivered">Delivered</option>
+              <option value="returned" selected>Returned</option>
             </select>
           </div>
 
           <div class="form-group">
             <label for="message_to_customer">Message to Customer:</label>
-            <textarea name="message_to_customer" id="message_to_customer" class="input-field" rows="4"></textarea>
+            <textarea name="message_to_customer" id="message_to_customer" class="input-field" rows="4" placeholder="Enter a message for the customer regarding their returned item..."></textarea>
           </div>
 
           <div class="action-buttons">
-            <button type="submit" class="update-status">Update Order</button>
+            <button type="submit" class="update-status">Update Return Status</button>
             <button type="button" class="btn-secondary-color" id="cancelStatusUpdate">Cancel</button>
           </div>
         </form>
@@ -339,7 +341,7 @@
   </div>
 
   <script>
-    const ROOT = "<?=ROOT?>";
+  const ROOT = "<?=ROOT?>";
   </script>
     <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>  
     <script src="<?=ROOT?>/assets/js/customerServiceManager/returns.js"></script>  
