@@ -8,6 +8,40 @@
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/customerServiceManager/home.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/customerServiceManager/common.css">
     <title>Waste360|Dashboard|CSM</title>
+    <script>
+        async function fetchDayData(date) {
+            try {
+                const response = await fetch(`<?= ROOT ?>/CSManagerHome/getDayData?date=${date}`);
+                const data = await response.json();
+
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    document.getElementById('giveaways-count').textContent = data.giveaways;
+                    document.getElementById('returns-count').textContent = data.returns;
+                    document.getElementById('orders-count').textContent = data.orders;
+                    document.getElementById('reviews-count').textContent = data.reviews;
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                alert('Failed to fetch data for the selected date.');
+            }
+        }
+
+        function onDateClick(event) {
+            const selectedDate = event.target.getAttribute('data-date');
+            if (selectedDate) {
+                fetchDayData(selectedDate);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const dateElements = document.querySelectorAll('#dates .date');
+            dateElements.forEach(dateElement => {
+                dateElement.addEventListener('click', onDateClick);
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -82,7 +116,12 @@
                         <div class="day">Fri</div>
                         <div class="day">Sat</div>
                     </div>
-                    <div class="days" id="dates"></div>
+                    <div class="days" id="dates">
+                        <!-- Example of dynamically generated dates -->
+                        <div class="date" data-date="2025-04-20">20</div>
+                        <div class="date" data-date="2025-04-21">21</div>
+                        <!-- Add more dates dynamically -->
+                    </div>
                 </div>
             </div>
 
@@ -95,19 +134,19 @@
                 <div class="metric-grid">
                     <div class="metric-card">
                         <h4>Give Aways</h4>
-                        <div class="metric-value">0</div>
+                        <div class="metric-value" id="giveaways-count"><?= $giveaways ?></div>
                     </div>
                     <div class="metric-card">
-                        <h4>Inquiries & Returns</h4>
-                        <div class="metric-value">0</div>
+                        <h4>Returns</h4>
+                        <div class="metric-value" id="returns-count"><?= $returns ?></div>
                     </div>
                     <div class="metric-card">
                         <h4>Orders</h4>
-                        <div class="metric-value">0</div>
+                        <div class="metric-value" id="orders-count"><?= $orders ?></div>
                     </div>
                     <div class="metric-card">
                         <h4>Reviews</h4>
-                        <div class="metric-value">0</div>
+                        <div class="metric-value" id="reviews-count"><?= $reviews ?></div>
                     </div>
                 </div>
             </div>

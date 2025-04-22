@@ -23,6 +23,71 @@
       });
     }
 
+    ocument.addEventListener('DOMContentLoaded', function () {
+      // Tab functionality
+      const tabs = document.querySelectorAll('.status-tab');
+      const tabContents = document.querySelectorAll('.tab-content');
+    
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const status = tab.getAttribute('data-status');
+    
+          tabs.forEach(t => t.classList.remove('active'));
+          tabContents.forEach(c => c.classList.remove('active'));
+    
+          tab.classList.add('active');
+          document.getElementById(`${status}-orders`).classList.add('active');
+        });
+      });
+
+       // Modal functionality
+  const modal = document.getElementById('orderDetailsModal');
+  const viewButtons = document.querySelectorAll('.view-btn');
+  const closeBtn = document.querySelector('.modal .close');
+
+  viewButtons.forEach(btn => {
+    btn.addEventListener('click', function () {
+      const row = this.closest('tr');
+      const orderData = JSON.parse(row.getAttribute('data-order'));
+
+      document.getElementById('modal-return-id').textContent = orderData.return_id;
+      document.getElementById('modal-order-id').textContent = orderData.order_id;
+      document.getElementById('modal-product').textContent = orderData.product_id;
+      document.getElementById('modal-customer').textContent = orderData.customer_id;
+      document.getElementById('modal-return-details').textContent = orderData.returnDetails;
+      document.getElementById('modal-cus-requirements').textContent = orderData.cus_requirements; 
+      document.getElementById('modal-decision').textContent = orderData.decision_reason;
+      document.getElementById('modal-date').textContent = formatDate(orderData.date);
+
+      const statusElem = document.getElementById('modal-status');
+      statusElem.textContent = orderData.status.charAt(0).toUpperCase() + orderData.status.slice(1);
+      statusElem.className = 'value status-badge ' + orderData.status;
+
+      modal.style.display = 'flex';
+    });
+  });
+
+  closeBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
+
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+
+   // Status Update Popup
+   const updateStatusPopup = document.getElementById('statusUpdatePopup');
+   const closeStatusPopupBtn = document.getElementById('closeStatusPopup');
+   const cancelUpdateBtn = document.getElementById('cancelStatusUpdate');
+   const updateStatusButtons = document.querySelectorAll('.update-status');
+   const popupOrderIdField = document.getElementById('popup-order-id');
+   const popupStatusField = document.getElementById('status');
+   const popupMessageField = document.getElementById('message_to_customer');
+   const updateStatusForm = document.getElementById('updateStatusForm');
+
+
     function showMessage(type, customText) {
         const message = type === 'success' ? document.getElementById('successMessage') : document.getElementById('errorMessage');
         console.log("Show message called:",type,customText, message);
@@ -89,5 +154,5 @@
   }
 });
 
-
+    });
 

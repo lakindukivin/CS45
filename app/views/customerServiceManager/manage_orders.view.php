@@ -77,7 +77,7 @@
             <label for="Quantity" class="">Quantity:</label>
             <input type="text" id="quantity" name="quantity" class="input-field" readonly>
           </div>
-
+          
           <div class="popup-content">
             <label for="Total" class="">Total:</label>
             <input type="text" id="total" name="total" class="input-field" readonly>
@@ -190,26 +190,7 @@
 </div>
 
   <script>
-    function openManageOrderUpdatePopup(order) {
-      // Populate the popup fields with the order details
-      document.getElementById('order_id').value = order.order_id || '';
-      document.getElementById('productName').value = order.productName || '';
-      document.getElementById('customerName').value = order.customerName || '';
-      document.getElementById('quantity').value = order.quantity || '';
-      document.getElementById('total').value = order.total || '';
-      document.getElementById('deliveryAddress').value = order.deliveryAddress || '';
-      document.getElementById('billingAddress').value = order.billingAddress || '';
-      document.getElementById('orderDate').value = order.orderDate || '';
-      document.getElementById('orderStatus').value = order.orderStatus || '';
-
-      // Display the popup
-      document.getElementById('manageOrderUpdatePopup').style.display = 'flex';
-
-      // Add event listener to close the popup
-      document.getElementById('closePopupBtn').addEventListener('click', () => {
-        document.getElementById('manageOrderUpdatePopup').style.display = 'none';
-      });
-    }
+   
   </script>
   <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>
   <script src="<?=ROOT?>/assets/js/customerServiceManager/manage_orders.js"></script>

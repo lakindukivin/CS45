@@ -31,11 +31,11 @@
     }
     
     .success-message {
-      background-color: #4CAF50;
+      background-color:rgb(72, 173, 75);
     }
     
     .error-message {
-      background-color: #f44336;
+      background-color:rgb(221, 42, 29);
     }
 
     /* Dim background overlay for popups */
@@ -408,7 +408,7 @@
       </div>
     </div>
   </div>
-
+  data-order
   <!-- Pass the ROOT constant to JavaScript -->
   <script>
     const ROOT = "<?=ROOT?>";
