@@ -28,7 +28,7 @@ class GiveAwayModel {
     }
    
     public function getAllCompletedGiveAways() {
-        $query = "SELECT cg.*, c.name, c.phone, c.address, gr.request_date
+        $query = "SELECT cg.*, c.name, c.phone, c.address, gr.request_date, gr.details
                   FROM completedgiveaway cg
                   JOIN customer c ON cg.customer_id = c.customer_id
                   JOIN giveawayrequests gr ON cg.giveaway_id = gr.giveaway_id";

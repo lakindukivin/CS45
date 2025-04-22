@@ -83,7 +83,7 @@
             <input type="text" name="Phone" id="phone" readonly/>
           </div>
           <div class="popup-content">
-            <label for="request_date">request_date: </label>
+            <label for="request_date">Request date: </label>
             <input type="text" name="request_date" id="request_date" readonly/>
           </div>
           <div class="popup-content">
@@ -101,10 +101,6 @@
             <input type="text" name="details" id="details" readonly/>
           </div>
 
-          <div class="popup-content">
-            <label for="request-date">Request Date:</label>
-            <input type="text" name="request_date" id="request_date" readonly/>
-          </div>
 
           <div class="popup-content">
             <label for="decision-date">Decision date:</label>
