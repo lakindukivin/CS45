@@ -1,4 +1,3 @@
-
 // Modal functions
 function openAddModal() {
   document.getElementById('addModal').style.display = 'block';
@@ -16,7 +15,6 @@ function openEditModal(
   description,
   status
 ) {
-
   document.getElementById('editProductID').value = productId;
   document.getElementById('editProductName').value = productName;
   document.getElementById('existingImage').src = '<?= ROOT ?>' + productImage;
@@ -37,8 +35,7 @@ function openDeleteModal(productId) {
 
 function closeDeleteModal() {
   document.getElementById('deleteConfirmationModal').style.display = 'none';
-    document.getElementById('deleteProductForm').reset();
-
+  document.getElementById('deleteProductForm').reset();
 }
 
 function closeResponseModal() {
@@ -46,9 +43,15 @@ function closeResponseModal() {
   location.reload(); // Refresh the page to see changes
 }
 
-
-
 function showResponse(message) {
   document.getElementById('responseMessage').textContent = message;
   document.getElementById('responseModal').style.display = 'block';
 }
+//refresh searchbar
+document
+  .querySelector('input[name="search"]')
+  .addEventListener('input', function (e) {
+    if (e.target.value.trim() === '') {
+      window.location.href = window.location.pathname;
+    }
+  });

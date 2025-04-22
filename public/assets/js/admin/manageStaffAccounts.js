@@ -16,11 +16,10 @@ function openEditModal(
   phone,
   address,
   role,
-  status) 
-  {
-
+  status
+) {
   document.getElementById('staff_id').value = staff_id;
-  document.getElementById('editStaffName').value =   name;
+  document.getElementById('editStaffName').value = name;
   document.getElementById('editImage').src = '<?= ROOT ?>' + image;
   document.getElementById('editStaffEmail').value = email;
   document.getElementById('editStaffContactNo').value = phone;
@@ -34,7 +33,6 @@ function openEditModal(
 function closeEditModal() {
   document.getElementById('editModal').style.display = 'none';
   document.getElementById('editStaffAccounts').reset();
-  
 }
 
 function openDeleteModal(staff_id) {
@@ -57,14 +55,24 @@ function showResponse(message) {
 }
 
 // Add this to manageStaffAccounts.js
-document.getElementById('addStaffForm').addEventListener('submit', function(e) {
+document
+  .getElementById('addStaffForm')
+  .addEventListener('submit', function (e) {
     const password = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirm_password').value;
     if (password !== confirmPassword) {
-        e.preventDefault();
-        alert('Passwords do not match!');
-        return false;
+      e.preventDefault();
+      alert('Passwords do not match!');
+      return false;
     }
     // Additional validation can be added here
     return true;
-});
+  });
+//refresh searchbar
+document
+  .querySelector('input[name="search"]')
+  .addEventListener('input', function (e) {
+    if (e.target.value.trim() === '') {
+      window.location.href = window.location.pathname;
+    }
+  });

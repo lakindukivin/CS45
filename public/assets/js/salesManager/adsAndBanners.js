@@ -42,3 +42,11 @@ function closeDeleteModal() {
   document.getElementById('deleteModal').style.display = 'none';
   currentadId = null;
 }
+//refresh searchbar
+document
+  .querySelector('input[name="search"]')
+  .addEventListener('input', function (e) {
+    if (e.target.value.trim() === '') {
+      window.location.href = window.location.pathname;
+    }
+  });
