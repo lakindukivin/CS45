@@ -64,8 +64,7 @@ class Products
     {
 
         if (isset($_POST['product_id'])) {
-            $model = new ProductModel();
-            $singleProduct = $model->findById($_POST['product_id']);
+            $singleProduct = $this->productModel->findById($_POST['product_id']);
             echo json_encode($singleProduct);
             exit;
         }
@@ -142,7 +141,7 @@ class Products
 
 
     }
-
+    //Restore product
     public function restore()
     {
 
@@ -155,8 +154,40 @@ class Products
             }
 
         }
+    }
 
+    public function setActive()
+    {
+        if (isset($_GET['product_id'])) {
+            if ($this->productModel->setActive($_GET['product_id'])) {
+                $_SESSION['success'] = "Successfully activated!";
+                header("Location: " . ROOT . "/products");
+                exit();
+            } else {
+                $_SESSION['error'] = "Failed to activate product!";
+                header("Location: " . ROOT . "/products");
+                exit();
+            }
+        }
 
     }
+
+    public function setInactive()
+    {
+        if (isset($_GET['product_id'])) {
+            if ($this->productModel->setInactive($_GET['product_id'])) {
+                $_SESSION['success'] = "Successfully deactivated!";
+                header("Location: " . ROOT . "/products");
+                exit();
+            } else {
+                $_SESSION['error'] = "Failed to deactivate product!";
+                header("Location: " . ROOT . "/products");
+                exit();
+            }
+        }
+
+    }
+
+
 
 }

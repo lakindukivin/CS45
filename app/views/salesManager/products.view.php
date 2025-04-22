@@ -125,7 +125,8 @@
                                     <td><?= htmlspecialchars($product->productName) ?></td>
                                     <td><?= htmlspecialchars($product->productImage) ?></td>
                                     <td><?= htmlspecialchars($product->productDescription) ?></td>
-                                    <td><?= htmlspecialchars($product->productStatus == 1 ? 'Active' : 'Inactive') ?></td>
+                                    <td><?= $product->productStatus == 1 ? "<a href=Products/setInactive?product_id=".$product->product_id." class='active-btn'>Active</a>" : "<a  href=Products/setActive?product_id=".$product->product_id." class='inactive-btn'>Inactive</a>"; ?>
+                                    </td>
 
                                     <td>
                                         <button class="edit-btn"

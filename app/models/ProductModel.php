@@ -127,5 +127,36 @@ class ProductModel
         return $result ? $result[0]->count : 0;
     }
 
+    public function setActive($product_id)
+    {
+        try {
+            $query = 'UPDATE product SET productStatus =1 WHERE product_id = :product_id;';
+            $params = ['product_id' => $product_id];
+            $this->query($query, $params);
+            return true;
+
+        } catch (Exception $e) {
+            error_log("Error changing status: " . $e->getMessage());
+            return false;
+        }
+
+
+    }
+
+    public function setInactive($product_id)
+    {
+        try {
+            $query = 'UPDATE product SET productStatus =0 WHERE product_id = :product_id;';
+            $params = ['product_id' => $product_id];
+            $this->query($query, $params);
+            return true;
+
+        } catch (Exception $e) {
+            error_log("Error changing status: " . $e->getMessage());
+            return false;
+        }
+
+    }
+
 }
 ?>
