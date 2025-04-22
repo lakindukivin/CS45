@@ -19,6 +19,22 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: "Roboto";
+    src: url("../../fonts/Roboto.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Inter";
+    src: url("../../fonts/Inter.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -31,7 +47,7 @@ body {
     min-height: 100vh;
     display: grid;
     grid-template-columns: auto 1fr;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 .content {
