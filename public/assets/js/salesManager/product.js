@@ -17,7 +17,10 @@ function openEditModal(
 ) {
   document.getElementById('editProductID').value = productId;
   document.getElementById('editProductName').value = productName;
-  document.getElementById('existingImage').src = '<?= ROOT ?>' + productImage;
+  document.getElementById('existingImage').src = productImage
+    ? 'http://localhost/cs45/public/' + productImage
+    : '';
+  document.getElementById('existingImagePath').value = productImage;
   document.getElementById('editDescription').value = description;
   document.getElementById('editStatus').value = status;
   document.getElementById('editModal').style.display = 'block';
