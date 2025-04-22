@@ -31,10 +31,30 @@ class Issues
         if ($_SESSION['role_id'] != 1) {
             redirect('login');
         }
-        // Fetch all issues from the database
-        $issues = $this->IssueModel->getAllIssues();
 
-        $this->view('admin/issues', ['issues' => $issues]);
+        $limit = 10;
+        $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+        $offset = ($page - 1) * $limit;
+        $search = isset($_GET['search']) ? trim($_GET['search']) : '';
+
+        if ($search !== '') {
+            $issues = $this->IssueModel->searchIssues($search, $limit, $offset);
+            $totalIssues = $this->IssueModel->searchIssuesCount($search);
+        } else {
+            $issues = $this->IssueModel->getIssuesPaginated($limit, $offset);
+            $totalIssues = $this->IssueModel->getIssuesCount();
+        }
+        $totalPages = ceil($totalIssues / $limit);
+
+        // // Fetch all issues from the database
+        // $issues = $this->IssueModel->getAllIssues();
+
+        $this->view('admin/issues', [
+            'issues' => $issues,
+            'currentPage' => $page,
+            'totalPages' => $totalPages,
+            'search' => $search,
+        ]);
     }
 
     //Get single issue 
@@ -88,7 +108,7 @@ class Issues
                     'email' => $_POST['email'],
                     'phone' => $_POST['phone'],
                     'status' => $_POST['status'],
-                    'action_taken' => $_POST['actionsTaken'] 
+                    'action_taken' => $_POST['actionsTaken']
 
                 ];
 
