@@ -115,7 +115,8 @@
                                 <td><?= htmlspecialchars($customer->email) ?></td>
                                 <td><?= htmlspecialchars($customer->phone) ?></td>
                                 <td><?= htmlspecialchars($customer->address) ?></td>
-                                <td><?= $customer->status == 1 ? 'Active' : 'Inactive' ?></td>
+                                <td><?= $customer->status == 1 ? "<a href=ManageCustomerAccounts/setInactive?customer_id=" . $customer->customer_id . " class='active-btn'>Active</a>" : "<a  href=ManageCustomerAccounts/setActive?customer_id=" . $customer->customer_id . " class='inactive-btn'>Inactive</a>"; ?>
+                                </td>
                                 <td class="action-buttons">
                                     <button class="edit-btn"
                                         onclick="openEditModal('<?= $customer->customer_id ?>','<?= $customer->name ?>','<?= $customer->image ?>','<?= $customer->phone ?>','<?= $customer->address ?>','<?= $customer->status ?>')"><img

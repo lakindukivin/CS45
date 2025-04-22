@@ -101,5 +101,38 @@ class ManageCustomerAccounts
             }
         }
     }
+
+// change status
+    public function setActive()
+    {
+        if (isset($_GET['customer_id'])) {
+            if ($this->manageCustomerAccountsModel->setActive($_GET['customer_id'])) {
+                $_SESSION['success'] = "Successfully activated!";
+                header("Location: " . ROOT . "/manageCustomerAccounts");
+                exit();
+            } else {
+                $_SESSION['error'] = "Failed to activate product!";
+                header("Location: " . ROOT . "/manageCustomerAccounts");
+                exit();
+            }
+        }
+
+    }
+
+    public function setInactive()
+    {
+        if (isset($_GET['customer_id'])) {
+            if ($this->manageCustomerAccountsModel->setInactive($_GET['customer_id'])) {
+                $_SESSION['success'] = "Successfully deactivated!";
+                header("Location: " . ROOT . "/manageCustomerAccounts");
+                exit();
+            } else {
+                $_SESSION['error'] = "Failed to deactivate product!";
+                header("Location: " . ROOT . "/manageCustomerAccounts");
+                exit();
+            }
+        }
+
+    }
 }
 ?>
