@@ -4,9 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="root-url" content="<?= ROOT ?>">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/customerServiceManager/sidebar.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/customerServiceManager/home.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/customerServiceManager/common.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/customerServiceManager/notifications.css">
     <title>Waste360|Dashboard|CSM</title>
 </head>
 
@@ -58,8 +60,23 @@
             <h1 class="logo">DashBoard</h1>
             <nav class="nav">
                 <ul>
-                    <li><a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg"></a></li>
-                    <li><a href="#">Profile</a></li>
+                    <li class="notification-container">
+                        <a href="#" id="notification-icon"><img src="<?= ROOT ?>/assets/images/notifications.svg">
+                            <span class="notification-badge" id="notification-count">0</span>
+                        </a>
+                        <!-- Notification panel will appear here -->
+                        <div class="notification-panel" id="notification-panel">
+                            <div class="notification-header">
+                                <h3>Notifications</h3>
+                                <button id="mark-all-read">Mark all as read</button>
+                            </div>
+                            <div class="notification-content" id="notification-content">
+                                <!-- Notifications will be loaded here -->
+                                <div class="loading">Loading notifications...</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="<?= ROOT ?>/profile">Profile</a></li>
                     <li><a href="<?= ROOT ?>/login">Logout</a></li>
                 </ul>
             </nav>
@@ -82,7 +99,12 @@
                         <div class="day">Fri</div>
                         <div class="day">Sat</div>
                     </div>
-                    <div class="days" id="dates"></div>
+                    <div class="days" id="dates">
+                        <!-- Example of dynamically generated dates -->
+                        <div class="date" data-date="2025-04-20">20</div>
+                        <div class="date" data-date="2025-04-21">21</div>
+                        <!-- Add more dates dynamically -->
+                    </div>
                 </div>
             </div>
 
@@ -95,19 +117,19 @@
                 <div class="metric-grid">
                     <div class="metric-card">
                         <h4>Give Aways</h4>
-                        <div class="metric-value">0</div>
+                        <div class="metric-value" id="giveaways-count"><?= $giveaways ?></div>
                     </div>
                     <div class="metric-card">
-                        <h4>Inquiries & Returns</h4>
-                        <div class="metric-value">0</div>
+                        <h4>Returns</h4>
+                        <div class="metric-value" id="returns-count"><?= $returns ?></div>
                     </div>
                     <div class="metric-card">
                         <h4>Orders</h4>
-                        <div class="metric-value">0</div>
+                        <div class="metric-value" id="orders-count"><?= $orders ?></div>
                     </div>
                     <div class="metric-card">
                         <h4>Reviews</h4>
-                        <div class="metric-value">0</div>
+                        <div class="metric-value" id="reviews-count"><?= $reviews ?></div>
                     </div>
                 </div>
             </div>
@@ -115,6 +137,7 @@
     </div>
     <script src="<?= ROOT ?>/assets/js/customerServiceManager/home.js"></script>
     <script src="<?= ROOT ?>/assets/js/customerServiceManager/sidebar.js"></script>
+    <script src="<?= ROOT ?>/assets/js/customerServiceManager/notifications.js"></script>
 </body>
 
 </html>

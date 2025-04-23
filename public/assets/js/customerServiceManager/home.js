@@ -20,9 +20,13 @@ function renderCalendar() {
 
     // Add previous month's dates
     for (let i = firstDayOfMonth; i > 0; i--) {
+        const prevMonth = month === 0 ? 11 : month - 1;
+        const prevYear = month === 0 ? year - 1 : year;
         const date = document.createElement('div');
         date.classList.add('date', 'other-month');
         date.textContent = lastDateOfPrevMonth - i + 1;
+        const formattedDate = `${prevYear}-${String(prevMonth + 1).padStart(2, '0')}-${String(lastDateOfPrevMonth - i + 1).padStart(2, '0')}`;
+        date.setAttribute('data-date', formattedDate);
         dates.appendChild(date);
     }
 
@@ -31,6 +35,10 @@ function renderCalendar() {
         const date = document.createElement('div');
         date.classList.add('date');
         date.textContent = i;
+        
+        // Format date as YYYY-MM-DD
+        const formattedDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+        date.setAttribute('data-date', formattedDate);
 
         // Highlight today
         if (
@@ -44,15 +52,42 @@ function renderCalendar() {
         dates.appendChild(date);
     }
 
-    // Calculate the remaining cells after the last date of the month
-    const remainingCells = 42 - (firstDayOfMonth + lastDateOfMonth);
-
     // Add next month's dates
+    const remainingCells = 42 - (firstDayOfMonth + lastDateOfMonth);
     for (let i = 1; i <= remainingCells; i++) {
+        const nextMonth = month === 11 ? 0 : month + 1;
+        const nextYear = month === 11 ? year + 1 : year;
         const date = document.createElement('div');
         date.classList.add('date', 'other-month');
         date.textContent = i;
+        const formattedDate = `${nextYear}-${String(nextMonth + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+        date.setAttribute('data-date', formattedDate);
         dates.appendChild(date);
+    }
+    
+    // Add click events to all dates after they're created
+    addDateClickEvents();
+}
+
+function addDateClickEvents() {
+    const dateElements = document.querySelectorAll('#dates .date');
+    dateElements.forEach(dateElement => {
+        dateElement.addEventListener('click', onDateClick);
+    });
+}
+
+function onDateClick(event) {
+    // Remove 'selected' class from all dates
+    document.querySelectorAll('#dates .date').forEach(date => {
+        date.classList.remove('selected');
+    });
+    
+    // Add 'selected' class to clicked date
+    event.target.classList.add('selected');
+    
+    const selectedDate = event.target.getAttribute('data-date');
+    if (selectedDate) {
+        fetchDayData(selectedDate);
     }
 }
 
@@ -87,3 +122,51 @@ setInterval(updateClock, 1000);
 
 // Initial call to display clock immediately
 updateClock();
+
+// Fetch data for the selected day
+function fetchDayData(formattedDate) {
+    // Get the base URL from a hidden input or other source
+    const rootUrl = document.querySelector('meta[name="root-url"]')?.getAttribute('content') || '';
+    
+    fetch(`${rootUrl}/CSManagerHome/getDayData?date=${formattedDate}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.error) {
+                console.error('Error from server:', data.error);
+                return;
+            }
+            
+            // Update the dashboard with the new data
+            document.getElementById('giveaways-count').textContent = data.giveaways;
+            document.getElementById('returns-count').textContent = data.returns;
+            document.getElementById('orders-count').textContent = data.orders;
+            document.getElementById('reviews-count').textContent = data.reviews;
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+}
+
+// Display data for the selected day
+function displayDayData(data) {
+    // Ensure data is always a number, default to 0 if undefined/null
+    const giveaways = (typeof data.giveaways === 'number') ? data.giveaways : (parseInt(data.giveaways) || 0);
+    const returns = (typeof data.returns === 'number') ? data.returns : (parseInt(data.returns) || 0);
+    const orders = (typeof data.orders === 'number') ? data.orders : (parseInt(data.orders) || 0);
+    const reviews = (typeof data.reviews === 'number') ? data.reviews : (parseInt(data.reviews) || 0);
+
+    document.getElementById('giveaways-count').textContent = giveaways;
+    document.getElementById('returns-count').textContent = returns;
+    document.getElementById('orders-count').textContent = orders;
+    document.getElementById('reviews-count').textContent = reviews;
+}
+
+// Ensure the calendar is re-rendered after changing months
+document.addEventListener('DOMContentLoaded', () => {
+    renderCalendar();
+});

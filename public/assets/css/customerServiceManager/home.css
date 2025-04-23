@@ -86,6 +86,13 @@
   font-weight: bold;
 }
 
+/* Add this to your home.css file */
+.date.selected {
+    background-color: #4caf50;
+    color: white;
+    font-weight: bold;
+}
+
 /* Status Section Styles */
 .status-section {
   flex-grow: 1;

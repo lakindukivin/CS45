@@ -77,7 +77,7 @@
             <label for="Quantity" class="">Quantity:</label>
             <input type="text" id="quantity" name="quantity" class="input-field" readonly>
           </div>
-
+          
           <div class="popup-content">
             <label for="Total" class="">Total:</label>
             <input type="text" id="total" name="total" class="input-field" readonly>
@@ -128,7 +128,7 @@
       <nav class="nav">
         <ul>
           <li><a href="#"><img src="<?=ROOT?>/assets/images/notifications.svg"></a></li>
-          <li><a href="#">Profile</a></li>
+          <li><a href="<?=ROOT?>/profile">Profile</a></li>
           <li><a href="#">Logout</a></li>
         </ul>
       </nav>
@@ -179,27 +179,18 @@
     </div>
   </div>
 
+  <div id="successMessage" class="success-message" style="display: none;">
+    <div class="icon">✅</div>
+    <p class="message-text">The order was successfully accepted!</p>
+</div>
+
+<div id="errorMessage" class="error-message" style="display: none;">
+    <div class="icon">❌</div>
+    <p class="message-text">The order was rejected!</p>
+</div>
+
   <script>
-    function openManageOrderUpdatePopup(order) {
-      // Populate the popup fields with the order details
-      document.getElementById('order_id').value = order.order_id || '';
-      document.getElementById('productName').value = order.productName || '';
-      document.getElementById('customerName').value = order.customerName || '';
-      document.getElementById('quantity').value = order.quantity || '';
-      document.getElementById('total').value = order.total || '';
-      document.getElementById('deliveryAddress').value = order.deliveryAddress || '';
-      document.getElementById('billingAddress').value = order.billingAddress || '';
-      document.getElementById('orderDate').value = order.orderDate || '';
-      document.getElementById('orderStatus').value = order.orderStatus || '';
-
-      // Display the popup
-      document.getElementById('manageOrderUpdatePopup').style.display = 'flex';
-
-      // Add event listener to close the popup
-      document.getElementById('closePopupBtn').addEventListener('click', () => {
-        document.getElementById('manageOrderUpdatePopup').style.display = 'none';
-      });
-    }
+   
   </script>
   <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>
   <script src="<?=ROOT?>/assets/js/customerServiceManager/manage_orders.js"></script>

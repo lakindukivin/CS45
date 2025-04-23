@@ -7,8 +7,60 @@
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/customerServiceManager/returns.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/customerServiceManager/common.css">
     <title>Waste360|Completed Returns</title>
+
+    <!-- Updated CSS for message popups with higher z-index to always show on top -->
+  <style>
+    .message-popup {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 25px;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
+      z-index: 2000; /* Higher than other modals (typically 1000) */
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    
+    .message-popup.show {
+      opacity: 1;
+    }
+    
+    .success-message {
+      background-color:rgb(72, 173, 75);
+    }
+    
+    .error-message {
+      background-color:rgb(221, 42, 29);
+    }
+
+    /* Dim background overlay for popups */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1500;
+      display: none;
+    }
+  </style>
 </head>
+
 <body>
+<!-- Success and Error message popups - moved outside of any other container -->
+<div id="successMessage" class="message-popup success-message">
+  <span class="message-text">Return successfully updated!</span>
+</div>
+<div id="errorMessage" class="message-popup error-message">
+  <span class="message-text">Failed to update return!</span>
+</div>
+<div id="modalOverlay" class="modal-overlay"></div>
+
 <nav id="sidebar">
       <button id="toggle-btn" onclick="toggleSidebar()" class="toggle-btn">
         <img src="<?=ROOT?>/assets/images/menu.svg" alt="menu" />
@@ -67,88 +119,6 @@
     </nav>
 
     <div class="content">
-    <div id="completedReturnPopup" style="display: none;">
-      <div class="popup-content">
-        <form action="" method="post" class="bg-white p-5 rounded-md w-full">
-          <div class="popup-content">
-            <h1>Return Update</h1>
-            <button type="button" class="btn-secondary-color" id="closePopupBtn">Close</button>
-          </div>
-
-          <div class="popup-content">
-            <label for="Return-id" class="">Return ID:</label>
-            <input type="text" id="return_id" name="returnId" class="input-field" readonly>
-          </div>
-
-          <div class="popup-content">
-            <label for="Order-id" class="">Order ID:</label>
-            <input type="text" id="order_id" name="orderId" class="input-field" readonly>
-          </div>
-
-          <div class="popup-content">
-            <label for="Product-id" class="">Product ID:</label>
-            <input type="text" id="product_id" name="productId" class="input-field" readonly>
-          </div>
-
-          <div class="popup-content">
-            <label for="Customer-id" class="">Customer ID:</label>
-            <input type="text" id="customer_id" name="customerId" class="input-field" readonly>
-          </div>
-
-          <div class="popup-content">
-            <label for="Name" class="">Name:</label>
-            <input type="text" id="customerName" name="customerName" class="input-field" readonly>
-          </div>
-
-          <div class="popup-content">
-            <label for="Product-name" class="">Product Name:</label>
-            <input type="text" id="productName" name="productName" class="input-field" readonly>
-          </div>
-
-          <div class="popup-content">
-            <label for="Quantity" class="">Quantity:</label>
-            <input type="text" id="quantity" name="quantity" class="input-field" readonly>
-          </div>
-
-          <div class="popup-content">
-            <label for="Total" class="">Total:</label>
-            <input type="text" id="total" name="total" class="input-field" readonly>
-          </div>
-
-          <div class="popup-content">
-            <label for="Order-date" class="">Order Date:</label>
-            <input type="text" id="orderDate" name="orderDate" class="input-field" readonly>
-          </div>
-
-          <div class="popup-content">
-            <label for="Phone" class="">Phone:</label>
-            <input type="text" id="phone" name="phone" class="input-field" readonly>
-          </div>
-
-          <div class="popup-content">
-            <label for="Return-Details" class="">Return Details:</label>
-            <input type="text" id="returnDetails" name="returnDetails" class="input-field" readonly>
-          </div>
-
-          <div class="popup-content">
-            <label for="Customer-Requirements" class="">Customer Requirements:</label>
-            <input type="text" id="cus_requirements" name="cus_requirements" class="input-field" readonly>
-          </div>
-
-          <div class="popup-content">
-            <label for="decision_reason" class="">Decision Reason:</label>
-            <textarea id="decision_reason" name="decision_reason" class="input-field"></textarea>
-          </div>
-
-          <div class="popup-content">
-            <label for="message_to_customer" class="">Message to Customer:</label>
-            <textarea id="message_to_customer" name="message_to_customer" class="input-field"></textarea>
-          </div>
-  
-        </form>
-      </div>
-    </div>
-
     <header class="header">
       <div class="logo">
       <img src="<?=ROOT?>/assets/images/Waste360.png" alt="logo" />
@@ -158,7 +128,7 @@
       <nav class="nav">
         <ul>
           <li><a href="#"><img src="<?=ROOT?>/assets/images/notifications.svg"></a></li>
-          <li><a href="#">Profile</a></li>
+          <li><a href="<?=ROOT?>/profile">Profile</a></li>
           <li><a href="#">Logout</a></li>
         </ul>
       </nav>
@@ -168,33 +138,114 @@
       <div class="container">
         <div class="header">
           <h2>Completed Return Requests</h2>
+          <button class="add-button">
+            <a href="<?=ROOT?>/Returns">View Pending Returns</a>
+          </button>
         </div>
-        <table id="completedReturnTable">
+
+         <!-- Order status tabs -->
+         <div class="status-tabs">
+          <button class="status-tab active" data-status="accepted">Accepted</button>
+          <button class="status-tab" data-status="returned">Mark as Returned</button>
+          <button class="status-tab" data-status="rejected">Rejected</button>
+        </div>
+
+        <div class="tab-content active" id="accepted-orders">
+        <table>
             <thead>
                 <tr>
                     <th>Return ID</th>
                     <th>Order ID</th>
                     <th>Product ID</th>
                     <th>Customer ID</th>
-                    <th>Status</th>
-                    <th>Decision Reason</th>
                     <th>Date Completed</th>
+                    <th>Status</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-            <?php if(isset($data['completedReturns']) && is_array($data['completedReturns'])): ?>
-              <?php foreach ($data['completedReturns'] as $completedReturn) : ?>
-                <tr>
-                  <td><?= $completedReturn->return_id ?></td>
-                  <td><?= $completedReturn->order_id ?></td>
-                  <td><?= $completedReturn->product_id ?></td>
-                  <td><?= $completedReturn->customer_id ?></td>
-                  <td><?= $completedReturn->status ?></td>
-                  <td><?= $completedReturn->decision_reason ?></td>
-                  <td><?= $completedReturn->date_completed ?></td>
+            <?php if(isset($data['accepted_returns']) && is_array($data['accepted_returns']) && !empty($data['accepted_returns'])): ?>
+              <?php foreach ($data['accepted_returns'] as $return) : ?>
+                <tr data-order='<?= htmlspecialchars(json_encode($return), ENT_QUOTES, 'UTF-8') ?>'>                  <td><?= $return->return_id ?></td>
+                  <td><?= $return->order_id ?></td>
+                  <td><?= $return->product_id ?></td>
+                  <td><?= $return->customer_id ?></td>
+                  <td><?= $return->date_completed ?></td>
+                  <td><span class="status-badge accepted">Accepted</span></td>
                   <td>
-                    <button class="view-btn" onclick="openCompletedReturnPopup(<?= htmlspecialchars(json_encode($completedReturn), ENT_QUOTES, 'UTF-8')?>)">View</button>
+                    <button class="view-btn" data-id="<?= $return->return_id ?>">View Details</button>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="9">No completed return requests found</td>
+                </tr>
+            <?php endif; ?>
+            </tbody>
+        </table>
+      </div>
+
+      <div class="tab-content" id="returned-orders">
+      <table>
+            <thead>
+                <tr>
+                    <th>Return ID</th>
+                    <th>Order ID</th>
+                    <th>Product ID</th>
+                    <th>Customer ID</th>
+                    <th>Date Completed</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php if(isset($data['returned_orders']) && is_array($data['returned_orders']) && !empty($data['returned_orders'])): ?>
+              <?php foreach ($data['returned_orders'] as $return) : ?>
+                <tr data-order='<?= htmlspecialchars(json_encode($return), ENT_QUOTES, 'UTF-8') ?>'>                  <td><?= $return->return_id ?></td>
+                  <td><?= $return->order_id ?></td>
+                  <td><?= $return->product_id ?></td>
+                  <td><?= $return->customer_id ?></td>
+                  <td><?= $return->date_completed ?></td>
+                  <td><span class="status-badge returned">Returned</span></td>
+                  <td>
+                    <button class="view-btn" data-id="<?= $return->return_id ?>">View Details</button>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="9">No completed return requests found</td>
+                </tr>
+            <?php endif; ?>
+            </tbody>
+        </table>
+      </div>
+
+      <div class="tab-content" id="rejected-orders">
+      <table>
+            <thead>
+                <tr>
+                    <th>Return ID</th>
+                    <th>Order ID</th>
+                    <th>Product ID</th>
+                    <th>Customer ID</th>
+                    <th>Date Completed</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php if(isset($data['rejected_returns']) && is_array($data['rejected_returns']) && !empty($data['rejected_returns'])): ?>
+              <?php foreach ($data['rejected_returns'] as $return) : ?>
+                <tr data-order='<?= htmlspecialchars(json_encode($return), ENT_QUOTES, 'UTF-8') ?>'>                  <td><?= $return->return_id ?></td>
+                  <td><?= $return->order_id ?></td>
+                  <td><?= $return->product_id ?></td>
+                  <td><?= $return->customer_id ?></td>
+                  <td><?= $return->date_completed ?></td>
+                  <td><span class="status-badge rejected">Rejected</span></td>
+                  <td>
+                    <button class="view-btn" data-id="<?= $return->return_id ?>">View Details</button>
                   </td>
                 </tr>
               <?php endforeach; ?>
@@ -209,7 +260,90 @@
     </div>
   </div>
 
+         <!-- Order Details Modal -->
+    <div id="orderDetailsModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Order Details</h2>
+        <div class="popup-details">
+          <div class="detail-row">
+            <span class="label">Return ID:</span>
+            <span class="value" id="modal-return-id"></span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Order ID:</span>
+            <span class="value" id="modal-order-id"></span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Product ID:</span>
+            <span class="value" id="modal-product"></span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Customer ID:</span>
+            <span class="value" id="modal-customer"></span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Return Details:</span>
+            <span class="value" id="modal-return-details"></span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Customer Requirements:</span>
+            <span class="value" id="modal-cus-requirements"></span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Decision reason:</span>
+            <span class="value" id="modal-decision"></span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Date:</span>
+            <span class="value" id="modal-date"></span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Status:</span>
+            <span class="value status-badge" id="modal-status"></span>
+          </div>
+        </div>
+        
+        <div class="action-buttons">
+          <!-- Only show update button for statuses that can be updated -->
+          <button class="update-status" data-id="" id="updateStatusBtn" style="display:none;">Update Status</button>
+        </div>
+      </div>
+    </div>
+
+     <!-- Order Status Update Popup -->
+     <div id="statusUpdatePopup" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closeStatusPopup">&times;</span>
+        <h2>Update Return Status</h2>
+        <form id="updateStatusForm">
+          <input type="hidden" name="return_id" id="popup-return-id">
+
+          <div class="form-group">
+            <label for="status">Status:</label>
+            <select name="status" id="status" class="input-field">
+              <option value="returned" selected>Returned</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message_to_customer">Message to Customer:</label>
+            <textarea name="message_to_customer" id="message_to_customer" class="input-field" rows="4" placeholder="Enter a message for the customer regarding their returned item..."></textarea>
+          </div>
+
+          <div class="action-buttons">
+            <button type="submit" class="update-status">Update Return Status</button>
+            <button type="button" class="btn-secondary-color" id="cancelStatusUpdate">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  const ROOT = "<?=ROOT?>";
+  </script>
     <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>  
-    <script src="<?=ROOT?>/assets/js/customerServiceManager/completedReturns.js"></script>  
+    <script src="<?=ROOT?>/assets/js/customerServiceManager/returns.js"></script>  
 </body>
 </html>

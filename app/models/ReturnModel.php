@@ -32,8 +32,9 @@ class ReturnModel {
     }
 
     public function getAllCompletedReturns() {
-        $query = "SELECT cr.*, o.customer_id, c.name AS customerName, o.quantity, c.phone, p.productName, o.total,  o.orderDate
+        $query = "SELECT cr.*, o.customer_id, c.name AS customerName, o.quantity, c.phone, p.productName, o.total,  o.orderDate, ri.returnDetails, ri.cus_requirements
                     FROM completed_returns cr
+                    JOIN return_item ri ON cr.return_id = ri.return_id
                     JOIN orders o ON cr.order_id = o.order_id
                     JOIN customer c ON o.customer_id = c.customer_id
                     JOIN product p ON o.product_id = p.product_id
@@ -44,19 +45,36 @@ class ReturnModel {
     public function addCompletedReturn($data) {
         // Check if the return_id already exists in completed_returns
         $existingReturn = $this->query("SELECT * FROM completed_returns WHERE return_id = :return_id", ['return_id' => $data['return_id']]);
-        if ($existingReturn) {
-            // If it exists, update the existing record instead of inserting
-            $query = "UPDATE completed_returns 
-                      SET order_id = :order_id, product_id = :product_id, customer_id = :customer_id, 
-                          status = :status, decision_reason = :decision_reason, message_to_customer = :message_to_customer 
-                      WHERE return_id = :return_id";
-        } else {
-            // If it doesn't exist, insert a new record
-            $query = "INSERT INTO completed_returns 
-                      (return_id, order_id, product_id, customer_id, status, decision_reason, message_to_customer) 
-                      VALUES (:return_id, :order_id, :product_id, :customer_id, :status, :decision_reason, :message_to_customer)";
+        
+        // Debug log
+        error_log("Adding/updating completed return: " . print_r($data, true));
+        
+        try {
+            if ($existingReturn) {
+                // If it exists, update the existing record
+                $query = "UPDATE completed_returns 
+                        SET order_id = :order_id, product_id = :product_id, customer_id = :customer_id, 
+                            status = :status, decision_reason = :decision_reason, message_to_customer = :message_to_customer,
+                            date_completed = CURRENT_TIMESTAMP
+                        WHERE return_id = :return_id";
+            } else {
+                // If it doesn't exist, insert a new record
+                $query = "INSERT INTO completed_returns 
+                        (return_id, order_id, product_id, customer_id, status, decision_reason, message_to_customer) 
+                        VALUES (:return_id, :order_id, :product_id, :customer_id, :status, :decision_reason, :message_to_customer)";
+            }
+            
+            // Also update the status in the return_item table
+            $this->updateReturnStatus($data['return_id'], $data['status'], $data['decision_reason']);
+            
+            $result = $this->query($query, $data);
+            error_log("Database query result: " . ($result ? "Success" : "Failed"));
+            
+            return true; // Return true to indicate success even if query returns null
+        } catch (Exception $e) {
+            error_log("Error in addCompletedReturn: " . $e->getMessage());
+            return false;
         }
-        return $this->query($query, $data);
     }
 
     public function updateCompletedReturn($return_id, $data) {
@@ -72,4 +90,41 @@ class ReturnModel {
         return $this->query($query, $data)[0] ?? null;
     }
 
+    public function getReturnWithCustomerInfo($return_id) {
+        $query = "SELECT ri.*, o.customer_id, c.name AS customerName
+                  FROM return_item ri
+                  JOIN orders o ON ri.order_id = o.order_id
+                  JOIN customer c ON o.customer_id = c.customer_id
+                  WHERE ri.return_id = :return_id";
+        $data = ['return_id' => $return_id];
+        $result = $this->query($query, $data);
+        return $result ? $result[0] : null;
+    }
+
+    public function countByDate($date)
+    {
+        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
+            throw new Exception("Invalid date format. Expected YYYY-MM-DD.");
+        }
+        // Fix the query to use the correct date column name
+        $query = "SELECT COUNT(return_id) as count FROM return_item WHERE DATE(date) = :date";
+        $result = $this->query($query, ['date' => $date]);
+
+        // Access the result as an object
+        if (isset($result[0]->count)) {
+            return $result[0]->count;
+        }
+
+        return 0; // Default to 0 if no valid result is found
+    }
+
+    public function getPendingReturns()
+    {
+        $query = "SELECT r.*, c.name FROM return_item r 
+                  JOIN orders o ON r.order_id = o.order_id 
+                  JOIN customer c ON o.customer_id = c.customer_id 
+                  WHERE r.returnStatus = 'pending' 
+                  ORDER BY r.date DESC";
+        return $this->query($query);
+    }
 }

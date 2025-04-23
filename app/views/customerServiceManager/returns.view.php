@@ -158,7 +158,6 @@
           <div class="button-container">
             <button type="submit" class="accept" name="accept_return">Accept</button>
             <button type="submit" class="reject" name="reject_return">Reject</button>
-            <button type="submit" class="return" name="mark_as_returned">Mark as Returned</button>
           </div>
 
   
@@ -174,7 +173,7 @@
       <nav class="nav">
         <ul>
           <li><a href="#"><img src="<?=ROOT?>/assets/images/notifications.svg"></a></li>
-          <li><a href="#">Profile</a></li>
+          <li><a href="<?=ROOT?>/profile">Profile</a></li>
           <li><a href="#">Logout</a></li>
         </ul>
       </nav>
@@ -224,6 +223,41 @@
   </div> 
 
   
+  <div id="successMessage" class="success-message" style="display: none;">
+    <div class="icon">✅</div>
+    <p class="message-text">The return was successfully accepted!</p>
+</div>
+
+<div id="errorMessage" class="error-message" style="display: none;">
+    <div class="icon">❌</div>
+    <p class="message-text">The return was rejected!</p>
+</div>
+
+  <script>
+    function openReturnUpdatePopup(returnData) {
+        document.getElementById('return_id').value = returnData.return_id;
+        document.getElementById('order_id').value = returnData.order_id;
+        document.getElementById('product_id').value = returnData.product_id;
+        document.getElementById('customer_id').value = returnData.customer_id;
+        document.getElementById('customerName').value = returnData.customerName;
+        document.getElementById('productName').value = returnData.productName;
+        document.getElementById('quantity').value = returnData.quantity;
+        document.getElementById('total').value = returnData.total;
+        document.getElementById('orderDate').value = returnData.orderDate;
+        document.getElementById('returnDetails').value = returnData.returnDetails;
+        document.getElementById('cus_requirements').value = returnData.cus_requirements;
+        document.getElementById('phone').value = returnData.phone;
+        document.getElementById('return_status').value = returnData.returnStatus;
+
+
+        document.getElementById('returnUpdatePopup').style.display = 'flex';
+
+        // Add event listener to close the popup
+      document.getElementById('closePopupBtn').addEventListener('click', () => {
+        document.getElementById('returnUpdatePopup').style.display = 'none';
+      });
+    }
+  </script>
   <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>  
   <script src="<?=ROOT?>/assets/js/customerServiceManager/returns.js"></script>  
 </body>

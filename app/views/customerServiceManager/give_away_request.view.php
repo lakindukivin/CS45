@@ -83,7 +83,7 @@
             <input type="text" name="Phone" id="phone" readonly/>
           </div>
           <div class="popup-content">
-            <label for="request_date">request_date: </label>
+            <label for="request_date">Request date: </label>
             <input type="text" name="request_date" id="request_date" readonly/>
           </div>
           <div class="popup-content">
@@ -101,10 +101,6 @@
             <input type="text" name="details" id="details" readonly/>
           </div>
 
-          <div class="popup-content">
-            <label for="request-date">Request Date:</label>
-            <input type="text" name="request_date" id="request_date" readonly/>
-          </div>
 
           <div class="popup-content">
             <label for="decision-date">Decision date:</label>
@@ -138,11 +134,11 @@
         <img src="<?= ROOT ?>/assets/images/Waste360.png" alt="logo" />
         <h1>Waste360</h1>
       </div>
-      <h1 class="logo">DashBoard</h1>
+      <h1 class="logo">Pending Give Away Request</h1>
       <nav class="nav">
         <ul>
           <li><a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg"></a></li>
-          <li><a href="#">Profile</a></li>
+          <li><a href="<?=ROOT?>/profile">Profile</a></li>
           <li><a href="#">Logout</a></li>
         </ul>
       </nav>
@@ -150,7 +146,6 @@
     <div class="box">
       <div class="container">
         <div class="header">
-          <h2>Pending Give Away Request</h2>
           <button class="add-button">
             <a href="<?= ROOT ?>/CompletedGiveAway">View Completed Give Aways</a>
           </button>
@@ -193,24 +188,16 @@
     </div>
   </div>
 
-  <script>
-    function openGiveAwayReqUpdatePopup(giveaway) {
-      document.getElementById('giveaway_id').value = giveaway.giveaway_id;
-      document.getElementById('customer_id').value = giveaway.customer_id;
-      document.getElementById('name').value = giveaway.name;
-      document.getElementById('phone').value = giveaway.phone;
-      document.getElementById('request_date').value = giveaway.request_date;
-      document.getElementById('address').value = giveaway.address;
-      document.getElementById('giveaway_status').value = giveaway.giveawayStatus;
-      document.getElementById('details').value = giveaway.details;
+  <div id="successMessage" class="success-message" style="display: none;">
+    <div class="icon">✅</div>
+    <p class="message-text">The order was successfully accepted!</p>
+</div>
 
-      
-      document.getElementById('giveAwayReqUpdatePopup').style.display = 'flex';
-      document.getElementById('giveAwayReqUpdatePopupClose').addEventListener('click', () => {
-        document.getElementById('giveAwayReqUpdatePopup').style.display = 'none';
-      });
-    }
-  </script>
+<div id="errorMessage" class="error-message" style="display: none;">
+    <div class="icon">❌</div>
+    <p class="message-text">The order was rejected!</p>
+</div>
+
   <script src="<?= ROOT ?>/assets/js/customerServiceManager/sidebar.js"></script>
   <script src="<?= ROOT ?>/assets/js/customerServiceManager/give_away_request.js"></script>
 </body>
