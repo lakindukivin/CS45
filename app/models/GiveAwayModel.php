@@ -81,4 +81,13 @@ class GiveAwayModel {
 
         return 0; // Default to 0 if no valid result is found
     }
+
+    public function getPendingGiveaways()
+    {
+        $query = "SELECT g.*, c.name FROM giveawayrequests g 
+                  JOIN customer c ON g.customer_id = c.customer_id 
+                  WHERE g.giveawayStatus = 'pending' 
+                  ORDER BY g.request_date DESC";
+        return $this->query($query);
+    }
 }

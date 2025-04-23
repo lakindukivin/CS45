@@ -118,4 +118,13 @@ class ReturnModel {
         return 0; // Default to 0 if no valid result is found
     }
 
+    public function getPendingReturns()
+    {
+        $query = "SELECT r.*, c.name FROM return_item r 
+                  JOIN orders o ON r.order_id = o.order_id 
+                  JOIN customer c ON o.customer_id = c.customer_id 
+                  WHERE r.returnStatus = 'pending' 
+                  ORDER BY r.date DESC";
+        return $this->query($query);
+    }
 }

@@ -70,5 +70,14 @@ class Review {
 
         return 0; // Default to 0 if no valid result is found
     }
+
+    public function getPendingReviews()
+    {
+        $query = "SELECT r.*, c.name FROM review r 
+                  JOIN customer c ON r.customer_id = c.customer_id 
+                  WHERE r.status = 'pending' 
+                  ORDER BY r.date DESC";
+        return $this->query($query);
+    }
     
 }

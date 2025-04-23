@@ -172,4 +172,14 @@ class ManageOrderModel
         return 0;
     }
 
+    public function getPendingOrders()
+    {
+        $query = "SELECT o.*, c.name, p.productName FROM orders o 
+                  JOIN customer c ON o.customer_id = c.customer_id 
+                  JOIN product p ON o.product_id = p.product_id 
+                  WHERE o.orderStatus = 'pending' 
+                  ORDER BY o.orderDate DESC";
+        return $this->query($query);
+    }
+
 }

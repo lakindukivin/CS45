@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/customerServiceManager/sidebar.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/customerServiceManager/home.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/customerServiceManager/common.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/customerServiceManager/notifications.css">
     <title>Waste360|Dashboard|CSM</title>
-    
 </head>
 
 <body>
@@ -60,7 +60,22 @@
             <h1 class="logo">DashBoard</h1>
             <nav class="nav">
                 <ul>
-                    <li><a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg"></a></li>
+                    <li class="notification-container">
+                        <a href="#" id="notification-icon"><img src="<?= ROOT ?>/assets/images/notifications.svg">
+                            <span class="notification-badge" id="notification-count">0</span>
+                        </a>
+                        <!-- Notification panel will appear here -->
+                        <div class="notification-panel" id="notification-panel">
+                            <div class="notification-header">
+                                <h3>Notifications</h3>
+                                <button id="mark-all-read">Mark all as read</button>
+                            </div>
+                            <div class="notification-content" id="notification-content">
+                                <!-- Notifications will be loaded here -->
+                                <div class="loading">Loading notifications...</div>
+                            </div>
+                        </div>
+                    </li>
                     <li><a href="<?= ROOT ?>/profile">Profile</a></li>
                     <li><a href="<?= ROOT ?>/login">Logout</a></li>
                 </ul>
@@ -122,6 +137,7 @@
     </div>
     <script src="<?= ROOT ?>/assets/js/customerServiceManager/home.js"></script>
     <script src="<?= ROOT ?>/assets/js/customerServiceManager/sidebar.js"></script>
+    <script src="<?= ROOT ?>/assets/js/customerServiceManager/notifications.js"></script>
 </body>
 
 </html>

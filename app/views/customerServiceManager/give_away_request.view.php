@@ -134,7 +134,7 @@
         <img src="<?= ROOT ?>/assets/images/Waste360.png" alt="logo" />
         <h1>Waste360</h1>
       </div>
-      <h1 class="logo">DashBoard</h1>
+      <h1 class="logo">Pending Give Away Request</h1>
       <nav class="nav">
         <ul>
           <li><a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg"></a></li>
@@ -146,7 +146,6 @@
     <div class="box">
       <div class="container">
         <div class="header">
-          <h2>Pending Give Away Request</h2>
           <button class="add-button">
             <a href="<?= ROOT ?>/CompletedGiveAway">View Completed Give Aways</a>
           </button>
