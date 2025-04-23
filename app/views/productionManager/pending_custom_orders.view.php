@@ -96,9 +96,9 @@
                     <tr>
                         <td><?=htmlspecialchars($order->customOrder_id)?></td>
                         <td><?=htmlspecialchars($order->customer_name)?></td>
-                        <td><?=htmlspecialchars($order->Company_name)?></td>
-                        <td><?=htmlspecialchars($order->Quantity)?></td>
-                        <td><?=htmlspecialchars($order->Type)?></td>
+                        <td><?=htmlspecialchars($order->company_name)?></td>
+                        <td><?=htmlspecialchars($order->quantity)?></td>
+                        <td><?=htmlspecialchars($order->type)?></td>
                         <td><?=htmlspecialchars($order->customOrder_status)?></td>
                         <td>
                             <div class="buttons">

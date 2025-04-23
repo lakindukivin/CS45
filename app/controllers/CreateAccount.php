@@ -13,29 +13,55 @@ class CreateAccount
         $data = [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Set default role if not provided
+            $_POST['role_id'] = $_POST['role_id'] ?? 3; // Default to Customer role (3)
+
             if ($user->validate($_POST)) {
                 try {
-                    // Use processed data for insertion
-                    if ($user->insert($user->processedData)) {
-                        // Successful account creation, redirect to home
+                    // Hash the password before insertion
+                    $user->processedData['password'] = password_hash($user->processedData['password'], PASSWORD_DEFAULT);
+
+                    // Insert the user and get the new user ID
+                    $user_id = $user->addUser($user->processedData);
+
+                    if ($user_id) {
+                        // Optionally log the user in immediately
+                        // $this->autoLogin($user_id);
+
+                        // Set success message and redirect
+                        $_SESSION['success'] = "Account created successfully!";
                         redirect('login');
                     } else {
-                        // If insert fails, show a general error message
-                        $data['errors']['general'] = "An unexpected error occurred. Please try again.";
+                        $data['errors']['general'] = "Failed to create account. Please try again.";
                     }
                 } catch (Exception $e) {
-                    // Log any errors for debugging
                     error_log("Database Error: " . $e->getMessage());
-                    // Show a friendly error message to the user
-                    $data['errors']['general'] = "Failed to create account: " . $e->getMessage();
+                    $data['errors']['general'] = "A system error occurred. Please try again later.";
                 }
             } else {
-                // Validation failed, show the validation errors
                 $data['errors'] = $user->errors;
+                // Preserve form input for better UX
+                $data['old'] = $_POST;
             }
         }
 
-        // Load the view and pass data (errors)
         $this->view('customer/createAccount', $data);
+    }
+
+    // Optional: Auto-login after registration
+    protected function autoLogin($user_id)
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        $user = new User();
+        $userData = $user->first(['user_id' => $user_id]);
+
+        if ($userData) {
+            $_SESSION['user_id'] = $userData->user_id;
+            $_SESSION['email'] = $userData->email;
+            $_SESSION['role_id'] = $userData->role_id;
+        }
     }
 }

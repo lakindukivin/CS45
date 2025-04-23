@@ -95,9 +95,6 @@
     <div class="container">
         <div class="header">
             <h1>Completed Custom Orders</h1>
-            <button class="add-button">
-                <a href="<?=ROOT?>/CompletedOrders">View Completed Orders</a>
-            </button>
         </div>
 
         <table>
@@ -112,7 +109,20 @@
                 </tr>
             </thead>
             <tbody id="orderTableBody">
-                <!-- Table body will be populated by JavaScript -->
+              <?php if (!empty($completedOrders)): ?>
+                <?php foreach ($completedOrders as $order): ?>
+                  <tr>
+                  <td><?= htmlspecialchars($order->customer_id) ?></td>
+                  <td><?= htmlspecialchars($order->company_name) ?></td>
+                  <td><?= htmlspecialchars($order->quantity) ?></td>
+                  <td><?= htmlspecialchars($order->phone) ?></td>
+                  <td><?= htmlspecialchars($order->type) ?></td>
+                    <td><span class="completed-label">Completed</span></td>
+                  </tr>
+                <?php endforeach; ?>
+              <?php else: ?>
+                <tr><td colspan="6">No completed orders found.</td></tr>
+              <?php endif; ?>
             </tbody>
         </table>
     </div>

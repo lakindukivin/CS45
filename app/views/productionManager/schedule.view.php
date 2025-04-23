@@ -97,7 +97,7 @@
   <div id="modal" class="modal">
       <div class="modal-content">
           <span class="close-btn" onclick="closeModal()">&times;</span>
-          <h2>Add Collection Schedule</h2>
+          <h2>Add Collection Schedule</h2></br>
           <form id="scheduleForm">
               <div class="form-group">
                   <label for="area">Area:</label>
@@ -105,7 +105,7 @@
               </div>
               <div class="form-group">
                   <label for="date">Date:</label>
-                  <input type="date" id="date" name="date" required>
+                  <input type="date" id="date" name="date" min="<?= date('Y-m-d', strtotime('+2 day')) ?>" required>
               </div>
               <div class="form-group">
                   <label for="time">Time:</label>

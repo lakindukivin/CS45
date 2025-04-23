@@ -12,6 +12,29 @@
     --transition: all 0.3s ease;
 }
 
+@font-face {
+    font-family: "Poppins";
+    src: url("../../fonts/Poppins.ttf") format("truetype");
+    /* font-weight: 400; */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("../../fonts/Roboto.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Inter";
+    src: url("../../fonts/Inter.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -24,7 +47,7 @@ body {
     min-height: 100vh;
     display: grid;
     grid-template-columns: auto 1fr;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 .content {
@@ -111,6 +134,28 @@ header {
     margin-bottom: 15px;
 }
 
+/* pagination */
+.pagination {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 8px 12px;
+    margin: 0 2px;
+    border: 1px solid #ccc;
+    color: #333;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.pagination a.active {
+    background: var(--accent-green);
+    color: #fff;
+    border-color: var(--accent-green);
+}
+
 .search-bar {
     display: flex;
     align-items: center;
@@ -158,39 +203,56 @@ header {
 }
 
 form input,
-form textarea form select {
+form select {
     width: 100%;
     padding: 8px;
     margin-top: 5px;
-    border: 1px solid black;
+    border: 2px solid #ccc;
     border-radius: 5px;
+    background-color: #f8f8f8;
+}
+
+form textarea {
+    width: 100%;
+    height: 150px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background-color: #f8f8f8;
+    resize: none;
 }
 
 /*table*/
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
-    border: 1px solid black;
+    margin-top: 10px;
 }
 
 th,
 td {
-    padding: 10px;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
 
-    text-align: left;
-    border: 1px solid black;
+td {
+    color: var(--gray-800);
 }
 
 th {
-    background-color: #f0f0f0;
+    background-color: var(--gray-300);
+    color: var(--primary-green);
+    font-weight: 600;
 }
 
 .action-btn {
     background-color: var(--secondary-green);
     color: white;
     padding: 10px 20px;
-    margin: 5px 0;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -201,31 +263,32 @@ th {
 }
 
 .edit-btn {
-    background-color: #4c8f36;
-    color: white;
-    padding: 10px 20px;
+    background: transparent;
     margin: 5px 0;
-    border: none;
     border-radius: 4px;
     cursor: pointer;
+    padding: 5px;
+    border: none;
 }
 
 .edit-btn:hover {
-    background-color: #6eaf58;
+    transform: scale(1.1);
+    transition: all 0.3s ease;
+
 }
 
 .delete-btn {
-    background-color: #782424;
-    color: white;
-    padding: 10px 20px;
+    background: transparent;
     margin: 5px 0;
-    border: none;
     border-radius: 4px;
     cursor: pointer;
+    padding: 5px;
+    border: none;
 }
 
 .delete-btn:hover {
-    background-color: #612424;
+    transform: scale(1.1);
+    transition: all 0.3s ease;
 }
 
 
@@ -245,7 +308,7 @@ th {
 
 .modal-content {
     background-color: #fff;
-    margin: 15% auto;
+    margin: 100px auto;
     padding: 20px;
     border-radius: 8px;
     width: 50%;
@@ -254,14 +317,12 @@ th {
     animation: fadeIn 0.3s;
 }
 
-.modal-content h3 {
-    margin-bottom: 15px;
-}
-
-.modal-content p {
-    margin-bottom: 20px;
-    font-size: 16px;
-    color: #555;
+.delete-modal {
+    width: 600px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .close {
@@ -275,16 +336,9 @@ th {
     color: #000;
 }
 
-/* Delete Confirmation Modal */
-.delete-modal-actions {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
-
 .confirm-btn {
-    background-color: #d9534f;
-    color: #fff;
+    background-color: #ff4d4d;
+    color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 4px;
@@ -311,6 +365,26 @@ th {
 /* Response Modal */
 .response-modal {
     width: 40%;
+}
+
+.active-btn {
+    background-color: var(--secondary-green);
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.inactive-btn {
+    background-color: #c9302c;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 @media (max-width: 768px) {

@@ -1,0 +1,31 @@
+h2,
+h3 {
+    text-align: center;
+}
+
+
+
+.action-btn {
+    background-color: #133223;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.action-btn:hover {
+    background-color: #1c573b;
+}
+
+
+
+#message {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+
+
+@media screen and (max-width: 768px) {}

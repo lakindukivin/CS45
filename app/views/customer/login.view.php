@@ -50,7 +50,7 @@
                         <input
                             type="email"
                             id="Email"
-                            name="Email"
+                            name="email"
                             placeholder="Enter your email"
                             required />
                     </div>
@@ -59,7 +59,7 @@
                         <input
                             type="password"
                             id="Password"
-                            name="Password"
+                            name="password"
                             placeholder="Enter your password"
                             required />
                     </div>

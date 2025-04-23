@@ -12,7 +12,7 @@ class Logout
         }
 
         // Destroy the session only if the user explicitly clicks the logout button
-        if (isset($_GET['logout'])) {
+        // if (isset($_GET['logout'])) {
             // Unset all session variables
             session_unset();
             // Destroy the session
@@ -21,6 +21,6 @@ class Logout
             // Redirect the user to the login page
             header('Location: ' . ROOT . '/login');
             exit();
-        }
+        // }
     }
 }

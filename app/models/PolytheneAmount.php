@@ -4,22 +4,32 @@ class PolytheneAmount  {
 
     use Model;  
     protected $table = 'polytheneamount';
-
+    protected $primaryKey = 'polythene_id';
+    protected $allowedColumns = [
+        'polythene_amount', 
+        'message',
+        'month',
+        'updated_date'
+    ];
+    
     public function updateAmount($data) {
-        $query = "INSERT INTO polytheneamount (polytheneamount, message, month) 
-                 VALUES (:polytheneamount, :message, :month)";
+        $data['updated_date'] = date('Y-m-d');
+        // Check if record exists for this month
+        $existing = $this->first(['month' => $data['month']]);
         
-        return $this->query($query, [
-            'polytheneamount' => $data['amount'],
-            'message' => $data['message'],
-            'month' => $data['month']
-        ]);
+        if($existing) {
+            return $this->update($existing->polythene_id, $data);
+        } else {
+            return $this->insert($data);
+        }
+    }
+    public function getAllAmounts() {
+        return $this->findAll();
     }
 
-    public function getAllAmounts() {
-        $query = "SELECT * FROM polytheneamount ORDER BY updated_date DESC";
-        return $this->query($query);
-    }
+
+
+    //below methods (have no idea)
 
     public function getAmountByMonth($month) {
         $query = "SELECT * FROM polytheneamount WHERE month = :month";

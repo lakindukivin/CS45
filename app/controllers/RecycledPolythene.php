@@ -1,7 +1,6 @@
 <?php
 
 class RecycledPolythene {
-
     use Controller;
     private $polytheneModel;
 
@@ -18,16 +17,21 @@ class RecycledPolythene {
     public function updateAmount() {
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $data = [
-                'amount' => $_POST['amount'],
+                'polythene_amount' => $_POST['polythene_amount'], // Changed to match your table column
                 'message' => $_POST['message'],
-                'month' => $_POST['month']
+                'month' => $_POST['month'],
+                'updated_date' => date('Y-m-d H:i:s')
             ];
 
             if($this->polytheneModel->updateAmount($data)) {
                 $_SESSION['success'] = "Successfully updated!";
-                header("Location: " . ROOT . "/RecycledPolythene");
-                exit();
+                redirect('RecycledPolythene');
             }
         }
+    }
+    
+    public function PolytheneAmount() {
+        $data['amounts'] = $this->polytheneModel->getAllAmounts();
+        $this->view('productionManager/polythene_amount', $data);
     }
 }

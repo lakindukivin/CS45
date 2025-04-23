@@ -26,10 +26,7 @@
         </button>
         <div class="sidebar-container">
             <div class="prof-picture">
-                <img src="<?= ROOT ?>/assets/images/profile-circle.svg" alt="profile" />
-
-            </div>
-            <div>
+                <img src="<?= ROOT ?>/assets/images/user.svg" alt="profile" />
                 <span class="user-title">Sales and Marketing Manager</span>
             </div>
 
@@ -43,7 +40,7 @@
                     </li>
 
                     <li>
-                        <a href="<?= ROOT ?>/carbonFootprint" class="sidebar-active">
+                        <a href="#" class="sidebar-active">
                             <img src="<?= ROOT ?>/assets/images/carbon-footprint.svg" alt="carbon footprint" />
                             <span class="sidebar-titles">Carbon Footprint</span>
                         </a>
@@ -82,18 +79,27 @@
     </nav>
 
     <main>
-        <header>
+        <header class="header">
             <div class="logo">
                 <img src="<?= ROOT ?>/assets/images/Waste360.png" alt="Waste360" />
                 <h1>Waste360</h1>
             </div>
-            <div class="page-title">
-                <p>Carbon Footprint</p>
-            </div>
-            <nav class="header-nav">
-                <a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg" alt="" /></a>
-                <a href="#">Profile</a>
-                <a href="#">Log Out</a>
+
+            <h1 class="logo">Carbon Footprint</h1>
+
+            <nav class="nav">
+                <ul>
+
+                    <li>
+                        <a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg" alt="" /></a>
+                    </li>
+                    <li>
+                        <a href="#">Profile</a>
+                    </li>
+                    <li>
+                        <a href="<?= ROOT ?>/Logout">Log Out</a>
+                    </li>
+                </ul>
             </nav>
         </header>
 
@@ -123,13 +129,44 @@
                 <table id="carbonFootprintTable">
                     <thead>
                         <tr>
-                            <th>Value</th>
-                            <th>Unit</th>
+                            <th>Month</th>
+                            <th>Amount of Carbon Footprint Saved(in kg)</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody></tbody>
+                    <tbody>
+                        <?php if (!empty($carbonFootprints)): ?>
+                            <?php foreach ($carbonFootprints as $carbonFootprint): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($carbonFootprint->month) ?></td>
+                                    <td><?= htmlspecialchars($carbonFootprint->amount) ?></td>
+
+                                    <td>
+                                        <button class="delete-btn"
+                                            onclick="openDeleteModal('<?= $carbonFootprint->discount_id ?>')">Delete</button>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="6">No discounts found.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
                 </table>
+                <!-- Delete Confirmation Modal -->
+                <div id="deleteModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeDeleteModal()">&times;</span>
+                        <h3>Confirm Delete</h3>
+                        <p>Are you sure you want to delete this record?</p>
+                        <form action="<?= ROOT ?>/carbonFootprint/delete" method="POST">
+                            <input type="hidden" name="footprint_id" id="delete_footprint_id">
+                            <button type="submit" class="delete-btn">Delete</button>
+                            <button type="button" class="cancel-btn" onclick="closeDeleteModal()">Cancel</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -140,7 +177,8 @@
         <p>&copy; 2024 Waste360. All rights reserved.</p>
       </footer> -->
     </main>
-    <script src="<?= ROOT ?>/assets/js/salesManager/sidebar.js"></script>
+    <script src="<?= ROOT ?>/assets/js/sidebar.js"></script>
+    <script src="<?= ROOT ?>/assets/js/modal.js"></script>
     <script src="<?= ROOT ?>/assets/js/salesManager/carbonFootprint.js"></script>
 </body>
 

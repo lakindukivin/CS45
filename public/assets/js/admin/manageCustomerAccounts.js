@@ -1,118 +1,43 @@
-const customerDetails = [
-  {
-    userId: 'C001',
-    name: 'John Doe',
-    email: 'johndoe@example.com',
-    contactNo: '+1234567890',
-    address: '123 Green Street, Cityville',
-    giveAwayAmount: '50 kg',
-    purchasedAmount: '$200',
-    savedCarbonFootprint: '15 kg',
-  },
-  {
-    userId: 'C002',
-    name: 'Jane Smith',
-    email: 'janesmith@example.com',
-    contactNo: '+9876543210',
-    address: '456 Blue Avenue, Townsville',
-    giveAwayAmount: '30 kg',
-    purchasedAmount: '$120',
-    savedCarbonFootprint: '10 kg',
-  },
-  {
-    userId: 'C003',
-    name: 'Alice Johnson',
-    email: 'alicej@example.com',
-    contactNo: '+1122334455',
-    address: '789 Red Road, Villagetown',
-    giveAwayAmount: '20 kg',
-    purchasedAmount: '$80',
-    savedCarbonFootprint: '8 kg',
-  },
-  {
-    userId: 'C004',
-    name: 'Bob Brown',
-    email: 'bobbrown@example.com',
-    contactNo: '+9988776655',
-    address: '321 Yellow Lane, Hamletcity',
-    giveAwayAmount: '40 kg',
-    purchasedAmount: '$160',
-    savedCarbonFootprint: '12 kg',
-  },
-  {
-    userId: 'C005',
-    name: 'Charlie Davis',
-    email: 'charlied@example.com',
-    contactNo: '+5566778899',
-    address: '654 Purple Path, Countryside',
-    giveAwayAmount: '10 kg',
-    purchasedAmount: '$50',
-    savedCarbonFootprint: '5 kg',
-  },
-];
-const fetchCustomerDetails = async () => {
-  try {
-    // const response = await fetch();
-    //  if (!response.ok) throw new Error('Failed to fetch products');
+function openEditModal(customer_id, name, image, phone, address, status) {
+  document.getElementById('editCustomerId').value = customer_id;
+  document.getElementById('editCustomerName').value = name;
+  document.getElementById('editCustomerImage').value = image ? image : '';
+  document.getElementById('editCustomerContactNo').value = phone;
+  document.getElementById('editCustomerAddress').value = address;
+  document.getElementById('editCustomerStatus').value = status;
 
-    //  const customerDetails = await response.json();
-    const tableBody = document.getElementById('customerTableBody');
+  document.getElementById('editModal').style.display = 'block';
+}
 
-    tableBody.innerHTML = customerDetails
-      .map((customer) => {
-        return `<tr>
-            <td>${customer.userId}</td>
-            <td>${customer.name}</td>
-            <td>${customer.email}</td>
-            <td>${customer.contactNo}</td>
-            <td>${customer.address}</td>
-            <td>${customer.giveAwayAmount}</td>
-            <td>${customer.purchasedAmount}</td>
-            <td>${customer.savedCarbonFootprint}</td>
-            
-            <td>
-            <button class="edit-btn" onclick="editCustomer('${customer.userId}')">Edit</button>
-            <button class="delete-btn" onclick="openDeleteModal(${customer.userId})">Delete</button>
-            </td>           
-            </tr>
-            `;
-      })
-      .join('');
-    document.getElementById('totalUsers').textContent = staffDetails.length;
-  } catch (error) {
-    console.error('Error:', error);
-  }
-};
-fetchCustomerDetails();
+function closeEditModal() {
+  document.getElementById('editModal').style.display = 'none';
+  document.getElementById('editCustomerForm').reset();
+}
 
-//edit
+function openDeleteModal(customer_id) {
+  document.getElementById('deleteCustomerId').value = customer_id;
+  document.getElementById('deleteConfirmationModal').style.display = 'block';
+}
 
-const editCustomer = async (customerID) => {
-  try {
-    openEditModal();
-    // const response = await fetch(
-    //  );
+function closeDeleteModal() {
+  document.getElementById('deleteConfirmationModal').style.display = 'none';
+  document.getElementById('deleteCustomerForm').reset();
+}
 
-    // if (!response.ok) {
-    //   throw new Error('Failed to fetch product details');
-    // }
+function closeResponseModal() {
+  document.getElementById('responseModal').style.display = 'none';
+  location.reload(); // Refresh the page to see changes
+}
 
-    // const customer= await response.json();
-
-    const customer = customerDetails.find((customer) => {
-      return customer.userId == customerID;
-    });
-
-    document.getElementById('editCustomerAccounts').userId.value =
-      customer.userId;
-    document.getElementById('editCustomerAccounts').editCustomerName.value =
-      customer.name;
-    document.getElementById('editCustomerAccounts').editCustomerEmail.value =
-      customer.email;
-    document.getElementById(
-      'editCustomerAccounts'
-    ).editCustomerContactNo.value = customer.contactNo;
-    document.getElementById('editCustomerAccounts').editCustomerAddress.value =
-      customer.address;
-  } catch (error) {}
-};
+function showResponse(message) {
+  document.getElementById('responseMessage').textContent = message;
+  document.getElementById('responseModal').style.display = 'block';
+}
+//refresh searchbar
+document
+  .querySelector('input[name="search"]')
+  .addEventListener('input', function (e) {
+    if (e.target.value.trim() === '') {
+      window.location.href = window.location.pathname;
+    }
+  });

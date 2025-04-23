@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -11,21 +11,13 @@
 </head>
 
 <body>
-    <?php
-    if (isset($_SESSION['user_id'])) {
-        $profileLink = ROOT . '/profile';
-    } else {
-        $profileLink = ROOT . '/login';
-    }
-    ?>
-
     <nav id="sidebar">
         <button id="toggle-btn" onclick="toggleSidebar()" class="toggle-btn">
             <img src="<?= ROOT ?>/assets/images/menu.svg" alt="menu" />
         </button>
         <div class="sidebar-container">
             <div class="prof-picture">
-                <img src="<?= ROOT ?>/assets/images/profile-circle.svg" alt="profile" />
+                <img src="<?= ROOT ?>/assets/images/user.svg" alt="profile" />
                 <span class="user-title">Admin</span>
             </div>
 
@@ -39,35 +31,26 @@
                     </li>
 
                     <li>
-                        <button onclick="toggleSubMenu()" class="dropdown-button">
-                            <img src="<?= ROOT ?>/assets/images/manage-accounts.svg" alt="" />
-                            <span class="sidebar-titles">Manage Accounts</span>
-                            <img src="<?= ROOT ?>/assets/images/dropdownbtn.svg" alt="dropdown-button"
-                                id="dropdownbtn-img" />
-                        </button>
-
-                        <ul id="sub-menu" class="sub-menu">
-                            <li>
-                                <a class="sidebar-titles" href="<?= ROOT ?>/manageCustomerAccounts">
-                                    Manage Customer Accounts
-                                </a>
-                            </li>
-                            <li>
-                                <a class="sidebar-titles" href="<?= ROOT ?>/manageStaffAccounts">
-                                    Manage Staff Accounts
-                                </a>
-                            </li>
-                        </ul>
+                        <a href="<?= ROOT ?>/manageCustomerAccounts">
+                            <img src="<?= ROOT ?>/assets/images/customer-account.svg" alt="customer" />
+                            <span class="sidebar-titles">Customer Management</span>
+                        </a>
                     </li>
 
                     <li>
-                        <a href="<?= ROOT ?>/legalIssues">
+                        <a href="<?= ROOT ?>/manageStaffAccounts">
+                            <img src="<?= ROOT ?>/assets/images/staff-account.svg" alt="staff" />
+                            <span class="sidebar-titles">Staff Management</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= ROOT ?>/issues">
                             <img src="<?= ROOT ?>/assets/images/legal-issues.svg" alt="legal issues" />
                             <span class="sidebar-titles">Issues</span>
                         </a>
                     </li>
                     <li>
-                        <a href="<?= ROOT ?>/siteperformance" class="sidebar-active">
+                        <a href="#" class="sidebar-active">
                             <img src="<?= ROOT ?>/assets/images/site-performance.svg" alt="site Performance" />
                             <span class="sidebar-titles">Site Performance</span>
                         </a>
@@ -78,18 +61,26 @@
     </nav>
 
     <main>
-        <header>
+        <header class="header">
             <div class="logo">
                 <img src="<?= ROOT ?>/assets/images/Waste360.png" alt="Waste360" />
                 <h1>Waste360</h1>
             </div>
-            <div class="page-title">
-                <p>Site Performance</p>
-            </div>
-            <nav class="header-nav">
-                <a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg" alt="" /></a>
-                <a href="#">Profile</a>
-                <a href="#">Log Out</a>
+
+            <h1 class="logo">Site Performance</h1>
+
+            <nav class="nav">
+                <ul>
+                    <li>
+                        <a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg" alt="" /></a>
+                    </li>
+                    <li>
+                        <a href="#">Profile</a>
+                    </li>
+                    <li>
+                        <a href="<?= ROOT ?>/Logout">Log Out</a>
+                    </li>
+                </ul>
             </nav>
         </header>
 

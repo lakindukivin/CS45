@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Edit Order class
- */
 
 class EditCustomOrder
 {
@@ -13,7 +10,6 @@ class EditCustomOrder
 
         $order = $this->getOrderById($orderId);
 
-        // Check if the order exists
         if ($order) {
 
             $this->view('customer/editCustomOrder', ['order' => $order]);
@@ -23,7 +19,7 @@ class EditCustomOrder
         }
     }
 
-    // Method to fetch the order from the database
+   
     private function getOrderById($orderId)
     {
 

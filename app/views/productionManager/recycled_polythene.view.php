@@ -82,7 +82,7 @@
 
         <div class="form-group">
           <label for="amount">Polythene Amount (Tons):</label>
-          <input type="number" id="amount" name="amount" step="0.01" min="0" required class="form-control">
+          <input type="number" id="amount" name="polythene_amount" step="0.01" min="0" required class="form-control">
           <small class="error-message" id="amountError"></small>
         </div>
 

@@ -11,23 +11,13 @@
 </head>
 
 <body>
-
-    <?php
-    if (isset($_SESSION['user_id'])) {
-        $profileLink = ROOT . '/profile';
-    } else {
-        $profileLink = ROOT . '/login';
-    }
-    ?>
     <nav id="sidebar">
         <button id="toggle-btn" onclick="toggleSidebar()" class="toggle-btn">
             <img src="<?= ROOT ?>/assets/images/menu.svg" alt="menu" />
         </button>
         <div class="sidebar-container">
             <div class="prof-picture">
-                <img src="<?= ROOT ?>/assets/images/profile-circle.svg" alt="profile" />
-            </div>
-            <div>
+                <img src="<?= ROOT ?>/assets/images/user.svg" alt="profile" />
                 <span class="user-title">Sales and Marketing Manager</span>
             </div>
 
@@ -80,18 +70,27 @@
     </nav>
 
     <main>
-        <header>
+        <header class="header">
             <div class="logo">
                 <img src="<?= ROOT ?>/assets/images/Waste360.png" alt="Waste360" />
                 <h1>Waste360</h1>
             </div>
-            <div class="page-title">
-                <p>Ads/Banners</p>
-            </div>
-            <nav class="header-nav">
-                <a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg" alt="" /></a>
-                <a href="#">Profile</a>
-                <a href="#">Log Out</a>
+
+            <h1 class="logo">Ads / Banners</h1>
+
+            <nav class="nav">
+                <ul>
+
+                    <li>
+                        <a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg" alt="" /></a>
+                    </li>
+                    <li>
+                        <a href="#">Profile</a>
+                    </li>
+                    <li>
+                        <a href="<?= ROOT ?>/Logout">Log Out</a>
+                    </li>
+                </ul>
             </nav>
         </header>
 
@@ -99,9 +98,12 @@
             <!--Table Header-->
 
             <div class="table-header">
-                <div>
-
-                </div>
+                <form class="search-bar" method="get" action="">
+                    <img src="<?= ROOT ?>/assets/images/magnifying-glass-solid.svg" class="search-icon" width="20px" />
+                    <input type="text" name="search" value="<?= isset($search) ? htmlspecialchars($search) : '' ?>"
+                        placeholder="Search ads by title,description or dates..." />
+                    <button type="submit">Search</button>
+                </form>
                 <div>
                     <button class="action-btn" onclick="openAddModal()">Add Ads/Banners</button>
                 </div>
@@ -113,63 +115,165 @@
             <table id="adTable">
                 <thead>
                     <tr>
+                        <th>Ads/Banner ID</th>
                         <th>Title</th>
+                        <th>Image</th>
                         <th>Description</th>
-                        <th>Target Audience</th>
-                        <th>Display Settings</th>
-                        <th>Actions</th>
+                        <th>Status</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th style="width:100px">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Rows dynamically added -->
+                    <?php if (!empty($adsAndBanners)): ?>
+                        <?php foreach ($adsAndBanners as $adsAndBanner): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($adsAndBanner->ad_id) ?></td>
+                                <td><?= htmlspecialchars($adsAndBanner->title) ?></td>
+                                <td><?php if (!empty($adsAndBanner->image)): ?>
+                                        <img src="<?= ROOT . $adsAndBanner->image ?>" alt="Ad/Banner"
+                                            style="width: 90px; height: 90px;" />
+                                    <?php else: ?>
+                                        No image
+                                    <?php endif; ?>
+                                </td>
+                                <td><?= htmlspecialchars($adsAndBanner->description) ?></td>
+                                <td><?= htmlspecialchars($adsAndBanner->start_date) ?></td>
+                                <td><?= htmlspecialchars($adsAndBanner->end_date) ?></td>
+                                <td><?= $adsAndBanner->status == 1 ? "<a href=AdsAndBanners/setInactive?ad_id=" . $adsAndBanner->ad_id . " class='active-btn'>Active</a>" : "<a  href=AdsAndBanners/setActive?ad_id=" . $adsAndBanner->ad_id . " class='inactive-btn'>Inactive</a>";?></td>
+                                <td>
+                                    <button class="edit-btn"
+                                        onclick="openEditModal('<?= $adsAndBanner->ad_id ?>', '<?= $adsAndBanner->title ?>', '<?= $adsAndBanner->image ?>','<?= $adsAndBanner->description ?>','<?= $adsAndBanner->start_date ?>', '<?= $adsAndBanner->end_date ?>','<?= $adsAndBanner->status ?>')"><img
+                                            src="<?= ROOT ?>/assets/images/edit-btn.svg"" alt=" edit"></button>
+                                    <button class="delete-btn" onclick="openDeleteModal('<?= $adsAndBanner->ad_id ?>')"><img
+                                            src="<?= ROOT ?>/assets/images/delete-btn.svg"" alt=" delete"></button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="6">No data found.</td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
             </table>
 
 
-            <!-- Ad Form Section -->
-
-            <h3>Add Ads/Banners</h3>
-
-            <form id="adFormContent">
-                <div class="form-group">
-                    <label>Title:
-                        <input type="text" id="adTitle" placeholder="Ad Title" required />
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label>Description:
-                        <textarea id="adDescription" placeholder="Ad Description" required></textarea>
-                    </label>
-                </div>
-
-                <div class="form-group">
-                    <label>Target Audience:
-                        <input type="text" id="adAudience" placeholder="E.g., Customers, Teens, Professionals"
-                            required />
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label>Display Settings:
-                        <input type="text" id="adSettings" placeholder="E.g., Homepage, Sidebar, Banner" required />
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label>Upload Banner File:
-                        <input type="file" id="adFile" accept="image/*" required />
-                    </label>
-                </div>
-                <button type="submit" class="action-btn">Save & Preview</button>
-            </form>
-        </div>
-
-        <!-- <footer>
-            <div class="logo">
-                <img src="<?= ROOT ?>/assets/images/Waste360.png" alt="Waste360" />
+            <!-- Pagination Controls -->
+            <div class="pagination">
+                <?php if (isset($totalPages) && $totalPages > 1): ?>
+                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                        <a href="?<?= isset($search) && $search !== '' ? 'search=' . urlencode($search) . '&' : '' ?>page=<?= $i ?>"
+                            class="<?= (isset($currentPage) && $currentPage == $i) ? 'active' : '' ?>">
+                            <?= $i ?>
+                        </a>
+                    <?php endfor; ?>
+                <?php endif; ?>
             </div>
-            <p>&copy; 2024 Waste360. All rights reserved.</p>
-        </footer> -->
+
+            <div id="addModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeAddModal()">&times;</span>
+                    <h3>Add Ads/Banners</h3>
+
+                    <form action="<?= ROOT ?>/AdsAndBanners/add" id="adForm" enctype="multipart/form-data"
+                        method="post">
+                        <div class="form-group">
+                            <label>Title:
+                                <input type="text" id="adTitle" name="title" placeholder="Ad Title" required />
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>Upload Banner File:</label>
+                            <input type="file" id="adImage" name="adImage" accept="image/*" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Description:
+                                <textarea id="adDescription" name="description" placeholder="Ad Description"
+                                    required></textarea>
+                            </label>
+                        </div>
+
+                        <div class="form-group date-inputs" id="scheduledDateContainer">
+                            <label>Start Date:
+                                <input type="date" id="adStartDate" name="startDate" />
+                            </label>
+                            <label>End Date:
+                                <input type="date" id="adEndDate" name="endDate" />
+                            </label>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="action-btn" id="saveAdBtn">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="editModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeEditModal()">&times;</span>
+                    <h3>Edit Ads/Banner</h3>
+                    <form id="editAdForm" enctype="multipart/form-data" action="<?= ROOT ?>/AdsAndBanners/update"
+                        method="post">
+                        <input type="hidden" id="editAdId" name="editAdId" />
+                        <input type="hidden" name="existingImagePath" id="existingImagePath" />
+                        <div class="form-group">
+                            <label>Title:</label>
+                            <input type="text" id="editAdTitle" name="editAdTitle" placeholder="Ad Title" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editAdImage">Ad Image:</label>
+                            <img id="editAdImage" src="" alt="AD Image" style="width: 100px; height: auto" />
+                            <input type="file" name="editAdImage" id="editAdImage" accept="image/*" />
+                        </div>
+                        <div class="form-group">
+                            <label>Description:</label>
+                            <textarea id="editAdDescription" name="editAdDescription" placeholder="Ad Description"
+                                required></textarea>
+                        </div>
+
+                        <div class="form-group date-inputs" id="editScheduledDateContainer">
+                            <label>Start Date:</label>
+                            <input type="date" id="editAdStartDate" name="editAdStartDate" />
+                            <label>End Date:</label>
+                            <input type="date" id="editAdEndDate" name="editAdEndDate" />
+
+                        </div>
+                        <div class="form-group">
+                            <label for="editStatus">Status</label>
+                            <select name="editStatus" id="editStatus">
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+
+                        </div>
+
+                        <button type="submit" class="action-btn">Update</button>
+
+                    </form>
+                </div>
+            </div>
+
+            <!-- Delete Confirmation Modal -->
+            <div id="deleteModal" class="modal">
+                <div class="modal-content delete-modal">
+                    <h3>Confirm Deletion</h3>
+                    <p>Are you sure you want to delete this ad/banner?</p>
+                    <form action="<?= ROOT ?>/AdsAndBanners/delete" id="deleteAdForm" method="post">
+                        <input type="hidden" id="deleteAdId" name="deleteAdId" />
+                        <div class="form-actions">
+                            <button type="submit" class="confirm-btn">Delete</button>
+                            <button type="button" class="cancel-btn" onclick="closeDeleteModal()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </main>
-    <script src="<?= ROOT ?>/assets/js/salesManager/sidebar.js"></script>
+    <script src="<?= ROOT ?>/assets/js/sidebar.js"></script>
     <script src="<?= ROOT ?>/assets/js/salesManager/adsAndBanners.js"></script>
 </body>
 
