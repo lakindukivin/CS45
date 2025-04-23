@@ -186,7 +186,7 @@
                         <div class="form-group">
                             <label for="discountPercentage">Discount Percentage:
                                 <input id="discountPercentage" type="number" name="discountPercentage"
-                                    placeholder="E.g., 0.2,0.4" min="0" max="1" required />
+                                    placeholder="E.g., 0.2,0.4" min="1" max="100" required />
                             </label>
                         </div>
                         <div class="form-group">
@@ -242,7 +242,7 @@
 
                         </div>
                         <button type="submit" class="action-btn">Update Discount</button>
-                     </form>
+                    </form>
                 </div>
             </div>
 
@@ -262,6 +262,7 @@
         </div>
     </main>
     <script src="<?= ROOT ?>/assets/js/sidebar.js"></script>
+    <script src="<?= ROOT ?>/assets/js/formValidation.js"></script>
     <script src="<?= ROOT ?>/assets/js/salesManager/discounts.js"></script>
 </body>
 

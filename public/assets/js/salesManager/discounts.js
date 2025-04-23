@@ -58,3 +58,34 @@ document
       window.location.href = window.location.pathname;
     }
   });
+
+// Discount form validation
+document.addEventListener('DOMContentLoaded', function () {
+  // Add Discount form
+  if (document.getElementById('addDiscountForm')) {
+    setupFormValidation('addDiscountForm', {
+      productId: [{ type: 'required' }],
+      discountPercentage: [{ type: 'required' }],
+      startDate: [{ type: 'required' }, { type: 'dateFormat' }],
+      endDate: [
+        { type: 'required' },
+        { type: 'dateFormat' },
+        { type: 'dateOrder', related: 'startDate' },
+      ],
+    });
+  }
+
+  // Edit Discount form
+  if (document.getElementById('editDiscountForm')) {
+    setupFormValidation('editDiscountForm', {
+      editDiscountPercentage: [{ type: 'required' }],
+      editStartDate: [{ type: 'required' }, { type: 'dateFormat' }],
+      editEndDate: [
+        { type: 'required' },
+        { type: 'dateFormat' },
+        { type: 'dateOrder', related: 'editStartDate' },
+      ],
+      editStatus: [{ type: 'required' }],
+    });
+  }
+});

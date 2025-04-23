@@ -16,7 +16,7 @@ function showError(input, message) {
   // Add the error message to the form group
   formGroup.appendChild(errorMessage);
 }
- 
+
 // Function to remove error message
 function removeError(input) {
   // Find the parent container
@@ -29,7 +29,7 @@ function removeError(input) {
     formGroup.removeChild(errorMessage);
   }
 }
- 
+
 // Function to validate required fields
 function validateRequired(input) {
   if (input.value.trim() === '') {
@@ -39,7 +39,7 @@ function validateRequired(input) {
   removeError(input);
   return true;
 }
- 
+
 // Function to validate email format
 function validateEmail(input) {
   // Check if the field is empty
@@ -55,7 +55,7 @@ function validateEmail(input) {
   removeError(input);
   return true;
 }
- 
+
 // Function to validate phone number
 function validatePhone(input) {
   // Check if the field is empty
@@ -71,7 +71,7 @@ function validatePhone(input) {
   removeError(input);
   return true;
 }
- 
+
 // Function to validate minimum length
 function validateMinLength(input, minLength) {
   if (input.value.trim().length < minLength) {
@@ -81,7 +81,7 @@ function validateMinLength(input, minLength) {
   removeError(input);
   return true;
 }
- 
+
 // Function to validate maximum length
 function validateMaxLength(input, maxLength) {
   if (input.value.trim().length > maxLength) {
@@ -91,13 +91,13 @@ function validateMaxLength(input, maxLength) {
   removeError(input);
   return true;
 }
- 
+
 // Function to sanitize input (prevent SQL injection characters)
 function sanitizeInput(input) {
   // Basic sanitization - remove potentially harmful characters
   const sanitized = input.value
     .replace(/[<>'"]/g, '') // Remove angle brackets, quotes
-    .replace(/;/g, '');     // Remove semicolons
+    .replace(/;/g, ''); // Remove semicolons
   if (sanitized !== input.value) {
     input.value = sanitized;
     showError(input, 'Special characters removed for security');
@@ -105,7 +105,7 @@ function sanitizeInput(input) {
   }
   return true;
 }
- 
+
 // Function to enforce special characters policy
 function validateSpecialChars(input, allowSpecial) {
   if (!allowSpecial) {
@@ -119,7 +119,7 @@ function validateSpecialChars(input, allowSpecial) {
   removeError(input);
   return true;
 }
- 
+
 // Function to validate file type
 function validateFileType(input, allowedTypes) {
   // Check if a file is selected
@@ -135,7 +135,7 @@ function validateFileType(input, allowedTypes) {
   removeError(input);
   return true;
 }
- 
+
 // Function to limit input length in real-time
 function setupCharLimit(input, maxLength) {
   // Set maxlength attribute
@@ -146,7 +146,7 @@ function setupCharLimit(input, maxLength) {
   counter.innerText = `0/${maxLength}`;
   input.parentElement.appendChild(counter);
   // Update counter on input
-  input.addEventListener('input', function() {
+  input.addEventListener('input', function () {
     const currentLength = this.value.length;
     counter.innerText = `${currentLength}/${maxLength}`;
     // Change counter color when approaching limit
@@ -161,7 +161,51 @@ function setupCharLimit(input, maxLength) {
     }
   });
 }
- 
+
+// ...existing code...
+
+// Function to validate date format (YYYY-MM-DD)
+function validateDateFormat(input) {
+  if (input.value.trim() === '') return true; // Required handled separately
+  // Simple regex for YYYY-MM-DD
+  const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+  if (!dateRegex.test(input.value.trim())) {
+    showError(input, 'Invalid date format');
+    return false;
+  }
+  removeError(input);
+  return true;
+}
+
+// Function to validate that end date is after start date
+function validateDateOrder(startInput, endInput) {
+  if (startInput.value && endInput.value) {
+    const start = new Date(startInput.value);
+    const end = new Date(endInput.value);
+    if (end < start) {
+      showError(endInput, 'End date must be after start date');
+      return false;
+    }
+  }
+  removeError(endInput);
+  return true;
+}
+
+// Special handling for date fields (real-time validation)
+const startInput = form.querySelector(
+  '[name="startDate"], [name="editStartDate"]'
+);
+const endInput = form.querySelector('[name="endDate"], [name="editEndDate"]');
+if (startInput && endInput) {
+  function validateDatesRealtime() {
+    validateDateFormat(startInput);
+    validateDateFormat(endInput);
+    validateDateOrder(startInput, endInput);
+  }
+  startInput.addEventListener('input', validateDatesRealtime);
+  endInput.addEventListener('input', validateDatesRealtime);
+}
+
 // Function to set up form validation
 function setupFormValidation(formId, validations) {
   const form = document.getElementById(formId);
@@ -191,13 +235,15 @@ function setupFormValidation(formId, validations) {
     const input = form.querySelector(`[name="${fieldName}"]`);
     if (!input) continue;
     // Find maxLength rule if it exists
-    const maxLengthRule = validations[fieldName].find(rule => rule.type === 'maxLength');
+    const maxLengthRule = validations[fieldName].find(
+      (rule) => rule.type === 'maxLength'
+    );
     if (maxLengthRule) {
       setupCharLimit(input, maxLengthRule.value);
     }
   }
   // Handle form submission
-  form.addEventListener('submit', function(event) {
+  form.addEventListener('submit', function (event) {
     let isValid = true;
     // Validate each field according to its rules
     for (const fieldName in validations) {
@@ -211,6 +257,7 @@ function setupFormValidation(formId, validations) {
         }
       }
       // Apply each validation rule
+      // ...existing code...
       for (const rule of rules) {
         let ruleIsValid = true;
         switch (rule.type) {
@@ -235,13 +282,20 @@ function setupFormValidation(formId, validations) {
           case 'fileType':
             ruleIsValid = validateFileType(input, rule.extensions);
             break;
+          case 'dateFormat':
+            ruleIsValid = validateDateFormat(input);
+            break;
+          case 'dateOrder':
+            const relatedInput = form.querySelector(`[name="${rule.related}"]`);
+            ruleIsValid = validateDateOrder(relatedInput, input);
+            break;
         }
-        // If any rule fails, mark the form as invalid
         if (!ruleIsValid) {
           isValid = false;
-          break; // Skip remaining rules for this field
+          break;
         }
       }
+      // ...existing code...
     }
     // Prevent form submission if validation fails
     if (!isValid) {
@@ -252,7 +306,7 @@ function setupFormValidation(formId, validations) {
   for (const fieldName in validations) {
     const input = form.querySelector(`[name="${fieldName}"]`);
     if (!input) continue;
-    input.addEventListener('blur', function() {
+    input.addEventListener('blur', function () {
       // Sanitize input first
       if (input.type !== 'file') {
         sanitizeInput(input);
@@ -288,7 +342,7 @@ function setupFormValidation(formId, validations) {
       }
     });
     // Clear errors when user starts typing again
-    input.addEventListener('input', function() {
+    input.addEventListener('input', function () {
       if (input.classList.contains('error-input')) {
         removeError(input);
       }
