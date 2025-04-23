@@ -95,18 +95,20 @@
         <div class="form-group">
           <label for="month">Month:</label>
           <select id="month" name="month" class="form-control" required>
-            <option value="January">January</option>
-            <option value="February">February</option>
-            <option value="March">March</option>
-            <option value="April">April</option>
-            <option value="May">May</option>
-            <option value="June">June</option>
-            <option value="July">July</option>
-            <option value="August">August</option>
-            <option value="September">September</option>
-            <option value="October">October</option>
-            <option value="November">November</option>
-            <option value="December">December</option>
+          <option value="">-- Select Month --</option>
+        <?php 
+        $months = ['January','February','March','April','May','June',
+                  'July','August','September','October','November','December'];
+        
+        foreach($months as $m): 
+            $disabled = in_array($m, $existingMonths) ? 'disabled' : '';
+            $selected = (!empty($existingData) && $existingData->month == $m) ? 'selected' : '';
+        ?>
+            <option value="<?= $m ?>" <?= $disabled ?> <?= $selected ?>>
+                <?= $m ?>
+                <?= $disabled ? '(Already exists)' : '' ?>
+            </option>
+        <?php endforeach; ?>
           </select>
           <small class="error-message" id="monthError"></small>
         </div>
