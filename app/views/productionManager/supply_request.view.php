@@ -80,11 +80,9 @@
         <table>
             <thead>
                 <tr>
-                    <th>Customer ID</th>
-                    <th>Customer Name</th>
-                    <th>Quantity</th>
-                    <th>Type</th>
-                    <th>Action</th>
+                    <th>Product ID</th>
+                    <th>Product Name</th>
+                    <th>Size</th>
                 </tr>
             </thead>
             <tbody id="orderTableBody">

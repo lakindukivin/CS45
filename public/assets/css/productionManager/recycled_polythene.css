@@ -87,6 +87,11 @@ select.form-control {
   padding-right: 2.5rem;
 }
 
+select option:disabled {
+  color: #ccc;
+  font-style: italic;
+}
+
 .error-message {
   color: var(--error-color);
   font-size: 0.875rem;
