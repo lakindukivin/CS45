@@ -12,23 +12,14 @@ class StaffModel {
      * @return object|bool The staff profile data or false if not found
      */
     public function getStaffProfileById($user_id) {
-        // Change r.role to r.role_name if that's the correct column name in your database
-        $query = "SELECT u.*, s.*, r.role as role_name, r.role as role
+        $query = "SELECT u.*, s.*, r.role as role_name
                   FROM user u 
                   JOIN staff s ON u.user_id = s.user_id 
                   JOIN role r ON u.role_id = r.role_id 
                   WHERE u.user_id = :user_id";
         
         $result = $this->query($query, ['user_id' => $user_id]);
-        
-        if ($result) {
-            // For debugging
-            error_log("Staff profile found: " . print_r($result[0], true));
-            return $result[0];
-        }
-        
-        error_log("No staff profile found for user ID: $user_id");
-        return false;
+        return $result ? $result[0] : false;
     }
     
     /**
@@ -38,11 +29,11 @@ class StaffModel {
      * @return array The staff profiles for the given role
      */
     public function getStaffByRole($role_name) {
-        $query = "SELECT u.*, s.*, r.role
+        $query = "SELECT u.*, s.*, r.role as role_name
                   FROM user u 
                   JOIN staff s ON u.user_id = s.user_id 
                   JOIN role r ON u.role_id = r.role_id 
-                  WHERE r.role_name = :role_name";
+                  WHERE r.role = :role_name";
         
         return $this->query($query, ['role_name' => $role_name]);
     }
@@ -95,10 +86,8 @@ class StaffModel {
             $staffQuery .= " WHERE user_id = :user_id";
             $this->query($staffQuery, $params);
             
-            // If we got here without exceptions, the update was successful
             return true;
         } catch (Exception $e) {
-            // Log the error
             error_log("Profile update error: " . $e->getMessage());
             return false;
         }

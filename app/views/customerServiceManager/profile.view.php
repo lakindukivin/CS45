@@ -64,7 +64,7 @@
             <nav class="nav">
                 <ul>
                     <li><a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg"></a></li>
-                    <li><a href="<?= ROOT ?>/profile" class="active">Profile</a></li>
+                    <li><a href="<?= ROOT ?>/staffprofile" class="active">Profile</a></li>
                     <li><a href="<?= ROOT ?>/logout">Logout</a></li>
                 </ul>
             </nav>
@@ -108,7 +108,7 @@
                 
                 <div class="tab-content" id="personal-tab">
                     <div class="profile-details">
-                        <form action="<?= ROOT ?>/profile/update" method="POST" enctype="multipart/form-data">
+                        <form action="<?= ROOT ?>/staffprofile/update" method="POST" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="name">Full Name</label>
                                 <input type="text" id="name" name="name" value="<?= $profile->name ?? '' ?>">
@@ -144,7 +144,7 @@
                 
                 <div class="tab-content" id="password-tab" style="display: none;">
                     <div class="profile-details">
-                        <form action="<?= ROOT ?>/profile/changePassword" method="POST">
+                        <form action="<?= ROOT ?>/staffprofile/changePassword" method="POST">
                             <div class="form-group">
                                 <label for="current_password">Current Password</label>
                                 <input type="password" id="current_password" name="current_password">
