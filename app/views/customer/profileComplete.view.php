@@ -12,11 +12,25 @@
 
 <body>
     <?php
-    // Check if the user is logged in
-    if (isset($_SESSION['user_id'])) {
-        $profileLink = ROOT . '/profile'; // Link to the profile page
-    } else {
-        $profileLink = ROOT . '/login'; // Link to the login page if the user is not logged in
+    // Start session if not already started
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    // Check if the user is logged in, redirect if not
+    if (!isset($_SESSION['user_id'])) {
+        header("Location: " . ROOT . "/login");
+        exit();
+    }
+
+    // Fetch profile data (this should come from your controller)
+    $userId = $_SESSION['user_id'];
+    $customer = new Customer();
+    $profile = $customer->getCustomerByUserId($userId);
+
+    // Convert object to array if needed
+    if (is_object($profile)) {
+        $profile = (array)$profile;
     }
     ?>
 
@@ -41,33 +55,44 @@
     <main>
         <div class="content">
             <div class="cta">
+                <?php if (isset($_SESSION['success_message'])): ?>
+                    <div class="success-message">
+                        <?= htmlspecialchars($_SESSION['success_message']) ?>
+                    </div>
+                    <?php unset($_SESSION['success_message']); ?>
+                <?php endif; ?>
+
                 <h1>PROFILE COMPLETION SUCCESSFUL</h1>
                 <p>Your profile is now complete! Thank you for being part of the Green Revolution!</p>
 
                 <!-- Profile Info Section -->
                 <div class="profile-info">
-                    <h2>Your Profile Information</h2>
-                    <p><strong>Address:</strong> <?= isset($profileData->address) ? $profileData->address : 'Not provided' ?></p>
-                    <p><strong>Phone Number:</strong> <?= isset($profileData->phone_number) ? $profileData->phone_number : 'Not provided' ?></p>
+                    <!-- Profile Picture -->
+                    <div class="profile-picture-container">
+                        <img src="<?= !empty($profile['image']) ? ROOT . htmlspecialchars($profile['image']) : ROOT . '/assets/images/default-avatar.png' ?>"
+                            alt="Profile Picture"
+                            class="profile-picture">
+                    </div>
+
+                    <!-- Profile Details -->
+                    <div class="profile-details">
+                        <h2>Your Profile Information</h2>
+                        <p><strong>Name:</strong> <?= !empty($profile['name']) ? htmlspecialchars($profile['name']) : 'Not provided' ?></p>
+                        <p><strong>Address:</strong> <?= !empty($profile['address']) ? htmlspecialchars($profile['address']) : 'Not provided' ?></p>
+                        <p><strong>Phone Number:</strong> <?= !empty($profile['phone']) ? htmlspecialchars($profile['phone']) : 'Not provided' ?></p>
+                    </div>
                 </div>
 
                 <!-- Form for deleting the account (hidden by default) -->
-                <form id="deleteAccountForm" method="POST" action="<?= ROOT ?>/profileComplete">
+                <form id="deleteAccountForm" method="POST" action="<?= ROOT ?>/profile/delete">
                     <input type="hidden" name="delete_account" value="true">
                 </form>
 
-                <!-- Orders and Delete Account Buttons -->
+                <!-- Action Buttons -->
                 <div class="action-buttons">
-                    <a href="<?= ROOT ?>/order">
-                        <button class="orders-btn">My Orders</button>
-                    </a>
-                    <!-- Delete account button with confirmation -->
-                    <a href="javascript:void(0);" id="deleteAccountLink">
-                        <button class="delete-account-btn">Delete Account</button>
-                    </a>
-                    <a href="<?= ROOT ?>/profile">
-                        <button>Edit Account</button>
-                    </a>
+                    <a href="<?= ROOT ?>/order" class="btn orders-btn">My Orders</a>
+                    <button id="deleteAccountBtn" class="btn delete-account-btn">Delete Account</button>
+                    <a href="<?= ROOT ?>/profile" class="btn edit-btn">Edit Profile</a>
                 </div>
             </div>
         </div>
@@ -79,6 +104,14 @@
         </div>
     </footer>
 
+    <script>
+        // Delete account confirmation
+        document.getElementById('deleteAccountBtn').addEventListener('click', function(e) {
+            if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+                document.getElementById('deleteAccountForm').submit();
+            }
+        });
+    </script>
 </body>
 
 </html>
