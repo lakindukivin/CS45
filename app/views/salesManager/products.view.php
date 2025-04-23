@@ -256,6 +256,7 @@
 
 
     <script src="<?= ROOT ?>/assets/js/sidebar.js"></script>
+    <script src="<?= ROOT ?>/assets/js/formValidation.js"></script>
     <script src="<?= ROOT ?>/assets/js/salesManager/product.js"></script>
 </body>
 
