@@ -127,4 +127,20 @@ class ReturnModel {
                   ORDER BY r.date DESC";
         return $this->query($query);
     }
+
+    public function getRecentReturns($limit = 8) {
+        // Convert $limit to an integer to prevent SQL injection
+        $limit = (int) $limit;
+        
+        // Modified to get only pending returns
+        $query = "SELECT ri.*, c.name
+                  FROM return_item ri
+                  JOIN orders o ON ri.order_id = o.order_id
+                  JOIN customer c ON o.customer_id = c.customer_id
+                  WHERE ri.returnStatus = 'pending'
+                  ORDER BY ri.date DESC
+                  LIMIT $limit";
+                  
+        return $this->query($query);
+    }
 }

@@ -172,13 +172,19 @@ class ManageOrderModel
         return 0;
     }
 
-    public function getPendingOrders()
+    public function getRecentOrders($limit = 8)
     {
-        $query = "SELECT o.*, c.name, p.productName FROM orders o 
+        // Convert $limit to an integer to prevent SQL injection
+        $limit = (int) $limit;
+        
+        // Modified to get only pending orders
+        $query = "SELECT o.*, c.name as customerName 
+                  FROM orders o 
                   JOIN customer c ON o.customer_id = c.customer_id 
-                  JOIN product p ON o.product_id = p.product_id 
-                  WHERE o.orderStatus = 'pending' 
-                  ORDER BY o.orderDate DESC";
+                  WHERE o.orderStatus = 'pending'
+                  ORDER BY o.orderDate DESC 
+                  LIMIT $limit";
+
         return $this->query($query);
     }
 

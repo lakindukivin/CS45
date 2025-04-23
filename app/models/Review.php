@@ -53,7 +53,20 @@ class Review {
         return $this->query($query);
     }
 
-    
+    public function getRecentReviews($limit = 8) {
+        // Convert $limit to an integer to prevent SQL injection
+        $limit = (int) $limit;
+        
+        // Modified to get only pending reviews
+        $query = "SELECT r.*, c.name
+                  FROM review r 
+                  JOIN customer c ON r.customer_id = c.customer_id
+                  WHERE r.status = 'pending'
+                  ORDER BY r.date DESC
+                  LIMIT $limit";
+                  
+        return $this->query($query);
+    }
     
     public function countByDate($date)
     {

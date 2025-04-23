@@ -1,10 +1,31 @@
 .top {
   display: flex;
-  flex-direction: row;
+  flex-direction: column-reverse;
   gap: 2rem;
   padding: 2rem;
  
 }
+
+.left {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  flex-grow: 1;
+  max-width: 1200px;
+}
+
+.panel-card {
+  background-color: var(--white);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+  padding: 1.5rem;
+  text-align: center;
+  transition: var(--transition);
+  min-width:575px;
+  min-height: 450px;
+}
+
+
 
 /* Calendar Styles */
 .calendar {
@@ -96,16 +117,14 @@
 /* Status Section Styles */
 .status-section {
   flex-grow: 1;
-  max-width: 800px;
+  max-width: 1200px;
 }
 
 .time-display {
   background-color: var(--white);
   border-radius: 12px;
   box-shadow: var(--shadow-md);
-  padding: 0.5rem;
   text-align: center;
-  margin-bottom: 2rem;
 }
 
 .time-display h3 {
@@ -118,15 +137,15 @@
   color: var(--white);
   padding: 0.5rem 1rem;
   border-radius: 8px;
-  font-size: 2.0rem;
+  font-size: 1.5rem;
   font-weight: 600;
   display: inline-block;
-  min-width: 200px;
+  min-width: 150px;
 }
 
 .metric-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
 }
 

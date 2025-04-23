@@ -1,12 +1,13 @@
 #sidebar {
   box-sizing: border-box;
-  min-height: 100vh;
+  max-height: 100vh;
   width: 280px;
   position: sticky;
   top: 0;
   background: linear-gradient(to bottom, var(--primary-green), var(--secondary-green));
   transition: var(--transition);
   box-shadow: var(--shadow-md);
+  overflow: hidden;
 }
 
 #sidebar .sidebar-container {

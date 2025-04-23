@@ -111,12 +111,12 @@
         <img src="<?=ROOT?>/assets/images/Waste360.png" alt="logo" />
         <h1>Waste360</h1>
       </div>
-      <h1 class="logo">DashBoard</h1>
+      <h1 class="logo">Pending Reviews</h1>
       <nav class="nav">
         <ul>
           <li><a href="#"><img src="<?=ROOT?>/assets/images/notifications.svg"></a></li>
           <li><a href="<?=ROOT?>/profile">Profile</a></li>
-          <li><a href="#">Logout</a></li>
+          <li><a href="<?=ROOT?>/logout">Logout</a></li>
         </ul>
       </nav>
     </header>
@@ -124,7 +124,6 @@
     <div class="box">
       <div class="container">
         <div class="header">
-        <h2>Pending Reviews</h2>
         </div>
         <table>
     <thead>
@@ -145,13 +144,13 @@
               <td><?=$review->rating?></td>
               <td><?=$review->date?></td>
               <td>
-              <button class="view-btn" onclick="openCompletedReviewsPopup(<?= htmlspecialchars(json_encode($review),ENT_QUOTES,'UTF-8')?>)">View/Reply</button>
+              <button class="view-btn" onclick="openCompletedReviewsPopup(<?= htmlspecialchars(json_encode($review),ENT_QUOTES,'UTF-8')?>)"><img src="<?= ROOT ?>/assets/images/edit-btn.svg" alt=""></button>
               </td>
             </tr>
             <?php endforeach; ?>
             <?php else: ?>
               <tr>
-                <td colspan="7">No give away requests found</td>
+                <td colspan="7">No reviews found</td>
               </tr>
             <?php endif; ?> 
     </tbody>

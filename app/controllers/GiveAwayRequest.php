@@ -11,7 +11,28 @@ class GiveAwayRequest {
 
     public function index($data) {
         $giveAwayModel = new GiveAwayModel();
-        $data['giveaways'] = $giveAwayModel->getAllGiveAways();
+
+        // Pagination parameters
+        $limit = 3; // Items per page
+        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $currentPage = max(1, $currentPage); // Make sure page is at least 1
+
+        // Get total count of pending giveaways
+        $allPendingGiveaways = $giveAwayModel->getAllGiveAways();
+        $totalItems = count($allPendingGiveaways);
+        $totalPages = ceil($totalItems / $limit);
+
+        // Ensure current page is valid
+        if ($currentPage > $totalPages && $totalPages > 0) {
+            $currentPage = $totalPages;
+        }
+
+        $offset = ($currentPage - 1) * $limit;
+        // Get the paginated giveaways
+        $data['giveaways'] = array_slice($allPendingGiveaways, $offset, $limit);
+        // Add pagination data to pass to the view
+        $data['currentPage'] = $currentPage;
+        $data['totalPages'] = $totalPages;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $giveaway_id = $_POST['giveaway_id'];
