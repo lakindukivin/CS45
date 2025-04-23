@@ -99,9 +99,9 @@
           <table id="collectionTable">
               <thead>
                   <tr>
+                      <th>Month</th>
                       <th>Amount(Tons)</th>
                       <th>Message</th>
-                      <th>Month</th>
                       <th>Updated Date</th>
                   </tr>
                 </thead>
@@ -110,7 +110,7 @@
         <?php foreach($amounts as $amount): ?>
             <tr>
                 <td><?=htmlspecialchars($amount->month)?></td>
-                <td><?=htmlspecialchars($amount->polytheneamount)?></td>
+                <td><?=htmlspecialchars($amount->polythene_amount)?></td>
                 <td><?=htmlspecialchars($amount->message)?></td>
                 <td><?=htmlspecialchars($amount->updated_date)?></td>
             </tr>
