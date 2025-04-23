@@ -5,7 +5,15 @@ class Customer
     use Model;
 
     protected $table = 'customer'; // Ensure this matches the table name
-    protected $allowedColumns = ['user_id', 'address', 'phone_number'];
+    protected $allowedColumns = [
+        'customer_id',
+        'user_id',
+        'name',
+        'address',
+        'phone',
+        'image',
+        'status'
+    ];
 
     // Fetch customer by user ID
     public function getCustomerByUserId($userId)
