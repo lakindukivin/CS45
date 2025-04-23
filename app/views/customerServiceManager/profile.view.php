@@ -90,7 +90,7 @@
                 <div class="profile-header">
                     <div class="profile-image">
                         <?php if (!empty($profile->image)): ?>
-                            <img src="<?= ROOT ?>/<?= $profile->image ?>" alt="Profile Image">
+                            <img src="<?= ROOT ?>/<?= ltrim($profile->image, '/') ?>" alt="Profile Image">
                         <?php else: ?>
                             <img src="<?= ROOT ?>/assets/images/user.svg" alt="Default Profile">
                         <?php endif; ?>

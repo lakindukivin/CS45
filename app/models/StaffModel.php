@@ -65,36 +65,43 @@ class StaffModel {
      * @return bool Success status
      */
     public function updateStaffProfile($user_id, $data) {
-        // Update user table
-        $userQuery = "UPDATE user SET email = :email WHERE user_id = :user_id";
-        $userResult = $this->query($userQuery, [
-            'email' => $data['email'],
-            'user_id' => $user_id
-        ]);
-        
-        // Update staff table
-        $staffQuery = "UPDATE staff SET 
-                      name = :name,
-                      phone = :phone,
-                      address = :address";
-                      
-        $params = [
-            'name' => $data['name'],
-            'phone' => $data['phone'],
-            'address' => $data['address'],
-            'user_id' => $user_id
-        ];
-        
-        // Add image if provided
-        if (!empty($data['image'])) {
-            $staffQuery .= ", image = :image";
-            $params['image'] = $data['image'];
+        try {
+            // Update user table
+            $userQuery = "UPDATE user SET email = :email WHERE user_id = :user_id";
+            $this->query($userQuery, [
+                'email' => $data['email'],
+                'user_id' => $user_id
+            ]);
+            
+            // Update staff table
+            $staffQuery = "UPDATE staff SET 
+                          name = :name,
+                          phone = :phone,
+                          address = :address";
+                          
+            $params = [
+                'name' => $data['name'],
+                'phone' => $data['phone'],
+                'address' => $data['address'],
+                'user_id' => $user_id
+            ];
+            
+            // Add image if provided
+            if (!empty($data['image'])) {
+                $staffQuery .= ", image = :image";
+                $params['image'] = $data['image'];
+            }
+            
+            $staffQuery .= " WHERE user_id = :user_id";
+            $this->query($staffQuery, $params);
+            
+            // If we got here without exceptions, the update was successful
+            return true;
+        } catch (Exception $e) {
+            // Log the error
+            error_log("Profile update error: " . $e->getMessage());
+            return false;
         }
-        
-        $staffQuery .= " WHERE user_id = :user_id";
-        $staffResult = $this->query($staffQuery, $params);
-        
-        return $userResult && $staffResult;
     }
     
     /**

@@ -19,16 +19,16 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 switch(type) {
                     case 'order':
-                        window.location.href = `${getRootUrl()}/ManageOrders/view/${id}`;
+                        window.location.href = `${getRootUrl()}/ManageOrders`;
                         break;
                     case 'giveaway':
-                        window.location.href = `${getRootUrl()}/GiveAwayRequest/view/${id}`;
+                        window.location.href = `${getRootUrl()}/GiveAwayRequest`;
                         break;
                     case 'review':
-                        window.location.href = `${getRootUrl()}/ManageReviews/view/${id}`;
+                        window.location.href = `${getRootUrl()}/ManageReviews`;
                         break;
                     case 'return':
-                        window.location.href = `${getRootUrl()}/Returns/view/${id}`;
+                        window.location.href = `${getRootUrl()}/Returns/view`;
                         break;
                 }
             }, 150); // Small delay for the effect to be visible

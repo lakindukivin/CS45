@@ -187,19 +187,26 @@ class Profile
     
     private function handleImageUpload($file)
     {
+        // Create relative path without leading slash
         $target_dir = "uploads/profile/";
-        if (!file_exists($target_dir)) {
-            mkdir($target_dir, 0777, true);
+        $full_target_dir = $_SERVER['DOCUMENT_ROOT'] . '/' . $target_dir;
+        
+        // Create directory if it doesn't exist
+        if (!file_exists($full_target_dir)) {
+            mkdir($full_target_dir, 0777, true);
         }
         
         $file_extension = pathinfo($file['name'], PATHINFO_EXTENSION);
         $file_name = uniqid() . '.' . $file_extension;
-        $target_file = $target_dir . $file_name;
+        $relative_path = $target_dir . $file_name; // Store relative path in database
+        $full_target_file = $_SERVER['DOCUMENT_ROOT'] . '/' . $relative_path;
         
-        if (move_uploaded_file($file['tmp_name'], $target_file)) {
-            return $target_file;
+        if (move_uploaded_file($file['tmp_name'], $full_target_file)) {
+            error_log("Image uploaded successfully: " . $relative_path);
+            return $relative_path; // Return relative path without leading slash
+        } else {
+            error_log("Image upload failed. Error: " . $_FILES['profile_image']['error']);
+            return false;
         }
-        
-        return false;
     }
 }
