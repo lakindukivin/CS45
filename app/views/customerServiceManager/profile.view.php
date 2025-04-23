@@ -65,7 +65,7 @@
                 <ul>
                     <li><a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg"></a></li>
                     <li><a href="<?= ROOT ?>/profile" class="active">Profile</a></li>
-                    <li><a href="<?= ROOT ?>/login">Logout</a></li>
+                    <li><a href="<?= ROOT ?>/logout">Logout</a></li>
                 </ul>
             </nav>
         </header>
@@ -90,7 +90,7 @@
                 <div class="profile-header">
                     <div class="profile-image">
                         <?php if (!empty($profile->image)): ?>
-                            <img src="<?= ROOT ?>/<?= $profile->image ?>" alt="Profile Image">
+                            <img src="<?= ROOT ?>/<?= ltrim($profile->image, '/') ?>" alt="Profile Image">
                         <?php else: ?>
                             <img src="<?= ROOT ?>/assets/images/user.svg" alt="Default Profile">
                         <?php endif; ?>

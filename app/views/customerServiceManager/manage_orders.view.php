@@ -124,19 +124,18 @@
         <img src="<?=ROOT?>/assets/images/Waste360.png" alt="logo" />
         <h1>Waste360</h1>
       </div>
-      <h1 class="logo"></h1>
+      <h1 class="logo">Pending Orders</h1>
       <nav class="nav">
         <ul>
           <li><a href="#"><img src="<?=ROOT?>/assets/images/notifications.svg"></a></li>
           <li><a href="<?=ROOT?>/profile">Profile</a></li>
-          <li><a href="#">Logout</a></li>
+          <li><a href="<?=ROOT?>/logout">Logout</a></li>
         </ul>
       </nav>
     </header>
     <div class="box">
       <div class="container">
         <div class="header">
-          <h2>Pending Orders</h2>
           <button class="add-button">
             <a href="<?=ROOT?>/CompletedOrders">View Completed Orders</a>
           </button>
@@ -164,7 +163,7 @@
               <td>Rs. <?= number_format($order->total, 2) ?></td>
               <td><?= date('Y-m-d', strtotime($order->orderDate)) ?></td>
               <td>
-              <button onclick="openManageOrderUpdatePopup(<?= htmlspecialchars(json_encode($order), ENT_QUOTES, 'UTF-8') ?>)" class="view-btn">View/Update</button>              
+              <button onclick="openManageOrderUpdatePopup(<?= htmlspecialchars(json_encode($order), ENT_QUOTES, 'UTF-8') ?>)" class="view-btn"><img src="<?= ROOT ?>/assets/images/edit-btn.svg" alt=""></button>              
               </td>
             </tr>
             <?php endforeach; ?>
@@ -175,6 +174,19 @@
             <?php endif; ?>
           </tbody>
         </table>
+
+         <!-- Pagination Controls -->
+         <div class="pagination">
+                <?php if (isset($totalPages) && $totalPages > 1): ?>
+                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                        <a href="?<?= isset($search) && $search !== '' ? 'search=' . urlencode($search) . '&' : '' ?>page=<?= $i ?>"
+                            class="<?= (isset($currentPage) && $currentPage == $i) ? 'active' : '' ?>">
+                            <?= $i ?>
+                        </a>
+                    <?php endfor; ?>
+                <?php endif; ?>
+            </div>
+            
       </div>
     </div>
   </div>

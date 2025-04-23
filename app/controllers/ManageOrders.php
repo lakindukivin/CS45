@@ -4,7 +4,32 @@ class ManageOrders {
 
     public function index() {
         $orderModel = new ManageOrderModel();
-        $data['orders'] = $orderModel->getAllOrders();
+        
+        // Pagination parameters
+        $limit = 10; // Items per page
+        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $currentPage = max(1, $currentPage); // Make sure page is at least 1
+        
+        // Get total count of pending orders
+        $allPendingOrders = $orderModel->getAllOrders();
+        $totalItems = count($allPendingOrders);
+        $totalPages = ceil($totalItems / $limit);
+        
+        // Ensure current page is valid
+        if ($currentPage > $totalPages && $totalPages > 0) {
+            $currentPage = $totalPages;
+        }
+        
+        $offset = ($currentPage - 1) * $limit;
+        
+        // Get the paginated orders
+        $data['orders'] = array_slice($allPendingOrders, $offset, $limit);
+        
+        // Add pagination data to pass to the view
+        $data['currentPage'] = $currentPage;
+        $data['totalPages'] = $totalPages;
+
+        
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $order_id = $_POST['orderId'];
@@ -46,6 +71,15 @@ class ManageOrders {
                 exit();
             }
         }
+        
+        // Check for success or error flags from redirects
+        if (isset($_GET['success'])) {
+            $data['success'] = true;
+        }
+        if (isset($_GET['error'])) {
+            $data['error'] = true;
+        }
+        
         $this->view('customerServiceManager/manage_orders', $data);
     }
 }

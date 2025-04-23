@@ -90,4 +90,19 @@ class GiveAwayModel {
                   ORDER BY g.request_date DESC";
         return $this->query($query);
     }
+
+    public function getRecentGiveaways($limit = 8) {
+        // Convert $limit to an integer to prevent SQL injection
+        $limit = (int) $limit;
+        
+        // Modified to get only pending giveaways
+        $query = "SELECT gr.*, c.name
+                  FROM giveawayrequests gr 
+                  JOIN customer c ON gr.customer_id = c.customer_id
+                  WHERE gr.giveawayStatus = 'pending'
+                  ORDER BY gr.request_date DESC
+                  LIMIT $limit";
+        
+        return $this->query($query);
+    }
 }
