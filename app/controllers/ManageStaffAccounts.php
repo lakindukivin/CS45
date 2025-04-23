@@ -72,6 +72,10 @@ class ManageStaffAccounts
                 $_SESSION['success'] = "Successfully Added!";
                 header("Location: " . ROOT . "/manageStaffAccounts");
                 exit();
+            }else {
+                $_SESSION['error'] = "Failed to add staff!";
+                header("Location: " . ROOT . "/manageStaffAccounts");
+                exit();
             }
         }
     }
