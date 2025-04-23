@@ -58,3 +58,46 @@ document
       window.location.href = window.location.pathname;
     }
   });
+
+//validation for add product form
+document.addEventListener('DOMContentLoaded', function () {
+  // Set up validation for the Add Product form
+  if (document.getElementById('productForm')) {
+    setupFormValidation('productForm', {
+      // Define validation rules for each field
+      productName: [
+        { type: 'required' },
+        { type: 'minLength', value: 3 },
+        { type: 'maxLength', value: 100 }, // Limit product name length
+      ],
+      img: [
+        { type: 'required' },
+        { type: 'fileType', extensions: ['jpg', 'jpeg', 'png', 'gif'] },
+      ],
+      description: [
+        { type: 'required' },
+        { type: 'minLength', value: 10 },
+        { type: 'maxLength', value: 500 }, // Limit description to reasonable size
+      ],
+    });
+  }
+
+  // Set up validation for the Edit Product form
+  if (document.getElementById('editProductForm')) {
+    setupFormValidation('editProductForm', {
+      editProductName: [
+        { type: 'required' },
+        { type: 'minLength', value: 3 },
+        { type: 'maxLength', value: 100 },
+      ],
+      editImage: [
+        { type: 'fileType', extensions: ['jpg', 'jpeg', 'png', 'gif'] },
+      ],
+      editDescription: [
+        { type: 'required' },
+        { type: 'minLength', value: 10 },
+        { type: 'maxLength', value: 500 },
+      ],
+    });
+  }
+});

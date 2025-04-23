@@ -82,7 +82,7 @@
         <div class="container">
             <div class="table-header">
                 <form class="search-bar" method="get" action="">
-                        <img src="<?= ROOT ?>/assets/images/magnifying-glass-solid.svg" class="search-icon" width="20px" />
+                    <img src="<?= ROOT ?>/assets/images/magnifying-glass-solid.svg" class="search-icon" width="20px" />
                     <input type="text" name="search" value="<?= isset($search) ? htmlspecialchars($search) : '' ?>"
                         placeholder="Search customer by name,email.." />
                     <button type="submit">Search</button>
@@ -91,7 +91,7 @@
                     Total Customers: <span
                         id="totalUsers"><?= isset($customerAccounts) ? count($customerAccounts) : 0 ?></span>
                 </div>
-                
+
             </div>
 
             <table id="customerTable">
@@ -115,12 +115,14 @@
                                 <td><?= htmlspecialchars($customer->email) ?></td>
                                 <td><?= htmlspecialchars($customer->phone) ?></td>
                                 <td><?= htmlspecialchars($customer->address) ?></td>
-                                <td><?= $customer->status == 1 ? 'Active' : 'Inactive' ?></td>
+                                <td><?= $customer->status == 1 ? "<a href=ManageCustomerAccounts/setInactive?customer_id=" . $customer->customer_id . " class='active-btn'>Active</a>" : "<a  href=ManageCustomerAccounts/setActive?customer_id=" . $customer->customer_id . " class='inactive-btn'>Inactive</a>"; ?>
+                                </td>
                                 <td class="action-buttons">
                                     <button class="edit-btn"
-                                        onclick="openEditModal('<?= $customer->customer_id ?>','<?= $customer->name  ?>','<?= $customer->image ?>','<?= $customer->phone ?>','<?= $customer->address ?>','<?= $customer->status ?>')"><img src="<?= ROOT ?>/assets/images/edit-btn.svg"" alt=" edit"></button>
-                                    <button class="delete-btn"
-                                        onclick="openDeleteModal('<?= $customer->customer_id ?>')"><img src="<?= ROOT ?>/assets/images/delete-btn.svg"" alt=" delete"></button>
+                                        onclick="openEditModal('<?= $customer->customer_id ?>','<?= $customer->name ?>','<?= $customer->image ?>','<?= $customer->phone ?>','<?= $customer->address ?>','<?= $customer->status ?>')"><img
+                                            src="<?= ROOT ?>/assets/images/edit-btn.svg"" alt=" edit"></button>
+                                    <button class="delete-btn" onclick="openDeleteModal('<?= $customer->customer_id ?>')"><img
+                                            src="<?= ROOT ?>/assets/images/delete-btn.svg"" alt=" delete"></button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -133,8 +135,8 @@
             </table>
         </div>
 
-          <!-- Pagination Controls -->
-            <div class="pagination">
+        <!-- Pagination Controls -->
+        <div class="pagination">
             <?php if (isset($totalPages) && $totalPages > 1): ?>
                 <?php for ($i = 1; $i <= $totalPages; $i++): ?>
                     <a href="?<?= isset($search) && $search !== '' ? 'search=' . urlencode($search) . '&' : '' ?>page=<?= $i ?>"
@@ -152,13 +154,10 @@
                 <h3>Edit Customer Details</h3>
                 <form id="editCustomerForm" action="<?= ROOT ?>/ManageCustomerAccounts/update" method="post">
                     <input type="hidden" name="editCustomerId" id="editCustomerId" />
+                    <input name="editCustomerImage" type="hidden" id="editCustomerImage" required />
                     <div class="form-group">
                         <label for="editCustomerName">Name:</label>
                         <input name="editCustomerName" type="text" id="editCustomerName" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="editCustomerImage">Image:</label>
-                        <input name="editCustomerImage" type="file" id="editCustomerImage" required />
                     </div>
                     <div class="form-group">
                         <label for="editCustomerContactNo">Contact No:</label>

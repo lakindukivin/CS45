@@ -113,7 +113,7 @@ class Products
             if (isset($_POST['editProductID'])) {
                 $imagePath = $_POST['existingImagePath'] ?? '';
                 if (isset($_FILES['editImage']) && $_FILES['editImage']['error'] == UPLOAD_ERR_OK) {
-                    $uploadDir = 'app/uploads/products/';
+                    $uploadDir = 'uploads/products/';
                     if (!is_dir($uploadDir)) {
                         mkdir($uploadDir, 0777, true);
                     }

@@ -5,7 +5,7 @@ class DiscountModel
     use Model;
 
     protected $table = 'discount';
-    protected $allowedColumns = ['discount_id', 'product_id', 'discount_percentage', 'start_date', 'end_date','status'];
+    protected $allowedColumns = ['discount_id', 'product_id', 'discount_percentage', 'start_date', 'end_date', 'status'];
 
     public function getDiscountWithProduct($limit, $offset)
     {
@@ -87,7 +87,9 @@ class DiscountModel
         }
     }
 
-    public function updateDiscount($discount_id, $data){
+    // update discount
+    public function updateDiscount($discount_id, $data)
+    {
         try {
             $this->update($discount_id, $data, 'discount_id');
             return true;
@@ -97,6 +99,66 @@ class DiscountModel
         }
     }
 
+    //Delete customer (soft delete)
+    public function delete($id)
+    {
+        try {
+            $query = 'UPDATE discount SET status = 0 WHERE discount_id = :id;';
+            $params = ['id' => $id];
+            $this->query($query, $params);
+            return true;
+        } catch (Exception $e) {
+            error_log("Error deleting customer: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    //Restore customer
+    public function restore($id)
+    {
+        try {
+            $query = 'UPDATE discount SET status = 1 WHERE discount_id = :id;';
+            $params = ['id' => $id];
+            $this->query($query, $params);
+            return true;
+        } catch (Exception $e) {
+            error_log("Error restoring customer: " . $e->getMessage());
+            return false;
+        }
+    }
+
+
+    //toggle status 
+    public function setActive($id)
+    {
+        try {
+            $query = 'UPDATE discount SET status =1 WHERE discount_id = :id;';
+            $params = ['id' => $id];
+            $this->query($query, $params);
+            return true;
+
+        } catch (Exception $e) {
+            error_log("Error changing status: " . $e->getMessage());
+            return false;
+        }
+
+
+    }
+
+    public function setInactive($id)
+    {
+        try {
+            $query = 'UPDATE discount SET status =0 WHERE discount_id = :id;';
+            $params = ['id' => $id];
+            $this->query($query, $params);
+            return true;
+
+        } catch (Exception $e) {
+            error_log("Error changing status: " . $e->getMessage());
+            return false;
+        }
+
+    }
 
 }
 

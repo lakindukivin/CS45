@@ -9,8 +9,8 @@ class ManageStaffAccountsModel
     //get all staff accounts
     public function getAllStaff($limit, $offset)
     {
-        $query = "SELECT s.staff_id,s.name,s.address,s.phone,r.role,u.email,s.status,s.image
-                  FROM staff s JOIN role r JOIN user u ON s.role_id=r.role_id AND s.user_id=u.user_id order by staff_id  limit $limit offset $offset";
+        $query = "SELECT s.staff_id,s.name,s.address,s.phone,s.role_id,u.email,s.status,s.image
+                  FROM staff s JOIN user u ON s.user_id=u.user_id order by staff_id  limit $limit offset $offset";
         return $this->query($query);
     }
     public function getStaffPaginated($limit, $offset)
@@ -118,6 +118,39 @@ class ManageStaffAccountsModel
         $params = ['search' => $search];
         $result = $this->query($query, $params);
         return $result ? $result[0]->count : 0;
+    }
+
+
+    //toggle status 
+    public function setActive($id)
+    {
+        try {
+            $query = 'UPDATE staff SET status =1 WHERE staff_id = :id;';
+            $params = ['id' => $id];
+            $this->query($query, $params);
+            return true;
+
+        } catch (Exception $e) {
+            error_log("Error changing status: " . $e->getMessage());
+            return false;
+        }
+
+
+    }
+
+    public function setInactive($id)
+    {
+        try {
+            $query = 'UPDATE staff SET status =0 WHERE staff_id = :id;';
+            $params = ['id' => $id];
+            $this->query($query, $params);
+            return true;
+
+        } catch (Exception $e) {
+            error_log("Error changing status: " . $e->getMessage());
+            return false;
+        }
+
     }
 }
 ?>

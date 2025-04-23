@@ -128,11 +128,11 @@
                                 <td><?= $staff->email ?></td>
                                 <td><?= $staff->phone ?></td>
                                 <td><?= $staff->address ?></td>
-                                <td><?= $staff->role ?></td>
-                                <td><?= $staff->status == 1 ? 'Active' : 'Inactive' ?></td>
+                                <td><?= $staff->role_id ?></td>
+                                <td><?= $staff->status == 1 ? "<a href=ManageStaffAccounts/setInactive?staff_id=" . $staff->staff_id . " class='active-btn'>Active</a>" : "<a  href=ManageStaffAccounts/setActive?staff_id=" . $staff->staff_id . " class='inactive-btn'>Inactive</a>";?></td>
                                 <td class="action-buttons">
                                     <button class="edit-btn"
-                                        onclick="openEditModal('<?= $staff->staff_id ?>','<?= $staff->name ?>','<?= $staff->image ?>','<?= $staff->email ?>','<?= $staff->phone ?>','<?= $staff->address ?>','<?= $staff->role ?>','<?= $staff->status ?>')"><img
+                                        onclick="openEditModal('<?= $staff->staff_id ?>','<?= $staff->name ?>','<?= $staff->image ?>','<?= $staff->phone ?>','<?= $staff->address ?>','<?= $staff->role_id ?>','<?= $staff->status ?>')"><img
                                             src="<?= ROOT ?>/assets/images/edit-btn.svg"" alt=" edit"></button>
                                     <button class="delete-btn" onclick="openDeleteModal(<?= $staff->staff_id ?>)"><img
                                             src="<?= ROOT ?>/assets/images/delete-btn.svg"" alt=" delete"></button>
@@ -172,27 +172,16 @@
                         <label for="name">Name:</label>
                         <input name="name" type="text" id="name" placeholder="Enter Staff Name" required />
                     </div>
-                    <!-- 
+
                     <div class="form-group">
                         <label for="image">Profile Image:</label>
                         <input name="image" type="file" id="image" accept="image/*" required />
-                    </div> -->
+                    </div>
 
                     <div class="form-group">
                         <label for="email">Email:</label>
                         <input name="email" type="email" id="email" placeholder="Enter Staff Email" required />
                     </div>
-
-                    <!-- <div class="form-group">
-                        <label for="password">Password:</label>
-                        <input name="password" type="password" id="password" placeholder="Enter Password" required />
-                    </div> -->
-
-                    <!-- <div class="form-group">
-                        <label for="confirm_password">Confirm Password:</label>
-                        <input name="confirm_password" type="password" id="confirm_password"
-                            placeholder="Confirm Password" required />
-                    </div> -->
 
                     <div class="form-group">
                         <label for="phone">Contact No:</label>
@@ -208,15 +197,14 @@
                         <label for="role">Role:</label>
                         <select name="role" id="role" required>
                             <option value="">Select Role</option>
-                            <option value="1">Admin</option>
-                            <option value="2">Customer Service Manager</option>
                             <option value="3">Production Manager</option>
-                            <option value="4">Sales and Marketing Manager</option>
+                            <option value="1">Admin</option>
+                            <option value="2">Sales and Marketing Manager</option>
+                            <option value="4">Customer Service Manager</option>
                         </select>
                     </div>
 
                     <button type="submit" class="action-btn">Add Staff</button>
-                    <button type="button" class="action-btn">Cancel</button>
 
                 </form>
             </div>
@@ -231,6 +219,8 @@
                 <form id="editStaffAccounts" method="post" enctype="multipart/form-data"
                     action="<?= ROOT ?>/ManageStaffAccounts/update">
                     <input type="hidden" name="staff_id" id="staff_id" />
+                    <input type="hidden" name="existingImagePath" id="existingImagePath" />
+
                     <div class="form-group">
                         <label for="editStaffName">Name:</label>
                         <input name="editStaffName" type="text" id="editStaffName" placeholder="Enter Staff Name"
@@ -238,15 +228,11 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="editImage">Profile Image:</label>
-                        <input name="editImage" type="file" id="editImage" accept="image/*" required />
+                        <label for="editStaffImage">Profile Image:</label>
+                        <img id="editImage" src="" alt="Staff Profile picture" style="width: 100px; height: auto" />
+                        <input name="editStaffImage" type="file" id="editStaffImage" accept="image/*" />
                     </div>
 
-                    <div class="form-group">
-                        <label for="editStaffEmail">Email</label>
-                        <input name="editStaffEmail" type="email" id="editStaffEmail" placeholder="Enter Staff Email"
-                            required />
-                    </div>
                     <div class="form-group">
                         <label for="editStaffContactNo">Contact No</label>
                         <input name="editStaffContactNo" type="text" id="editStaffContactNo"
@@ -258,26 +244,25 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="editStafrole">Role:</label>
-                        <select name="editStafrole" id="editStafrole" required>
+                        <label for="editStaffrole">Role:</label>
+                        <select name="editStaffrole" id="editStaffrole" required>
                             <option value="">Select Role</option>
                             <option value="1">Admin</option>
-                            <option value="2">Customer Service Manager</option>
+                            <option value="2">Sales and Marketing Manager</option>
                             <option value="3">Production Manager</option>
-                            <option value="4">Sales and Marketing Manager</option>
+                            <option value="4">Customer Service Manager</option>
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label for="editStaffStatus">Status:</label>
-                        <select name="status" id="editStaffStatus" required>
+                        <select name="editStaffStatus" id="editStaffStatus" required>
                             <option value="1">Active</option>
                             <option value="0">Inactive</option>
                         </select>
                     </div>
 
                     <button type="submit" class="action-btn">Update</button>
-                    <button type="button" class="action-btn">Cancel</button>
                 </form>
             </div>
         </div>
@@ -304,7 +289,6 @@
     </main>
 
     <script src="<?= ROOT ?>/assets/js/admin/sidebar.js"></script>
-    <!-- <script src="<?= ROOT ?>/assets/js/admin/modal.js"></script> -->
     <script src="<?= ROOT ?>/assets/js/admin/manageStaffAccounts.js"></script>
 </body>
 

@@ -131,10 +131,11 @@
                                 <td><?= htmlspecialchars($discount->discount_percentage) ?></td>
                                 <td><?= htmlspecialchars($discount->start_date) ?></td>
                                 <td><?= htmlspecialchars($discount->end_date) ?></td>
-                                <td><?= htmlspecialchars($discount->status == 1 ? 'Active' : 'Inactive') ?></td>
+                                <td><?= $discount->status == 1 ? "<a href=discounts/setInactive?discount_id=" . $discount->discount_id . " class='active-btn'>Active</a>" : "<a  href=discounts/setActive?discount_id=" . $discount->discount_id . " class='inactive-btn'>Inactive</a>"; ?>
+                                </td>
                                 <td>
                                     <button class="edit-btn"
-                                        onclick="openEditModal('<?= $discount->discount_id ?>', '<?= $discount->productName ?>', '<?= $discount->discount_percentage ?>', '<?= $discount->start_date ?>', ,'<?= $discount->status ?>')"><img
+                                        onclick="openEditModal('<?= $discount->discount_id ?>', '<?= $discount->productName ?>', '<?= $discount->discount_percentage ?>', '<?= $discount->start_date ?>', '<?= $discount->end_date ?>','<?= $discount->status ?>')"><img
                                             src="<?= ROOT ?>/assets/images/edit-btn.svg"" alt=" edit"></button>
                                     <button class="delete-btn" onclick="openDeleteModal('<?= $discount->discount_id ?>')"><img
                                             src="<?= ROOT ?>/assets/images/delete-btn.svg"" alt=" delete"></button>
@@ -167,10 +168,10 @@
                 <div class="modal-content">
                     <span class="close" onclick="closeAddModal()">&times;</span>
                     <h3>Create New Discount</h3>
-                    <form action="<?= ROOT ?>/discounts/add" method="POST">
+                    <form action="<?= ROOT ?>/discounts/add" method="POST" id="addDiscountForm">
                         <div class="form-group">
-                            <label>Product:
-                                <select name="product_id" required>
+                            <label for="productId">Product:
+                                <select name="productId" id="productId" required>
                                     <option value="">Select a product</option>
                                     <?php if (isset($products) && is_array($products)): ?>
                                         <?php foreach ($products as $product): ?>
@@ -183,23 +184,22 @@
                             </label>
                         </div>
                         <div class="form-group">
-                            <label>Discount Percentage:
-                                <input type="number" name="discount_percentage" placeholder="E.g., 0.2,0.4" min="0"
-                                    max="1" required />
+                            <label for="discountPercentage">Discount Percentage:
+                                <input id="discountPercentage" type="number" name="discountPercentage"
+                                    placeholder="E.g., 0.2,0.4" min="1" max="100" required />
                             </label>
                         </div>
                         <div class="form-group">
-                            <label>Start Date:
-                                <input type="date" name="start_date" required />
+                            <label for="startDate">Start Date:
+                                <input id="startDate" type="date" name="startDate" required />
                             </label>
                         </div>
                         <div class="form-group">
-                            <label>End Date:
-                                <input type="date" name="end_date" required />
+                            <label for="endDate">End Date:
+                                <input id="endDate" type="date" name="endDate" required />
                             </label>
                         </div>
                         <button type="submit" class="action-btn">Save Discount</button>
-                        <button type="button" class="cancel-btn" onclick="closeAddModal()">Cancel</button>
                     </form>
                 </div>
             </div>
@@ -209,29 +209,28 @@
                 <div class="modal-content">
                     <span class="close" onclick="closeEditModal()">&times;</span>
                     <h3>Edit Discount</h3>
-                    <form action="<?= ROOT ?>/discounts/edit" method="POST">
-                        <input type="hidden" name="Discount_id" id="edit_discount_id">
-                        <!-- Add this hidden field to maintain Product_id -->
-                        <input type="hidden" name="Product_id" id="edit_product_id">
+                    <form action="<?= ROOT ?>/discounts/edit" method="POST" id="editDiscountForm">
+                        <input type="hidden" name="editDiscountId" id="editDiscountId">
+                        <input type="hidden" name="editProductId" id="editProductId">
                         <div class="form-group">
                             <label>Product:
-                                <input type="text" id="edit_product_name" readonly />
+                                <input type="text" id="editProductName" readonly />
                             </label>
                         </div>
                         <div class="form-group">
-                            <label>Discount Percentage:
-                                <input type="number" name="discount_percentage" id="edit_discount_percentage" min="1"
-                                    max="100" required />
+                            <label for="editDiscountPercentage">Discount Percentage:
+                                <input type="number" name="editDiscountPercentage" id="editDiscountPercentage" min="1"
+                                    max="100" step="0.1" required />
                             </label>
                         </div>
                         <div class="form-group">
-                            <label>Start Date:
-                                <input type="date" name="start_date" id="edit_start_date" required />
+                            <label for="editStartDate">Start Date:
+                                <input type="date" name="editStartDate" id="editStartDate" required />
                             </label>
                         </div>
                         <div class="form-group">
-                            <label>End Date:
-                                <input type="date" name="end_date" id="edit_end_date" required />
+                            <label for="editEndDate">End Date:
+                                <input type="date" name="editEndDate" id="editEndDate" required />
                             </label>
                         </div>
                         <div class="form-group">
@@ -243,19 +242,17 @@
 
                         </div>
                         <button type="submit" class="action-btn">Update Discount</button>
-                        <button type="button" class="cancel-btn" onclick="closeEditModal()">Cancel</button>
                     </form>
                 </div>
             </div>
 
             <!-- Delete Confirmation Modal -->
-            <div id="deleteModal" class="modal">
+            <div id="deleteConfirmationModal" class="modal">
                 <div class="modal-content">
-                    <span class="close" onclick="closeDeleteModal()">&times;</span>
                     <h3>Confirm Delete</h3>
                     <p>Are you sure you want to delete this discount?</p>
                     <form action="<?= ROOT ?>/discounts/delete" method="POST">
-                        <input type="hidden" name="Discount_id" id="delete_discount_id">
+                        <input type="hidden" name="deleteDiscountId" id="deleteDiscountId">
                         <button type="submit" class="delete-btn">Delete</button>
                         <button type="button" class="cancel-btn" onclick="closeDeleteModal()">Cancel</button>
                     </form>
@@ -265,6 +262,7 @@
         </div>
     </main>
     <script src="<?= ROOT ?>/assets/js/sidebar.js"></script>
+    <script src="<?= ROOT ?>/assets/js/formValidation.js"></script>
     <script src="<?= ROOT ?>/assets/js/salesManager/discounts.js"></script>
 </body>
 
