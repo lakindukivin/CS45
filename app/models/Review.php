@@ -52,5 +52,32 @@ class Review {
         JOIN customer c ON r.customer_id = c.customer_id";
         return $this->query($query);
     }
+
+    
+    
+    public function countByDate($date)
+    {
+        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
+            throw new Exception("Invalid date format. Expected YYYY-MM-DD.");
+        }
+        $query = "SELECT COUNT(review_id) as count FROM review WHERE DATE(date) = :date";
+        $result = $this->query($query, ['date' => $date]);
+
+        // Access the result as an object
+        if (isset($result[0]->count)) {
+            return $result[0]->count;
+        }
+
+        return 0; // Default to 0 if no valid result is found
+    }
+
+    public function getPendingReviews()
+    {
+        $query = "SELECT r.*, c.name FROM review r 
+                  JOIN customer c ON r.customer_id = c.customer_id 
+                  WHERE r.status = 'pending' 
+                  ORDER BY r.date DESC";
+        return $this->query($query);
+    }
     
 }

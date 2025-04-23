@@ -87,7 +87,19 @@
                   </tr>
               </thead>
               <tbody>
-                  <!-- Table rows will be dynamically added here -->
+              <?php if(!empty($schedules)): ?>
+        <?php foreach($schedules as $schedule): ?>
+            <tr>
+                <td><?= htmlspecialchars($schedule->area) ?></td>
+                <td><?= htmlspecialchars($schedule->collection_date) ?></td>
+                <td><?= htmlspecialchars($schedule->collection_time) ?></td>
+            </tr>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <tr>
+            <td colspan="3">No schedules found</td>
+        </tr>
+    <?php endif; ?>
               </tbody>
           </table>
       </div>
@@ -98,19 +110,20 @@
       <div class="modal-content">
           <span class="close-btn" onclick="closeModal()">&times;</span>
           <h2>Add Collection Schedule</h2></br>
-          <form id="scheduleForm">
+          <form id="scheduleForm" action="<?=ROOT?>/Schedule/addSchedule" method="POST">
               <div class="form-group">
                   <label for="area">Area:</label>
                   <input type="text" id="area" name="area" required>
               </div>
               <div class="form-group">
                   <label for="date">Date:</label>
-                  <input type="date" id="date" name="date" min="<?= date('Y-m-d', strtotime('+2 day')) ?>" required>
+                  <input type="date" id="date" name="date" min="<?= date('Y-m-d', strtotime('+1 day')) ?>" required>
               </div>
               <div class="form-group">
                   <label for="time">Time:</label>
                   <input type="time" id="time" name="time" required>
               </div>
+              <input type="hidden" name="action" value="add">
               <button type="submit" class="save-btn">Save</button>
           </form>
       </div>

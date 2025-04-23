@@ -11,14 +11,6 @@
 </head>
 
 <body>
-
-    <?php
-    if (isset($_SESSION['user_id'])) {
-        $profileLink = ROOT . '/profile';
-    } else {
-        $profileLink = ROOT . '/login';
-    }
-    ?>
     <nav id="sidebar">
         <button id="toggle-btn" onclick="toggleSidebar()" class="toggle-btn">
             <img src="<?= ROOT ?>/assets/images/menu.svg" alt="menu" />
@@ -130,7 +122,7 @@
                         <th>Status</th>
                         <th>Start Date</th>
                         <th>End Date</th>
-                        <th>Actions</th>
+                        <th style="width:100px">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -139,11 +131,17 @@
                             <tr>
                                 <td><?= htmlspecialchars($adsAndBanner->ad_id) ?></td>
                                 <td><?= htmlspecialchars($adsAndBanner->title) ?></td>
-                                <td><?= htmlspecialchars($adsAndBanner->image) ?></td>
+                                <td><?php if (!empty($adsAndBanner->image)): ?>
+                                        <img src="<?= ROOT . $adsAndBanner->image ?>" alt="Ad/Banner"
+                                            style="width: 90px; height: 90px;" />
+                                    <?php else: ?>
+                                        No image
+                                    <?php endif; ?>
+                                </td>
                                 <td><?= htmlspecialchars($adsAndBanner->description) ?></td>
                                 <td><?= htmlspecialchars($adsAndBanner->start_date) ?></td>
                                 <td><?= htmlspecialchars($adsAndBanner->end_date) ?></td>
-                                <td><?= htmlspecialchars($adsAndBanner->status == 1 ? 'Active' : 'Inactive') ?></td>
+                                <td><?= $adsAndBanner->status == 1 ? "<a href=AdsAndBanners/setInactive?ad_id=" . $adsAndBanner->ad_id . " class='active-btn'>Active</a>" : "<a  href=AdsAndBanners/setActive?ad_id=" . $adsAndBanner->ad_id . " class='inactive-btn'>Inactive</a>";?></td>
                                 <td>
                                     <button class="edit-btn"
                                         onclick="openEditModal('<?= $adsAndBanner->ad_id ?>', '<?= $adsAndBanner->title ?>', '<?= $adsAndBanner->image ?>','<?= $adsAndBanner->description ?>','<?= $adsAndBanner->start_date ?>', '<?= $adsAndBanner->end_date ?>','<?= $adsAndBanner->status ?>')"><img
@@ -181,17 +179,14 @@
 
                     <form action="<?= ROOT ?>/AdsAndBanners/add" id="adForm" enctype="multipart/form-data"
                         method="post">
-                        <input type="hidden" id="adId" name="adId" value="" />
                         <div class="form-group">
                             <label>Title:
                                 <input type="text" id="adTitle" name="title" placeholder="Ad Title" required />
                             </label>
                         </div>
                         <div class="form-group">
-                            <label>Upload Banner File:
-                                <input type="file" id="adImage" name="adImage" accept="image/*" required />
-                            </label>
-                            <div id="imagePreview" class="image-preview"></div>
+                            <label>Upload Banner File:</label>
+                            <input type="file" id="adImage" name="adImage" accept="image/*" required />
                         </div>
                         <div class="form-group">
                             <label>Description:
@@ -210,8 +205,7 @@
                         </div>
 
                         <div class="form-actions">
-                            <button type="submit" class="action-btn" id="saveAdBtn">Save</button>
-                            <button type="button" class="cancel-btn" onclick="closeAddModal()">Cancel</button>
+                            <button type="submit" class="action-btn" id="saveAdBtn">Add</button>
                         </div>
                     </form>
                 </div>
@@ -221,44 +215,32 @@
                 <div class="modal-content">
                     <span class="close" onclick="closeEditModal()">&times;</span>
                     <h3>Edit Ads/Banner</h3>
-
                     <form id="editAdForm" enctype="multipart/form-data" action="<?= ROOT ?>/AdsAndBanners/update"
                         method="post">
-                        <input type="hidden" id="editAdId" name="adId" />
+                        <input type="hidden" id="editAdId" name="editAdId" />
+                        <input type="hidden" name="existingImagePath" id="existingImagePath" />
                         <div class="form-group">
-                            <label>Title:
-                                <input type="text" id="editAdTitle" name="title" placeholder="Ad Title" required />
-                            </label>
+                            <label>Title:</label>
+                            <input type="text" id="editAdTitle" name="editAdTitle" placeholder="Ad Title" required />
                         </div>
-                        <!-- <div class="form-group">
-                            <label>Current Image:</label>
-                            <div id="currentImagePreview" class="image-preview"></div>
-                        </div>
-                        <div class="form-group">
-                            <label>Replace Image (Optional):
-                                <input type="file" id="editAdImage" name="adImage" accept="image/*" />
-                            </label>
-                            <div id="editImagePreview" class="image-preview"></div>
-                        </div> -->
+
                         <div class="form-group">
                             <label for="editAdImage">Ad Image:</label>
                             <img id="editAdImage" src="" alt="AD Image" style="width: 100px; height: auto" />
-                            <input type="file" name="adImage" id="editAdImage" accept="image/*" />
+                            <input type="file" name="editAdImage" id="editAdImage" accept="image/*" />
                         </div>
                         <div class="form-group">
-                            <label>Description:
-                                <textarea id="editAdDescription" name="description" placeholder="Ad Description"
-                                    required></textarea>
-                            </label>
+                            <label>Description:</label>
+                            <textarea id="editAdDescription" name="editAdDescription" placeholder="Ad Description"
+                                required></textarea>
                         </div>
 
                         <div class="form-group date-inputs" id="editScheduledDateContainer">
-                            <label>Start Date:
-                                <input type="date" id="editAdStartDate" name="startDate" />
-                            </label>
-                            <label>End Date:
-                                <input type="date" id="editAdEndDate" name="endDate" />
-                            </label>
+                            <label>Start Date:</label>
+                            <input type="date" id="editAdStartDate" name="editAdStartDate" />
+                            <label>End Date:</label>
+                            <input type="date" id="editAdEndDate" name="editAdEndDate" />
+
                         </div>
                         <div class="form-group">
                             <label for="editStatus">Status</label>
@@ -269,10 +251,8 @@
 
                         </div>
 
-                        <div class="form-actions">
-                            <button type="submit" class="action-btn">Update</button>
-                            <button type="button" class="cancel-btn" onclick="closeEditModal()">Cancel</button>
-                        </div>
+                        <button type="submit" class="action-btn">Update</button>
+
                     </form>
                 </div>
             </div>
@@ -280,21 +260,18 @@
             <!-- Delete Confirmation Modal -->
             <div id="deleteModal" class="modal">
                 <div class="modal-content delete-modal">
-                    <span class="close" onclick="closeDeleteModal()">&times;</span>
                     <h3>Confirm Deletion</h3>
-                    <p>Are you sure you want to delete this ad/banner? This action cannot be undone.</p>
+                    <p>Are you sure you want to delete this ad/banner?</p>
                     <form action="<?= ROOT ?>/AdsAndBanners/delete" id="deleteAdForm" method="post">
-
-                        <input type="hidden" id="deleteAdId" name="adId" />
+                        <input type="hidden" id="deleteAdId" name="deleteAdId" />
                         <div class="form-actions">
                             <button type="submit" class="confirm-btn">Delete</button>
                             <button type="button" class="cancel-btn" onclick="closeDeleteModal()">Cancel</button>
                         </div>
+                    </form>
                 </div>
             </div>
         </div>
-
-
     </main>
     <script src="<?= ROOT ?>/assets/js/sidebar.js"></script>
     <script src="<?= ROOT ?>/assets/js/salesManager/adsAndBanners.js"></script>

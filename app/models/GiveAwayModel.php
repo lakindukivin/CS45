@@ -28,7 +28,7 @@ class GiveAwayModel {
     }
    
     public function getAllCompletedGiveAways() {
-        $query = "SELECT cg.*, c.name, c.phone, c.address, gr.request_date
+        $query = "SELECT cg.*, c.name, c.phone, c.address, gr.request_date, gr.details
                   FROM completedgiveaway cg
                   JOIN customer c ON cg.customer_id = c.customer_id
                   JOIN giveawayrequests gr ON cg.giveaway_id = gr.giveaway_id";
@@ -63,5 +63,31 @@ class GiveAwayModel {
                   SET decision_reason = :decision_reason, message_to_customer = :message_to_customer
                   WHERE giveaway_id = :giveaway_id";
         return $this->query($query, array_merge(['giveaway_id' => $giveaway_id], $data));
+    }
+
+
+    public function countByDate($date)
+    {
+        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
+            throw new Exception("Invalid date format. Expected YYYY-MM-DD.");
+        }
+        $query = "SELECT COUNT(giveaway_id) as count FROM giveawayrequests WHERE DATE(request_date) = :date";
+        $result = $this->query($query, ['date' => $date]);
+
+        // Access the result as an object
+        if (isset($result[0]->count)) {
+            return $result[0]->count;
+        }
+
+        return 0; // Default to 0 if no valid result is found
+    }
+
+    public function getPendingGiveaways()
+    {
+        $query = "SELECT g.*, c.name FROM giveawayrequests g 
+                  JOIN customer c ON g.customer_id = c.customer_id 
+                  WHERE g.giveawayStatus = 'pending' 
+                  ORDER BY g.request_date DESC";
+        return $this->query($query);
     }
 }

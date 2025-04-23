@@ -72,10 +72,10 @@
         <form action="" method="post" class="bg-white p-5 rounded-md w-full">
 
           <div class="popup-content">
+          <span  class="close"
+          id="completedGiveAwayPopupClose">&times;</span>
             <h1>Give Away Request Update</h1>
 
-            <button type="button" class="btn-secondary-color"
-            id="completedGiveAwayPopupClose">Cancel</button>
           </div>
 
 
@@ -113,13 +113,6 @@
             <input type="text" name="details" id="details" readonly/>
           </div>
 
-          <div>
-            <button type="submit" class="accept"
-              name="accept_giveaway">Accept</button>
-
-              <button type="submit" class="reject"
-              name="reject_giveaway">Reject</button>
-          </div>
 
         </form>
       </div>
@@ -134,7 +127,7 @@
       <nav class="nav">
         <ul>
           <li><a href="#"><img src="<?=ROOT?>/assets/images/notifications.svg"></a></li>
-          <li><a href="#">Profile</a></li>
+          <li><a href="<?=ROOT?>/profile">Profile</a></li>
           <li><a href="#">Logout</a></li>
         </ul>
       </nav>
@@ -144,7 +137,14 @@
         <div class="header">
         <h2>Completed Give Away Request</h2>
         </div>
-        <table id="giveAwayTable">  
+
+        <div class="status-tabs">
+          <button class="status-tab active" data-status="accepted">Accepted</button>
+          <button class="status-tab" data-status="rejected">Rejected</button>
+        </div>
+
+        <div class="tab-content active" id="accepted-orders">
+        <table>  
             <thead>
                 <tr>
                 <th>Customer ID</th>
@@ -157,15 +157,52 @@
                 </tr>
             </thead>
             <tbody>
-            <?php if (isset($data['giveaway']) && is_array($data['giveaway'])): ?>
-              <?php foreach ($data['giveaway'] as $giveaway): ?>
-                <tr>
+            <?php if (isset($data['accepted_giveaway']) && is_array($data['accepted_giveaway'])): ?>
+              <?php foreach ($data['accepted_giveaway'] as $giveaway): ?>
+                <tr data-order='<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8') ?>'>                  
                   <td><?= $giveaway->customer_id ?></td>
                   <td><?= $giveaway->name ?></td>
                   <td><?= $giveaway->phone ?></td>
                   <td><?= $giveaway->request_date ?></td>
                   <td><?= $giveaway->address ?></td>
-                  <td><?= $giveaway->status ?></td>
+                  <td><span class="status-badge accepted">Accepted</span></td>
+                  <td>
+                    <button class="view-btn" onclick="openCompletedGiveAwayPopup(<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8')?>)">View/Update</button>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            <?php else: ?>
+              <tr>
+                <td colspan="7">No give away requests found</td>
+              </tr>
+            <?php endif; ?>
+            </tbody>
+        </table>
+      </div> 
+
+      <div class="tab-content" id="rejected-orders">
+        <table>  
+            <thead>
+                <tr>
+                <th>Customer ID</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Request Date</th>
+                <th>Address</th>
+                <th>Status</th>
+                <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php if (isset($data['rejected_giveaway']) && is_array($data['rejected_giveaway'])): ?>
+              <?php foreach ($data['rejected_giveaway'] as $giveaway): ?>
+                <tr data-order='<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8') ?>'>                  
+                  <td><?= $giveaway->customer_id ?></td>
+                  <td><?= $giveaway->name ?></td>
+                  <td><?= $giveaway->phone ?></td>
+                  <td><?= $giveaway->request_date ?></td>
+                  <td><?= $giveaway->address ?></td>
+                  <td><span class="status-badge accepted">Rejected</span></td>
                   <td>
                     <button class="view-btn" onclick="openCompletedGiveAwayPopup(<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8')?>)">View/Update</button>
                   </td>

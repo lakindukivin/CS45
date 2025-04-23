@@ -8,24 +8,17 @@ function closeAddModal() {
   document.getElementById('addStaffForm').reset();
 }
 
-function openEditModal(
-  staff_id,
-  name,
-  image,
-  email,
-  phone,
-  address,
-  role,
-  status
-) {
+function openEditModal(staff_id, name, image, phone, address, role, status) {
   document.getElementById('staff_id').value = staff_id;
   document.getElementById('editStaffName').value = name;
-  document.getElementById('editImage').src = '<?= ROOT ?>' + image;
-  document.getElementById('editStaffEmail').value = email;
+  document.getElementById('editImage').src = image
+    ? 'http://localhost/cs45/public/' + image
+    : '';
+  document.getElementById('existingImagePath').value = image;
   document.getElementById('editStaffContactNo').value = phone;
   document.getElementById('editStaffAddress').value = address;
-  document.getElementById('editStafrole').value = role;
-  document.getElementById('status').value = status;
+  document.getElementById('editStaffrole').value = role;
+  document.getElementById('editStaffStatus').value = status;
 
   document.getElementById('editModal').style.display = 'block';
 }

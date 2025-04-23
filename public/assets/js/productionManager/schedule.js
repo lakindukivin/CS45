@@ -2,20 +2,9 @@ const table = document.getElementById('collectionTable');
 const modal = document.getElementById('modal');
 const form = document.getElementById('scheduleForm');
 
-function populateTable() {
-    sampleData.forEach(data => {
-        const row = table.insertRow();
-        row.addEventListener('click', () => openModal(data));
-        
-        const areaCell = row.insertCell();
-        areaCell.textContent = data.area;
-        
-        const dateCell = row.insertCell();
-        dateCell.textContent = data.date;
-        
-        const timeCell = row.insertCell();
-        timeCell.textContent = data.time;
-    });
+function addSchedule(event) {
+    event.preventDefault();
+    form.submit(); // Let the form submit normally
 }
 
 function openModal(data = null) {
@@ -57,22 +46,7 @@ function closeModal() {
 function addSchedule(event) {
     event.preventDefault();
     
-    const area = document.getElementById('area').value;
-    const date = document.getElementById('date').value;
-    const time = document.getElementById('time').value;
-    
-    // Add the new schedule to the table
-    const row = table.insertRow();
-    row.addEventListener('click', () => openModal({ area, date, time }));
-    
-    const areaCell = row.insertCell();
-    areaCell.textContent = area;
-    
-    const dateCell = row.insertCell();
-    dateCell.textContent = date;
-    
-    const timeCell = row.insertCell();
-    timeCell.textContent = time;
+    form.submit()
     
     closeModal();
 }

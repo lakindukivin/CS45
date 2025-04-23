@@ -120,5 +120,38 @@ class ManageCustomerAccountsModel
         $result = $this->query($query, $params);
         return $result ? $result[0]->count : 0;
     }
+
+
+    //toggle status 
+    public function setActive($id)
+    {
+        try {
+            $query = 'UPDATE customer SET status =1 WHERE customer_id = :id;';
+            $params = ['id' => $id];
+            $this->query($query, $params);
+            return true;
+
+        } catch (Exception $e) {
+            error_log("Error changing status: " . $e->getMessage());
+            return false;
+        }
+
+
+    }
+
+    public function setInactive($id)
+    {
+        try {
+            $query = 'UPDATE customer SET status =0 WHERE customer_id = :id;';
+            $params = ['id' => $id];
+            $this->query($query, $params);
+            return true;
+
+        } catch (Exception $e) {
+            error_log("Error changing status: " . $e->getMessage());
+            return false;
+        }
+
+    }
 }
 ?>

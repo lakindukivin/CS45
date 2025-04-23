@@ -71,10 +71,24 @@ class AdsAndBanners
     public function add()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $imagePath = '';
+            if (isset($_FILES['adImage']) && $_FILES['adImage']['error'] == UPLOAD_ERR_OK) {
+                $uploadDir = 'uploads/adsAndBanners/';
+                if (!is_dir($uploadDir)) {
+                    mkdir($uploadDir, 0777, true);
+                }
+                $fileName = uniqid() . '_' . basename($_FILES['adImage']['name']);
+                $targetFile = $uploadDir . $fileName;
+                if (move_uploaded_file($_FILES['adImage']['tmp_name'], $targetFile)) {
+                    $imagePath = '/' . $targetFile; // Save relative path
+                }
+            }
+
             $data = [
 
                 'title' => $_POST['title'],
-                'image' => $_POST['adImage'],
+                'image' => $imagePath,
                 'description' => $_POST['description'],
                 'start_date' => $_POST['startDate'],
                 'end_date' => $_POST['endDate'],
@@ -86,26 +100,47 @@ class AdsAndBanners
                 $_SESSION['success'] = "Successfully Added!";
                 header("Location: " . ROOT . "/adsAndBanners");
                 exit();
+            }else {
+                $_SESSION['error'] = "Failed to add ad/banner!";
+                header("Location: " . ROOT . "/adsAndBanners");
+                exit();
             }
         }
     }
     public function update()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if (isset($_POST['adId'])) {
+            if (isset($_POST['editAdId'])) {
+
+                $imagePath = $_POST['existingImagePath'] ?? '';
+                if (isset($_FILES['editAdImage']) && $_FILES['editAdImage']['error'] == UPLOAD_ERR_OK) {
+                    $uploadDir = 'uploads/adsAndBanners/';
+                    if (!is_dir($uploadDir)) {
+                        mkdir($uploadDir, 0777, true);
+                    }
+                    $fileName = uniqid() . '_' . basename($_FILES['editAdImage']['name']);
+                    $targetFile = $uploadDir . $fileName;
+                    if (move_uploaded_file($_FILES['editAdImage']['tmp_name'], $targetFile)) {
+                        $imagePath = '/' . $targetFile;
+                    }
+                }
                 $data = [
 
-                    'ad_id' => $_POST['adId'],
-                    'title' => $_POST['title'],
-                    'image' => $_POST['adImage'],
-                    'description' => $_POST['description'],
-                    'start_date' => $_POST['startDate'],
-                    'end_date' => $_POST['endDate'],
-                    'status'=> $_POST['status']
+                    'ad_id' => $_POST['editAdId'],
+                    'title' => $_POST['editAdTitle'],
+                    'image' => $imagePath,
+                    'description' => $_POST['editAdDescription'],
+                    'start_date' => $_POST['editAdStartDate'],
+                    'end_date' => $_POST['editAdEndDate'],
+                    'status' => $_POST['editStatus']
                 ];
 
-                if ($this->AdsAndBannersModel->editAdsAndBanners($_POST['adId'], $data)) {
+                if ($this->AdsAndBannersModel->editAdsAndBanners($_POST['editAdId'], $data)) {
                     $_SESSION['success'] = "Successfully updated!";
+                    header("Location: " . ROOT . "/adsAndBanners");
+                    exit();
+                }else {
+                    $_SESSION['error'] = "Failed to update ad/banner!";
                     header("Location: " . ROOT . "/adsAndBanners");
                     exit();
                 }
@@ -117,10 +152,14 @@ class AdsAndBanners
     public function delete()
     {
 
-        if (isset($_POST['adId'])) {
+        if (isset($_POST['deleteAdId'])) {
 
-            if ($this->AdsAndBannersModel->deleteAdsAndBanners($_POST['adId'])) {
+            if ($this->AdsAndBannersModel->deleteAdsAndBanners($_POST['deleteAdId'])) {
                 $_SESSION['success'] = "Successfully deleted!";
+                header("Location: " . ROOT . "/adsAndBanners");
+                exit();
+            }else{
+                $_SESSION['error'] = "Failed to delete ad/banner!";
                 header("Location: " . ROOT . "/adsAndBanners");
                 exit();
             }
@@ -128,4 +167,38 @@ class AdsAndBanners
 
 
     }
+
+    public function setActive()
+    {
+        if (isset($_GET['ad_id'])) {
+            if ($this->AdsAndBannersModel->setActive($_GET['ad_id'])) {
+                $_SESSION['success'] = "Successfully activated!";
+                header("Location: " . ROOT . "/adsAndBanners");
+                exit();
+            } else {
+                $_SESSION['error'] = "Failed to activate product!";
+                header("Location: " . ROOT . "/adsAndBanners");
+                exit();
+            }
+        }
+
+    }
+
+    public function setInactive()
+    {
+        if (isset($_GET['ad_id'])) {
+            if ($this->AdsAndBannersModel->setInactive($_GET['ad_id'])) {
+                $_SESSION['success'] = "Successfully deactivated!";
+                header("Location: " . ROOT . "/adsAndBanners");
+                exit();
+            } else {
+                $_SESSION['error'] = "Failed to deactivate product!";
+                header("Location: " . ROOT . "/adsAndBanners");
+                exit();
+            }
+        }
+
+    }
+
+    
 }

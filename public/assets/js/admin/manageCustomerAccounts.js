@@ -1,7 +1,7 @@
 function openEditModal(customer_id, name, image, phone, address, status) {
   document.getElementById('editCustomerId').value = customer_id;
   document.getElementById('editCustomerName').value = name;
-  // document.getElementById('editImage').src = '<?= ROOT ?>' + image;
+  document.getElementById('editCustomerImage').value = image ? image : '';
   document.getElementById('editCustomerContactNo').value = phone;
   document.getElementById('editCustomerAddress').value = address;
   document.getElementById('editCustomerStatus').value = status;

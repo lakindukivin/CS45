@@ -126,12 +126,13 @@ class ProductModel
         $result = $this->query($query, $params);
         return $result ? $result[0]->count : 0;
     }
-
-    public function setActive($product_id)
+    
+    //toggle status 
+    public function setActive($id)
     {
         try {
-            $query = 'UPDATE product SET productStatus =1 WHERE product_id = :product_id;';
-            $params = ['product_id' => $product_id];
+            $query = 'UPDATE product SET productStatus =1 WHERE product_id = :id;';
+            $params = ['id' => $id];
             $this->query($query, $params);
             return true;
 
@@ -143,11 +144,11 @@ class ProductModel
 
     }
 
-    public function setInactive($product_id)
+    public function setInactive($id)
     {
         try {
-            $query = 'UPDATE product SET productStatus =0 WHERE product_id = :product_id;';
-            $params = ['product_id' => $product_id];
+            $query = 'UPDATE product SET productStatus =0 WHERE product_id = :id;';
+            $params = ['id' => $id];
             $this->query($query, $params);
             return true;
 

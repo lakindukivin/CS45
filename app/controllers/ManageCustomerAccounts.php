@@ -55,35 +55,6 @@ class ManageCustomerAccounts
 
         ]);
     }
-
-    public function getSingleCustomer()
-    {
-        if (isset($_POST['customer_id'])) {
-            $singleCustomer = $this->manageCustomerAccountsModel->findById($_POST['customer_id']);
-            echo json_encode($singleCustomer);
-            exit;
-        }
-    }
-
-    // Add customer (without user account)
-    public function add()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $data = [
-                'name' => $_POST['name'],
-                'address' => $_POST['address'],
-                'phone' => $_POST['phone'],
-                'status' => 1
-            ];
-
-            if ($this->manageCustomerAccountsModel->addCustomer($data)) {
-                $_SESSION['success'] = "Successfully Added!";
-                header("Location: " . ROOT . "/manageCustomerAccounts");
-                exit();
-            }
-        }
-    }
-
     // Update customer details
     public function update()
     {
@@ -129,6 +100,39 @@ class ManageCustomerAccounts
                 exit();
             }
         }
+    }
+
+// change status
+    public function setActive()
+    {
+        if (isset($_GET['customer_id'])) {
+            if ($this->manageCustomerAccountsModel->setActive($_GET['customer_id'])) {
+                $_SESSION['success'] = "Successfully activated!";
+                header("Location: " . ROOT . "/manageCustomerAccounts");
+                exit();
+            } else {
+                $_SESSION['error'] = "Failed to activate product!";
+                header("Location: " . ROOT . "/manageCustomerAccounts");
+                exit();
+            }
+        }
+
+    }
+
+    public function setInactive()
+    {
+        if (isset($_GET['customer_id'])) {
+            if ($this->manageCustomerAccountsModel->setInactive($_GET['customer_id'])) {
+                $_SESSION['success'] = "Successfully deactivated!";
+                header("Location: " . ROOT . "/manageCustomerAccounts");
+                exit();
+            } else {
+                $_SESSION['error'] = "Failed to deactivate product!";
+                header("Location: " . ROOT . "/manageCustomerAccounts");
+                exit();
+            }
+        }
+
     }
 }
 ?>

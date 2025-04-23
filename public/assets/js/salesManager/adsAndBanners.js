@@ -15,11 +15,13 @@ function openEditModal(
   end_date,
   status
 ) {
-  currentadId = ad_id;
-
+ 
   document.getElementById('editAdId').value = ad_id;
   document.getElementById('editAdTitle').value = title;
-  //   document.getElementById('existingImage').src = '<?= ROOT ?>' + image;
+  document.getElementById('editAdImage').src = image
+    ? 'http://localhost/cs45/public/' + image
+    : '';
+  document.getElementById('existingImagePath').value = image;
   document.getElementById('editAdDescription').value = description;
   document.getElementById('editAdStartDate').value = start_date;
   document.getElementById('editAdEndDate').value = end_date;

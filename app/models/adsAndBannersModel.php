@@ -113,4 +113,39 @@ class AdsAndBannersModel
         return $result ? $result[0]->count : 0;
     }
 
+
+
+    //toggle status 
+    public function setActive($id)
+    {
+        try {
+            $query = 'UPDATE ads_and_banners SET status =1 WHERE ad_id = :id;';
+            $params = ['id' => $id];
+            $this->query($query, $params);
+            return true;
+
+        } catch (Exception $e) {
+            error_log("Error changing status: " . $e->getMessage());
+            return false;
+        }
+
+
+    }
+
+    public function setInactive($id)
+    {
+        try {
+            $query = 'UPDATE ads_and_banners SET status =0 WHERE ad_id = :id;';
+            $params = ['id' => $id];
+            $this->query($query, $params);
+            return true;
+
+        } catch (Exception $e) {
+            error_log("Error changing status: " . $e->getMessage());
+            return false;
+        }
+
+    }
+
+
 }

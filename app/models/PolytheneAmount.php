@@ -24,9 +24,17 @@ class PolytheneAmount  {
         }
     }
     public function getAllAmounts() {
-        return $this->findAll();
+        return $this->query("SELECT * FROM polytheneamount ORDER BY updated_date DESC");
     }
 
+    public function getAllMonths() {
+        return $this->query("SELECT month FROM polytheneamount");
+    }
+    
+    public function monthExists($month) {
+        $result = $this->first(['month' => $month]);
+        return !empty($result);
+    }
 
 
     //below methods (have no idea)
