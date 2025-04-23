@@ -58,9 +58,15 @@
                     <a href="<?= ROOT ?>/store">
                         <button>BUY NOW</button>
                     </a>
-                    <a href="<?= ROOT ?>/login">
-                        <button>RECYCLE</button>
-                    </a>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <a href="<?= ROOT ?>/recycle"> <!-- Link to recycle form for logged-in users -->
+                            <button>RECYCLE</button>
+                        </a>
+                    <?php else: ?>
+                        <a href="<?= ROOT ?>/login"> <!-- Link to login page for guests -->
+                            <button>RECYCLE</button>
+                        </a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

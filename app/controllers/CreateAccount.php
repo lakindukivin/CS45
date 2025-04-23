@@ -1,5 +1,4 @@
 <?php
-
 /**
  * CreateAccount Class
  */
@@ -10,11 +9,12 @@ class CreateAccount
     public function index()
     {
         $user = new User();
+        $customer = new Customer(); // Add Customer model instance
         $data = [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Set default role if not provided
-            $_POST['role_id'] = $_POST['role_id'] ?? 3; // Default to Customer role (3)
+            $_POST['role_id'] = $_POST['role_id'] ?? 5; // Default to Customer role (5)
 
             if ($user->validate($_POST)) {
                 try {
@@ -25,6 +25,21 @@ class CreateAccount
                     $user_id = $user->addUser($user->processedData);
 
                     if ($user_id) {
+                        // Create customer record with default values
+                        $customerData = [
+                            'user_id' => $user_id,
+                            'address' => '', // Default empty address
+                            'phone' => '', // Default empty phone
+                            'status' => 1 // Default active status
+                        ];
+
+                        // Add customer record
+                        if (!$customer->insert($customerData)) {
+                            // If customer creation fails, delete the user to maintain consistency
+                            $user->delete($user_id, 'user_id');
+                            throw new Exception("Failed to create customer profile");
+                        }
+
                         // Optionally log the user in immediately
                         // $this->autoLogin($user_id);
 
@@ -62,6 +77,13 @@ class CreateAccount
             $_SESSION['user_id'] = $userData->user_id;
             $_SESSION['email'] = $userData->email;
             $_SESSION['role_id'] = $userData->role_id;
+            
+            // You might want to add customer data to session as well
+            $customer = new Customer();
+            $customerData = $customer->where(['user_id' => $user_id]);
+            if ($customerData && count($customerData) > 0) {
+                $_SESSION['customer_id'] = $customerData[0]->customer_id;
+            }
         }
     }
 }
