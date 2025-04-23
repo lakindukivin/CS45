@@ -87,6 +87,7 @@ class DiscountModel
         }
     }
 
+    // update discount
     public function updateDiscount($discount_id, $data)
     {
         try {
@@ -97,6 +98,35 @@ class DiscountModel
             return false;
         }
     }
+
+    //Delete customer (soft delete)
+    public function delete($id)
+    {
+        try {
+            $query = 'UPDATE discount SET status = 0 WHERE discount_id = :id;';
+            $params = ['id' => $id];
+            $this->query($query, $params);
+            return true;
+        } catch (Exception $e) {
+            error_log("Error deleting customer: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    //Restore customer
+    public function restore($id)
+    {
+        try {
+            $query = 'UPDATE discount SET status = 1 WHERE discount_id = :id;';
+            $params = ['id' => $id];
+            $this->query($query, $params);
+            return true;
+        } catch (Exception $e) {
+            error_log("Error restoring customer: " . $e->getMessage());
+            return false;
+        }
+    }
+
 
     //toggle status 
     public function setActive($id)

@@ -60,8 +60,7 @@ class Discounts
     {
 
         if (isset($_POST['discount_id'])) {
-            $model = new DiscountModel();
-            $singleDiscount = $model->findById($_POST['discount_id']);
+            $singleDiscount = $this->discountModel->findById($_POST['discount_id']);
             echo json_encode($singleDiscount);
             exit;
         }
@@ -74,15 +73,66 @@ class Discounts
             // $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
 
             $data = [
-                'product_id' => $_POST['product_id'],
-                'discount_percentage' => $_POST['discount_percentage'],
-                'start_date' => $_POST['start_date'],
-                'end_date' => $_POST['end_date'],
-                'status' => $_POST['status'],
+                'product_id' => $_POST['productId'],
+                'discount_percentage' => $_POST['discountPercentage'],
+                'start_date' => $_POST['startDate'],
+                'end_date' => $_POST['endDate'],
+                'status' => 1,
 
             ];
+
+            if ($this->discountModel->addDiscount($data)) {
+                $_SESSION['success'] = "Successfully Added!";
+                header("Location: " . ROOT . "/discounts");
+                exit();
+            } else {
+                $_SESSION['error'] = "Failed to add !";
+                header("Location: " . ROOT . "/discounts");
+                exit();
+            }
         }
     }
+
+    
+    public function update()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $data = [
+                'discount_id' => $_POST['editDiscountId'],
+                'product_id' => $_POST['editProductId'],
+                'discount_percentage' => $_POST['editDiscountPercentage'],
+                'start_date' => $_POST['editStartDate'],
+                'end_date' => $_POST['editEndDate'],
+                'status' => $_POST['editStatus'],
+
+            ];
+
+            if ($this->discountModel->updateDiscount($_POST['editDiscountId'], $data)) {
+                $_SESSION['success'] = "Successfully Updated!";
+                header("Location: " . ROOT . "/discounts");
+                exit();
+            } else {
+                $_SESSION['error'] = "Failed to update !";
+                header("Location: " . ROOT . "/discounts");
+                exit();
+            }
+        }
+    }
+
+    public function delete(){
+        if (isset($_POST['deleteDiscountId'])) {
+            if ($this->discountModel->delete($_POST['deleteDiscountId'])) {
+                $_SESSION['success'] = "Successfully deleted!";
+                header("Location: " . ROOT . "/discounts");
+                exit();
+            } else {
+                $_SESSION['error'] = "Failed to delete discount!";
+                header("Location: " . ROOT . "/discounts");
+                exit();
+            }
+        }
+    }
+     
 
 
     public function setActive()
