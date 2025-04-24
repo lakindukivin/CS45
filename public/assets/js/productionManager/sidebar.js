@@ -46,6 +46,9 @@ function closeAllSubMenus() {
   });
 }
 
+// Responsive sidebar toggle
+
+
 // function applyMobileStyles() {
 //   if (window.innerWidth <= 768) {
 //     sidebar.classList.add('hide'); // Hide the sidebar initially for mobile
