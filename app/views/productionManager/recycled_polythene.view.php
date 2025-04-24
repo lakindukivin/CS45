@@ -117,6 +117,7 @@
       </form>
       <div> <button type="view" class="add-button" ><a href="<?=ROOT?>/PolytheneAmount">View Polythene Amounts</a> </button></div>
     </div>
+    </div>
     <script src="<?= ROOT ?>/assets/js/productionManager/sidebar.js"></script>
     <script src="<?=ROOT?>/assets/js/productionManager/recycled_polythene.js"></script>
 </body>

@@ -14,10 +14,24 @@
   --transition: all 0.3s ease;
 }
 
+* {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.content {
+  margin-left: 250px; /* Same as sidebar width */
+  transition: margin-left 0.3s ease;
+  width: calc(100% - 250px);
+}
+
+.content.collapsed {
+  margin-left: 80px; /* Collapsed sidebar width */
+  width: calc(100% - 80px);
+}
+
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: var(--white);
   color: var(--text-color);
   min-height: 100vh;
@@ -31,6 +45,9 @@ body {
   box-sizing: border-box;
   margin-left: 200px;
   display: flex;
+  max-width: 1200px;
+  width: calc(100% - 40px); /* Changed from fixed width */
+  margin: 20px auto; /* Centered */
 }
 
 .form-card {
@@ -39,6 +56,12 @@ body {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 550px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 24px;
+  color: var(--primary-green);
 }
 
 h2 {
@@ -133,20 +156,28 @@ select option:disabled {
 
 .add-button {
   background-color: var(--secondary-green);
+  color: white;
+  padding: 0.75rem 1.5rem;
   border: none;
-  padding: 8px 16px;
   border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  margin-left: 50px;
+  width: 100%;
+  transition: background-color 0.2s ease;
+  margin-top: 5px;
+  margin-left: 25px;
 }
 
 .add-button:hover {
   background-color: var(--accent-green);
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
+}
+
+.add-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
 }
 
 .add-button a {
@@ -174,8 +205,20 @@ select option:disabled {
 }
 
 @media (max-width: 480px) {
+  .content {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .content.collapsed {
+    margin-left: 0;
+    width: 100%;
+  }
+
   .container {
-      padding: 10px;
+      width: 95%;
+    margin: 1rem auto;
+    padding: 1rem;
   }
   
   .form-card {
