@@ -196,7 +196,6 @@
                                     placeholder="Document actions taken"></textarea>
                             </div>
                             <button type="submit" class="action-btn">Save & Update</button>
-                            <button type="button" class="cancel-btn" onclick="closeEditModal()">Cancel</button>
                         </form>
                     </div>
                 </div>
