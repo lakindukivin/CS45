@@ -26,15 +26,6 @@ class GiveAwayModel {
         ];
         return $this->query($query, $data);
     }
-   
-    public function getAllCompletedGiveAways() {
-        $query = "SELECT cg.*, c.name, c.phone, c.address, gr.request_date, gr.details
-                  FROM completedgiveaway cg
-                  JOIN customer c ON cg.customer_id = c.customer_id
-                  JOIN giveawayrequests gr ON cg.giveaway_id = gr.giveaway_id";
-
-        return $this->query($query);
-    }
 
     public function addCompletedGiveaway($data) {
         // Check if the giveaway_id already exists in completed_giveaways
@@ -53,6 +44,24 @@ class GiveAwayModel {
         return $this->query($query, $data);
     }
 
+   
+    public function getAllCompletedGiveAways() {
+        $query = "SELECT cg.*, c.name, c.phone, c.address, gr.request_date, gr.details
+                  FROM completedgiveaway cg
+                  JOIN customer c ON cg.customer_id = c.customer_id
+                  JOIN giveawayrequests gr ON cg.giveaway_id = gr.giveaway_id";
+
+        return $this->query($query);
+    }
+
+    public function getAcceptedGiveAways() {
+        $query = "SELECT cg.*, c.name, c.phone, c.address, g.request_date, g.details 
+                  FROM completedgiveaway cg 
+                  JOIN customer c ON cg.customer_id = c.customer_id
+                  JOIN giveawayrequests g ON cg.giveaway_id = g.giveaway_id";
+        return $this->query($query);
+    }
+    
     public function getGiveAwayById($giveaway_id) {
         $query = "SELECT * FROM giveawayrequests WHERE giveaway_id = :giveaway_id";
         return $this->query($query, ['giveaway_id' => $giveaway_id]);
@@ -65,6 +74,28 @@ class GiveAwayModel {
         return $this->query($query, array_merge(['giveaway_id' => $giveaway_id], $data));
     }
 
+    public function updateAcceptedGiveAway($giveaway_id, $status) {
+        $query = "UPDATE completedgiveaway
+                  SET status = :status
+                  WHERE giveaway_id = :giveaway_id";
+        return $this->query($query, [
+            'giveaway_id' => $giveaway_id,
+            'status' => $status
+        ]);
+    }
+
+    public function updatePolytheneAmount($giveaway_id, $amount) {
+        $query = "UPDATE completedgiveaway
+                  SET amount = :amount
+                  WHERE giveaway_id = :giveaway_id";
+
+        return $this->query($query, [
+            'giveaway_id' => $giveaway_id,
+            'amount' => $amount
+        ]);
+    }
+    
+
 
     public function countByDate($date)
     {
@@ -72,6 +103,22 @@ class GiveAwayModel {
             throw new Exception("Invalid date format. Expected YYYY-MM-DD.");
         }
         $query = "SELECT COUNT(giveaway_id) as count FROM giveawayrequests WHERE DATE(request_date) = :date";
+        $result = $this->query($query, ['date' => $date]);
+
+        // Access the result as an object
+        if (isset($result[0]->count)) {
+            return $result[0]->count;
+        }
+
+        return 0; // Default to 0 if no valid result is found
+    }
+
+    public function countByDateAccepted($date)
+    {
+        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
+            throw new Exception("Invalid date format. Expected YYYY-MM-DD.");
+        }
+        $query = "SELECT COUNT(completed_id) as count FROM completedgiveaway WHERE DATE(completion_date) = :date";
         $result = $this->query($query, ['date' => $date]);
 
         // Access the result as an object

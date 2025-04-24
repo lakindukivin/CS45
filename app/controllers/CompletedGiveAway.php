@@ -10,6 +10,7 @@ class CompletedGiveAway {
 
      // Initialize arrays for each status type
      $data['accepted_giveaway'] = [];
+      $data['collected_giveaway'] = [];
      $data['rejected_giveaway'] = [];
 
       // Sort giveaways by status
@@ -18,6 +19,9 @@ class CompletedGiveAway {
             switch ($giveaway->status) {
                 case 'accepted':
                     $data['accepted_giveaway'][] = $giveaway;
+                    break;
+                case 'collected':
+                    $data['collected_giveaway'][] = $giveaway;
                     break;
                 case 'rejected':
                     $data['rejected_giveaway'][] = $giveaway;

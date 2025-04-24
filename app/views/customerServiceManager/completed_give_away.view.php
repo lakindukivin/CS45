@@ -134,11 +134,10 @@
     </header>
     <div class="box">
       <div class="container">
-        <div class="header">
-        </div>
-
+       
         <div class="status-tabs">
-          <button class="status-tab active" data-status="accepted">Accepted</button>
+          <button class="status-tab active" data-status="accepted" >Accepted</button>
+          <button class="status-tab" data-status="collected">Collected</button>
           <button class="status-tab" data-status="rejected">Rejected</button>
         </div>
 
@@ -164,7 +163,44 @@
                   <td><?= $giveaway->phone ?></td>
                   <td><?= $giveaway->request_date ?></td>
                   <td><?= $giveaway->address ?></td>
-                  <td><span class="status-badge accepted">Accepted</span></td>
+                  <td><span>Accepted</span></td>
+                  <td>
+                    <button class="view-btn" onclick="openCompletedGiveAwayPopup(<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8')?>)"><img src="<?= ROOT ?>/assets/images/edit-btn.svg" alt=""></button>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            <?php else: ?>
+              <tr>
+                <td colspan="9">No give away requests found</td>
+              </tr>
+            <?php endif; ?>
+            </tbody>
+        </table>
+      </div> 
+
+      <div class="tab-content" id="collected-orders">
+        <table>  
+            <thead>
+                <tr>
+                <th>Customer ID</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Request Date</th>
+                <th>Address</th>
+                <th>Status</th>
+                <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php if (isset($data['collected_giveaway']) && is_array($data['collected_giveaway']) && !empty($data['collected_giveaway'])): ?>
+              <?php foreach ($data['collected_giveaway'] as $giveaway): ?>
+                <tr data-order='<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8') ?>'>                  
+                  <td><?= $giveaway->customer_id ?></td>
+                  <td><?= $giveaway->name ?></td>
+                  <td><?= $giveaway->phone ?></td>
+                  <td><?= $giveaway->request_date ?></td>
+                  <td><?= $giveaway->address ?></td>
+                  <td><span>Collected</span></td>
                   <td>
                     <button class="view-btn" onclick="openCompletedGiveAwayPopup(<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8')?>)"><img src="<?= ROOT ?>/assets/images/edit-btn.svg" alt=""></button>
                   </td>
