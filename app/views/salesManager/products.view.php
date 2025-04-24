@@ -140,9 +140,11 @@
                                             onclick="openEditModal('<?= $product->product_id ?>', '<?= $product->productName ?>', '<?= $product->productImage ?>', '<?= $product->productDescription ?>','<?= $product->productStatus ?>')">
                                             <img src="<?= ROOT ?>/assets/images/edit-btn.svg"" alt=" edit">
                                         </button>
-                                        <button class="delete-btn" onclick="openDeleteModal('<?= $product->product_id ?>')">
-                                            <img src="<?= ROOT ?>/assets/images/delete-btn.svg"" alt=" delete">
-                                        </button>
+                                        <?php if ($product->productStatus == 1): ?>
+                                            <button class="delete-btn" onclick="openDeleteModal('<?= $product->product_id ?>')">
+                                                <img src="<?= ROOT ?>/assets/images/delete-btn.svg"" alt=" delete">
+                                            </button>
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

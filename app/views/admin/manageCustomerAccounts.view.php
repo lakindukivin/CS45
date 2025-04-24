@@ -121,8 +121,10 @@
                                     <button class="edit-btn"
                                         onclick="openEditModal('<?= $customer->customer_id ?>','<?= $customer->name ?>','<?= $customer->image ?>','<?= $customer->phone ?>','<?= $customer->address ?>','<?= $customer->status ?>')"><img
                                             src="<?= ROOT ?>/assets/images/edit-btn.svg"" alt=" edit"></button>
-                                    <button class="delete-btn" onclick="openDeleteModal('<?= $customer->customer_id ?>')"><img
-                                            src="<?= ROOT ?>/assets/images/delete-btn.svg"" alt=" delete"></button>
+                                    <?php if ($customer->status == 1): ?>
+                                        <button class="delete-btn" onclick="openDeleteModal('<?= $customer->customer_id ?>')"><img
+                                                src="<?= ROOT ?>/assets/images/delete-btn.svg"" alt=" delete"></button>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -198,6 +200,7 @@
     </main>
 
     <script src="<?= ROOT ?>/assets/js/admin/sidebar.js"></script>
+    <script src="<?= ROOT ?>/assets/js/formValidation.js"></script>
     <script src="<?= ROOT ?>/assets/js/admin/manageCustomerAccounts.js"></script>
 </body>
 

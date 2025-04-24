@@ -147,8 +147,10 @@
                                     <button class="edit-btn"
                                         onclick="openEditModal('<?= $adsAndBanner->ad_id ?>', '<?= $adsAndBanner->title ?>', '<?= $adsAndBanner->image ?>','<?= $adsAndBanner->description ?>','<?= $adsAndBanner->start_date ?>', '<?= $adsAndBanner->end_date ?>','<?= $adsAndBanner->status ?>')"><img
                                             src="<?= ROOT ?>/assets/images/edit-btn.svg"" alt=" edit"></button>
-                                    <button class="delete-btn" onclick="openDeleteModal('<?= $adsAndBanner->ad_id ?>')"><img
-                                            src="<?= ROOT ?>/assets/images/delete-btn.svg"" alt=" delete"></button>
+                                    <?php if ($adsAndBanner->status == 1): ?>
+                                        <button class="delete-btn" onclick="openDeleteModal('<?= $adsAndBanner->ad_id ?>')"><img
+                                                src="<?= ROOT ?>/assets/images/delete-btn.svg"" alt=" delete"></button>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

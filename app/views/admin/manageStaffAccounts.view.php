@@ -129,13 +129,16 @@
                                 <td><?= $staff->phone ?></td>
                                 <td><?= $staff->address ?></td>
                                 <td><?= $staff->role_id ?></td>
-                                <td><?= $staff->status == 1 ? "<a href=ManageStaffAccounts/setInactive?staff_id=" . $staff->staff_id . " class='active-btn'>Active</a>" : "<a  href=ManageStaffAccounts/setActive?staff_id=" . $staff->staff_id . " class='inactive-btn'>Inactive</a>";?></td>
+                                <td><?= $staff->status == 1 ? "<a href=ManageStaffAccounts/setInactive?staff_id=" . $staff->staff_id . " class='active-btn'>Active</a>" : "<a  href=ManageStaffAccounts/setActive?staff_id=" . $staff->staff_id . " class='inactive-btn'>Inactive</a>"; ?>
+                                </td>
                                 <td class="action-buttons">
                                     <button class="edit-btn"
                                         onclick="openEditModal('<?= $staff->staff_id ?>','<?= $staff->name ?>','<?= $staff->image ?>','<?= $staff->phone ?>','<?= $staff->address ?>','<?= $staff->role_id ?>','<?= $staff->status ?>')"><img
                                             src="<?= ROOT ?>/assets/images/edit-btn.svg"" alt=" edit"></button>
-                                    <button class="delete-btn" onclick="openDeleteModal(<?= $staff->staff_id ?>)"><img
-                                            src="<?= ROOT ?>/assets/images/delete-btn.svg"" alt=" delete"></button>
+                                    <?php if ($staff->status == 1): ?>
+                                        <button class="delete-btn" onclick="openDeleteModal(<?= $staff->staff_id ?>)"><img
+                                                src="<?= ROOT ?>/assets/images/delete-btn.svg"" alt=" delete"></button>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -289,6 +292,7 @@
     </main>
 
     <script src="<?= ROOT ?>/assets/js/admin/sidebar.js"></script>
+    <script src="<?= ROOT ?>/assets/js/formValidation.js"></script>
     <script src="<?= ROOT ?>/assets/js/admin/manageStaffAccounts.js"></script>
 </body>
 
