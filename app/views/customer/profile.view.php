@@ -54,7 +54,7 @@
                     <label for="phone">Phone Number</label>
                     <input type="tel" id="phone" name="phone"
                         placeholder="Enter your phone number"
-                        value="<?= htmlspecialchars($profile['phone_number'] ?? '') ?>"
+                        value="<?= htmlspecialchars($profile['phone'] ?? '') ?>"
                         required>
                 </div>
 
