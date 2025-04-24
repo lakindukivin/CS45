@@ -141,7 +141,8 @@
                                 <td><?= htmlspecialchars($adsAndBanner->description) ?></td>
                                 <td><?= htmlspecialchars($adsAndBanner->start_date) ?></td>
                                 <td><?= htmlspecialchars($adsAndBanner->end_date) ?></td>
-                                <td><?= $adsAndBanner->status == 1 ? "<a href=AdsAndBanners/setInactive?ad_id=" . $adsAndBanner->ad_id . " class='active-btn'>Active</a>" : "<a  href=AdsAndBanners/setActive?ad_id=" . $adsAndBanner->ad_id . " class='inactive-btn'>Inactive</a>"; ?></td>
+                                <td><?= $adsAndBanner->status == 1 ? "<a href=AdsAndBanners/setInactive?ad_id=" . $adsAndBanner->ad_id . " class='active-btn'>Active</a>" : "<a  href=AdsAndBanners/setActive?ad_id=" . $adsAndBanner->ad_id . " class='inactive-btn'>Inactive</a>"; ?>
+                                </td>
                                 <td>
                                     <button class="edit-btn"
                                         onclick="openEditModal('<?= $adsAndBanner->ad_id ?>', '<?= $adsAndBanner->title ?>', '<?= $adsAndBanner->image ?>','<?= $adsAndBanner->description ?>','<?= $adsAndBanner->start_date ?>', '<?= $adsAndBanner->end_date ?>','<?= $adsAndBanner->status ?>')"><img
@@ -273,6 +274,7 @@
         </div>
     </main>
     <script src="<?= ROOT ?>/assets/js/sidebar.js"></script>
+    <script src="<?= ROOT ?>/assets/js/formValidation.js"></script>
     <script src="<?= ROOT ?>/assets/js/salesManager/adsAndBanners.js"></script>
 </body>
 
