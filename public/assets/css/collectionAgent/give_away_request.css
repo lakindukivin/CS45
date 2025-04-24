@@ -1,0 +1,97 @@
+:root {
+  --primary-green: #1a4731;
+  --secondary-green: #2d7d4c;
+  --accent-green: #34965e;
+  --light-green: #e7f6ec;
+  --danger-red: #d9534f;
+  --white: #ffffff;
+  --gray-100: #f8f9fa;
+  --gray-200: #e9ecef;
+  --gray-300: #dee2e6;
+  --gray-800: #343a40;
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+}
+
+
+
+/* Background Overlay */
+#giveAwayReqUpdatePopup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  display: none;
+  /* Initially hidden */
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+#completedGiveAwayPopup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  display: none;
+  /* Initially hidden */
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Status tabs */
+.status-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--gray-300);
+  margin-bottom: 20px;
+}
+
+.status-tab {
+  padding: 10px 20px;
+  border: none;
+  background: none;
+  font-weight: 500;
+  color: var(--gray-800);
+  cursor: pointer;
+  position: relative;
+  transition: var(--transition);
+}
+
+.status-tab:hover {
+  color: var(--secondary-green);
+}
+
+.status-tab.active {
+  color: var(--primary-green);
+  font-weight: 600;
+}
+
+.status-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: var(--secondary-green);
+}
+
+/* Tab content */
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
