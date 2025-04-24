@@ -141,7 +141,7 @@
                                 <td><?= htmlspecialchars($adsAndBanner->description) ?></td>
                                 <td><?= htmlspecialchars($adsAndBanner->start_date) ?></td>
                                 <td><?= htmlspecialchars($adsAndBanner->end_date) ?></td>
-                                <td><?= $adsAndBanner->status == 1 ? "<a href=AdsAndBanners/setInactive?ad_id=" . $adsAndBanner->ad_id . " class='active-btn'>Active</a>" : "<a  href=AdsAndBanners/setActive?ad_id=" . $adsAndBanner->ad_id . " class='inactive-btn'>Inactive</a>";?></td>
+                                <td><?= $adsAndBanner->status == 1 ? "<a href=AdsAndBanners/setInactive?ad_id=" . $adsAndBanner->ad_id . " class='active-btn'>Active</a>" : "<a  href=AdsAndBanners/setActive?ad_id=" . $adsAndBanner->ad_id . " class='inactive-btn'>Inactive</a>"; ?></td>
                                 <td>
                                     <button class="edit-btn"
                                         onclick="openEditModal('<?= $adsAndBanner->ad_id ?>', '<?= $adsAndBanner->title ?>', '<?= $adsAndBanner->image ?>','<?= $adsAndBanner->description ?>','<?= $adsAndBanner->start_date ?>', '<?= $adsAndBanner->end_date ?>','<?= $adsAndBanner->status ?>')"><img
@@ -180,9 +180,8 @@
                     <form action="<?= ROOT ?>/AdsAndBanners/add" id="adForm" enctype="multipart/form-data"
                         method="post">
                         <div class="form-group">
-                            <label>Title:
-                                <input type="text" id="adTitle" name="title" placeholder="Ad Title" required />
-                            </label>
+                            <label>Title:</label>
+                            <input type="text" id="adTitle" name="title" placeholder="Ad Title" required />
                         </div>
                         <div class="form-group">
                             <label>Upload Banner File:</label>
