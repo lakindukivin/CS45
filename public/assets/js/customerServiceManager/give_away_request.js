@@ -30,46 +30,46 @@ function openCompletedGiveAwayPopup(giveaway) {
     });
   }
 
-  document.addEventListener('DOMContentLoaded', function () {
-    // Tab functionality
-    const tabs = document.querySelectorAll('.status-tab');
-    const tabContents = document.querySelectorAll('.tab-content');
+  // document.addEventListener('DOMContentLoaded', function () {
+  //   // Tab functionality
+  //   const tabs = document.querySelectorAll('.status-tab');
+  //   const tabContents = document.querySelectorAll('.tab-content');
   
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        const status = tab.getAttribute('data-status');
+  //   tabs.forEach(tab => {
+  //     tab.addEventListener('click', () => {
+  //       const status = tab.getAttribute('data-status');
         
-        // Debug logging
-        console.log("Tab clicked:", status);
+  //       // Debug logging
+  //       console.log("Tab clicked:", status);
         
-        // Remove active class from all tabs and contents
-        tabs.forEach(t => t.classList.remove('active'));
-        tabContents.forEach(c => c.classList.remove('active'));
+  //       // Remove active class from all tabs and contents
+  //       tabs.forEach(t => t.classList.remove('active'));
+  //       tabContents.forEach(c => c.classList.remove('active'));
   
-        // Add active class to clicked tab
-        tab.classList.add('active');
+  //       // Add active class to clicked tab
+  //       tab.classList.add('active');
         
-        let tabContentId;
-        if (status === 'accepted') {
-          tabContentId = 'accepted-orders';
-        } else {
-          tabContentId = `${status}-orders`;
-        }
+  //       let tabContentId;
+  //       if (status === 'accepted') {
+  //         tabContentId = 'accepted-orders';
+  //       } else {
+  //         tabContentId = `${status}-orders`;
+  //       }
         
-        // Find and show the corresponding content
-        const tabContent = document.getElementById(tabContentId);
-        if (tabContent) {
-          tabContent.classList.add('active');
-          console.log("Tab content activated:", tabContentId);
-        } else {
-          console.error(`Tab content not found for ID: ${tabContentId}`);
-          // List all available tab content IDs for debugging
-          const allIds = Array.from(tabContents).map(el => el.id);
-          console.log("Available tab content IDs:", allIds);
-        }
-      });
-    });
-  });
+  //       // Find and show the corresponding content
+  //       const tabContent = document.getElementById(tabContentId);
+  //       if (tabContent) {
+  //         tabContent.classList.add('active');
+  //         console.log("Tab content activated:", tabContentId);
+  //       } else {
+  //         console.error(`Tab content not found for ID: ${tabContentId}`);
+  //         // List all available tab content IDs for debugging
+  //         const allIds = Array.from(tabContents).map(el => el.id);
+  //         console.log("Available tab content IDs:", allIds);
+  //       }
+  //     });
+  //   });
+  // });
 
   function showMessage(type, customText) {
     const message = type === 'success' ? document.getElementById('successMessage') : document.getElementById('errorMessage');

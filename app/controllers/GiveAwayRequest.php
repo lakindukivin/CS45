@@ -8,7 +8,7 @@ class GiveAwayRequest {
 
         // Get current page and tab from URL
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        $limit = 3; // items per page
+        $limit = 5; // items per page
 
          // Get filter parameters
          $filters = [

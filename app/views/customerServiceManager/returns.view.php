@@ -74,28 +74,27 @@
           <span class="close" id="closePopupBtn">&times;</span>
             <h1>Return Update</h1>
           </div>
-
           <div class="popup-content">
           <div>
-            <label for="Return-id" class="">Return ID:</label>
-            <input type="text" id="return_id" name="returnId" class="input-field" readonly>
+            <label for="Return-id" class="" type="hidden" ></label>
+            <input type="hidden" id="return_id" name="returnId" class="input-field" readonly>
           </div>
 
           <div>
-            <label for="Order-id" class="">Order ID:</label>
-            <input type="text" id="order_id" name="orderId" class="input-field" readonly>
+            <label for="Order-id" class=""></label>
+            <input type="hidden" id="order_id" name="orderId" class="input-field" readonly>
           </div>
           </div>
           
           <div class="popup-content">
           <div>
-            <label for="Product-id" class="">Product ID:</label>
-            <input type="text" id="product_id" name="productId" class="input-field" readonly>
+            <label for="Product-id" class=""></label>
+            <input type="hidden" id="product_id" name="productId" class="input-field" readonly>
           </div>
 
           <div >
-            <label for="Customer-id" class="">Customer ID:</label>
-            <input type="text" id="customer_id" name="customerId" class="input-field" readonly>
+            <label for="Customer-id" class=""></label>
+            <input type="hidden" id="customer_id" name="customerId" class="input-field" readonly>
           </div>
           </div>
           
@@ -181,6 +180,27 @@
     <div class="box">
       <div class="container">
         <div class="header">
+           <!-- Filter Form -->
+        <div class="filter-container">
+          <form action="" method="get" class="filter-form">
+            <input type="hidden" name="tab" value="<?= $data['activeTab'] ?? 'accepted' ?>">
+            
+            <div class="filter-input">
+              <label for="filter_name">Customer Name:</label>
+              <input type="text" id="filter_name" name="filter_name" value="<?= htmlspecialchars($data['filters']['name'] ?? '') ?>" placeholder="Filter by name">
+            </div>
+            
+            <div class="filter-input">
+              <label for="filter_date">Request Date:</label>
+              <input type="date" id="filter_date" name="filter_date" value="<?= htmlspecialchars($data['filters']['date'] ?? '') ?>">
+            </div>
+            
+            <div class="filter-actions">
+              <button type="submit" class="filter-btn">Apply Filters</button>
+              <a href="?tab=<?= $data['activeTab'] ?? 'accepted' ?>" class="reset-filter-btn">Reset</a>
+            </div>
+          </form>
+        </div>
         <button class="add-button">
                 <a href="<?=ROOT?>/CompletedReturns">View Completed Returns</a>
             </button>

@@ -203,7 +203,6 @@
         <table>
           <thead>
             <tr>
-              <th>Customer ID</th>
               <th>Name</th>
               <th>Phone</th>
               <th>request_date</th>
@@ -216,7 +215,6 @@
             <?php if (isset($data['collected_giveaway']) && is_array($data['collected_giveaway'])): ?>
               <?php foreach ($data['collected_giveaway'] as $giveaway): ?>
                 <tr data-order='<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8') ?>'>                  
-                  <td><?= $giveaway->customer_id ?></td>
                   <td><?= $giveaway->name ?></td>
                   <td><?= $giveaway->phone ?></td>
                   <td><?= $giveaway->request_date ?></td>
@@ -293,5 +291,4 @@
     });
   </script>
 </body>
-
 </html>

@@ -5,31 +5,27 @@ class ManageOrders {
     public function index() {
         $orderModel = new ManageOrderModel();
         
-        // Pagination parameters
-        $limit = 10; // Items per page
-        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        $currentPage = max(1, $currentPage); // Make sure page is at least 1
-        
-        // Get total count of pending orders
-        $allPendingOrders = $orderModel->getAllOrders();
-        $totalItems = count($allPendingOrders);
-        $totalPages = ceil($totalItems / $limit);
-        
-        // Ensure current page is valid
-        if ($currentPage > $totalPages && $totalPages > 0) {
-            $currentPage = $totalPages;
-        }
-        
-        $offset = ($currentPage - 1) * $limit;
-        
-        // Get the paginated orders
-        $data['orders'] = array_slice($allPendingOrders, $offset, $limit);
-        
-        // Add pagination data to pass to the view
-        $data['currentPage'] = $currentPage;
-        $data['totalPages'] = $totalPages;
+        // Get current page and tab from URL
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $limit = 5; // items per page
 
-        
+         // Get filter parameters
+         $filters = [
+            'name' => isset($_GET['filter_name']) ? $_GET['filter_name'] : '',
+            'date' => isset($_GET['filter_date']) ? $_GET['filter_date'] : '',
+        ];
+
+        $allPendingOrders = $orderModel->getPendingOrders($page, $limit, $filters);
+        $totalPending = $orderModel->countPendingOrders($filters);
+        $totalPendingPages = ceil($totalPending / $limit);
+
+        $data = [
+            'orders' => $allPendingOrders,
+            'currentPage' => $page,
+            'totalPages' => $totalPendingPages,
+            'activeTab' => 'pending',
+            'filters' => $filters
+        ];
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $order_id = $_POST['orderId'];

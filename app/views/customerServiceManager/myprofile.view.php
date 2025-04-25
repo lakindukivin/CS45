@@ -7,8 +7,8 @@
     <meta name="root-url" content="<?= ROOT ?>">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/customerServiceManager/sidebar.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/customerServiceManager/common.css">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/customerServiceManager/profile.css">
-    <title>Profile | <?= $profile->role_name ?></title>
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/customerServiceManager/myprofile.css">
+    <title>Profile | <?= $profile->role_name ?? 'Customer Service Manager' ?></title>
 </head>
 
 <body>
@@ -17,13 +17,14 @@
             <img src="<?= ROOT ?>/assets/images/menu.svg" alt="menu" />
         </button>
         <div class="sidebar-container">
+            <!-- Profile image in sidebar -->
             <div class="prof-picture">
                 <?php if (!empty($profile->image)): ?>
-                    <img src="<?= ROOT ?>/<?= $profile->image ?>" alt="Profile">
+                    <img src="<?= ROOT . $profile->image ?>" alt="profile" />
                 <?php else: ?>
                     <img src="<?= ROOT ?>/assets/images/user.svg" alt="profile" />
                 <?php endif; ?>
-                <span class="user-title"><?= $profile->role_name ?></span>
+                <span class="user-title"><?= $profile->role_name ?? 'Customer Service Manager' ?></span>
             </div>
 
             <div>
@@ -63,13 +64,12 @@
             <h1 class="logo">My Profile</h1>
             <nav class="nav">
                 <ul>
-                    <li><a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg"></a></li>
-                    <li><a href="<?= ROOT ?>/staffprofile" class="active">Profile</a></li>
+                    <li><a href="<?= ROOT ?>/CSmanagerProfile" class="active">Profile</a></li>
                     <li><a href="<?= ROOT ?>/logout">Logout</a></li>
                 </ul>
             </nav>
         </header>
-
+  
         <div class="profile-container">
             <!-- Display success or error messages -->
             <?php if (isset($_SESSION['success_message'])): ?>
@@ -88,16 +88,17 @@
             
             <div class="profile-card">
                 <div class="profile-header">
+                    <!-- Profile image in profile header -->
                     <div class="profile-image">
                         <?php if (!empty($profile->image)): ?>
-                            <img src="<?= ROOT ?>/<?= ltrim($profile->image, '/') ?>" alt="Profile Image">
+                            <img src="<?= ROOT . $profile->image ?>" alt="Profile Image">
                         <?php else: ?>
                             <img src="<?= ROOT ?>/assets/images/user.svg" alt="Default Profile">
                         <?php endif; ?>
                     </div>
                     <div class="profile-title">
-                        <h2><?= $profile->name ?? 'Staff Member' ?></h2>
-                        <p><?= $profile->role_name ?? 'Staff' ?></p>
+                        <h2><?= $profile->name ?? 'User' ?></h2>
+                        <p><?= $profile->role_name ?? 'Customer Service Manager' ?></p>
                     </div>
                 </div>
                 
@@ -108,7 +109,7 @@
                 
                 <div class="tab-content" id="personal-tab">
                     <div class="profile-details">
-                        <form action="<?= ROOT ?>/staffprofile/update" method="POST" enctype="multipart/form-data">
+                        <form action="<?= ROOT ?>/CSmanagerProfile/update" method="POST" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="name">Full Name</label>
                                 <input type="text" id="name" name="name" value="<?= $profile->name ?? '' ?>">
@@ -144,7 +145,7 @@
                 
                 <div class="tab-content" id="password-tab" style="display: none;">
                     <div class="profile-details">
-                        <form action="<?= ROOT ?>/staffprofile/changePassword" method="POST">
+                        <form action="<?= ROOT ?>/CSmanagerProfile/changePassword" method="POST">
                             <div class="form-group">
                                 <label for="current_password">Current Password</label>
                                 <input type="password" id="current_password" name="current_password">

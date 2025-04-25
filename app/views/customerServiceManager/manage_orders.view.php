@@ -59,8 +59,8 @@
           </div>
 
           <div class="popup-content">
-            <label for="Order-id" class="">Order ID:</label>
-            <input type="text" id="order_id" name="orderId" class="input-field" readonly>
+            <label for="Order-id" class=""></label>
+            <input type="hidden" id="order_id" name="orderId" class="input-field" readonly>
           </div>
 
           <div class="popup-content">
@@ -105,7 +105,7 @@
 
           <div class="popup-content">
             <label for="message_to_customer">Message to Customer:</label>
-            <textarea id="message_to_customer" name="message_to_customer" class="input-field"></textarea>
+            <textarea id="message_to_customer" name="message_to_customer" class="input-field" required></textarea>
           </div>
 
           <div>
@@ -136,6 +136,27 @@
     <div class="box">
       <div class="container">
         <div class="header">
+           <!-- Filter Form -->
+        <div class="filter-container">
+          <form action="" method="get" class="filter-form">
+            <input type="hidden" name="tab" value="<?= $data['activeTab'] ?? 'accepted' ?>">
+            
+            <div class="filter-input">
+              <label for="filter_name">Customer Name:</label>
+              <input type="text" id="filter_name" name="filter_name" value="<?= htmlspecialchars($data['filters']['name'] ?? '') ?>" placeholder="Filter by name">
+            </div>
+            
+            <div class="filter-input">
+              <label for="filter_date">Request Date:</label>
+              <input type="date" id="filter_date" name="filter_date" value="<?= htmlspecialchars($data['filters']['date'] ?? '') ?>">
+            </div>
+            
+            <div class="filter-actions">
+              <button type="submit" class="filter-btn">Apply Filters</button>
+              <a href="?tab=<?= $data['activeTab'] ?? 'accepted' ?>" class="reset-filter-btn">Reset</a>
+            </div>
+          </form>
+        </div>
           <button class="add-button">
             <a href="<?=ROOT?>/CompletedOrders">View Completed Orders</a>
           </button>
@@ -143,7 +164,6 @@
         <table id="ordersTable">
           <thead>
             <tr>
-              <th>Order ID</th>
               <th>Product Name</th>
               <th>Customer Name</th>
               <th>Quantity</th>
@@ -156,7 +176,6 @@
             <?php if(isset($data['orders']) && is_array($data['orders'])): ?>
             <?php foreach($data['orders'] as $order): ?>
             <tr>
-              <td><?= $order->order_id ?></td>
               <td><?= $order->productName ?></td>
               <td><?= $order->customerName ?></td>
               <td><?= $order->quantity ?></td>
@@ -176,16 +195,13 @@
         </table>
 
          <!-- Pagination Controls -->
-         <div class="pagination">
-                <?php if (isset($totalPages) && $totalPages > 1): ?>
-                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                        <a href="?<?= isset($search) && $search !== '' ? 'search=' . urlencode($search) . '&' : '' ?>page=<?= $i ?>"
-                            class="<?= (isset($currentPage) && $currentPage == $i) ? 'active' : '' ?>">
-                            <?= $i ?>
-                        </a>
-                    <?php endfor; ?>
-                <?php endif; ?>
-            </div>
+        <div class="pagination">
+          <?php if (isset($data['currentPage']) && isset($data['totalPages'])): ?>
+            <?php for ($i = 1; $i <= $data['totalPages']; $i++): ?>
+              <a href="?page=<?= $i ?>&tab=<?= $data['activeTab'] ?>&filter_name=<?= htmlspecialchars($data['filters']['name'] ?? '') ?>&filter_date=<?= htmlspecialchars($data['filters']['date'] ?? '') ?>" class="<?= ($i == $data['currentPage']) ? 'active' : '' ?>"><?= $i ?></a>
+            <?php endfor; ?>
+          <?php endif; ?>
+        </div>  
             
       </div>
     </div>

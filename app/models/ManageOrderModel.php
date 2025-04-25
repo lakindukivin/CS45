@@ -1,7 +1,6 @@
 <?php
 
-class ManageOrderModel
-{
+class ManageOrderModel {
     use Model;
 
     protected $table = 'orders';
@@ -154,7 +153,319 @@ class ManageOrderModel
         return $result ? $result[0] : false;
     }
 
-    
+        //search pending orders by name and date
+    public function getPendingOrders($page = 1, $limit = 10, $filters = []) {
+        $offset = ($page - 1) * $limit;
+
+        $query = "SELECT o.*, p.productName, c.name as customerName 
+                  FROM orders o 
+                  JOIN product p ON o.product_id = p.product_id 
+                  JOIN customer c ON o.customer_id = c.customer_id 
+                  WHERE o.orderStatus = 'pending'";
+
+        $params = [];          
+
+        // Add filters for name and date
+        if (!empty($filters['name'])) {
+            $query .= " AND c.name LIKE :name";
+            $params['name'] = '%' . $filters['name'] . '%';
+        }
+        if (!empty($filters['date'])) {
+            $query .= " AND DATE(o.orderDate) = :date";
+            $params['date'] = $filters['date'];
+        }
+
+        $query .= " LIMIT $limit OFFSET $offset";
+
+        return $this->query($query, $params);
+    }
+
+    // search accepted orders by name and date
+    public function getAcceptedOrders($page = 1, $limit = 10, $filters = []) {
+        $offset = ($page - 1) * $limit;
+
+        $query = "SELECT co.*, p.productName, c.name as customerName , o.quantity, c.phone, o.total, o.orderDate
+                  FROM completed_orders co 
+                  JOIN orders o ON co.order_id = o.order_id 
+                  JOIN product p ON o.product_id = p.product_id 
+                  JOIN customer c ON o.customer_id = c.customer_id 
+                  WHERE co.status = 'accepted'";
+
+        $params = [];
+
+        // Add filters for name and date
+        if (!empty($filters['name'])) {
+             $query .= " AND c.name LIKE :name";
+             $params['name'] = '%' . $filters['name'] . '%';
+        }
+        if (!empty($filters['date'])) {
+            $query .= " AND DATE(co.date_completed) = :date";
+            $params['date'] = $filters['date'];
+        }
+
+        $query .= " LIMIT $limit OFFSET $offset";
+
+        return $this->query($query, $params);
+}        
+
+        //search processing orders by name and date
+    public function getProcessingOrders($page = 1, $limit = 10, $filters = []) {
+        $offset = ($page - 1) * $limit;
+
+        $query = "SELECT co.*, p.productName, c.name as customerName, o.quantity, c.phone, o.total, o.orderDate 
+                  FROM completed_orders co 
+                  JOIN orders o ON co.order_id = o.order_id 
+                  JOIN product p ON o.product_id = p.product_id
+                  JOIN customer c ON o.customer_id = c.customer_id 
+                  WHERE co.status = 'processing'";
+
+        $params = [];
+
+        // Add filters for name and date
+        if (!empty($filters['name'])) {
+            $query .= " AND c.name LIKE :name";
+            $params['name'] = '%' . $filters['name'] . '%';
+        }
+        if (!empty($filters['date'])) {
+            $query .= " AND DATE(co.date_completed) = :date";
+            $params['date'] = $filters['date'];
+        }
+
+        $query .= " LIMIT $limit OFFSET $offset";
+
+        return $this->query($query, $params);
+    }
+
+    //search shipped orders by name and date
+    public function getShippedOrders($page = 1, $limit = 10, $filters = []) {
+        $offset = ($page - 1) * $limit;
+
+        $query = "SELECT co.*, p.productName, c.name as customerName, o.quantity, c.phone, o.total, o.orderDate  
+                  FROM completed_orders co 
+                  JOIN orders o ON co.order_id = o.order_id
+                  JOIN product p ON o.product_id = p.product_id 
+                  JOIN customer c ON o.customer_id = c.customer_id 
+                  WHERE co.status = 'shipped'";
+
+        $params = [];
+
+        // Add filters for name and date
+        if (!empty($filters['name'])) {
+            $query .= " AND c.name LIKE :name";
+            $params['name'] = '%' . $filters['name'] . '%';
+        }
+        if (!empty($filters['date'])) {
+            $query .= " AND DATE(co.date_completed) = :date";
+            $params['date'] = $filters['date'];
+        }
+
+        $query .= " LIMIT $limit OFFSET $offset";
+
+        return $this->query($query, $params);
+    }
+
+    //search delivered orders by name and date
+    public function getDeliveredOrders($page = 1, $limit = 10, $filters = []) {
+        $offset = ($page - 1) * $limit;
+
+        $query = "SELECT co.*, p.productName, c.name as customerName, o.quantity, c.phone, o.total, o.orderDate  
+                  FROM completed_orders co 
+                  JOIN orders o ON co.order_id = o.order_id 
+                  JOIN product p ON o.product_id = p.product_id 
+                  JOIN customer c ON o.customer_id = c.customer_id 
+                  WHERE co.status = 'delivered'";
+
+        $params = [];
+
+        // Add filters for name and date
+        if (!empty($filters['name'])) {
+            $query .= " AND c.name LIKE :name";
+            $params['name'] = '%' . $filters['name'] . '%';
+        }
+        if (!empty($filters['date'])) {
+            $query .= " AND DATE(co.date_completed) = :date";
+            $params['date'] = $filters['date'];
+        }
+
+        $query .= " LIMIT $limit OFFSET $offset";
+
+        return $this->query($query, $params);
+    }
+
+    // search rejected orders by name and date
+    public function getRejectedOrders($page = 1, $limit = 10, $filters = []) {
+        $offset = ($page - 1) * $limit;
+
+        $query = "SELECT co.*, p.productName, c.name as customerName, o.quantity, c.phone, o.total, o.orderDate 
+                  FROM completed_orders co 
+                  JOIN orders o ON co.order_id = o.order_id 
+                  JOIN product p ON o.product_id = p.product_id 
+                  JOIN customer c ON o.customer_id = c.customer_id 
+                  WHERE co.status = 'rejected'";
+
+        $params = [];
+
+        // Add filters for name and date
+        if (!empty($filters['name'])) {
+            $query .= " AND c.name LIKE :name";
+            $params['name'] = '%' . $filters['name'] . '%';
+        }
+        if (!empty($filters['date'])) {
+            $query .= " AND DATE(co.date_completed) = :date";
+            $params['date'] = $filters['date'];
+        }
+
+        $query .= " LIMIT $limit OFFSET $offset";
+
+        return $this->query($query, $params);
+    }
+
+
+    public function countPendingOrders($filters = []) {
+        $query = "SELECT COUNT(o.order_id) as count 
+                  FROM orders o 
+                  JOIN product p ON o.product_id = p.product_id 
+                  JOIN customer c ON o.customer_id = c.customer_id 
+                  WHERE o.orderStatus = 'pending'";
+
+        $params = [];
+
+        // Add filters for name and date
+        if (!empty($filters['name'])) {
+            $query .= " AND c.name LIKE :name";
+            $params['name'] = '%' . $filters['name'] . '%';
+        }
+        if (!empty($filters['date'])) {
+            $query .= " AND DATE(o.orderDate) = :date";
+            $params['date'] = $filters['date'];
+        }
+
+        $result = $this->query($query, $params);
+
+        $result = $this->query($query, $params);
+        return isset($result[0]->count) ? $result[0]->count : 0;
+    }
+
+    public function countAcceptedOrders($filters = []) {
+        $query = "SELECT COUNT(co.order_id) as count 
+                  FROM completed_orders co 
+                  JOIN orders o ON co.order_id = o.order_id 
+                  JOIN product p ON o.product_id = p.product_id 
+                  JOIN customer c ON o.customer_id = c.customer_id 
+                  WHERE co.status = 'accepted'";
+
+        $params = [];
+
+        // Add filters for name and date
+        if (!empty($filters['name'])) {
+            $query .= " AND c.name LIKE :name";
+            $params['name'] = '%' . $filters['name'] . '%';
+        }
+        if (!empty($filters['date'])) {
+            $query .= " AND DATE(co.date_completed) = :date";
+            $params['date'] = $filters['date'];
+        }
+
+        $result = $this->query($query, $params);
+        return isset($result[0]->count) ? $result[0]->count : 0;
+    }
+
+
+    public function countProcessingOrders($filters = []) {
+        $query = "SELECT COUNT(co.order_id) as count 
+                  FROM completed_orders co 
+                  JOIN orders o ON co.order_id = o.order_id 
+                  JOIN product p ON o.product_id = p.product_id 
+                  JOIN customer c ON o.customer_id = c.customer_id 
+                  WHERE co.status = 'processing'";
+
+        $params = [];
+
+        // Add filters for name and date
+        if (!empty($filters['name'])) {
+            $query .= " AND c.name LIKE :name";
+            $params['name'] = '%' . $filters['name'] . '%';
+        }
+        if (!empty($filters['date'])) {
+            $query .= " AND DATE(co.date_completed) = :date";
+            $params['date'] = $filters['date'];
+        }
+
+        $result = $this->query($query, $params);
+        return isset($result[0]->count) ? $result[0]->count : 0;
+    }
+
+    public function countShippedOrders($filters = []) {
+        $query = "SELECT COUNT(co.order_id) as count 
+                  FROM completed_orders co 
+                  JOIN orders o ON co.order_id = o.order_id 
+                  JOIN product p ON o.product_id = p.product_id 
+                  JOIN customer c ON o.customer_id = c.customer_id 
+                  WHERE co.status = 'shipped'";
+
+        $params = [];
+
+        // Add filters for name and date
+        if (!empty($filters['name'])) {
+            $query .= " AND c.name LIKE :name";
+            $params['name'] = '%' . $filters['name'] . '%';
+        }
+        if (!empty($filters['date'])) {
+            $query .= " AND DATE(co.date_completed) = :date";
+            $params['date'] = $filters['date'];
+        }
+
+        $result = $this->query($query, $params);
+        return isset($result[0]->count) ? $result[0]->count : 0;
+    }
+     
+    public function countDeliveredOrders($filters = []) {
+        $query = "SELECT COUNT(co.order_id) as count 
+                  FROM completed_orders co 
+                  JOIN orders o ON co.order_id = o.order_id 
+                  JOIN product p ON o.product_id = p.product_id 
+                  JOIN customer c ON o.customer_id = c.customer_id 
+                  WHERE co.status = 'delivered'";
+
+        $params = [];
+
+        // Add filters for name and date
+        if (!empty($filters['name'])) {
+            $query .= " AND c.name LIKE :name";
+            $params['name'] = '%' . $filters['name'] . '%';
+        }
+        if (!empty($filters['date'])) {
+            $query .= " AND DATE(co.date_completed) = :date";
+            $params['date'] = $filters['date'];
+        }
+
+        $result = $this->query($query, $params);
+        return isset($result[0]->count) ? $result[0]->count : 0;
+    }
+
+    public function countRejectedOrders($filters = []) {
+        $query = "SELECT COUNT(co.order_id) as count 
+                  FROM completed_orders co 
+                  JOIN orders o ON co.order_id = o.order_id 
+                  JOIN product p ON o.product_id = p.product_id 
+                  JOIN customer c ON o.customer_id = c.customer_id 
+                  WHERE co.status = 'rejected'";
+
+        $params = [];
+
+        // Add filters for name and date
+        if (!empty($filters['name'])) {
+            $query .= " AND c.name LIKE :name";
+            $params['name'] = '%' . $filters['name'] . '%';
+        }
+        if (!empty($filters['date'])) {
+            $query .= " AND DATE(co.date_completed) = :date";
+            $params['date'] = $filters['date'];
+        }
+
+        $result = $this->query($query, $params);
+        return isset($result[0]->count) ? $result[0]->count : 0;
+    }
 
     public function countByDate($date)
     {
