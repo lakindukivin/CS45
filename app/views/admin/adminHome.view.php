@@ -115,11 +115,15 @@
                 <div class="metric-grid">
                     <div class="metric-card">
                         <h4>Total Staff</h4>
-                        <div class="metric-value">10+</div>
+                        <div class="metric-value">
+                            <span id="totalStaff"><?= isset($totalStaff) ? $totalStaff : 0 ?></span>
+                        </div>
                     </div>
                     <div class="metric-card">
-                        <h4>Total Users</h4>
-                        <div class="metric-value">100+</div>
+                        <h4>Total Customers</h4>
+                        <div class="metric-value">
+                            <span id="totalCustomers"><?= isset($totalCustomers) ? $totalCustomers : 0 ?></span>
+                        </div>
                     </div>
                     <div class="metric-card">
                         <h4>Site Performance</h4>
