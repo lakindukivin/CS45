@@ -6,13 +6,8 @@ class Login
 
     const ROLE_ADMIN = 1;
     const ROLE_SALES_MANAGER = 2;
-<<<<<<< HEAD
-    const ROLE_CUSTOMER = 3;
-    const ROLE_PRODUCTION_MANAGER = 5;
-=======
     const ROLE_CUSTOMER = 5;
     const ROLE_PRODUCTION_MANAGER = 3;
->>>>>>> 631abb915d9d60b76fdaed24f645f43933a9e2ae
     const ROLE_CS_MANAGER = 4;
 
     public function index($data = [])

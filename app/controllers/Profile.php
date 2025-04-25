@@ -67,7 +67,6 @@ class Profile
                 $_SESSION['error_message'] = "Please fill all required fields!";
             }
         }
-<<<<<<< HEAD
     }
     
     public function changePassword()
@@ -143,17 +142,5 @@ class Profile
             error_log("Image upload failed. Error: " . $_FILES['profile_image']['error']);
             return false;
         }
-=======
-
-        // Pass data to view
-        $this->view('customer/profile', [
-            'profile' => $profileData,
-            'success_message' => $_SESSION['success_message'] ?? null,
-            'error_message' => $_SESSION['error_message'] ?? null
-        ]);
-
-        // Clear messages
-        unset($_SESSION['success_message'], $_SESSION['error_message']);
->>>>>>> 631abb915d9d60b76fdaed24f645f43933a9e2ae
     }
 }

@@ -101,7 +101,7 @@
                 <div class="metric-grid">
                     <div class="metric-card">
                         <h4>New Orders</h4>
-                        <div class="metric-value">0</div>
+                        <div class="metric-value"><?= ($pendingCustomOrders + $pendingPelletsOrders) ?></div>
                     </div>
                     <div class="metric-card">
                         <h4>Monthly Amount of Recycled Polythene</h4>

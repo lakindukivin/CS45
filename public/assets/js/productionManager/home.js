@@ -87,3 +87,19 @@
 
       // Initial call to display clock immediately
       updateClock();
+
+      // Fetch and update order counts every 30 seconds
+      function updateOrderCounts() {
+        fetch('<?= ROOT ?>/ProductionManagerHome/getOrderCounts')
+            .then(response => response.json())
+            .then(data => {
+                // Update the total count
+                document.querySelector('.metric-value').textContent = data.total;
+            });
+    }
+    
+    // Update every 30 seconds
+    setInterval(updateOrderCounts, 30000);
+    
+    // Initial update
+    updateOrderCounts();
