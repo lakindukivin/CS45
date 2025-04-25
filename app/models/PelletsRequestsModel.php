@@ -60,4 +60,10 @@ class PelletsRequestsModel {
     return $this->query($query, $params);
 } 
 
+public function countPendingOrders() {
+    $query = "SELECT COUNT(*) as count FROM pellet WHERE pelletOrderStatus = 'pending'";
+    $result = $this->query($query);
+    return $result[0]->count ?? 0;
+}
+
 }

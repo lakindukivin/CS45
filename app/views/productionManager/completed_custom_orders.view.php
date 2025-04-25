@@ -117,7 +117,7 @@
                   <td><?= htmlspecialchars($order->quantity) ?></td>
                   <td><?= htmlspecialchars($order->phone) ?></td>
                   <td><?= htmlspecialchars($order->type) ?></td>
-                    <td><span class="completed-label">Completed</span></td>
+                  <td><?= htmlspecialchars($order->customOrder_status) ?></td>
                   </tr>
                 <?php endforeach; ?>
               <?php else: ?>

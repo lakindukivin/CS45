@@ -7,6 +7,12 @@
 class ProductionManagerHome
 {
     use Controller;
+    private $pendingCustomOrderModel;
+    private $pelletsRequestsModel;
+    public function __construct() {
+        $this->pendingCustomOrderModel = new PendingCustomOrderModel();
+        $this->pelletsRequestsModel = new PelletsRequestsModel();
+    }
     public function index()
     {
         // Ensure session is active
@@ -23,6 +29,26 @@ class ProductionManagerHome
         if ($_SESSION['role_id'] != 3) {
             redirect('login');
         }
-        $this->view('productionManager/productionManagerHome');
+
+        // Fetch new orders
+        $data = [
+            'pendingCustomOrders' => $this->pendingCustomOrderModel->countPendingOrders(),
+            'pendingPelletsOrders' => $this->pelletsRequestsModel->countPendingOrders()
+        ];
+
+        $this->view('productionManager/productionManagerHome', $data);
+    }
+
+    //dynamically updates the new orders
+    public function getOrderCounts() {
+        $customCount = $this->pendingCustomOrderModel->countPendingOrders();
+        $pelletsCount = $this->pelletsRequestsModel->countPendingOrders();
+        
+        echo json_encode([  
+            'custom' => $customCount,
+            'pellets' => $pelletsCount,
+            'total' => $customCount + $pelletsCount
+        ]);
+        exit;
     }
 }

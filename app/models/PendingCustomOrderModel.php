@@ -62,5 +62,10 @@ class PendingCustomOrderModel {
         return $this->query($query, $params);
     }   
     
+    public function countPendingOrders() {
+        $query = "SELECT COUNT(*) as count FROM custom_order WHERE customOrder_status = 'pending'";
+        $result = $this->query($query);
+        return $result[0]->count ?? 0;
+    }
     
 }
