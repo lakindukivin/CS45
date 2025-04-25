@@ -63,7 +63,7 @@
               >
             </li>
             <li>
-              <a href="<?=ROOT?>/PelletsRequest"
+              <a href="<?=ROOT?>/PelletsRequests"
                 ><img src="<?=ROOT?>/assets/images/order.svg" alt="supply" /><span
                   class="sidebar-titles"
                   >Pellets Requests</span
