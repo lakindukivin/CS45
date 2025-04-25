@@ -138,7 +138,7 @@
       <nav class="nav">
         <ul>
           <li><a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg"></a></li>
-          <li><a href="<?=ROOT?>/profile">Profile</a></li>
+          <li><a href="<?=ROOT?>/CSmanagerProfile">Profile</a></li>
           <li><a href="<?=ROOT?>/logout">Logout</a></li>
         </ul>
       </nav>
@@ -188,7 +188,7 @@
                 <tr>
                   <td><?= $giveaway->name ?></td>
                   <td><?= $giveaway->phone ?></td>
-                  <td><?= $giveaway->request_date ?></td>
+                  <td><?= date('Y-m-d', strtotime($giveaway->request_date)) ?></td>
                   <td><?= $giveaway->address ?></td>
                   <td><?= $giveaway->giveawayStatus ?></td>
                   <td>

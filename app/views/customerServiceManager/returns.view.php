@@ -125,6 +125,11 @@
           </div>
 
           <div class="popup-content">
+            <label for="Request-date" class="">Request Date:</label>
+            <input type="text" id="requestDate" name="requestDate" class="input-field" readonly>
+          </div>
+
+          <div class="popup-content">
             <label for="Phone" class="">Phone:</label>
             <input type="text" id="phone" name="phone" class="input-field" readonly>
           </div>
@@ -171,8 +176,7 @@
       <h1 class="logo">Pending Return Requests</h1>
       <nav class="nav">
         <ul>
-          <li><a href="#"><img src="<?=ROOT?>/assets/images/notifications.svg"></a></li>
-          <li><a href="<?=ROOT?>/profile">Profile</a></li>
+          <li><a href="<?=ROOT?>/CSmanagerProfile">Profile</a></li>
           <li><a href="<?=ROOT?>/logout">Logout</a></li>
         </ul>
       </nav>
@@ -208,21 +212,19 @@
         <table id="returnTable">
             <thead>
                 <tr>
-                    <th>Order ID</th>
-                    <th>Customer ID</th>
                     <th>Customer Name</th>
+                    <th>Product Name</th>
                     <th>Quantity</th>
                     <th>Phone</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-            <?php if(isset($data['returns']) && is_array($data['returns'])): ?>
+            <?php if(isset($data['returns']) && is_array($data['returns']) && !empty($data['returns'])): ?>
               <?php foreach ($data['returns'] as $return) : ?>
                 <tr>
-                  <td><?= $return->order_id ?></td>
-                  <td><?= $return->customer_id ?></td>
                   <td><?= $return->customerName ?></td>
+                  <td><?= $return->productName ?></td>
                   <td><?= $return->quantity ?></td>
                   <td><?= $return->phone ?></td>
                   <td>
