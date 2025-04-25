@@ -359,7 +359,7 @@
         <div class="popup-details">
           <div class="detail-row">
             <span class="label">Order ID:</span>
-            <span class="value" id="modal-order-id"></span>
+            <span class="value" id="modal-order-id"></span></span>
           </div>
           <div class="detail-row">
             <span class="label">Customer:</span>
@@ -432,11 +432,199 @@
   <!-- Pass the ROOT constant to JavaScript -->
   <script>
     const ROOT = "<?=ROOT?>";
+    
+    // Set active tab based on URL parameter
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get tab from URL parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const activeTab = urlParams.get('tab') || 'accepted';
+      
+      // Remove active class from all tabs
+      document.querySelectorAll('.status-tab').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      
+      // Set active tab
+      const tabElement = document.querySelector(`.status-tab[data-status="${activeTab}"]`);
+      if (tabElement) tabElement.classList.add('active');
+      
+      const contentElement = document.getElementById(`${activeTab}-orders`);
+      if (contentElement) contentElement.classList.add('active');
+      
+      // Add click handlers to tabs to preserve filters
+      document.querySelectorAll('.status-tab').forEach(tab => {
+        tab.addEventListener('click', function(e) {
+          e.preventDefault();
+          const status = this.getAttribute('data-status');
+          const filterName = document.getElementById('filter_name').value;
+          const filterDate = document.getElementById('filter_date').value;
+          
+          let url = `?tab=${status}`;
+          if (filterName) url += `&filter_name=${encodeURIComponent(filterName)}`;
+          if (filterDate) url += `&filter_date=${encodeURIComponent(filterDate)}`;
+          
+          window.location.href = url;
+        });
+      });
+    });
   </script>
   <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>
   <script src="<?=ROOT?>/assets/js/customerServiceManager/manage_orders.js"></script>
 
+  <!-- Helper function for pagination links with filters -->
+  <?php
+  function getPaginationUrl($page, $tab, $filters) {
+    $url = "?tab=" . urlencode($tab) . "&page=" . urlencode($page);
+    
+    if (!empty($filters['name'])) {
+      $url .= "&filter_name=" . urlencode($filters['name']);
+    }
+    
+    if (!empty($filters['date'])) {
+      $url .= "&filter_date=" . urlencode($filters['date']);
+    }
+    
+    return $url;
+  }
+  ?>
+
+  <!-- Add pagination controls to each tab content -->
+  <script>
+    // Add pagination to each tab after the table
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add pagination to Accepted Orders tab
+      const acceptedOrders = document.getElementById('accepted-orders');
+      if (acceptedOrders) {
+        const acceptedPagination = document.createElement('div');
+        acceptedPagination.className = 'pagination';
+        acceptedPagination.innerHTML = `
+          <?php if (isset($data['totalAcceptedPages']) && $data['totalAcceptedPages'] > 1): ?>
+            <div class="pagination-controls">
+              <?php for ($i = 1; $i <= $data['totalAcceptedPages']; $i++): ?>
+                <a href="<?= getPaginationUrl($i, 'accepted', $data['filters']) ?>" 
+                   class="page-link <?= ($i == $data['currentPage'] && $data['activeTab'] == 'accepted') ? 'active' : '' ?>">
+                  <?= $i ?>
+                </a>
+              <?php endfor; ?>
+            </div>
+          <?php endif; ?>
+        `;
+        acceptedOrders.appendChild(acceptedPagination);
+      }
+      
+      // Add pagination to Processing Orders tab
+      const processingOrders = document.getElementById('processing-orders');
+      if (processingOrders) {
+        const processingPagination = document.createElement('div');
+        processingPagination.className = 'pagination';
+        processingPagination.innerHTML = `
+          <?php if (isset($data['totalProcessingPages']) && $data['totalProcessingPages'] > 1): ?>
+            <div class="pagination-controls">
+              <?php for ($i = 1; $i <= $data['totalProcessingPages']; $i++): ?>
+                <a href="<?= getPaginationUrl($i, 'processing', $data['filters']) ?>" 
+                   class="page-link <?= ($i == $data['currentPage'] && $data['activeTab'] == 'processing') ? 'active' : '' ?>">
+                  <?= $i ?>
+                </a>
+              <?php endfor; ?>
+            </div>
+          <?php endif; ?>
+        `;
+        processingOrders.appendChild(processingPagination);
+      }
+      
+      // Add pagination to Shipped Orders tab
+      const shippedOrders = document.getElementById('shipped-orders');
+      if (shippedOrders) {
+        const shippedPagination = document.createElement('div');
+        shippedPagination.className = 'pagination';
+        shippedPagination.innerHTML = `
+          <?php if (isset($data['totalShippedPages']) && $data['totalShippedPages'] > 1): ?>
+            <div class="pagination-controls">
+              <?php for ($i = 1; $i <= $data['totalShippedPages']; $i++): ?>
+                <a href="<?= getPaginationUrl($i, 'shipped', $data['filters']) ?>" 
+                   class="page-link <?= ($i == $data['currentPage'] && $data['activeTab'] == 'shipped') ? 'active' : '' ?>">
+                  <?= $i ?>
+                </a>
+              <?php endfor; ?>
+            </div>
+          <?php endif; ?>
+        `;
+        shippedOrders.appendChild(shippedPagination);
+      }
+      
+      // Add pagination to Delivered Orders tab
+      const deliveredOrders = document.getElementById('delivered-orders');
+      if (deliveredOrders) {
+        const deliveredPagination = document.createElement('div');
+        deliveredPagination.className = 'pagination';
+        deliveredPagination.innerHTML = `
+          <?php if (isset($data['totalDeliveredPages']) && $data['totalDeliveredPages'] > 1): ?>
+            <div class="pagination-controls">
+              <?php for ($i = 1; $i <= $data['totalDeliveredPages']; $i++): ?>
+                <a href="<?= getPaginationUrl($i, 'delivered', $data['filters']) ?>" 
+                   class="page-link <?= ($i == $data['currentPage'] && $data['activeTab'] == 'delivered') ? 'active' : '' ?>">
+                  <?= $i ?>
+                </a>
+              <?php endfor; ?>
+            </div>
+          <?php endif; ?>
+        `;
+        deliveredOrders.appendChild(deliveredPagination);
+      }
+      
+      // Add pagination to Rejected Orders tab
+      const rejectedOrders = document.getElementById('rejected-orders');
+      if (rejectedOrders) {
+        const rejectedPagination = document.createElement('div');
+        rejectedPagination.className = 'pagination';
+        rejectedPagination.innerHTML = `
+          <?php if (isset($data['totalRejectedPages']) && $data['totalRejectedPages'] > 1): ?>
+            <div class="pagination-controls">
+              <?php for ($i = 1; $i <= $data['totalRejectedPages']; $i++): ?>
+                <a href="<?= getPaginationUrl($i, 'rejected', $data['filters']) ?>" 
+                   class="page-link <?= ($i == $data['currentPage'] && $data['activeTab'] == 'rejected') ? 'active' : '' ?>">
+                  <?= $i ?>
+                </a>
+              <?php endfor; ?>
+            </div>
+          <?php endif; ?>
+        `;
+        rejectedOrders.appendChild(rejectedPagination);
+      }
+    });
+  </script>
   
+  <style>
+    /* Pagination styles */
+    .pagination {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+    }
+    
+    .pagination-controls {
+      display: flex;
+      gap: 5px;
+    }
+    
+    .pagination .page-link {
+      padding: 8px 12px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      text-decoration: none;
+      color: #333;
+      transition: background-color 0.3s;
+    }
+    
+    .pagination .page-link.active {
+      background-color: #4CAF50;
+      color: white;
+      border-color: #4CAF50;
+    }
+    
+    .pagination .page-link:hover:not(.active) {
+      background-color: #f1f1f1;
+    }
+  </style>
 </body>
 
 </html>
