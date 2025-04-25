@@ -6,18 +6,20 @@ class ProductModel
     protected $table = "product";
     protected $allowedColumns = ['product_id', 'productName', 'productImage', 'productDescription', 'productStatus'];
 
-    //Getting all the products in the database
+    //Getting all the products in the database without pagination
     public function getAllProducts()
     {
         try {
-            return $this->findAll('product_id');
+            $query = "SELECT * FROM $this->table WHERE productStatus = 1 ORDER BY product_id DESC";
+            $result = $this->query($query);
+            return $result;
         } catch (Exception $e) {
             error_log("Error fetching products: " . $e->getMessage());
             return false;
         }
     }
 
-
+//Getting all the products in the database with pagination
     public function getProductsPaginated($limit, $offset)
     {
         try {

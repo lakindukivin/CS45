@@ -134,11 +134,23 @@
                                 <td><?= $discount->status == 1 ? "<a href=discounts/setInactive?discount_id=" . $discount->discount_id . " class='active-btn'>Active</a>" : "<a  href=discounts/setActive?discount_id=" . $discount->discount_id . " class='inactive-btn'>Inactive</a>"; ?>
                                 </td>
                                 <td>
-                                    <button class="edit-btn"
-                                        onclick="openEditModal('<?= $discount->discount_id ?>', '<?= $discount->productName ?>', '<?= $discount->discount_percentage ?>', '<?= $discount->start_date ?>', '<?= $discount->end_date ?>','<?= $discount->status ?>')"><img
-                                            src="<?= ROOT ?>/assets/images/edit-btn.svg"" alt=" edit"></button>
-                                    <button class="delete-btn" onclick="openDeleteModal('<?= $discount->discount_id ?>')"><img
-                                            src="<?= ROOT ?>/assets/images/delete-btn.svg"" alt=" delete"></button>
+                                    <button class="edit-btn" onclick="openEditModal(
+                                            '<?= $discount->discount_id ?>', 
+                                            '<?= htmlspecialchars($discount->productName, ENT_QUOTES) ?>', 
+                                            '<?= $discount->discount_percentage ?>', 
+                                            '<?= $discount->start_date ?>', 
+                                            '<?= $discount->end_date ?>', 
+                                            '<?= $discount->status ?>', 
+                                            '<?= $discount->product_id ?>'
+                                        )">
+                                        <img src="<?= ROOT ?>/assets/images/edit-btn.svg" alt="edit">
+                                    </button>
+
+                                    <?php if ($discount->status == 1): ?>
+                                        <button class="delete-btn" onclick="openDeleteModal('<?= $discount->discount_id ?>')">
+                                            <img src="<?= ROOT ?>/assets/images/delete-btn.svg" alt="delete">
+                                        </button>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -186,7 +198,7 @@
                         <div class="form-group">
                             <label for="discountPercentage">Discount Percentage:
                                 <input id="discountPercentage" type="number" name="discountPercentage"
-                                    placeholder="E.g., 0.2,0.4" min="1" max="100" required />
+                                    placeholder="E.g., 0.2 for 20%" min="0.01" max="0.99" step="0.01" required />
                             </label>
                         </div>
                         <div class="form-group">
@@ -209,29 +221,28 @@
                 <div class="modal-content">
                     <span class="close" onclick="closeEditModal()">&times;</span>
                     <h3>Edit Discount</h3>
-                    <form action="<?= ROOT ?>/discounts/edit" method="POST" id="editDiscountForm">
+                    <form action="<?= ROOT ?>/discounts/update" method="POST" id="editDiscountForm">
                         <input type="hidden" name="editDiscountId" id="editDiscountId">
                         <input type="hidden" name="editProductId" id="editProductId">
                         <div class="form-group">
-                            <label>Product:
-                                <input type="text" id="editProductName" readonly />
-                            </label>
+                            <label>Product:</label>
+                            <input type="text" id="editProductName" readonly />
+
                         </div>
                         <div class="form-group">
-                            <label for="editDiscountPercentage">Discount Percentage:
-                                <input type="number" name="editDiscountPercentage" id="editDiscountPercentage" min="1"
-                                    max="100" step="0.1" required />
-                            </label>
+                            <label for="editDiscountPercentage">Discount Percentage:</label>
+                            <input type="number" name="editDiscountPercentage" id="editDiscountPercentage" min="0.01"
+                                max="0.99" step="0.01" required />
                         </div>
                         <div class="form-group">
-                            <label for="editStartDate">Start Date:
-                                <input type="date" name="editStartDate" id="editStartDate" required />
-                            </label>
+                            <label for="editStartDate">Start Date:</label>
+                            <input type="date" name="editStartDate" id="editStartDate" required />
+
                         </div>
                         <div class="form-group">
-                            <label for="editEndDate">End Date:
-                                <input type="date" name="editEndDate" id="editEndDate" required />
-                            </label>
+                            <label for="editEndDate">End Date:</label>
+                            <input type="date" name="editEndDate" id="editEndDate" required />
+
                         </div>
                         <div class="form-group">
                             <label for="editStatus">Status</label>

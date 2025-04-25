@@ -50,6 +50,47 @@ function showResponse(message) {
   document.getElementById('responseMessage').textContent = message;
   document.getElementById('responseModal').style.display = 'block';
 }
+
+// Bag Size Modal Functions
+function openBagSizeModal() {
+  document.getElementById('bagSizeModal').style.display = 'block';
+}
+
+function closeBagSizeModal() {
+  document.getElementById('bagSizeModal').style.display = 'none';
+}
+
+function openAddBagSizeModal() {
+  document.getElementById('addBagSizeModal').style.display = 'block';
+}
+
+function closeAddBagSizeModal() {
+  document.getElementById('addBagSizeModal').style.display = 'none';
+  document.getElementById('addBagSizeForm').reset();
+}
+
+function openEditBagSizeModal(productId, bagId, weight, price) {
+  document.getElementById('editProductID').value = productId;
+  document.getElementById('editBagID').value = bagId;
+  document.getElementById('editWeight').value = weight;
+  document.getElementById('editPrice').value = price;
+  document.getElementById('editBagSizeModal').style.display = 'block';
+}
+
+function closeEditBagSizeModal() {
+  document.getElementById('editBagSizeModal').style.display = 'none';
+}
+
+function openDeleteBagSizeModal(productId, bagId) {
+  document.getElementById('deleteBagSizeProductID').value = productId;
+  document.getElementById('deleteBagSizeGagID').value = bagId;
+  document.getElementById('deleteBagSizeModal').style.display = 'block';
+}
+
+function closeDeleteBagSizeModal() {
+  document.getElementById('deleteBagSizeModal').style.display = 'none';
+}
+
 //refresh searchbar
 document
   .querySelector('input[name="search"]')
@@ -97,6 +138,80 @@ document.addEventListener('DOMContentLoaded', function () {
         { type: 'required' },
         { type: 'minLength', value: 10 },
         { type: 'maxLength', value: 500 },
+      ],
+    });
+  }
+
+  // Add Bag Size form validation
+  if (document.getElementById('addBagSizeForm')) {
+    setupFormValidation('addBagSizeForm', {
+      product_id: [{ type: 'required' }],
+      bag_id: [{ type: 'required' }],
+      weight: [
+        { type: 'required' },
+        {
+          type: 'custom',
+          validate: function (input) {
+            const val = parseFloat(input.value);
+            if (isNaN(val) || val <= 0) {
+              showError(input, 'Weight must be greater than 0');
+              return false;
+            }
+            removeError(input);
+            return true;
+          },
+        },
+      ],
+      price: [
+        { type: 'required' },
+        {
+          type: 'custom',
+          validate: function (input) {
+            const val = parseFloat(input.value);
+            if (isNaN(val) || val <= 0) {
+              showError(input, 'Price must be greater than 0');
+              return false;
+            }
+            removeError(input);
+            return true;
+          },
+        },
+      ],
+    });
+  }
+
+  // Edit Bag Size form validation
+  if (document.getElementById('editBagSizeForm')) {
+    setupFormValidation('editBagSizeForm', {
+      editWeight: [
+        { type: 'required' },
+        {
+          type: 'custom',
+          validate: function (input) {
+            const val = parseFloat(input.value);
+            if (isNaN(val) || val <= 0) {
+              showError(input, 'Weight must be greater than 0');
+              return false;
+            }
+            removeError(input);
+            return true;
+          },
+        },
+      ],
+      editPrice: [
+        { type: 'required' },
+        {
+          type: 'custom',
+          validate: function (input) {
+            const val = parseFloat(input.value);
+            if (isNaN(val) || val <= 0) {
+              showError(input, 'Price must be greater than 0');
+              return false;
+            }
+            removeError(input);
+            return true;
+          },
+        },
       ],
     });
   }
