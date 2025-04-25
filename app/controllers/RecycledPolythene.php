@@ -50,8 +50,7 @@ class RecycledPolythene {
             ];
 
             if($this->polytheneModel->updateAmount($data)) {
-                $_SESSION['success'] = "Data for $month was successfully saved";
-                redirect('RecycledPolythene?month=' . urlencode($month));
+                redirect('PolytheneAmount?month=' . urlencode($month));
             }
         }
     }
