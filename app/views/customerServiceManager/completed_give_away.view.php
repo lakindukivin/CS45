@@ -75,21 +75,15 @@
           <span  class="close"
           id="completedGiveAwayPopupClose">&times;</span>
             <h1>Give Away Request Update</h1>
-
           </div>
-
-
           <div class="popup-content">
-            <label for="Customer_id" class="">Customer ID: </label>
-            <input type="text" name="customer_id" id="customer_id" readonly/>
+            <label for="Customer_id" class=""></label>
+            <input type="hidden" name="customer_id" id="customer_id" readonly/>
           </div>
-
-
           <div class="popup-content">
             <label for="Name" class="">Name: </label>
             <input type="text" name="name" id="name" readonly/>
           </div>
-
           <div class="popup-content">
             <label for="Phone">Phone: </label>
             <input type="text" name="Phone" id="phone" readonly/>
@@ -112,8 +106,6 @@
             <label for="status">Details: </label>
             <input type="text" name="details" id="details" readonly/>
           </div>
-
-
         </form>
       </div>
     </div>
@@ -134,18 +126,38 @@
     </header>
     <div class="box">
       <div class="container">
-       
+       <!-- Filter Form -->
+       <div class="filter-container">
+          <form action="" method="get" class="filter-form">
+            <input type="hidden" name="tab" value="<?= $data['activeTab'] ?? 'accepted' ?>">
+            
+            <div class="filter-input">
+              <label for="filter_name">Customer Name:</label>
+              <input type="text" id="filter_name" name="filter_name" value="<?= htmlspecialchars($data['filters']['name'] ?? '') ?>" placeholder="Filter by name">
+            </div>
+            
+            <div class="filter-input">
+              <label for="filter_date">Request Date:</label>
+              <input type="date" id="filter_date" name="filter_date" value="<?= htmlspecialchars($data['filters']['date'] ?? '') ?>">
+            </div>
+            
+            <div class="filter-actions">
+              <button type="submit" class="filter-btn">Apply Filters</button>
+              <a href="?tab=<?= $data['activeTab'] ?? 'accepted' ?>" class="reset-filter-btn">Reset</a>
+            </div>
+          </form>
+        </div> 
+
         <div class="status-tabs">
-          <button class="status-tab active" data-status="accepted" >Accepted</button>
-          <button class="status-tab" data-status="collected">Collected</button>
-          <button class="status-tab" data-status="rejected">Rejected</button>
+          <button class="status-tab <?= ($data['activeTab'] == 'accepted') ? 'active' : '' ?>" data-status="accepted" >Accepted</button>
+          <button class="status-tab <?= ($data['activeTab'] == 'collected') ? 'active' : '' ?>" data-status="collected">Collected</button>
+          <button class="status-tab <?= ($data['activeTab'] == 'rejected') ? 'active' : '' ?>" data-status="rejected">Rejected</button>
         </div>
 
-        <div class="tab-content active" id="accepted-orders">
+        <div class="tab-content <?= ($data['activeTab'] == 'accepted') ? 'active' : '' ?>" id="accepted-orders">
         <table>  
             <thead>
                 <tr>
-                <th>Customer ID</th>
                 <th>Name</th>
                 <th>Phone</th>
                 <th>Request Date</th>
@@ -158,7 +170,6 @@
             <?php if (isset($data['accepted_giveaway']) && is_array($data['accepted_giveaway']) && !empty($data['accepted_giveaway'])): ?>
               <?php foreach ($data['accepted_giveaway'] as $giveaway): ?>
                 <tr data-order='<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8') ?>'>                  
-                  <td><?= $giveaway->customer_id ?></td>
                   <td><?= $giveaway->name ?></td>
                   <td><?= $giveaway->phone ?></td>
                   <td><?= $giveaway->request_date ?></td>
@@ -176,13 +187,25 @@
             <?php endif; ?>
             </tbody>
         </table>
+
+        <!-- Accepted Pagination Controls -->
+        <div class="pagination">
+                <?php if (isset($data['totalAcceptedPages']) && $data['totalAcceptedPages'] > 1): ?>
+                    <?php for ($i = 1; $i <= $data['totalAcceptedPages']; $i++): ?>
+                        <a href="?tab=accepted&page=<?= $i ?><?= !empty($data['filters']['name']) ? '&filter_name='.urlencode($data['filters']['name']) : '' ?><?= !empty($data['filters']['date']) ? '&filter_date='.urlencode($data['filters']['date']) : '' ?>"
+                            class="<?= (isset($data['currentPage']) && $data['currentPage'] == $i && (!isset($data['activeTab']) || $data['activeTab'] == 'accepted')) ? 'active' : '' ?>">
+                            <?= $i ?>
+                        </a>
+                    <?php endfor; ?>
+                <?php endif; ?>
+        </div>       
+
       </div> 
 
-      <div class="tab-content" id="collected-orders">
+      <div class="tab-content <?= (isset($data['activeTab']) && $data['activeTab'] == 'collected') ? 'active' : '' ?>" id="collected-orders">
         <table>  
             <thead>
                 <tr>
-                <th>Customer ID</th>
                 <th>Name</th>
                 <th>Phone</th>
                 <th>Request Date</th>
@@ -195,7 +218,6 @@
             <?php if (isset($data['collected_giveaway']) && is_array($data['collected_giveaway']) && !empty($data['collected_giveaway'])): ?>
               <?php foreach ($data['collected_giveaway'] as $giveaway): ?>
                 <tr data-order='<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8') ?>'>                  
-                  <td><?= $giveaway->customer_id ?></td>
                   <td><?= $giveaway->name ?></td>
                   <td><?= $giveaway->phone ?></td>
                   <td><?= $giveaway->request_date ?></td>
@@ -213,13 +235,24 @@
             <?php endif; ?>
             </tbody>
         </table>
+
+        <!-- Collected Pagination Controls -->
+        <div class="pagination">
+                <?php if (isset($data['totalCollectedPages']) && $data['totalCollectedPages'] > 1): ?>
+                    <?php for ($i = 1; $i <= $data['totalCollectedPages']; $i++): ?>
+                        <a href="?tab=collected&page=<?= $i ?><?= !empty($data['filters']['name']) ? '&filter_name='.urlencode($data['filters']['name']) : '' ?><?= !empty($data['filters']['date']) ? '&filter_date='.urlencode($data['filters']['date']) : '' ?>"
+                            class="<?= (isset($data['currentPage']) && $data['currentPage'] == $i && isset($data['activeTab']) && $data['activeTab'] == 'collected') ? 'active' : '' ?>">
+                            <?= $i ?>
+                        </a>
+                    <?php endfor; ?>
+                <?php endif; ?>
+        </div>    
       </div> 
 
-      <div class="tab-content" id="rejected-orders">
+      <div class="tab-content <?= ($data['activeTab'] == 'rejected') ? 'active' : '' ?>" id="rejected-orders">
         <table>  
             <thead>
                 <tr>
-                <th>Customer ID</th>
                 <th>Name</th>
                 <th>Phone</th>
                 <th>Request Date</th>
@@ -232,7 +265,6 @@
             <?php if (isset($data['rejected_giveaway']) && is_array($data['rejected_giveaway']) && !empty($data['rejected_giveaway'])): ?>
               <?php foreach ($data['rejected_giveaway'] as $giveaway): ?>
                 <tr data-order='<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8') ?>'>                  
-                  <td><?= $giveaway->customer_id ?></td>
                   <td><?= $giveaway->name ?></td>
                   <td><?= $giveaway->phone ?></td>
                   <td><?= $giveaway->request_date ?></td>
@@ -250,11 +282,70 @@
             <?php endif; ?>
             </tbody>
         </table>
+
+        <!-- Rejected Pagination Controls -->
+        <div class="pagination">
+                <?php if (isset($data['totalRejectedPages']) && $data['totalRejectedPages'] > 1): ?>
+                    <?php for ($i = 1; $i <= $data['totalRejectedPages']; $i++): ?>
+                        <a href="?tab=rejected&page=<?= $i ?><?= !empty($data['filters']['name']) ? '&filter_name='.urlencode($data['filters']['name']) : '' ?><?= !empty($data['filters']['date']) ? '&filter_date='.urlencode($data['filters']['date']) : '' ?>"
+                            class="<?= (isset($data['currentPage']) && $data['currentPage'] == $i && isset($data['activeTab']) && $data['activeTab'] == 'rejected') ? 'active' : '' ?>">
+                            <?= $i ?>
+                        </a>
+                    <?php endfor; ?>
+                <?php endif; ?>
+        </div>       
       </div> 
     </div>
   </div>
 
   <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>
   <script src="<?=ROOT?>/assets/js/customerServiceManager/give_away_request.js"></script>
+  <script>
+    // Make sure tab switching preserves the current page and filters
+    document.addEventListener('DOMContentLoaded', function() {
+      const statusTabs = document.querySelectorAll('.status-tab');
+      const tabContents = document.querySelectorAll('.tab-content');
+      
+      // Show active tab based on URL parameter or default to accepted
+      const urlParams = new URLSearchParams(window.location.search);
+      const activeTab = urlParams.get('tab') || 'accepted';
+      
+      // Update tab visibility
+      tabContents.forEach(content => {
+        if (content.id === activeTab + '-orders') {
+          content.classList.add('active');
+        } else {
+          content.classList.remove('active');
+        }
+      });
+      
+      // Update tab button active state
+      statusTabs.forEach(tab => {
+        if (tab.getAttribute('data-status') === activeTab) {
+          tab.classList.add('active');
+        } else {
+          tab.classList.remove('active');
+        }
+        
+        // Add click event handler for tab switching with filter preservation
+        tab.addEventListener('click', function(e) {
+          e.preventDefault();
+          const tabStatus = this.getAttribute('data-status');
+          
+          // Get current filters
+          const filterName = urlParams.get('filter_name') || '';
+          const filterDate = urlParams.get('filter_date') || '';
+          
+          // Build the new URL with the tab and preserve filters
+          let newURL = '?tab=' + tabStatus;
+          if (filterName) newURL += '&filter_name=' + encodeURIComponent(filterName);
+          if (filterDate) newURL += '&filter_date=' + encodeURIComponent(filterDate);
+          
+          // Navigate to the new URL
+          window.location.href = newURL;
+        });
+      });
+    });
+  </script>
 </body>
 </html>
