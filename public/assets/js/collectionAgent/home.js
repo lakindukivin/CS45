@@ -143,7 +143,8 @@ function fetchDayData(formattedDate) {
             
             // Update the dashboard with the new data
             document.getElementById('giveaways-count').textContent = data.giveaways;
-            document.getElementById('customer-count').textContent = data.customers;
+            document.getElementById('guest-count').textContent = data.guests;
+            document.getElementById('total').textContent = data.total || '0';
         })
         .catch(error => {
             console.error('Error fetching data:', error);
@@ -154,10 +155,12 @@ function fetchDayData(formattedDate) {
 function displayDayData(data) {
     // Ensure data is always a number, default to 0 if undefined/null
     const giveaways = (typeof data.giveaways === 'number') ? data.giveaways : (parseInt(data.giveaways) || 0);
-    const returns = (typeof data.customers === 'number') ? data.customers : (parseInt(data.customers) || 0);
+    const guests = (typeof data.guests === 'number') ? data.guests : (parseInt(data.guests) || 0);
+    const total = (typeof data.total === 'number') ? data.total : (parseFloat(data.total) || 0);
 
     document.getElementById('giveaways-count').textContent = giveaways;
-    document.getElementById('customer-count').textContent = customers;
+    document.getElementById('guest-count').textContent = guests;
+    document.getElementById('total').textContent = total;
 }
 
 // Ensure the calendar is re-rendered after changing months

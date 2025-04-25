@@ -123,11 +123,34 @@
     </header>
     <div class="box">
       <div class="container">
-      <div class="status-tabs">
-          <button class="status-tab active" data-status="accepted">Accepted</button>
-          <button class="status-tab" data-status="collected">Collected</button>
+        <div class="status-tabs">
+          <button class="status-tab <?= (!isset($data['activeTab']) || $data['activeTab'] == 'accepted') ? 'active' : '' ?>" data-status="accepted" onclick="window.location.href='?tab=accepted&page=1'">Accepted</button>
+          <button class="status-tab <?= (isset($data['activeTab']) && $data['activeTab'] == 'collected') ? 'active' : '' ?>" data-status="collected" onclick="window.location.href='?tab=collected&page=1'">Collected</button>
         </div>
-        <div class="tab-content active" id="accepted-orders">
+        
+        <!-- Filter Form -->
+        <div class="filter-container">
+          <form action="" method="get" class="filter-form">
+            <input type="hidden" name="tab" value="<?= $data['activeTab'] ?? 'accepted' ?>">
+            
+            <div class="filter-input">
+              <label for="filter_name">Customer Name:</label>
+              <input type="text" id="filter_name" name="filter_name" value="<?= htmlspecialchars($data['filters']['name'] ?? '') ?>" placeholder="Filter by name">
+            </div>
+            
+            <div class="filter-input">
+              <label for="filter_date">Request Date:</label>
+              <input type="date" id="filter_date" name="filter_date" value="<?= htmlspecialchars($data['filters']['date'] ?? '') ?>">
+            </div>
+            
+            <div class="filter-actions">
+              <button type="submit" class="filter-btn">Apply Filters</button>
+              <a href="?tab=<?= $data['activeTab'] ?? 'accepted' ?>" class="reset-filter-btn">Reset</a>
+            </div>
+          </form>
+        </div>
+        
+        <div class="tab-content <?= (!isset($data['activeTab']) || $data['activeTab'] == 'accepted') ? 'active' : '' ?>" id="accepted-orders">
         <table>
           <thead>
             <tr>
@@ -162,9 +185,21 @@
             <?php endif; ?>
           </tbody>
         </table>
+
+         <!-- Accepted Pagination Controls -->
+         <div class="pagination">
+                <?php if (isset($data['totalAcceptedPages']) && $data['totalAcceptedPages'] > 1): ?>
+                    <?php for ($i = 1; $i <= $data['totalAcceptedPages']; $i++): ?>
+                        <a href="?tab=accepted&page=<?= $i ?><?= !empty($data['filters']['name']) ? '&filter_name='.urlencode($data['filters']['name']) : '' ?><?= !empty($data['filters']['date']) ? '&filter_date='.urlencode($data['filters']['date']) : '' ?>"
+                            class="<?= (isset($data['currentPage']) && $data['currentPage'] == $i && (!isset($data['activeTab']) || $data['activeTab'] == 'accepted')) ? 'active' : '' ?>">
+                            <?= $i ?>
+                        </a>
+                    <?php endfor; ?>
+                <?php endif; ?>
+        </div>
         </div>
 
-        <div class="tab-content" id="collected-orders">
+        <div class="tab-content <?= (isset($data['activeTab']) && $data['activeTab'] == 'collected') ? 'active' : '' ?>" id="collected-orders">
         <table>
           <thead>
             <tr>
@@ -199,20 +234,19 @@
             <?php endif; ?>
           </tbody>
         </table>
-        </div>
-
-        <!-- Pagination Controls -->
+        
+        <!-- Collected Pagination Controls -->
         <div class="pagination">
-                <?php if (isset($totalPages) && $totalPages > 1): ?>
-                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                        <a href="?<?= isset($search) && $search !== '' ? 'search=' . urlencode($search) . '&' : '' ?>page=<?= $i ?>"
-                            class="<?= (isset($currentPage) && $currentPage == $i) ? 'active' : '' ?>">
+                <?php if (isset($data['totalCollectedPages']) && $data['totalCollectedPages'] > 1): ?>
+                    <?php for ($i = 1; $i <= $data['totalCollectedPages']; $i++): ?>
+                        <a href="?tab=collected&page=<?= $i ?><?= !empty($data['filters']['name']) ? '&filter_name='.urlencode($data['filters']['name']) : '' ?><?= !empty($data['filters']['date']) ? '&filter_date='.urlencode($data['filters']['date']) : '' ?>"
+                            class="<?= (isset($data['currentPage']) && $data['currentPage'] == $i && isset($data['activeTab']) && $data['activeTab'] == 'collected') ? 'active' : '' ?>">
                             <?= $i ?>
                         </a>
                     <?php endfor; ?>
                 <?php endif; ?>
         </div>
-
+        </div>
       </div>
     </div>
   </div>
@@ -229,6 +263,35 @@
 
   <script src="<?= ROOT ?>/assets/js/customerServiceManager/sidebar.js"></script>
   <script src="<?= ROOT ?>/assets/js/collectionAgent/giveAwayRequest.js"></script>
+  <script>
+    // Make sure tab switching preserves the current page
+    document.addEventListener('DOMContentLoaded', function() {
+      const statusTabs = document.querySelectorAll('.status-tab');
+      const tabContents = document.querySelectorAll('.tab-content');
+      
+      // Show active tab based on URL parameter or default to accepted
+      const urlParams = new URLSearchParams(window.location.search);
+      const activeTab = urlParams.get('tab') || 'accepted';
+      
+      // Update tab visibility
+      tabContents.forEach(content => {
+        if (content.id === activeTab + '-orders') {
+          content.classList.add('active');
+        } else {
+          content.classList.remove('active');
+        }
+      });
+      
+      // Update tab button active state
+      statusTabs.forEach(tab => {
+        if (tab.getAttribute('data-status') === activeTab) {
+          tab.classList.add('active');
+        } else {
+          tab.classList.remove('active');
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>

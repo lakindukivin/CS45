@@ -17,14 +17,15 @@ class CollectionAgentHome
  
     public function index($data = [])
     {
-        
- // Get today's date in YYYY-MM-DD format
- $today = date('Y-m-d');
+        // Get today's date in YYYY-MM-DD format
+        $today = date('Y-m-d');
 
- // Fetch counts for today's date using the models
- $giveaways = $this->model('GiveAwayModel')->countByDateAccepted($today);
+        // Fetch counts for today's date using the models
+        $giveaways = $this->model('GiveAwayModel')->countByDateAccepted($today);
+        $guests = $this->model('GuestCollectionModel')->countByDate($today);
+        $total = $this->model('GuestCollectionModel')->getTotalAmountByDate($today);
 
- $giveAwayModel = new GiveAwayModel();
+        $giveAwayModel = new GiveAwayModel();
     $allCompletedgiveAways =  $giveAwayModel->getAllCompletedGiveAways();
 
      // Initialize arrays for each status type
@@ -55,6 +56,8 @@ class CollectionAgentHome
 
     $this->view('collectionAgent/collectionAgentHome',[
       'giveaways' => $giveaways,
+      'guests' => $guests,
+      'total' => $total,
     ]);
   }
 
@@ -66,11 +69,14 @@ class CollectionAgentHome
             try {
                 // Get counts for each type
                 $giveawayCount = $this->model('GiveAwayModel')->countByDateAccepted($date);
+                $guestCount = $this->model('GuestCollectionModel')->countByDate($date);
+                $totalAmount = $this->model('GuestCollectionModel')->getTotalAmountByDate($date);
                 
                 header('Content-Type: application/json');
                 echo json_encode([
                     'giveaways' => $giveawayCount,
-                   
+                    'guests' => $guestCount,
+                    'total' => $totalAmount
                 ]);
                 exit;
             } catch (Exception $e) {

@@ -16,7 +16,8 @@ class GuestCollection {
       $data = [
         'guest_name' => $_POST['guest_name'],
         'phone' => $_POST['phone'],
-        'amount' => $_POST['amount']
+        'amount' => $_POST['amount'],
+        'date' => date('Y-m-d') // Add today's date in YYYY-MM-DD format
       ];
       
       $guestCollection->addCollection($data);

@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="root-url" content="<?= ROOT ?>">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/customerServiceManager/sidebar.css">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/customerServiceManager/home.css">
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/customerServiceManager/common.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/collectionAgent/sidebar.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/collectionAgent/home.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/collectionAgent/common.css">
     <title>Waste360|Dashboard|CA</title>
 </head>
 
@@ -93,12 +93,20 @@
                         <h4>Give Aways</h4>
                         <div class="metric-value" id="giveaways-count"><?= $giveaways ?></div>
                     </div>
+                    <div class="metric-card">
+                        <h4>Guests</h4>
+                        <div class="metric-value" id="guest-count"><?= $guests ?></div>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Polythen Amount(Kgs)</h4>
+                        <div class="metric-value" id="total"><?= $total ?></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="<?= ROOT ?>/assets/js/customerServiceManager/home.js"></script>
-    <script src="<?= ROOT ?>/assets/js/customerServiceManager/sidebar.js"></script>
+    <script src="<?= ROOT ?>/assets/js/collectionAgent/home.js"></script>
+    <script src="<?= ROOT ?>/assets/js/collectionAgent/sidebar.js"></script>
 </body>
 
 </html>
