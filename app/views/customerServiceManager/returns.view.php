@@ -169,19 +169,18 @@
       <img src="<?=ROOT?>/assets/images/Waste360.png" alt="logo" />
       <h1>Waste360</h1>  
       </div> 
-      <h1 class="logo">DashBoard</h1>
+      <h1 class="logo">Pending Return Requests</h1>
       <nav class="nav">
         <ul>
           <li><a href="#"><img src="<?=ROOT?>/assets/images/notifications.svg"></a></li>
           <li><a href="<?=ROOT?>/profile">Profile</a></li>
-          <li><a href="#">Logout</a></li>
+          <li><a href="<?=ROOT?>/logout">Logout</a></li>
         </ul>
       </nav>
     </header>
     <div class="box">
       <div class="container">
         <div class="header">
-        <h2>Pending Return Requests</h2>
         <button class="add-button">
                 <a href="<?=ROOT?>/CompletedReturns">View Completed Returns</a>
             </button>
@@ -207,7 +206,7 @@
                   <td><?= $return->quantity ?></td>
                   <td><?= $return->phone ?></td>
                   <td>
-                  <button class="view-btn" onclick="openReturnUpdatePopup(<?= htmlspecialchars(json_encode($return), ENT_QUOTES, 'UTF-8')?>)">View/Edit</button>
+                  <button class="view-btn" onclick="openReturnUpdatePopup(<?= htmlspecialchars(json_encode($return), ENT_QUOTES, 'UTF-8')?>)"><img src="<?= ROOT ?>/assets/images/edit-btn.svg" alt=""></button>
                   </td>
                 </tr>
               <?php endforeach; ?>
@@ -218,6 +217,19 @@
             <?php endif; ?>
             </tbody>
         </table>
+
+        <!-- Pagination Controls -->
+        <div class="pagination">
+                <?php if (isset($totalPages) && $totalPages > 1): ?>
+                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                        <a href="?<?= isset($search) && $search !== '' ? 'search=' . urlencode($search) . '&' : '' ?>page=<?= $i ?>"
+                            class="<?= (isset($currentPage) && $currentPage == $i) ? 'active' : '' ?>">
+                            <?= $i ?>
+                        </a>
+                    <?php endfor; ?>
+                <?php endif; ?>
+        </div>
+        
       </div>
     </div>
   </div> 
@@ -233,31 +245,6 @@
     <p class="message-text">The return was rejected!</p>
 </div>
 
-  <script>
-    function openReturnUpdatePopup(returnData) {
-        document.getElementById('return_id').value = returnData.return_id;
-        document.getElementById('order_id').value = returnData.order_id;
-        document.getElementById('product_id').value = returnData.product_id;
-        document.getElementById('customer_id').value = returnData.customer_id;
-        document.getElementById('customerName').value = returnData.customerName;
-        document.getElementById('productName').value = returnData.productName;
-        document.getElementById('quantity').value = returnData.quantity;
-        document.getElementById('total').value = returnData.total;
-        document.getElementById('orderDate').value = returnData.orderDate;
-        document.getElementById('returnDetails').value = returnData.returnDetails;
-        document.getElementById('cus_requirements').value = returnData.cus_requirements;
-        document.getElementById('phone').value = returnData.phone;
-        document.getElementById('return_status').value = returnData.returnStatus;
-
-
-        document.getElementById('returnUpdatePopup').style.display = 'flex';
-
-        // Add event listener to close the popup
-      document.getElementById('closePopupBtn').addEventListener('click', () => {
-        document.getElementById('returnUpdatePopup').style.display = 'none';
-      });
-    }
-  </script>
   <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>  
   <script src="<?=ROOT?>/assets/js/customerServiceManager/returns.js"></script>  
 </body>

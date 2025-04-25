@@ -111,7 +111,7 @@
             <label for="decision-reason">Decision reason:</label>
             <input type="text" name="decision_reason" id="decision_reason"/>
           </div>
-
+ 
           <div class="popup-content">
             <label for="message_to_customer">Message to Customer:</label>
             <textarea id="message_to_customer" name="message_to_customer" class="input-field"></textarea>
@@ -139,7 +139,7 @@
         <ul>
           <li><a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg"></a></li>
           <li><a href="<?=ROOT?>/profile">Profile</a></li>
-          <li><a href="#">Logout</a></li>
+          <li><a href="<?=ROOT?>/logout">Logout</a></li>
         </ul>
       </nav>
     </header>
@@ -173,7 +173,7 @@
                   <td><?= $giveaway->address ?></td>
                   <td><?= $giveaway->giveawayStatus ?></td>
                   <td>
-                    <button class="view-btn" onclick="openGiveAwayReqUpdatePopup(<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8')?>)">View/Update</button>
+                    <button class="view-btn" onclick="openGiveAwayReqUpdatePopup(<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8')?>)"><img src="<?= ROOT ?>/assets/images/edit-btn.svg" alt=""></button>
                   </td>
                 </tr>
               <?php endforeach; ?>
@@ -184,6 +184,19 @@
             <?php endif; ?>
           </tbody>
         </table>
+
+        <!-- Pagination Controls -->
+        <div class="pagination">
+                <?php if (isset($totalPages) && $totalPages > 1): ?>
+                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                        <a href="?<?= isset($search) && $search !== '' ? 'search=' . urlencode($search) . '&' : '' ?>page=<?= $i ?>"
+                            class="<?= (isset($currentPage) && $currentPage == $i) ? 'active' : '' ?>">
+                            <?= $i ?>
+                        </a>
+                    <?php endfor; ?>
+                <?php endif; ?>
+        </div>
+
       </div>
     </div>
   </div>

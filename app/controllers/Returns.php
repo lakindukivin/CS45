@@ -9,8 +9,29 @@ class Returns {
 
     public function index() {
         $returnModel = new ReturnModel();
-        $data['returns'] = $returnModel->getAllReturns();
 
+        // Pagination parameters
+        $limit = 3; // Items per page
+        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $currentPage = max(1, $currentPage); // Make sure page is at least 1
+
+        // Get total count of pending returns
+        $allPendingReturns = $returnModel->getAllReturns();
+        $totalItems = count($allPendingReturns);
+        $totalPages = ceil($totalItems / $limit);
+
+        // Ensure current page is valid
+        if ($currentPage > $totalPages && $totalPages > 0) {
+            $currentPage = $totalPages;
+        }
+
+        $offset = ($currentPage - 1) * $limit;
+        // Get the paginated returns
+        $data['returns'] = array_slice($allPendingReturns, $offset, $limit);
+        // Add pagination data to pass to the view
+        $data['currentPage'] = $currentPage;
+        $data['totalPages'] = $totalPages;
+        
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $return_id = $_POST['returnId'];
             $return_status = $_POST['returnStatus'] ?? null;

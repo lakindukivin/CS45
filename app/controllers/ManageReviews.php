@@ -5,7 +5,29 @@ class ManageReviews {
    
     public function index() {
         $reviewModel = new Review();
-        $data['reviews'] = $reviewModel->getAllPendingReviews();
+
+        // Pagination parameters
+        $limit = 3; // Items per page
+        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $currentPage = max(1, $currentPage); // Make sure page is at least 1
+
+        // Get total count of pending reviews
+        $allPendingReviews = $reviewModel->getAllPendingReviews();
+        $totalItems = count($allPendingReviews);
+        $totalPages = ceil($totalItems / $limit);
+        
+        // Ensure current page is valid
+        if ($currentPage > $totalPages && $totalPages > 0) {
+            $currentPage = $totalPages;
+        }
+        $offset = ($currentPage - 1) * $limit;
+
+        // Get the paginated reviews
+        $data['reviews'] = array_slice($allPendingReviews, $offset, $limit);
+        // Add pagination data to pass to the view
+        $data['currentPage'] = $currentPage;
+        $data['totalPages'] = $totalPages;
+
         $this->view('customerServiceManager/manage_reviews', $data);
     }
 

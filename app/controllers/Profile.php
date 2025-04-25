@@ -1,138 +1,73 @@
 <?php
 
-/**
- * Universal Profile Controller for all users (both staff and customers)
- */
 class Profile
 {
     use Controller;
 
-    public function model($model)
-    {
-        $modelPath = "../app/models/" . $model . ".php";
-        if (file_exists($modelPath)) {
-            require_once $modelPath;
-            return new $model();
-        } else {
-            throw new Exception("Model file not found: " . $model);
-        }
-    }
-
     public function index()
     {
-        // Get user ID from session
-        $user_id = $_SESSION['user_id'] ?? 0;
-        
-        // Debug information - will help identify if session is working
-        if (!$user_id) {
-            // For testing, set a hardcoded user ID for CS Manager (change this to match your user)
-            // Remove this line after testing!
-            $_SESSION['user_id'] = 4; // Assuming 4 is the CS Manager's user_id
-            $user_id = 4;
-            
-            // For debugging only
-            echo "<div style='background:yellow;padding:10px;'>";
-            echo "DEBUG: No user_id in session. Using test ID: $user_id<br>";
-            echo "Session data: " . print_r($_SESSION, true);
-            echo "</div>";
+        // Start session if not already started
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
         }
 
-        // Get user role to determine if staff or customer
-        $userModel = $this->model('UserModel');
-        $user = $userModel->getUserById($user_id);
-        
-        if (!$user) {
-            echo "<div style='background:red;color:white;padding:10px;'>";
-            echo "DEBUG: User with ID $user_id not found in database</div>";
+        // Redirect if not authenticated
+        if (!isset($_SESSION['user_id'])) {
             redirect('login');
         }
-        
-       
-        
-        // Determine if user is staff or customer based on role_id
-        if ($user->role_id == 5) { // Customer role_id is 5 in your database
-            // Load customer profile
-            $customerModel = $this->model('Customer');
-            $profileData = $customerModel->getCustomerByUserId($user_id);
-            $this->view('customer/profile', [
-                'profile' => $profileData
-            ]);
-        } else {
-            // Load staff profile using existing ProfileController functionality
-            $staffModel = $this->model('StaffModel');
-            $profileData = $staffModel->getStaffProfileById($user_id);
-            
-            if (!$profileData) {
-                // Handle error - staff not found
-                echo "<div style='background:orange;padding:10px;'>";
-                redirect('login');
-            }
-            
-            // Map role ID to view folder
-            $roleMappings = [
-                1 => 'admin',
-                2 => 'salesManager',
-                3 => 'productionManager',
-                4 => 'customerServiceManager',
-                // Add other mappings as needed
-            ];
-            
-            $viewFolder = $roleMappings[$user->role_id] ?? 'staff';
-            
-            $this->view($viewFolder . '/profile', [
-                'profile' => $profileData
-            ]);
+
+        $userId = $_SESSION['user_id'];
+        $customer = new Customer();
+        $profileData = $customer->getCustomerByUserId($userId);
+
+        // Convert object to array if needed
+        if (is_object($profileData)) {
+            $profileData = (array)$profileData;
         }
-    }
-    
-    public function update()
-    {
+
+        // Handle form submission
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Get user ID from session
-            $user_id = $_SESSION['user_id'] ?? 0;
-            
-            if (!$user_id) {
-                redirect('login');
-            }
-            
-            // Process form data
-            $data = [
-                'name' => $_POST['name'] ?? '',
-                'email' => $_POST['email'] ?? '',
-                'phone' => $_POST['phone'] ?? '',
-                'address' => $_POST['address'] ?? '',
-            ];
-            
-            // Optional profile image upload
-            if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] === 0) {
-                $image = $this->handleImageUpload($_FILES['profile_image']);
-                if ($image) {
-                    $data['image'] = $image;
+            // Process profile picture upload
+            $profilePicture = $_FILES['profile_picture'] ?? null;
+            $picturePath = $profileData['image'] ?? null;
+
+            if ($profilePicture && $profilePicture['error'] == UPLOAD_ERR_OK) {
+                $uploadDir = ROOT . '/assets/uploads/profiles/';
+                if (!is_dir($uploadDir)) {
+                    mkdir($uploadDir, 0755, true);
                 }
+
+                $extension = pathinfo($profilePicture['name'], PATHINFO_EXTENSION);
+                $filename = 'profile_' . $userId . '.' . $extension;
+                $picturePath = '/assets/uploads/profiles/' . $filename;
+
+                move_uploaded_file($profilePicture['tmp_name'], $uploadDir . $filename);
             }
-            
-            // Get user role to determine update method
-            $userModel = $this->model('UserModel');
-            $user = $userModel->getUserById($user_id);
-            
-            if ($user->role_id == 5) { // Customer
-                $customerModel = $this->model('Customer');
-                $result = $customerModel->updateCustomerProfile($user_id, $data);
-            } else { // Staff
-                $staffModel = $this->model('StaffModel');
-                $result = $staffModel->updateStaffProfile($user_id, $data);
-            }
-            
-            if ($result) {
-                $_SESSION['success_message'] = 'Profile updated successfully';
+
+            // Prepare data
+            $data = [
+                'user_id' => $userId,
+                'name' => htmlspecialchars($_POST['name'] ?? ''),
+                'phone_number' => htmlspecialchars($_POST['phone'] ?? ''), // Note field name change
+                'address' => htmlspecialchars($_POST['address'] ?? ''),
+                'image' => $picturePath
+            ];
+
+            // Validate required fields
+            if (!empty($data['name']) && !empty($data['phone_number']) && !empty($data['address'])) {
+                if ($profileData) {
+                    $customer->updateCustomer($userId, $data);
+                    $_SESSION['success_message'] = "Profile updated successfully!";
+                } else {
+                    $customer->addCustomer($data);
+                    $_SESSION['success_message'] = "Profile created successfully!";
+                }
+                redirect('profileComplete');
             } else {
-                $_SESSION['error_message'] = 'Failed to update profile';
+                $_SESSION['error_message'] = "Please fill all required fields!";
             }
-            
-            redirect('profile');
-        } else {
-            redirect('profile');
         }
+<<<<<<< HEAD
     }
     
     public function changePassword()
@@ -187,19 +122,38 @@ class Profile
     
     private function handleImageUpload($file)
     {
+        // Create relative path without leading slash
         $target_dir = "uploads/profile/";
-        if (!file_exists($target_dir)) {
-            mkdir($target_dir, 0777, true);
+        $full_target_dir = $_SERVER['DOCUMENT_ROOT'] . '/' . $target_dir;
+        
+        // Create directory if it doesn't exist
+        if (!file_exists($full_target_dir)) {
+            mkdir($full_target_dir, 0777, true);
         }
         
         $file_extension = pathinfo($file['name'], PATHINFO_EXTENSION);
         $file_name = uniqid() . '.' . $file_extension;
-        $target_file = $target_dir . $file_name;
+        $relative_path = $target_dir . $file_name; // Store relative path in database
+        $full_target_file = $_SERVER['DOCUMENT_ROOT'] . '/' . $relative_path;
         
-        if (move_uploaded_file($file['tmp_name'], $target_file)) {
-            return $target_file;
+        if (move_uploaded_file($file['tmp_name'], $full_target_file)) {
+            error_log("Image uploaded successfully: " . $relative_path);
+            return $relative_path; // Return relative path without leading slash
+        } else {
+            error_log("Image upload failed. Error: " . $_FILES['profile_image']['error']);
+            return false;
         }
-        
-        return false;
+=======
+
+        // Pass data to view
+        $this->view('customer/profile', [
+            'profile' => $profileData,
+            'success_message' => $_SESSION['success_message'] ?? null,
+            'error_message' => $_SESSION['error_message'] ?? null
+        ]);
+
+        // Clear messages
+        unset($_SESSION['success_message'], $_SESSION['error_message']);
+>>>>>>> 631abb915d9d60b76fdaed24f645f43933a9e2ae
     }
 }

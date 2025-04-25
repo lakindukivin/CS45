@@ -123,7 +123,7 @@
       <img src="<?=ROOT?>/assets/images/Waste360.png" alt="logo" />
       <h1>Waste360</h1>  
       </div> 
-      <h1 class="logo">DashBoard</h1>
+      <h1 class="logo">Completed Give Away Request</h1>
       <nav class="nav">
         <ul>
           <li><a href="#"><img src="<?=ROOT?>/assets/images/notifications.svg"></a></li>
@@ -135,7 +135,6 @@
     <div class="box">
       <div class="container">
         <div class="header">
-        <h2>Completed Give Away Request</h2>
         </div>
 
         <div class="status-tabs">
@@ -157,7 +156,7 @@
                 </tr>
             </thead>
             <tbody>
-            <?php if (isset($data['accepted_giveaway']) && is_array($data['accepted_giveaway'])): ?>
+            <?php if (isset($data['accepted_giveaway']) && is_array($data['accepted_giveaway']) && !empty($data['accepted_giveaway'])): ?>
               <?php foreach ($data['accepted_giveaway'] as $giveaway): ?>
                 <tr data-order='<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8') ?>'>                  
                   <td><?= $giveaway->customer_id ?></td>
@@ -167,13 +166,13 @@
                   <td><?= $giveaway->address ?></td>
                   <td><span class="status-badge accepted">Accepted</span></td>
                   <td>
-                    <button class="view-btn" onclick="openCompletedGiveAwayPopup(<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8')?>)">View/Update</button>
+                    <button class="view-btn" onclick="openCompletedGiveAwayPopup(<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8')?>)"><img src="<?= ROOT ?>/assets/images/edit-btn.svg" alt=""></button>
                   </td>
                 </tr>
               <?php endforeach; ?>
             <?php else: ?>
               <tr>
-                <td colspan="7">No give away requests found</td>
+                <td colspan="9">No give away requests found</td>
               </tr>
             <?php endif; ?>
             </tbody>
@@ -194,7 +193,7 @@
                 </tr>
             </thead>
             <tbody>
-            <?php if (isset($data['rejected_giveaway']) && is_array($data['rejected_giveaway'])): ?>
+            <?php if (isset($data['rejected_giveaway']) && is_array($data['rejected_giveaway']) && !empty($data['rejected_giveaway'])): ?>
               <?php foreach ($data['rejected_giveaway'] as $giveaway): ?>
                 <tr data-order='<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8') ?>'>                  
                   <td><?= $giveaway->customer_id ?></td>
@@ -204,13 +203,13 @@
                   <td><?= $giveaway->address ?></td>
                   <td><span class="status-badge accepted">Rejected</span></td>
                   <td>
-                    <button class="view-btn" onclick="openCompletedGiveAwayPopup(<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8')?>)">View/Update</button>
+                    <button class="view-btn" onclick="openCompletedGiveAwayPopup(<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8')?>)"><img src="<?= ROOT ?>/assets/images/edit-btn.svg" alt=""></button>
                   </td>
                 </tr>
               <?php endforeach; ?>
             <?php else: ?>
               <tr>
-                <td colspan="7">No give away requests found</td>
+                <td colspan="9">No give away requests found</td>
               </tr>
             <?php endif; ?>
             </tbody>

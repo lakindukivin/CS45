@@ -124,12 +124,12 @@
       <img src="<?=ROOT?>/assets/images/Waste360.png" alt="logo" />
       <h1>Waste360</h1>  
       </div> 
-      <h1 class="logo">Completed Returns</h1>
+      <h1 class="logo">Completed Return Requests</h1>
       <nav class="nav">
         <ul>
           <li><a href="#"><img src="<?=ROOT?>/assets/images/notifications.svg"></a></li>
           <li><a href="<?=ROOT?>/profile">Profile</a></li>
-          <li><a href="#">Logout</a></li>
+          <li><a href="<?=ROOT?>/logout">Logout</a></li>
         </ul>
       </nav>
     </header>
@@ -137,7 +137,6 @@
     <div class="box">
       <div class="container">
         <div class="header">
-          <h2>Completed Return Requests</h2>
           <button class="add-button">
             <a href="<?=ROOT?>/Returns">View Pending Returns</a>
           </button>
@@ -173,13 +172,13 @@
                   <td><?= $return->date_completed ?></td>
                   <td><span class="status-badge accepted">Accepted</span></td>
                   <td>
-                    <button class="view-btn" data-id="<?= $return->return_id ?>">View Details</button>
+                    <button class="view-btn" data-id="<?= $return->return_id ?>"><img src="<?= ROOT ?>/assets/images/edit-btn.svg" alt=""></button>
                   </td>
                 </tr>
               <?php endforeach; ?>
             <?php else: ?>
                 <tr>
-                    <td colspan="9">No completed return requests found</td>
+                    <td colspan="9">No accepted return requests found</td>
                 </tr>
             <?php endif; ?>
             </tbody>
@@ -209,13 +208,13 @@
                   <td><?= $return->date_completed ?></td>
                   <td><span class="status-badge returned">Returned</span></td>
                   <td>
-                    <button class="view-btn" data-id="<?= $return->return_id ?>">View Details</button>
+                    <button class="view-btn" data-id="<?= $return->return_id ?>"><img src="<?= ROOT ?>/assets/images/edit-btn.svg" alt=""></button>
                   </td>
                 </tr>
               <?php endforeach; ?>
             <?php else: ?>
                 <tr>
-                    <td colspan="9">No completed return requests found</td>
+                    <td colspan="9">No returned requests found</td>
                 </tr>
             <?php endif; ?>
             </tbody>
@@ -245,13 +244,13 @@
                   <td><?= $return->date_completed ?></td>
                   <td><span class="status-badge rejected">Rejected</span></td>
                   <td>
-                    <button class="view-btn" data-id="<?= $return->return_id ?>">View Details</button>
+                    <button class="view-btn" data-id="<?= $return->return_id ?>"><img src="<?= ROOT ?>/assets/images/edit-btn.svg" alt=""></button>
                   </td>
                 </tr>
               <?php endforeach; ?>
             <?php else: ?>
                 <tr>
-                    <td colspan="9">No completed return requests found</td>
+                    <td colspan="9">No rejected return requests found</td>
                 </tr>
             <?php endif; ?>
             </tbody>

@@ -102,19 +102,18 @@
         <img src="<?=ROOT?>/assets/images/Waste360.png" alt="logo" />
         <h1>Waste360</h1>
       </div>
-      <h1 class="logo"></h1>
+      <h1 class="logo">Completed Orders</h1>
       <nav class="nav">
         <ul>
           <li><a href="#"><img src="<?=ROOT?>/assets/images/notifications.svg"></a></li>
           <li><a href="<?=ROOT?>/profile">Profile</a></li>
-          <li><a href="#">Logout</a></li>
+          <li><a href="<?=ROOT?>/logout">Logout</a></li>
         </ul>
       </nav>
     </header>
     <div class="box">
       <div class="container">
         <div class="header">
-          <h2>Completed Orders</h2>
           <button class="add-button">
             <a href="<?=ROOT?>/ManageOrders">View Pending Orders</a>
           </button>
@@ -156,7 +155,7 @@
                   <td><?= date('Y-m-d', strtotime($order->orderDate)) ?></td>
                   <td><span class="status-badge accepted">Accepted</span></td>
                   <td>
-                    <button class="view-btn" data-id="<?= $order->order_id ?>">View Details</button>
+                    <button class="view-btn" data-id="<?= $order->order_id ?>"><img src="<?= ROOT ?>/assets/images/edit-btn.svg" alt=""></button>
                   </td>
                 </tr>
                 <?php endforeach; ?>
@@ -196,7 +195,7 @@
                   <td><?= date('Y-m-d', strtotime($order->orderDate)) ?></td>
                   <td><span class="status-badge processing">Processing</span></td>
                   <td>
-                    <button class="view-btn" data-id="<?= $order->order_id ?>">View Details</button>
+                    <button class="view-btn" data-id="<?= $order->order_id ?>"><img src="<?= ROOT ?>/assets/images/edit-btn.svg" alt=""></button>
                   </td>
                 </tr>
                 <?php endforeach; ?>
@@ -236,7 +235,7 @@
                   <td><?= date('Y-m-d', strtotime($order->orderDate)) ?></td>
                   <td><span class="status-badge shipped">Shipped</span></td>
                   <td>
-                    <button class="view-btn" data-id="<?= $order->order_id ?>">View Details</button>
+                    <button class="view-btn" data-id="<?= $order->order_id ?>"><img src="<?= ROOT ?>/assets/images/edit-btn.svg" alt=""></button>
                   </td>
                 </tr>
                 <?php endforeach; ?>
@@ -276,7 +275,7 @@
                   <td><?= date('Y-m-d', strtotime($order->orderDate)) ?></td>
                   <td><span class="status-badge delivered">Delivered</span></td>
                   <td>
-                    <button class="view-btn" data-id="<?= $order->order_id ?>">View Details</button>
+                    <button class="view-btn" data-id="<?= $order->order_id ?>"><img src="<?= ROOT ?>/assets/images/edit-btn.svg" alt=""></button>
                   </td>
                 </tr>
                 <?php endforeach; ?>
@@ -316,7 +315,7 @@
                   <td><?= date('Y-m-d', strtotime($order->orderDate)) ?></td>
                   <td><span class="status-badge rejected">Rejected</span></td>
                   <td>
-                    <button class="view-btn" data-id="<?= $order->order_id ?>">View Details</button>
+                    <button class="view-btn" data-id="<?= $order->order_id ?>"><img src="<?= ROOT ?>/assets/images/edit-btn.svg" alt=""></button>
                   </td>
                 </tr>
                 <?php endforeach; ?>
