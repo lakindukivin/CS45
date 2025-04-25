@@ -63,7 +63,7 @@
                 </div>
             <nav class="nav">
                 <ul>
-                    <li><a href="<?= ROOT ?>/staffprofile">Profile</a></li>
+                    <li><a href="<?= ROOT ?>/CSmanagerProfile">Profile</a></li>
                     <li><a href="<?= ROOT ?>/logout">Logout</a></li>
                 </ul>
             </nav>
