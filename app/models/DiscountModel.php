@@ -10,9 +10,9 @@ class DiscountModel
     public function getDiscountWithProduct($limit, $offset)
     {
         // Fixed SQL query with proper table aliases and selected columns
-        $query = "SELECT d.discount_id, p.productName, d.discount_percentage, d.start_date, d.end_date,d.status 
+        $query = "SELECT d.discount_id, p.product_id, p.productName, d.discount_percentage, d.start_date, d.end_date, d.status 
                  FROM discount d 
-                 JOIN product p ON d.product_id = p.product_id order by discount_id  limit $limit offset $offset";
+                 JOIN product p ON d.product_id = p.product_id order by discount_id limit $limit offset $offset";
         return $this->query($query);
     }
 
@@ -158,6 +158,19 @@ class DiscountModel
             return false;
         }
 
+    }
+
+    // New method to automatically update expired discounts
+    public function updateExpiredDiscounts()
+    {
+        try {
+            $query = 'UPDATE discount SET status = 0 WHERE end_date < CURDATE() AND status = 1';
+            $this->query($query);
+            return true;
+        } catch (Exception $e) {
+            error_log("Error updating expired discounts: " . $e->getMessage());
+            return false;
+        }
     }
 
 }

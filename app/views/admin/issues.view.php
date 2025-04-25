@@ -196,7 +196,6 @@
                                     placeholder="Document actions taken"></textarea>
                             </div>
                             <button type="submit" class="action-btn">Save & Update</button>
-                            <button type="button" class="cancel-btn" onclick="closeEditModal()">Cancel</button>
                         </form>
                     </div>
                 </div>
@@ -221,6 +220,7 @@
         </div>
     </main>
     <script src="<?= ROOT ?>/assets/js/sidebar.js"></script>
+    <script src="<?= ROOT ?>/assets/js/formValidation.js"></script>
     <script src="<?= ROOT ?>/assets/js/admin/issues.js"></script>
 </body>
 

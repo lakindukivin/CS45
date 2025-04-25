@@ -9,10 +9,12 @@ class Products
     use Controller;
 
     private $productModel;
+    private $productHasBagSizesModel;
 
     public function __construct()
     {
         $this->productModel = new ProductModel();
+        $this->productHasBagSizesModel = new ProductHasBagSizesModel();
     }
 
 
@@ -48,12 +50,19 @@ class Products
             $totalProducts = $this->productModel->getProductsCount();
         }
         $totalPages = ceil($totalProducts / $limit);
+        $allProducts = $this->productModel->getAllProducts();
+        $productHasBagSizes = $this->productHasBagSizesModel->getAllProductHasBagSizes();
+
 
         $this->view('salesManager/products', [
             'products' => $products,
             'currentPage' => $page,
             'totalPages' => $totalPages,
             'search' => $search,
+            'allProducts' => $allProducts,
+            'productHasBagSizes' => $productHasBagSizes,
+           
+
         ]);
 
 
@@ -92,7 +101,7 @@ class Products
                 'productName' => $_POST['productName'],
                 'productImage' => $imagePath,
                 'productDescription' => $_POST['description'],
-                'productStatus' => 1
+                'productStatus' => 0
             ];
 
             if ($this->productModel->addNewProduct($data)) {

@@ -162,8 +162,6 @@ function setupCharLimit(input, maxLength) {
   });
 }
 
-// ...existing code...
-
 // Function to validate date format (YYYY-MM-DD)
 function validateDateFormat(input) {
   if (input.value.trim() === '') return true; // Required handled separately
@@ -191,25 +189,25 @@ function validateDateOrder(startInput, endInput) {
   return true;
 }
 
-// Special handling for date fields (real-time validation)
-const startInput = form.querySelector(
-  '[name="startDate"], [name="editStartDate"]'
-);
-const endInput = form.querySelector('[name="endDate"], [name="editEndDate"]');
-if (startInput && endInput) {
-  function validateDatesRealtime() {
-    validateDateFormat(startInput);
-    validateDateFormat(endInput);
-    validateDateOrder(startInput, endInput);
-  }
-  startInput.addEventListener('input', validateDatesRealtime);
-  endInput.addEventListener('input', validateDatesRealtime);
-}
-
 // Function to set up form validation
 function setupFormValidation(formId, validations) {
   const form = document.getElementById(formId);
   if (!form) return;
+
+  // Special handling for date fields (real-time validation)
+  const startInput = form.querySelector(
+    '[name="startDate"], [name="editStartDate"]'
+  );
+  const endInput = form.querySelector('[name="endDate"], [name="editEndDate"]');
+  if (startInput && endInput) {
+    function validateDatesRealtime() {
+      validateDateFormat(startInput);
+      validateDateFormat(endInput);
+      validateDateOrder(startInput, endInput);
+    }
+    startInput.addEventListener('input', validateDatesRealtime);
+    endInput.addEventListener('input', validateDatesRealtime);
+  }
   // Add CSS for error styling and character counters
   const style = document.createElement('style');
   style.textContent = `
@@ -257,7 +255,6 @@ function setupFormValidation(formId, validations) {
         }
       }
       // Apply each validation rule
-      // ...existing code...
       for (const rule of rules) {
         let ruleIsValid = true;
         switch (rule.type) {
@@ -289,13 +286,15 @@ function setupFormValidation(formId, validations) {
             const relatedInput = form.querySelector(`[name="${rule.related}"]`);
             ruleIsValid = validateDateOrder(relatedInput, input);
             break;
+          case 'custom':
+            ruleIsValid = rule.validate(input);
+            break;
         }
         if (!ruleIsValid) {
           isValid = false;
           break;
         }
       }
-      // ...existing code...
     }
     // Prevent form submission if validation fails
     if (!isValid) {
