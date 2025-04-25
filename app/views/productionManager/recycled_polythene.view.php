@@ -77,6 +77,7 @@
     </header>
 
     <div class="container">
+      <div class="form-container">
       <form action="<?=ROOT?>/RecycledPolythene/updateAmount" method="POST" class="form-card">
         <h2>Recycled Polythene Details</h2>
 
@@ -116,6 +117,7 @@
         <button type="submit" class="submit-btn">Save</button>
       </form>
       <div> <button type="view" class="add-button" ><a href="<?=ROOT?>/PolytheneAmount">View Polythene Amounts</a> </button></div>
+    </div>
     </div>
     </div>
     <script src="<?= ROOT ?>/assets/js/productionManager/sidebar.js"></script>
