@@ -48,6 +48,38 @@
       z-index: 1500;
       display: none;
     }
+
+    /* Pagination styles */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+    }
+    
+    .pagination a, .pagination span {
+      display: inline-block;
+      padding: 8px 12px;
+      margin: 0 4px;
+      border: 1px solid #ddd;
+      color: #333;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+    
+    .pagination a:hover {
+      background-color: #f5f5f5;
+    }
+    
+    .pagination .active {
+      background-color: #4CAF50;
+      color: white;
+      border: 1px solid #4CAF50;
+    }
+    
+    .pagination .disabled {
+      color: #aaa;
+      pointer-events: none;
+    }
   </style>
 </head>
 
@@ -137,6 +169,27 @@
     <div class="box">
       <div class="container">
         <div class="header">
+           <!-- Filter Form -->
+        <div class="filter-container">
+          <form action="" method="get" class="filter-form" id="filterForm">
+            <input type="hidden" name="tab" id="currentTab" value="<?= $data['activeTab'] ?? 'accepted' ?>">
+            
+            <div class="filter-input">
+              <label for="filter_name">Customer Name:</label>
+              <input type="text" id="filter_name" name="filter_name" value="<?= htmlspecialchars($data['filters']['name'] ?? '') ?>" placeholder="Filter by name">
+            </div>
+            
+            <div class="filter-input">
+              <label for="filter_date">Request Date:</label>
+              <input type="date" id="filter_date" name="filter_date" value="<?= htmlspecialchars($data['filters']['date'] ?? '') ?>">
+            </div>
+            
+            <div class="filter-actions">
+              <button type="submit" class="filter-btn">Apply Filters</button>
+              <a href="?tab=<?= $data['activeTab'] ?? 'accepted' ?>" class="reset-filter-btn">Reset</a>
+            </div>
+          </form>
+        </div>
           <button class="add-button">
             <a href="<?=ROOT?>/Returns">View Pending Returns</a>
           </button>
@@ -153,10 +206,8 @@
         <table>
             <thead>
                 <tr>
-                    <th>Return ID</th>
-                    <th>Order ID</th>
-                    <th>Product ID</th>
-                    <th>Customer ID</th>
+                    <th>Customer Name</th>
+                    <th>Product Name</th>
                     <th>Date Completed</th>
                     <th>Status</th>
                     <th>Action</th>
@@ -165,10 +216,9 @@
             <tbody>
             <?php if(isset($data['accepted_returns']) && is_array($data['accepted_returns']) && !empty($data['accepted_returns'])): ?>
               <?php foreach ($data['accepted_returns'] as $return) : ?>
-                <tr data-order='<?= htmlspecialchars(json_encode($return), ENT_QUOTES, 'UTF-8') ?>'>                  <td><?= $return->return_id ?></td>
-                  <td><?= $return->order_id ?></td>
-                  <td><?= $return->product_id ?></td>
-                  <td><?= $return->customer_id ?></td>
+                <tr data-order='<?= htmlspecialchars(json_encode($return), ENT_QUOTES, 'UTF-8') ?>'>                  
+                  <td><?= $return->customerName ?></td>
+                  <td><?= $return->productName ?></td>
                   <td><?= $return->date_completed ?></td>
                   <td><span class="status-badge accepted">Accepted</span></td>
                   <td>
@@ -183,16 +233,25 @@
             <?php endif; ?>
             </tbody>
         </table>
+          <!-- Accepted Pagination Controls -->
+          <div class="pagination">
+                <?php if (isset($data['totalAcceptedPages']) && $data['totalAcceptedPages'] > 1): ?>
+                    <?php for ($i = 1; $i <= $data['totalAcceptedPages']; $i++): ?>
+                        <a href="?tab=accepted&page=<?= $i ?><?= !empty($data['filters']['name']) ? '&filter_name='.urlencode($data['filters']['name']) : '' ?><?= !empty($data['filters']['date']) ? '&filter_date='.urlencode($data['filters']['date']) : '' ?>"
+                            class="<?= (isset($data['currentPage']) && $data['currentPage'] == $i && (!isset($data['activeTab']) || $data['activeTab'] == 'accepted')) ? 'active' : '' ?>">
+                            <?= $i ?>
+                        </a>
+                    <?php endfor; ?>
+                <?php endif; ?>
+        </div>
       </div>
 
       <div class="tab-content" id="returned-orders">
       <table>
             <thead>
                 <tr>
-                    <th>Return ID</th>
-                    <th>Order ID</th>
-                    <th>Product ID</th>
-                    <th>Customer ID</th>
+                    <th>Product Name</th>
+                    <th>Customer Name</th>
                     <th>Date Completed</th>
                     <th>Status</th>
                     <th>Action</th>
@@ -201,10 +260,9 @@
             <tbody>
             <?php if(isset($data['returned_orders']) && is_array($data['returned_orders']) && !empty($data['returned_orders'])): ?>
               <?php foreach ($data['returned_orders'] as $return) : ?>
-                <tr data-order='<?= htmlspecialchars(json_encode($return), ENT_QUOTES, 'UTF-8') ?>'>                  <td><?= $return->return_id ?></td>
-                  <td><?= $return->order_id ?></td>
-                  <td><?= $return->product_id ?></td>
-                  <td><?= $return->customer_id ?></td>
+                <tr data-order='<?= htmlspecialchars(json_encode($return), ENT_QUOTES, 'UTF-8') ?>'>                 
+                  <td><?= $return->customerName ?></td>
+                  <td><?= $return->productName ?></td>
                   <td><?= $return->date_completed ?></td>
                   <td><span class="status-badge returned">Returned</span></td>
                   <td>
@@ -219,16 +277,26 @@
             <?php endif; ?>
             </tbody>
         </table>
+        <!-- Returned Pagination Controls -->
+        <div class="pagination">
+                <?php if (isset($data['totalReturnedPages']) && $data['totalReturnedPages'] > 1): ?>
+                    <?php for ($i = 1; $i <= $data['totalReturnedPages']; $i++): ?>
+                        <a href="?tab=returned&page=<?= $i ?><?= !empty($data['filters']['name']) ? '&filter_name='.urlencode($data['filters']['name']) : '' ?><?= !empty($data['filters']['date']) ? '&filter_date='.urlencode($data['filters']['date']) : '' ?>"
+                            class="<?= (isset($data['currentPage']) && $data['currentPage'] == $i && (!isset($data['activeTab']) || $data['activeTab'] == 'returned')) ? 'active' : '' ?>">
+                            <?= $i ?>
+                        </a>
+                    <?php endfor; ?>
+                <?php endif; ?>
+        </div>       
       </div>
-
+        
+       
       <div class="tab-content" id="rejected-orders">
       <table>
             <thead>
                 <tr>
-                    <th>Return ID</th>
-                    <th>Order ID</th>
-                    <th>Product ID</th>
-                    <th>Customer ID</th>
+                    <th>Customer Name</th>
+                    <th>Product Name</th>
                     <th>Date Completed</th>
                     <th>Status</th>
                     <th>Action</th>
@@ -237,10 +305,9 @@
             <tbody>
             <?php if(isset($data['rejected_returns']) && is_array($data['rejected_returns']) && !empty($data['rejected_returns'])): ?>
               <?php foreach ($data['rejected_returns'] as $return) : ?>
-                <tr data-order='<?= htmlspecialchars(json_encode($return), ENT_QUOTES, 'UTF-8') ?>'>                  <td><?= $return->return_id ?></td>
-                  <td><?= $return->order_id ?></td>
-                  <td><?= $return->product_id ?></td>
-                  <td><?= $return->customer_id ?></td>
+                <tr data-order='<?= htmlspecialchars(json_encode($return), ENT_QUOTES, 'UTF-8') ?>'>                  
+                  <td><?= $return->customerName ?></td>
+                  <td><?= $return->productName ?></td>
                   <td><?= $return->date_completed ?></td>
                   <td><span class="status-badge rejected">Rejected</span></td>
                   <td>
@@ -255,7 +322,17 @@
             <?php endif; ?>
             </tbody>
         </table>
-      </div>
+        <!-- Rejected Pagination Controls -->
+        <div class="pagination">
+                <?php if (isset($data['totalRejectedPages']) && $data['totalRejectedPages'] > 1): ?>
+                    <?php for ($i = 1; $i <= $data['totalRejectedPages']; $i++): ?>
+                        <a href="?tab=rejected&page=<?= $i ?><?= !empty($data['filters']['name']) ? '&filter_name='.urlencode($data['filters']['name']) : '' ?><?= !empty($data['filters']['date']) ? '&filter_date='.urlencode($data['filters']['date']) : '' ?>"
+                            class="<?= (isset($data['currentPage']) && $data['currentPage'] == $i && (!isset($data['activeTab']) || $data['activeTab'] == 'rejected')) ? 'active' : '' ?>">
+                            <?= $i ?>
+                        </a>
+                    <?php endfor; ?>
+                <?php endif; ?>
+
     </div>
   </div>
 
@@ -265,21 +342,49 @@
         <span class="close">&times;</span>
         <h2>Order Details</h2>
         <div class="popup-details">
-          <div class="detail-row">
-            <span class="label">Return ID:</span>
-            <span class="value" id="modal-return-id"></span>
+          <div class="">
+            <span class="label"></span>
+            <span hidden class="value" id="modal-return-id"></span>
+          </div>
+          <div class="">
+            <span class="label"></span>
+            <span hidden class="value" id="modal-order-id"></span>
+          </div>
+          <div class="">
+            <span class="label"></span>
+            <span hidden class="value" id="modal-product"></span>
+          </div>
+          <div class="">
+            <span class="label"></span>
+            <span hidden class="value" id="modal-customer"></span>
           </div>
           <div class="detail-row">
-            <span class="label">Order ID:</span>
-            <span class="value" id="modal-order-id"></span>
+            <span class="label">Customer Name:</span>
+            <span class="value" id="modal-customer-name"></span>
           </div>
           <div class="detail-row">
-            <span class="label">Product ID:</span>
-            <span class="value" id="modal-product"></span>
+            <span class="label">Product Name:</span>
+            <span class="value" id="modal-product-name"></span>
           </div>
           <div class="detail-row">
-            <span class="label">Customer ID:</span>
-            <span class="value" id="modal-customer"></span>
+            <span class="label">Bag Size:</span>
+            <span class="value" id="modal-bag-size"></span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Pack Size:</span>
+            <span class="value" id="modal-pack-size"></span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Quantity:</span>
+            <span class="value" id="modal-quantity"></span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Total:</span>
+            <span class="value" id="modal-total"></span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Address:</span>
+            <span class="value" id="modal-address"></span>
           </div>
           <div class="detail-row">
             <span class="label">Return Details:</span>
@@ -341,8 +446,59 @@
 
   <script>
   const ROOT = "<?=ROOT?>";
+  
+  // Update the current tab value in the filter form when tabs are clicked
+  document.addEventListener('DOMContentLoaded', function() {
+    const tabButtons = document.querySelectorAll('.status-tab');
+    const currentTabInput = document.getElementById('currentTab');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    // Function to activate a tab
+    function activateTab(tabName) {
+      // Remove active class from all tabs and contents
+      tabButtons.forEach(t => t.classList.remove('active'));
+      tabContents.forEach(c => c.classList.remove('active'));
+      
+      // Add active class to the selected tab
+      const selectedTab = document.querySelector(`.status-tab[data-status="${tabName}"]`);
+      if (selectedTab) {
+        selectedTab.classList.add('active');
+        
+        // Find and show the corresponding content
+        const tabContentId = tabName === 'returned' ? 'returned-orders' : `${tabName}-orders`;
+        const tabContent = document.getElementById(tabContentId);
+        if (tabContent) {
+          tabContent.classList.add('active');
+        }
+        
+        // Update hidden input value
+        if(currentTabInput) {
+          currentTabInput.value = tabName;
+        }
+      }
+    }
+    
+    // Set tab click handlers
+    tabButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const tabValue = this.getAttribute('data-status');
+        activateTab(tabValue);
+      });
+    });
+    
+    // Set the active tab based on URL or default to "accepted"
+    const urlParams = new URLSearchParams(window.location.search);
+    const tabParam = urlParams.get('tab');
+    
+    if (tabParam) {
+      activateTab(tabParam);
+    } else {
+      activateTab('accepted');
+    }
+  });
   </script>
     <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>  
     <script src="<?=ROOT?>/assets/js/customerServiceManager/returns.js"></script>  
+    
 </body>
 </html>

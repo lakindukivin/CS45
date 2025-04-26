@@ -6,25 +6,45 @@ class CompletedGiveAway {
 
   public function index() {
     $giveAwayModel = new GiveAwayModel();
-    $allCompletedgiveAways =  $giveAwayModel->getAllCompletedGiveAways();
 
-     // Initialize arrays for each status type
-     $data['accepted_giveaway'] = [];
-     $data['rejected_giveaway'] = [];
+     // Get current page and tab from URL
+     $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+     $tab = isset($_GET['tab']) ? $_GET['tab'] : 'accepted';
+     $limit = 3; // items per page
 
-      // Sort giveaways by status
-      if (is_array($allCompletedgiveAways)) {
-        foreach ($allCompletedgiveAways as $giveaway) {
-            switch ($giveaway->status) {
-                case 'accepted':
-                    $data['accepted_giveaway'][] = $giveaway;
-                    break;
-                case 'rejected':
-                    $data['rejected_giveaway'][] = $giveaway;
-                    break;
-            }
-        }
-    }
+      // Get filter parameters
+      $filters = [
+        'name' => isset($_GET['filter_name']) ? $_GET['filter_name'] : '',
+        'date' => isset($_GET['filter_date']) ? $_GET['filter_date'] : '',
+    ];
+
+      // For accepted giveaways
+      $acceptedGiveaways = $giveAwayModel->getAcceptedGiveAways($page, $limit, $filters);
+      $totalAccepted = $giveAwayModel->countAcceptedGiveAways($filters);
+      $totalAcceptedPages = ceil($totalAccepted / $limit);
+
+       // For collected giveaways
+      $collectedGiveaways = $giveAwayModel->getCollectedGiveAways($page, $limit, $filters);
+      $totalCollected = $giveAwayModel->countCollectedGiveAways($filters);
+      $totalCollectedPages = ceil($totalCollected / $limit);
+
+      // For rejected giveaways
+      $rejectedGiveaways = $giveAwayModel->getRejectedGiveAways($page, $limit, $filters);
+      $totalRejected = $giveAwayModel->countRejectedGiveAways($filters);
+      $totalRejectedPages = ceil($totalRejected / $limit);
+
+      // Pass to the view
+      $data = [
+        'accepted_giveaway' => $acceptedGiveaways,
+        'collected_giveaway' => $collectedGiveaways,
+        'rejected_giveaway' => $rejectedGiveaways,
+        'currentPage' => $page,
+        'totalAcceptedPages' => $totalAcceptedPages,
+        'totalCollectedPages' => $totalCollectedPages,
+        'totalRejectedPages' => $totalRejectedPages,
+        'activeTab' => $tab,
+        'filters' => $filters
+    ];
 
      // Check for success/error messages in the URL
      if (isset($_GET['success'])) {

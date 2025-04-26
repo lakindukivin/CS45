@@ -5,21 +5,24 @@ function openReturnUpdatePopup(returnData) {
   document.getElementById('customer_id').value = returnData.customer_id;
   document.getElementById('customerName').value = returnData.customerName;
   document.getElementById('productName').value = returnData.productName;
+  document.getElementById('bagSize').value = returnData.bag_size;
+  document.getElementById('packSize').value = returnData.pack_size;
   document.getElementById('quantity').value = returnData.quantity;
   document.getElementById('total').value = returnData.total;
-  document.getElementById('orderDate').value = returnData.orderDate;
+  document.getElementById('orderDate').value = formatDate(returnData.orderDate);
+  document.getElementById('requestDate').value = formatDate(returnData.date);
   document.getElementById('returnDetails').value = returnData.returnDetails;
   document.getElementById('cus_requirements').value = returnData.cus_requirements;
   document.getElementById('phone').value = returnData.phone;
+  document.getElementById('address').value = returnData.address;
   document.getElementById('return_status').value = returnData.returnStatus;
-
 
   document.getElementById('returnUpdatePopup').style.display = 'flex';
 
   // Add event listener to close the popup
-document.getElementById('closePopupBtn').addEventListener('click', () => {
-  document.getElementById('returnUpdatePopup').style.display = 'none';
-});
+  document.getElementById('closePopupBtn').addEventListener('click', () => {
+    document.getElementById('returnUpdatePopup').style.display = 'none';
+  });
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -82,6 +85,13 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('modal-order-id').textContent = orderData.order_id || 'N/A';
     document.getElementById('modal-product').textContent = orderData.product_id || 'N/A';
     document.getElementById('modal-customer').textContent = orderData.customer_id || 'N/A';
+    document.getElementById('modal-customer-name').textContent = orderData.customerName || 'N/A';
+    document.getElementById('modal-product-name').textContent = orderData.productName || 'N/A';
+    document.getElementById('modal-bag-size').textContent = orderData.bag_size || 'N/A';
+    document.getElementById('modal-pack-size').textContent = orderData.pack_size || 'N/A';
+    document.getElementById('modal-quantity').textContent = orderData.quantity || 'N/A';
+    document.getElementById('modal-total').textContent = orderData.total || 'N/A';
+    document.getElementById('modal-address').textContent = orderData.address || 'N/A';
     document.getElementById('modal-return-details').textContent = orderData.returnDetails || 'N/A';
     document.getElementById('modal-cus-requirements').textContent = orderData.cus_requirements || 'N/A';
     document.getElementById('modal-decision').textContent = orderData.decision_reason || 'N/A';
@@ -304,10 +314,14 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-// Separate function to format dates - defined globally
+// Update the formatDate function to ensure it only shows date part
 function formatDate(dateString) {
   if (!dateString) return 'N/A';
   const date = new Date(dateString);
-  return date.toLocaleDateString();
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric', 
+    month: '2-digit', 
+    day: '2-digit'
+  });
 }
 

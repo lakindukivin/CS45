@@ -114,7 +114,7 @@
     align-items: center;
     gap: 8px;
     text-decoration: none;
-    margin-left: auto;
+    margin-left: 800px;
   }
   
   .add-button:hover {
@@ -139,9 +139,9 @@
   
   .header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-  
-    gap: 1rem;
+    margin-bottom: 20px;
   }
   
   h1 {
@@ -432,73 +432,6 @@ textarea {
   color: #fff;
   border-color: var(--accent-green);
 }
-
-/* Filter form styling */
-.filter-container {
-  margin-bottom: 20px;
-  background-color: #f9f9f9;
-  padding: 5px;
-  border-radius: 5px;
-  border: 1px solid #e0e0e0;
-  min-width: 60%;
-}
-
-.filter-form {
-  display: flex;
-}
-
-.filter-input {
-  flex: 1;
-  min-width: 0px;
-}
-
-.filter-input label {
-  display: block;
-  font-size: 14px;
-}
-
-.filter-input input {
-  padding: 4px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.filter-actions {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.filter-btn {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.filter-btn:hover {
-  background-color: #388e3c;
-}
-
-.reset-filter-btn {
-  background-color: #f1f1f1;
-  color: #333;
-  font-size: 14px;
-  border: 1px solid #ddd;
-  cursor: pointer;
-  padding: 4px 10px;
-  border-radius: 4px;
-  text-decoration: none;
-  transition: background-color 0.3s;
-}
-
-.reset-filter-btn:hover {
-  background-color: #e0e0e0;
-}
-
 
   @keyframes fadeInOut {
     0% {
