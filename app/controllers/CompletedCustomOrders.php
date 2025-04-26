@@ -22,8 +22,16 @@ class CompletedCustomOrders{
   }
     $orderModel = new PendingCustomOrderModel(); // You might want a specific method for this
     $completedOrders = $orderModel->getOrdersByStatus('completed'); // Fetch completed orders
+    $declinedOrders = $orderModel->getOrdersByStatus('declined');
+    $allOrders = array_merge($completedOrders, $declinedOrders);
 
-    $data['completedOrders'] = $completedOrders;
+    usort($allOrders, function($a, $b) {
+      return $b->customOrder_id - $a->customOrder_id; // Newest first (higher IDs first)
+  });
+
+    $data = [
+      'allOrders' => $allOrders 
+  ];
     $this->view('productionManager/completed_custom_orders', $data);
 }
 

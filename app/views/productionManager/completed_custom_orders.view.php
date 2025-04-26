@@ -109,20 +109,22 @@
                 </tr>
             </thead>
             <tbody id="orderTableBody">
-              <?php if (!empty($completedOrders)): ?>
-                <?php foreach ($completedOrders as $order): ?>
-                  <tr>
-                  <td><?= htmlspecialchars($order->customer_id) ?></td>
-                  <td><?= htmlspecialchars($order->company_name) ?></td>
-                  <td><?= htmlspecialchars($order->quantity) ?></td>
-                  <td><?= htmlspecialchars($order->phone) ?></td>
-                  <td><?= htmlspecialchars($order->type) ?></td>
-                  <td><?= htmlspecialchars($order->customOrder_status) ?></td>
-                  </tr>
-                <?php endforeach; ?>
-              <?php else: ?>
-                <tr><td colspan="6">No completed orders found.</td></tr>
-              <?php endif; ?>
+            <?php if (!empty($allOrders)): ?>
+            <?php foreach ($allOrders as $order): ?>
+                <tr>
+                    <td><?= htmlspecialchars($order->customer_id) ?></td>
+                    <td><?= htmlspecialchars($order->company_name) ?></td>
+                    <td><?= htmlspecialchars($order->quantity) ?></td>
+                    <td><?= htmlspecialchars($order->phone) ?></td>
+                    <td><?= htmlspecialchars($order->type) ?></td>
+                    <td class="status-<?= $order->customOrder_status ?>">
+                        <?= ucfirst($order->customOrder_status) ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr><td colspan="7">No orders found.</td></tr>
+        <?php endif; ?>
             </tbody>
         </table>
     </div>
