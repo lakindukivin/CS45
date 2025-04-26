@@ -66,7 +66,7 @@ class CustomOrderViewForm {
                     $orderModel->updateOrderStatus($order_id, 'declined', $reason);
                     $_SESSION['success'] = "Order #$order_id has been declined.";
                 } elseif ($action === 'accept') {
-                    $orderModel->updateOrderStatus($order_id, 'completed');
+                    $orderModel->updateOrderStatus($order_id, 'accepted');
                     $_SESSION['success'] = "Order #$order_id has been accepted and marked as completed.";
                 }
     
