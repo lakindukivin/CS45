@@ -78,7 +78,7 @@
 
     <div class="container">
       <div class="form-container">
-      <form action="<?=ROOT?>/RecycledPolythene/updateAmount" method="POST" class="form-card">
+      <form action="<?=ROOT?>/RecycledPolythene/updateAmount" method="POST" class="form-card" novalidate>
         <h2>Recycled Polythene Details</h2>
 
         <div class="form-group">
@@ -89,7 +89,7 @@
 
         <div class="form-group">
           <label for="message">Message:</label>
-          <textarea id="message" name="message" rows="4" class="form-control" required></textarea>
+          <textarea id="message" name="message" rows="4" class="form-control"></textarea>
           <small class="error-message" id="messageError"></small>
         </div>
 
