@@ -110,6 +110,16 @@
           </div>
 
           <div class="popup-content">
+            <label for="Bag-size" class="">Bag Size:</label>
+            <input type="text" id="bagSize" name="bagSize" class="input-field" readonly>
+          </div>
+
+            <div class="popup-content">
+            <label for="Pack-size" class="">Pack Size:</label>
+            <input type="text" id="packSize" name="packSize" class="input-field" readonly>
+          </div>
+
+          <div class="popup-content">
             <label for="Quantity" class="">Quantity:</label>
             <input type="text" id="quantity" name="quantity" class="input-field" readonly>
           </div>
@@ -240,12 +250,12 @@
             </tbody>
         </table>
 
-        <!-- Pagination Controls -->
+        <!-- Pagination Controls - Fixed to use $data array -->
         <div class="pagination">
-                <?php if (isset($totalPages) && $totalPages > 1): ?>
-                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                        <a href="?<?= isset($search) && $search !== '' ? 'search=' . urlencode($search) . '&' : '' ?>page=<?= $i ?>"
-                            class="<?= (isset($currentPage) && $currentPage == $i) ? 'active' : '' ?>">
+                <?php if (isset($data['totalPages']) && $data['totalPages'] > 1): ?>
+                    <?php for ($i = 1; $i <= $data['totalPages']; $i++): ?>
+                        <a href="?page=<?= $i ?><?= !empty($data['filters']['name']) ? '&filter_name='.urlencode($data['filters']['name']) : '' ?><?= !empty($data['filters']['date']) ? '&filter_date='.urlencode($data['filters']['date']) : '' ?>"
+                            class="<?= (isset($data['currentPage']) && $data['currentPage'] == $i) ? 'active' : '' ?>">
                             <?= $i ?>
                         </a>
                     <?php endfor; ?>

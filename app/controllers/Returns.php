@@ -26,8 +26,16 @@ class Returns {
             ? $returnModel->getFilteredReturns($filters)
             : $returnModel->getAllReturns();
         
+        // Ensure $allPendingReturns is always an array before counting
+        if (!is_array($allPendingReturns)) {
+            $allPendingReturns = [];
+        }
+        
         $totalItems = count($allPendingReturns);
         $totalPages = ceil($totalItems / $limit);
+        
+        // Debug output to check if we have data
+        error_log('Found ' . $totalItems . ' pending returns');
 
         // Ensure current page is valid
         if ($currentPage > $totalPages && $totalPages > 0) {
