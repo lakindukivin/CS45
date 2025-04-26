@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/customerServiceManager/home.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/customerServiceManager/common.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/customerServiceManager/notifications.css">
-    <!-- Add Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <title>Waste360|Dashboard|CSM</title>
 </head>
 
@@ -65,7 +63,7 @@
                 </div>
             <nav class="nav">
                 <ul>
-                    <li><a href="<?= ROOT ?>/profile">Profile</a></li>
+                    <li><a href="<?= ROOT ?>/CSmanagerProfile">Profile</a></li>
                     <li><a href="<?= ROOT ?>/logout">Logout</a></li>
                 </ul>
             </nav>
@@ -130,13 +128,13 @@
                                          data-type="<?= $notification['type'] ?>">
                                         <div class="notification-icon">
                                             <?php if($notification['type'] == 'order'): ?>
-                                                <i class="fas fa-shopping-cart"></i>
+                                                <img src="<?= ROOT ?>/assets/images/manage_order.svg" alt="">
                                             <?php elseif($notification['type'] == 'giveaway'): ?>
-                                                <i class="fas fa-gift"></i>
+                                                <img src="<?= ROOT ?>/assets/images/give_away.svg" alt="">
                                             <?php elseif($notification['type'] == 'review'): ?>
-                                                <i class="fas fa-star"></i>
+                                                <img src="<?= ROOT ?>/assets/images/reviews.svg" alt="">
                                             <?php elseif($notification['type'] == 'return'): ?>
-                                                <i class="fas fa-undo"></i>
+                                                <img src="<?= ROOT ?>/assets/images/returns.svg" alt="">
                                             <?php endif; ?>
                                         </div>
                                         <div class="notification-content">

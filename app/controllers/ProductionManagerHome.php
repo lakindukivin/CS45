@@ -9,9 +9,11 @@ class ProductionManagerHome
     use Controller;
     private $pendingCustomOrderModel;
     private $pelletsRequestsModel;
+    private $polytheneAmount;
     public function __construct() {
         $this->pendingCustomOrderModel = new PendingCustomOrderModel();
         $this->pelletsRequestsModel = new PelletsRequestsModel();
+        $this->polytheneAmount = new PolytheneAmount();
     }
     public function index()
     {
@@ -30,10 +32,15 @@ class ProductionManagerHome
             redirect('login');
         }
 
+         // Get latest polythene amount
+         $latestAmount = $this->polytheneAmount->getLatestAmount();
+         $polytheneAmount = !empty($latestAmount) ? $latestAmount[0]->polythene_amount : 0;
+
         // Fetch new orders
         $data = [
             'pendingCustomOrders' => $this->pendingCustomOrderModel->countPendingOrders(),
-            'pendingPelletsOrders' => $this->pelletsRequestsModel->countPendingOrders()
+            'pendingPelletsOrders' => $this->pelletsRequestsModel->countPendingOrders(),
+            'polytheneAmount' => $polytheneAmount
         ];
 
         $this->view('productionManager/productionManagerHome', $data);
@@ -51,4 +58,13 @@ class ProductionManagerHome
         ]);
         exit;
     }
+
+    //dynamically updates the recycled polythene amount
+    public function getPolytheneAmount() {
+        $latestAmount = $this->polytheneAmount->getLatestAmount();
+        echo json_encode([
+            'amount' => !empty($latestAmount) ? $latestAmount[0]->polythene_amount : 0
+    ]);
+    exit;
+}
 }

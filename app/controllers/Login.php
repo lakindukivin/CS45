@@ -9,6 +9,7 @@ class Login
     const ROLE_CUSTOMER = 5;
     const ROLE_PRODUCTION_MANAGER = 3;
     const ROLE_CS_MANAGER = 4;
+    const ROLE_COLLECTION_AGENT = 6;
 
     public function index($data = [])
     {
@@ -86,6 +87,9 @@ class Login
                 break;
             case self::ROLE_CS_MANAGER:
                 header("Location: csManagerHome");
+                break;
+            case self::ROLE_COLLECTION_AGENT:
+                header("Location: collectionAgentHome");
                 break;
             default:
                 $_SESSION['error'] = "Invalid user role";

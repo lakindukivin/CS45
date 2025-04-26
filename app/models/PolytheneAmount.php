@@ -36,16 +36,15 @@ class PolytheneAmount  {
         return !empty($result);
     }
 
-
+    //fetch the latest amount 
+    public function getLatestAmount() {
+        $query = "SELECT * FROM polytheneamount ORDER BY updated_date DESC LIMIT 1";
+        return $this->query($query);
+    }
     //below methods (have no idea)
 
     public function getAmountByMonth($month) {
         $query = "SELECT * FROM polytheneamount WHERE month = :month";
         return $this->query($query, ['month' => $month]);
-    }
-
-    public function getLatestAmount() {
-        $query = "SELECT * FROM polytheneamount ORDER BY updated_date DESC LIMIT 1";
-        return $this->query($query);
     }
 }

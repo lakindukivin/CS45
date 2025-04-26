@@ -12,39 +12,62 @@ class CompletedOrders
     {
         $orderModel = new ManageOrderModel();
         
-        // Get all completed orders filtered by status
-        $allCompletedOrders = $orderModel->getAllCompletedOrders();
         
-        // Initialize arrays for each status type
-        $data['accepted_orders'] = [];
-        $data['processing_orders'] = [];
-        $data['shipped_orders'] = [];
-        $data['delivered_orders'] = [];
-        $data['rejected_orders'] = [];
-        
-        // Sort orders by status
-        if (is_array($allCompletedOrders)) {
-            foreach ($allCompletedOrders as $order) {
-                switch ($order->status) {
-                    case 'accepted':
-                        $data['accepted_orders'][] = $order;
-                        break;
-                    case 'processing':
-                        $data['processing_orders'][] = $order;
-                        break;
-                    case 'shipped':
-                        $data['shipped_orders'][] = $order;
-                        break;
-                    case 'delivered':
-                        $data['delivered_orders'][] = $order;
-                        break;
-                    case 'rejected':
-                        $data['rejected_orders'][] = $order;
-                        break;
-                }
-            }
-        }
-        
+    // Get current page and tab from URL
+     $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+     $tab = isset($_GET['tab']) ? $_GET['tab'] : 'accepted';
+     $limit = 3; // items per page
+
+      // Get filter parameters
+      $filters = [
+        'name' => isset($_GET['filter_name']) ? $_GET['filter_name'] : '',
+        'date' => isset($_GET['filter_date']) ? $_GET['filter_date'] : '',
+    ];
+
+          // For accepted orders
+        $acceptedOrders = $orderModel->getAcceptedOrders($page, $limit, $filters);
+        $totalAccepted = $orderModel->countAcceptedOrders($filters);
+        $totalAcceptedPages = ceil($totalAccepted / $limit);
+
+        // For processing orders
+        $processingOrders = $orderModel->getProcessingOrders($page, $limit, $filters);
+        $totalProcessing = $orderModel->countProcessingOrders($filters);
+        $totalProcessingPages = ceil($totalProcessing / $limit);
+
+        // For shipped orders
+        $shippedOrders = $orderModel->getShippedOrders($page, $limit, $filters);
+        $totalShipped = $orderModel->countShippedOrders($filters);
+        $totalShippedPages = ceil($totalShipped / $limit);
+
+        // For delivered orders
+        $deliveredOrders = $orderModel->getDeliveredOrders($page, $limit, $filters);
+        $totalDelivered = $orderModel->countDeliveredOrders($filters);
+        $totalDeliveredPages = ceil($totalDelivered / $limit);
+
+        // For rejected orders
+        $rejectedOrders = $orderModel->getRejectedOrders($page, $limit, $filters);
+        $totalRejected = $orderModel->countRejectedOrders($filters);
+        $totalRejectedPages = ceil($totalRejected / $limit);
+
+        // Pass to the view
+        $data = [
+            'accepted_orders' => $acceptedOrders,
+            'processing_orders' => $processingOrders,
+            'shipped_orders' => $shippedOrders,
+            'delivered_orders' => $deliveredOrders,
+            'rejected_orders' => $rejectedOrders,
+            'currentPage' => $page,
+            'totalAcceptedPages' => $totalAcceptedPages,
+            'totalProcessingPages' => $totalProcessingPages,
+            'totalShippedPages' => $totalShippedPages,
+            'totalDeliveredPages' => $totalDeliveredPages,
+            'totalRejectedPages' => $totalRejectedPages,
+            'activeTab' => $tab,
+            'filters' => $filters
+        ];
+
+
+       
         // Check for success/error messages in the URL
         if (isset($_GET['success'])) {
             $data['success'] = $_GET['success'];

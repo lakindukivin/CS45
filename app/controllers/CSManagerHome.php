@@ -32,60 +32,68 @@ class CSManagerHome
         $reviews = $this->model('Review')->countByDate($today);
 
         // Get recent notifications (8 most recent combined from all sources)
-        $recentOrders = $this->model('ManageOrderModel')->getRecentOrders(8);
-        $recentGiveaways = $this->model('GiveAwayModel')->getRecentGiveaways(8);
-        $recentReviews = $this->model('Review')->getRecentReviews(8);
-        $recentReturns = $this->model('ReturnModel')->getRecentReturns(8);
+        $recentOrders = $this->model('ManageOrderModel')->getRecentOrders(8) ?: [];
+        $recentGiveaways = $this->model('GiveAwayModel')->getRecentGiveaways(8) ?: [];
+        $recentReviews = $this->model('Review')->getRecentReviews(8) ?: [];
+        $recentReturns = $this->model('ReturnModel')->getRecentReturns(8) ?: [];
 
         // Combine all notifications
         $allNotifications = [];
         
         // Process orders - update message to show these are pending orders
-        foreach($recentOrders as $order) {
-            $allNotifications[] = [
-                'type' => 'order',
-                'id' => $order->order_id,
-                'date' => $order->orderDate,
-                'timestamp' => strtotime($order->orderDate),
-                'message' => "Pending order from {$order->customerName}",
-                'status' => $order->orderStatus
-            ];
+        if (is_array($recentOrders) || is_object($recentOrders)) {
+            foreach($recentOrders as $order) {
+                $allNotifications[] = [
+                    'type' => 'order',
+                    'id' => $order->order_id,
+                    'date' => $order->orderDate,
+                    'timestamp' => strtotime($order->orderDate),
+                    'message' => "Pending order from {$order->customerName}",
+                    'status' => $order->orderStatus
+                ];
+            }
         }
         
         // Process giveaways - update message to show these are pending giveaways
-        foreach($recentGiveaways as $giveaway) {
-            $allNotifications[] = [
-                'type' => 'giveaway',
-                'id' => $giveaway->giveaway_id,
-                'date' => $giveaway->request_date,
-                'timestamp' => strtotime($giveaway->request_date),
-                'message' => "Pending giveaway request from {$giveaway->name}",
-                'status' => $giveaway->giveawayStatus
-            ];
+        if (is_array($recentGiveaways) || is_object($recentGiveaways)) {
+            foreach($recentGiveaways as $giveaway) {
+                $allNotifications[] = [
+                    'type' => 'giveaway',
+                    'id' => $giveaway->giveaway_id,
+                    'date' => $giveaway->request_date,
+                    'timestamp' => strtotime($giveaway->request_date),
+                    'message' => "Pending giveaway request from {$giveaway->name}",
+                    'status' => $giveaway->giveawayStatus
+                ];
+            }
         }
         
         // Process reviews - update message to show these are pending reviews
-        foreach($recentReviews as $review) {
-            $allNotifications[] = [
-                'type' => 'review',
-                'id' => $review->review_id,
-                'date' => $review->date,
-                'timestamp' => strtotime($review->date),
-                'message' => "Pending review from {$review->name}",
-                'status' => $review->status
-            ];
+        if (is_array($recentReviews) || is_object($recentReviews)) {
+            foreach($recentReviews as $review) {
+                $allNotifications[] = [
+                    'type' => 'review',
+                    'id' => $review->review_id,
+                    'date' => $review->date,
+                    'timestamp' => strtotime($review->date),
+                    'message' => "Pending review from {$review->name}",
+                    'status' => $review->status
+                ];
+            }
         }
         
         // Process returns - update message to show these are pending returns
-        foreach($recentReturns as $return) {
-            $allNotifications[] = [
-                'type' => 'return',
-                'id' => $return->return_id, 
-                'date' => $return->date,
-                'timestamp' => strtotime($return->date),
-                'message' => "Pending return request from {$return->name}",
-                'status' => $return->returnStatus
-            ];
+        if (is_array($recentReturns) || is_object($recentReturns)) {
+            foreach($recentReturns as $return) {
+                $allNotifications[] = [
+                    'type' => 'return',
+                    'id' => $return->return_id, 
+                    'date' => $return->date,
+                    'timestamp' => strtotime($return->date),
+                    'message' => "Pending return request from {$return->name}",
+                    'status' => $return->returnStatus
+                ];
+            }
         }
         
         // Sort by timestamp (most recent first)
