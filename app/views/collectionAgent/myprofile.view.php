@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/collectionAgent/sidebar.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/collectionAgent/common.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/collectionAgent/myprofile.css">
-    <title>Profile | <?= $profile->role_name ?? 'Customer Service Manager' ?></title>
+    <title>Profile | <?= $profile->role_name ?? 'Collection Agent' ?></title>
 </head>
 
 <body>

@@ -145,6 +145,11 @@
           </div>
 
           <div class="popup-content">
+            <label for="Address">Address:</label>
+            <input type="text" id="address" name="address" class="input-field" readonly>
+          </div>
+
+          <div class="popup-content">
             <label for="Return-Details" class="">Return Details:</label>
             <input type="text" id="returnDetails" name="returnDetails" class="input-field" readonly>
           </div>

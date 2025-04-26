@@ -5,37 +5,78 @@ class CompletedReturns {
     use Controller;
     
     public function index() {
-        // Existing code remains unchanged...
+
         $completedReturnModel = new ReturnModel();
-        $allCompletedReturns = $completedReturnModel->getAllCompletedReturns();
+       // $allCompletedReturns = $completedReturnModel->getAllCompletedReturns();
 
-        // Initialize arrays for each status type
-        $data['accepted_returns'] = [];
-        $data['returned_orders'] = [];
-        $data['rejected_returns'] = [];
+        // Get current page and tab from URL
+     $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+     $tab = isset($_GET['tab']) ? $_GET['tab'] : 'accepted';
+     $limit = 3; // items per page
 
-        // Sort orders by status
-        if (is_array($allCompletedReturns)) {
-            foreach ($allCompletedReturns as $order) {
-                switch ($order->status) {
-                    case 'accepted':
-                        $data['accepted_returns'][] = $order;
-                        break;
-                    case 'processing':
-                        $data['processing_returns'][] = $order;
-                        break;
-                    case 'shipped':
-                        $data['shipped_returns'][] = $order;
-                        break;
-                    case 'returned':
-                        $data['returned_orders'][] = $order;
-                        break;
-                    case 'rejected':
-                        $data['rejected_returns'][] = $order;
-                        break;
-                }
-            }
-        }
+      // Get filter parameters
+      $filters = [
+        'name' => isset($_GET['filter_name']) ? $_GET['filter_name'] : '',
+        'date' => isset($_GET['filter_date']) ? $_GET['filter_date'] : '',
+    ];
+
+    // For accepted returns
+        $acceptedReturns = $completedReturnModel->getAcceptedReturns($page, $limit, $filters);
+        $totalAccepted = $completedReturnModel->countAcceptedReturns($filters);
+        $totalAcceptedPages = ceil($totalAccepted / $limit);
+
+        // For mark_as_returned returns
+        $returnedOrders = $completedReturnModel->getReturnedOrders($page, $limit, $filters);
+        $totalReturned = $completedReturnModel->countReturnedOrders($filters);
+        $totalReturnedPages = ceil($totalReturned / $limit);
+
+        // For rejected returns
+        $rejectedReturns = $completedReturnModel->getRejectedReturns($page, $limit, $filters);
+        $totalRejected = $completedReturnModel->countRejectedReturns($filters);
+        $totalRejectedPages = ceil($totalRejected / $limit);
+
+          // Pass to the view
+        $data = [
+            'accepted_returns' => $acceptedReturns,
+            'returned_orders' => $returnedOrders,
+            'rejected_returns' => $rejectedReturns,
+            'currentPage' => $page,
+            'totalAcceptedPages' => $totalAcceptedPages,
+            'totalReturnedPages' => $totalReturnedPages,
+            'totalRejectedPages' => $totalRejectedPages,
+            'activeTab' => $tab,
+            'filters' => $filters, // Pass filters to the view
+
+        ];
+
+        
+        // // Initialize arrays for each status type
+        // $data['accepted_returns'] = [];
+        // $data['returned_orders'] = [];
+        // $data['rejected_returns'] = [];
+
+        // // Sort orders by status
+        // if (is_array($allCompletedReturns)) {
+        //     foreach ($allCompletedReturns as $order) {
+        //         switch ($order->status) {
+        //             case 'accepted':
+        //                 $data['accepted_returns'][] = $order;
+        //                 break;
+        //             case 'processing':
+        //                 $data['processing_returns'][] = $order;
+        //                 break;
+        //             case 'shipped':
+        //                 $data['shipped_returns'][] = $order;
+        //                 break;
+        //             case 'returned':
+        //                 $data['returned_orders'][] = $order;
+        //                 break;
+        //             case 'rejected':
+        //                 $data['rejected_returns'][] = $order;
+        //                 break;
+        //         }
+        //     }
+        // }
 
         // Check for success/error messages in the URL
         if (isset($_GET['success'])) {
@@ -77,12 +118,15 @@ class CompletedReturns {
                     return;
                 }
 
-                // Update the return order status
+                // First, explicitly update the return_item table status
+                $returnModel->updateReturnStatus($returnId, $newStatus);
+                
+                // Then update the completed_returns table
                 $data = [
                     'return_id' => $returnId,
                     'order_id' => $returnItem->order_id,
                     'product_id' => $returnItem->product_id,
-                    'customer_id' => $returnItem->customer_id, // This should now be properly populated
+                    'customer_id' => $returnItem->customer_id,
                     'status' => $newStatus,
                     'decision_reason' => $returnItem->decision_reason ?? '',
                     'message_to_customer' => $messageToCustomer,

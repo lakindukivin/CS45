@@ -119,7 +119,7 @@
       <nav class="nav">
         <ul>
           <li><a href="#"><img src="<?=ROOT?>/assets/images/notifications.svg"></a></li>
-          <li><a href="<?=ROOT?>/profile">Profile</a></li>
+          <li><a href="<?=ROOT?>/CSManagerProfile">Profile</a></li>
           <li><a href="#">Logout</a></li>
         </ul>
       </nav>
@@ -172,7 +172,7 @@
                 <tr data-order='<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8') ?>'>                  
                   <td><?= $giveaway->name ?></td>
                   <td><?= $giveaway->phone ?></td>
-                  <td><?= $giveaway->request_date ?></td>
+                  <td><?= date('Y-m-d', strtotime($giveaway->request_date)) ?></td>
                   <td><?= $giveaway->address ?></td>
                   <td><span>Accepted</span></td>
                   <td>
@@ -220,7 +220,7 @@
                 <tr data-order='<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8') ?>'>                  
                   <td><?= $giveaway->name ?></td>
                   <td><?= $giveaway->phone ?></td>
-                  <td><?= $giveaway->request_date ?></td>
+                  <td><?= date('Y-m-d', strtotime($giveaway->request_date)) ?></td>
                   <td><?= $giveaway->address ?></td>
                   <td><span>Collected</span></td>
                   <td>
@@ -267,7 +267,7 @@
                 <tr data-order='<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8') ?>'>                  
                   <td><?= $giveaway->name ?></td>
                   <td><?= $giveaway->phone ?></td>
-                  <td><?= $giveaway->request_date ?></td>
+                  <td><?= date('Y-m-d', strtotime($giveaway->request_date)) ?></td>
                   <td><?= $giveaway->address ?></td>
                   <td><span class="status-badge accepted">Rejected</span></td>
                   <td>
