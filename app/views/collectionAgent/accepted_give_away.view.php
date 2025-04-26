@@ -54,14 +54,12 @@
           </div>
 
           <div class="popup-content">
-            <label for="Order-id" class="">Give Away ID:</label>
-            <input type="text" name="giveaway_id" id="giveaway_id" readonly/>
+            <label for="Order-id" class=""></label>
+            <input type="hidden" name="giveaway_id" id="giveaway_id" readonly/>
           </div>
-
-
           <div class="popup-content">
-            <label for="Customer_id" class="">Customer ID: </label>
-            <input type="text" name="customer_id" id="customer_id" readonly/>
+            <label for="Customer_id" class=""></label>
+            <input type="hidden" name="customer_id" id="customer_id" readonly/>
           </div>
 
 
@@ -95,7 +93,7 @@
 
           <div class="popup-content">
             <label for="polytheneAmount">Polythene Amount (kg):</label>
-            <input type="number" name="amount" id="polythene_amount" step="0.01" min="0" required placeholder="Enter amount in kg"/>
+            <input type="number" name="amount" id="polythene_amount" step="0.01" min="10" required placeholder="Enter amount in kg"/>
           </div>
 
           <div>
@@ -154,7 +152,6 @@
         <table>
           <thead>
             <tr>
-              <th>Customer ID</th>
               <th>Name</th>
               <th>Phone</th>
               <th>request_date</th>
@@ -167,7 +164,6 @@
             <?php if (isset($data['accepted_giveaway']) && is_array($data['accepted_giveaway'])): ?>
               <?php foreach ($data['accepted_giveaway'] as $giveaway): ?>
                 <tr data-order='<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8') ?>'>                  
-                  <td><?= $giveaway->customer_id ?></td>
                   <td><?= $giveaway->name ?></td>
                   <td><?= $giveaway->phone ?></td>
                   <td><?= $giveaway->request_date ?></td>

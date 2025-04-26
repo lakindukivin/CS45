@@ -106,7 +106,7 @@
       <nav class="nav">
         <ul>
           <li><a href="#"><img src="<?=ROOT?>/assets/images/notifications.svg"></a></li>
-          <li><a href="<?=ROOT?>/profile">Profile</a></li>
+          <li><a href="<?=ROOT?>/CSmanagerProfile">Profile</a></li>
           <li><a href="<?=ROOT?>/logout">Logout</a></li>
         </ul>
       </nav>
@@ -368,6 +368,14 @@
           <div class="detail-row">
             <span class="label">Product:</span>
             <span class="value" id="modal-product"></span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Bag Size:</span>
+            <span class="value" id="modal-bag-size"></span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Pack Size:</span>
+            <span class="value" id="modal-pack-size"></span>
           </div>
           <div class="detail-row">
             <span class="label">Quantity:</span>

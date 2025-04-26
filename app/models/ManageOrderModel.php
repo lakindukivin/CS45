@@ -157,9 +157,11 @@ class ManageOrderModel {
     public function getPendingOrders($page = 1, $limit = 10, $filters = []) {
         $offset = ($page - 1) * $limit;
 
-        $query = "SELECT o.*, p.productName, c.name as customerName 
+        $query = "SELECT o.*, p.productName, c.name as customerName, b.bag_size, s.pack_size, o.quantity, c.phone, o.total, o.orderDate 
                   FROM orders o 
-                  JOIN product p ON o.product_id = p.product_id 
+                  JOIN product p ON o.product_id = p.product_id
+                  JOIN bag_size b ON o.bag_id = b.bag_id
+                  JOIN pack_size s ON o.pack_id = s.pack_id 
                   JOIN customer c ON o.customer_id = c.customer_id 
                   WHERE o.orderStatus = 'pending'";
 
@@ -184,9 +186,11 @@ class ManageOrderModel {
     public function getAcceptedOrders($page = 1, $limit = 10, $filters = []) {
         $offset = ($page - 1) * $limit;
 
-        $query = "SELECT co.*, p.productName, c.name as customerName , o.quantity, c.phone, o.total, o.orderDate
+        $query = "SELECT co.*, p.productName, c.name as customerName , b.bag_size, s.pack_size, o.quantity, c.phone, o.total, o.orderDate
                   FROM completed_orders co 
-                  JOIN orders o ON co.order_id = o.order_id 
+                  JOIN orders o ON co.order_id = o.order_id
+                  JOIN bag_size b ON o.bag_id = b.bag_id
+                  JOIN pack_size s ON o.pack_id = s.pack_id 
                   JOIN product p ON o.product_id = p.product_id 
                   JOIN customer c ON o.customer_id = c.customer_id 
                   WHERE co.status = 'accepted'";
@@ -212,9 +216,11 @@ class ManageOrderModel {
     public function getProcessingOrders($page = 1, $limit = 10, $filters = []) {
         $offset = ($page - 1) * $limit;
 
-        $query = "SELECT co.*, p.productName, c.name as customerName, o.quantity, c.phone, o.total, o.orderDate 
+        $query = "SELECT co.*, p.productName, c.name as customerName, b.bag_size, s.pack_size, o.quantity, c.phone, o.total, o.orderDate 
                   FROM completed_orders co 
-                  JOIN orders o ON co.order_id = o.order_id 
+                  JOIN orders o ON co.order_id = o.order_id
+                  JOIN bag_size b ON o.bag_id = b.bag_id
+                  JOIN pack_size s ON o.pack_id = s.pack_id 
                   JOIN product p ON o.product_id = p.product_id
                   JOIN customer c ON o.customer_id = c.customer_id 
                   WHERE co.status = 'processing'";
@@ -240,9 +246,11 @@ class ManageOrderModel {
     public function getShippedOrders($page = 1, $limit = 10, $filters = []) {
         $offset = ($page - 1) * $limit;
 
-        $query = "SELECT co.*, p.productName, c.name as customerName, o.quantity, c.phone, o.total, o.orderDate  
+        $query = "SELECT co.*, p.productName, c.name as customerName, b.bag_size, s.pack_size, o.quantity, c.phone, o.total, o.orderDate  
                   FROM completed_orders co 
                   JOIN orders o ON co.order_id = o.order_id
+                  JOIN bag_size b ON o.bag_id = b.bag_id
+                  JOIN pack_size s ON o.pack_id = s.pack_id 
                   JOIN product p ON o.product_id = p.product_id 
                   JOIN customer c ON o.customer_id = c.customer_id 
                   WHERE co.status = 'shipped'";
@@ -268,9 +276,11 @@ class ManageOrderModel {
     public function getDeliveredOrders($page = 1, $limit = 10, $filters = []) {
         $offset = ($page - 1) * $limit;
 
-        $query = "SELECT co.*, p.productName, c.name as customerName, o.quantity, c.phone, o.total, o.orderDate  
+        $query = "SELECT co.*, p.productName, c.name as customerName,b.bag_size, s.pack_size, o.quantity, c.phone, o.total, o.orderDate  
                   FROM completed_orders co 
                   JOIN orders o ON co.order_id = o.order_id 
+                  JOIN bag_size b ON o.bag_id = b.bag_id
+                  JOIN pack_size s ON o.pack_id = s.pack_id 
                   JOIN product p ON o.product_id = p.product_id 
                   JOIN customer c ON o.customer_id = c.customer_id 
                   WHERE co.status = 'delivered'";
@@ -296,9 +306,11 @@ class ManageOrderModel {
     public function getRejectedOrders($page = 1, $limit = 10, $filters = []) {
         $offset = ($page - 1) * $limit;
 
-        $query = "SELECT co.*, p.productName, c.name as customerName, o.quantity, c.phone, o.total, o.orderDate 
+        $query = "SELECT co.*, p.productName, c.name as customerName,b.bag_size, s.pack_size, o.quantity, c.phone, o.total, o.orderDate 
                   FROM completed_orders co 
                   JOIN orders o ON co.order_id = o.order_id 
+                  JOIN bag_size b ON o.bag_id = b.bag_id
+                  JOIN pack_size s ON o.pack_id = s.pack_id 
                   JOIN product p ON o.product_id = p.product_id 
                   JOIN customer c ON o.customer_id = c.customer_id 
                   WHERE co.status = 'rejected'";

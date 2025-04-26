@@ -3,6 +3,8 @@ function openManageOrderUpdatePopup(order) {
   document.getElementById('order_id').value = order.order_id || '';
   document.getElementById('productName').value = order.productName || '';
   document.getElementById('customerName').value = order.customerName || '';
+  document.getElementById('bagSize').value = order.bag_size || '';
+  document.getElementById('packSize').value = order.pack_size || '';
   document.getElementById('quantity').value = order.quantity || '';
   document.getElementById('total').value = order.total || '';
   document.getElementById('deliveryAddress').value = order.deliveryAddress || '';
@@ -49,6 +51,8 @@ document.addEventListener('DOMContentLoaded', function () {
       document.getElementById('modal-order-id').textContent = orderData.order_id;
       document.getElementById('modal-customer').textContent = orderData.customerName;
       document.getElementById('modal-product').textContent = orderData.productName;
+      document.getElementById('modal-bag-size').textContent = orderData.bag_size;
+      document.getElementById('modal-pack-size').textContent = orderData.pack_size;
       document.getElementById('modal-quantity').textContent = orderData.quantity;
       document.getElementById('modal-total').textContent = 'Rs. ' + parseFloat(orderData.total).toFixed(2);
       document.getElementById('modal-date').textContent = formatDate(orderData.orderDate);

@@ -74,6 +74,16 @@
           </div>
 
           <div class="popup-content">
+            <label for="Bag-size" class="">Bag Size:</label>
+            <input type="text" id="bagSize" name="bagSize" class="input-field" readonly>
+          </div>
+
+          <div class="popup-content">
+            <label for="Pack-size" class="">Pack Size:</label>
+            <input type="text" id="packSize" name="packSize" class="input-field" readonly>
+          </div>
+
+          <div class="popup-content">
             <label for="Quantity" class="">Quantity:</label>
             <input type="text" id="quantity" name="quantity" class="input-field" readonly>
           </div>
