@@ -8,23 +8,32 @@ class CompletedOrders
 {
     use Controller;
 
+    private $carbonFootprintModel;
+    private $productModel;
+
+    public function __construct()
+    {
+        $this->carbonFootprintModel = new CarbonFootprintModel();
+        $this->productModel = new ProductModel();
+    }
+
     public function index()
     {
         $orderModel = new ManageOrderModel();
-        
-        
-    // Get current page and tab from URL
-     $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-     $tab = isset($_GET['tab']) ? $_GET['tab'] : 'accepted';
-     $limit = 3; // items per page
 
-      // Get filter parameters
-      $filters = [
-        'name' => isset($_GET['filter_name']) ? $_GET['filter_name'] : '',
-        'date' => isset($_GET['filter_date']) ? $_GET['filter_date'] : '',
-    ];
 
-          // For accepted orders
+        // Get current page and tab from URL
+        $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+        $tab = isset($_GET['tab']) ? $_GET['tab'] : 'accepted';
+        $limit = 3; // items per page
+
+        // Get filter parameters
+        $filters = [
+            'name' => isset($_GET['filter_name']) ? $_GET['filter_name'] : '',
+            'date' => isset($_GET['filter_date']) ? $_GET['filter_date'] : '',
+        ];
+
+        // For accepted orders
         $acceptedOrders = $orderModel->getAcceptedOrders($page, $limit, $filters);
         $totalAccepted = $orderModel->countAcceptedOrders($filters);
         $totalAcceptedPages = ceil($totalAccepted / $limit);
@@ -65,9 +74,6 @@ class CompletedOrders
             'activeTab' => $tab,
             'filters' => $filters
         ];
-
-
-       
         // Check for success/error messages in the URL
         if (isset($_GET['success'])) {
             $data['success'] = $_GET['success'];
@@ -75,11 +81,11 @@ class CompletedOrders
         if (isset($_GET['error'])) {
             $data['error'] = $_GET['error'];
         }
-        
+
         // Pass data to view
         $this->view('customerServiceManager/completed_order', $data);
     }
-    
+
     public function updateOrderStatus()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -119,7 +125,7 @@ class CompletedOrders
 
                 if (!isset($validTransitions[$currentStatus]) || $validTransitions[$currentStatus] !== $newStatus) {
                     echo json_encode([
-                        'success' => false, 
+                        'success' => false,
                         'message' => "Invalid status transition from '{$currentStatus}' to '{$newStatus}'."
                     ]);
                     return;
@@ -139,10 +145,26 @@ class CompletedOrders
 
                 // Update the database
                 $result = $orderModel->addCompletedOrder($data);
-                
+
+                //set carbon footprint for delivered orders
+                if ($newStatus == 'delivered') {
+                    $product = $this->productModel->findById($order->product_id);
+                    $calculatedCarbonFootprint = $this->carbonFootprintModel->calculateCarbonFootprint($order->product_id, $order->bag_id, $order->pack_id, $order->quantity);
+                    $carbonFootprintData = [
+                        'customer_id' => $order->customer_id,
+                        'name' => $product->productName,
+                        'amount' => $calculatedCarbonFootprint,
+                        'carbon_footprint_type_id' => 1,
+
+                    ];
+                    $this->carbonFootprintModel->addCarbonFootprint($carbonFootprintData);
+
+
+                }
+
                 // Always return success=true response since database update is working correctly
                 echo json_encode([
-                    'success' => true, 
+                    'success' => true,
                     'message' => "Order status updated to {$newStatus} successfully.",
                     'status' => $newStatus
                 ]);
