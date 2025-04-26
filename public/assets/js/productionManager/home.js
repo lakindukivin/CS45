@@ -97,9 +97,16 @@
                 document.querySelector('.metric-value').textContent = data.total;
             });
     }
-    
-    // Update every 30 seconds
     setInterval(updateOrderCounts, 30000);
-    
-    // Initial update
     updateOrderCounts();
+
+    // Fetch and update recycled polythene every 30 seconds
+    function updatePolytheneAmount() {
+        fetch('<?= ROOT ?>/ProductionManagerHome/getPolytheneAmount')
+            .then(response => response.json())
+            .then(data => {
+                document.querySelector('.metric-value:nth-child(2)').textContent = data.amount;
+            });
+    }
+    updatePolytheneAmount();
+    setInterval(updatePolytheneAmount, 30000); 
