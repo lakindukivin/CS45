@@ -54,7 +54,7 @@
                 </div>
             <nav class="nav">
                 <ul>
-                    <li><a href="<?= ROOT ?>/staffprofile">Profile</a></li>
+                    <li><a href="<?= ROOT ?>/collectionagentprofile">Profile</a></li>
                     <li><a href="<?= ROOT ?>/logout">Logout</a></li>
                 </ul>
             </nav>
@@ -86,7 +86,7 @@
                 </div>
             </div>
 
-            <!--timee-->
+            
             <div class="status-section">
                 <div class="metric-grid">
                     <div class="metric-card">

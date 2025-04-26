@@ -1,16 +1,12 @@
 .top {
   display: flex;
-  flex-direction: column-reverse;
-  gap: 2rem;
-  padding: 2rem;
- 
+  flex-direction: row;
+  gap: 3em;
 }
 
 .left {
   display: flex;
-  flex-direction: row;
   gap: 1rem;
-  flex-grow: 1;
   max-width: 1200px;
 }
 
@@ -21,8 +17,6 @@
   padding: 1.5rem;
   text-align: center;
   transition: var(--transition);
-  min-width:575px;
-  min-height: 450px;
 }
 
 
@@ -35,6 +29,7 @@
   padding: 1.5rem;
   min-width: 320px;
   max-width: 420px;
+  margin-left: 100px;
 }
 
 .calendar-header {
@@ -116,8 +111,8 @@
 
 /* Status Section Styles */
 .status-section {
-  flex-grow: 1;
-  max-width: 1200px;
+  min-width: 400px;
+ 
 }
 
 .time-display {
@@ -144,18 +139,19 @@
 }
 
 .metric-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
   gap: 1.5rem;
+  flex-direction: column;
 }
 
 .metric-card {
   background-color: var(--white);
   border-radius: 12px;
   box-shadow: var(--shadow-md);
-  padding: 1.5rem;
+  padding: 1.3rem;
   text-align: center;
   transition: var(--transition);
+  height: 140px;
 }
 
 .metric-card:hover {
@@ -164,8 +160,8 @@
 
 .metric-card h4 {
   color: var(--primary-green);
-  font-size: 1.1rem;
-  margin-bottom: 1rem;
+  font-size: 1.0rem;
+  margin-bottom: 0.5rem;
   min-height: 2.5rem;
 }
 
