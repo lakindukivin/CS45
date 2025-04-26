@@ -21,8 +21,8 @@ class CompletedCustomOrders{
       redirect('login');
   }
     $orderModel = new PendingCustomOrderModel(); // You might want a specific method for this
-    $completedOrders = $orderModel->getOrdersByStatus('completed'); // Fetch completed orders
-    $declinedOrders = $orderModel->getOrdersByStatus('declined');
+    $completedOrders = $orderModel->getOrdersByStatus('accepted') ?:[]; // Fetch completed orders
+    $declinedOrders = $orderModel->getOrdersByStatus('declined') ?:[];
     $allOrders = array_merge($completedOrders, $declinedOrders);
 
     usort($allOrders, function($a, $b) {
