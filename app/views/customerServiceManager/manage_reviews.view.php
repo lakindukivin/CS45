@@ -1,4 +1,3 @@
-<!-- filepath: c:\xampp\htdocs\CS45\app\views\customerServiceManager\manage_reviews.view.php -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -59,23 +58,35 @@
 
                 <h1>Update Review</h1>
             </div>
+            <div >
+                <label for="review_id"></label>
+                <input type="hidden" id="review_id" name="review_id" readonly>
+            </div>
+
+            <div >
+                <label for="reply_id"></label>
+                <input type="hidden" id="reply_id" name="reply_id" readonly>
+            </div>
+
+            <div >
+                <label for="customer_id"></label>
+                <input type="hidden" id="customer_id" name="customer_id" readonly>
+            </div>
+
+            <div >
+                <label for="order_id"></label>
+                <input type="hidden" id="order_id" name="order_id" readonly>
+            </div>
+
             <div class="popup-content">
-            <div>
-                <label for="review_id">Review ID:</label>
-                <input type="text" id="review_id" name="review_id" readonly>
+                <label for="customer_name">Customer Name:</label>
+                <input type="text" id="customer_name" name="customer_name" readonly>
             </div>
 
-            <div>
-                <label for="customer_id">Customer ID:</label>
-                <input type="text" id="customer_id" name="customer_id" readonly>
+            <div class="popup-content">
+              <label for="product_name">Product Name:</label>
+              <input type="text" id="product_name" name="product_name" readonly>
             </div>
-
-            <div>
-                <label for="order_id">Order ID:</label>
-                <input type="text" id="order_id" name="order_id" readonly>
-            </div>
-            </div>
-            
 
             <div class="popup-content">
                 <label for="rating">Rating:</label>
@@ -149,8 +160,8 @@
         <table>
           <thead>
             <tr>
-              <th>Customer ID</th>
-              <th>Order ID</th>
+              <th>Customer Name</th>
+              <th>Product Name</th>
               <th>Rating</th>
               <th>Date</th>
               <th>Actions</th>
@@ -160,8 +171,8 @@
             <?php if(isset($data['reviews']) && is_array($data['reviews'])): ?>
             <?php foreach($data['reviews'] as $review): ?>
             <tr>
-              <td><?=$review->customer_id?></td>
-              <td><?=$review->order_id?></td>
+              <td><?=$review->customerName?></td>
+              <td><?=$review->productName?></td>
               <td><?=$review->rating?></td>
               <td><?=$review->date?></td>
               <td>

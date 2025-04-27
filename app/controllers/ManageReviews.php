@@ -6,13 +6,25 @@ class ManageReviews {
     public function index() {
         $reviewModel = new Review();
 
+        // Get filter parameters
+        $filterName = $_GET['filter_name'] ?? null;
+        $filterDate = $_GET['filter_date'] ?? null;
+        
+        // Store filters in data array to pass to view
+        $data['filters'] = [
+            'name' => $filterName,
+            'date' => $filterDate
+        ];
+        
+        // Get filtered reviews
+        $allPendingReviews = $reviewModel->getFilteredPendingReviews($filterName, $filterDate);
+
         // Pagination parameters
-        $limit = 3; // Items per page
+        $limit = 5; // Items per page
         $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $currentPage = max(1, $currentPage); // Make sure page is at least 1
 
         // Get total count of pending reviews
-        $allPendingReviews = $reviewModel->getAllPendingReviews();
         $totalItems = count($allPendingReviews);
         $totalPages = ceil($totalItems / $limit);
         
@@ -38,7 +50,7 @@ class ManageReviews {
 
             if (empty($replyText)) {
                 // Redirect back with an error flag if the reply is empty
-                header("Location: " . ROOT . "/ManageReviews?error=1");
+                header("Location: " . ROOT . "/ManageReviews?success=1");
                 exit;
             }
 

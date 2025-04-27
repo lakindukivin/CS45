@@ -59,24 +59,34 @@
                 <span  class="close" id="closePopup">&times;</span>
             </div>
 
-            <div class="popup-content">
-                <label for="review_id">Review ID:</label>
-                <input type="text" id="review_id" name="review_id" readonly>
+            <div class="">
+                <label for="review_id"></label>
+                <input type="hidden" id="review_id" name="review_id" readonly>
+            </div>
+
+            <div class="">
+                <label for="reply_id"></label>
+                <input type="hidden" id="reply_id" name="reply_id" readonly>
+            </div>
+
+            <div class="">
+                <label for="customer_id"></label>
+                <input type="hidden" id="customer_id" name="customer_id" readonly>
+            </div>
+
+            <div class="">
+                <label for="order_id"></label>
+                <input type="hidden" id="order_id" name="order_id" readonly>
             </div>
 
             <div class="popup-content">
-                <label for="reply_id">Reply ID:</label>
-                <input type="text" id="reply_id" name="reply_id" readonly>
+                <label for="customer_name">Customer Name:</label>
+                <input type="text" id="customer_name" name="customer_name" readonly>
             </div>
 
             <div class="popup-content">
-                <label for="customer_id">Customer ID:</label>
-                <input type="text" id="customer_id" name="customer_id" readonly>
-            </div>
-
-            <div class="popup-content">
-                <label for="order_id">Order ID:</label>
-                <input type="text" id="order_id" name="order_id" readonly>
+              <label for="product_name">Product Name:</label>
+              <input type="text" id="product_name" name="product_name" readonly>
             </div>
 
             <div class="popup-content">
@@ -111,11 +121,11 @@
         <img src="<?=ROOT?>/assets/images/Waste360.png" alt="logo" />
         <h1>Waste360</h1>
       </div>
-      <h1 class="logo">Pending Reviews</h1>
+      <h1 class="logo">Update Reviews</h1>
       <nav class="nav">
         <ul>
           <li><a href="#"><img src="<?=ROOT?>/assets/images/notifications.svg"></a></li>
-          <li><a href="<?=ROOT?>/profile">Profile</a></li>
+          <li><a href="<?=ROOT?>/CSmanagerProfile">Profile</a></li>
           <li><a href="<?=ROOT?>/logout">Logout</a></li>
         </ul>
       </nav>
@@ -149,8 +159,8 @@
         <table>
     <thead>
         <tr>
-            <th>Customer ID</th>
-            <th>Order ID</th>
+            <th>Customer Name</th>
+            <th>Product Name</th>
             <th>Rating</th>
             <th>Date</th>
             <th>Actions</th>
@@ -160,8 +170,8 @@
     <?php if(isset($data['reviews']) && is_array($data['reviews'])): ?>
             <?php foreach($data['reviews'] as $review): ?>
             <tr>
-              <td><?=$review->customer_id?></td>
-              <td><?=$review->order_id?></td>
+              <td><?=$review->customerName?></td>
+              <td><?=$review->productName?></td>
               <td><?=$review->rating?></td>
               <td><?=$review->date?></td>
               <td>
@@ -176,7 +186,19 @@
             <?php endif; ?> 
     </tbody>
 </table>
-</div>
+
+<!-- Pagination -->
+ <div class="pagination">
+   <?php if (isset($totalPages) && $totalPages > 1): ?>
+           <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+              <a href="?<?= isset($search) && $search !== '' ? 'search=' . urlencode($search) . '&' : '' ?>page=<?= $i ?>"
+                  class="<?= (isset($currentPage) && $currentPage == $i) ? 'active' : '' ?>">
+                  <?= $i ?>
+              </a>
+            <?php endfor; ?>
+       <?php endif; ?>  
+ </div>
+ </div>
 </div>
 </div>
 
@@ -192,5 +214,4 @@
   <script src="<?=ROOT?>/assets/js/customerServiceManager/manage_reviews.js"></script>
   <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>
 </body>
-
 </html>
