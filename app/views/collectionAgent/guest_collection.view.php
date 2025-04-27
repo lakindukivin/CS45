@@ -8,10 +8,40 @@
   <link rel="stylesheet" href="<?= ROOT ?>/assets/css/collectionAgent/guest_collection.css">
   <link rel="stylesheet" href="<?= ROOT ?>/assets/css/collectionAgent/common.css">
   <title>Waste360|Dashboard|CSM</title>
+  <style>
+    .success-popup {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px 20px;
+      border-radius: 4px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      display: none;
+      animation: fadeIn 0.5s, fadeOut 0.5s 2.5s forwards;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+  </style>
 </head>
 
 <body>
-<nav id="sidebar">
+  <!-- Success popup element -->
+  <div id="success-popup" class="success-popup">
+    <span id="success-message">Successfully updated!</span>
+  </div>
+  
+  <nav id="sidebar">
         <button id="toggle-btn" onclick="toggleSidebar()" class="toggle-btn">
             <img src="<?= ROOT ?>/assets/images/menu.svg" alt="menu" />
         </button>
@@ -47,11 +77,12 @@
         <img src="<?= ROOT ?>/assets/images/Waste360.png" alt="logo" />
         <h1>Waste360</h1>
       </div>
-      <h1 class="logo">Pending Give Away Request</h1>
+      <h1 class="logo">Guest Collection</h1>
       <nav class="nav">
         <ul>
           <li><a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg"></a></li>
-          <li><a href="<?=ROOT?>/profile">Profile</a></li>
+          <li><a href="<?=ROOT?>/CollectionAgent
+          Profile">Profile</a></li>
           <li><a href="<?=ROOT?>/logout">Logout</a></li>
         </ul>
       </nav>
@@ -70,7 +101,7 @@
 
         <div class="form-group">
           <label for="Amount" class="">Amount: </label>
-          <input type="number" step="0.01" min=0 name="amount"/>
+          <input type="number" step="0.01" min=0 name="amount" required/>
         </div>
 
         <button type="submit">Submit</button>
@@ -81,6 +112,29 @@
 
   <script src="<?= ROOT ?>/assets/js/customerServiceManager/sidebar.js"></script>
   <script src="<?= ROOT ?>/assets/js/collectionAgent/giveAwayRequest.js"></script>
+  
+  <script>
+    // Check for success message
+    document.addEventListener('DOMContentLoaded', function() {
+      <?php if(isset($_SESSION['success_message'])): ?>
+        // Show success popup
+        const popup = document.getElementById('success-popup');
+        const message = document.getElementById('success-message');
+        message.textContent = "<?= $_SESSION['success_message'] ?>";
+        popup.style.display = 'block';
+        
+        // Hide popup after 3 seconds
+        setTimeout(function() {
+          popup.style.display = 'none';
+        }, 3000);
+        
+        <?php 
+        // Clear the session message
+        unset($_SESSION['success_message']);
+        ?>
+      <?php endif; ?>
+    });
+  </script>
 </body>
 
 </html>

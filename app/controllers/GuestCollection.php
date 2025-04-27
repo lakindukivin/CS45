@@ -22,6 +22,9 @@ class GuestCollection {
       
       $guestCollection->addCollection($data);
       
+      // Set success message in session
+      $_SESSION['success_message'] = "Collection successfully added!";
+      
       redirect('GuestCollection');
     }
   }
