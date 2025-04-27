@@ -181,8 +181,8 @@
                         <div class="form-group">
                             <label for="productType">Product Type:</label>
                             <select name="productType" id="productType">
-                                <option value="Bags">Bags</option>
-                                <option value="Pellets">Pellets</option>
+                                <option value="Bag">Bags</option>
+                                <option value="Pellet">Pellets</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -329,22 +329,22 @@
                         <div class="form-group">
                             <label for="product_id">Product:</label>
                             <select name="product_id" id="product_id" required>
-                                <option value="">Select a product</option>
-                                <?php if (!empty($allProducts)): ?>
-                                    <?php foreach ($allProducts as $product): ?>
+                                <option value="">Select a bag product</option>
+                                <?php if (!empty($bagProducts)): ?>
+                                    <?php foreach ($bagProducts as $product): ?>
                                         <option value="<?= $product->product_id ?>">
                                             <?= htmlspecialchars($product->productName) ?>
                                         </option>
                                     <?php endforeach; ?>
+                                <?php else: ?>
+                                    <option value="" disabled>No bag products available</option>
                                 <?php endif; ?>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="bag_id">Bag Size:</label>
                             <select name="bag_id" id="bag_id" required>
-                                <option value="1">Small</option>
-                                <option value="2">Large</option>
-                                <option value="3">Extra Large</option>
+                                <option value="">Select product first</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -406,6 +406,15 @@
     <script src="<?= ROOT ?>/assets/js/sidebar.js"></script>
     <script src="<?= ROOT ?>/assets/js/formValidation.js"></script>
     <script src="<?= ROOT ?>/assets/js/salesManager/product.js"></script>
+
+    <!-- Initialize product-bag size data -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Pass PHP data to JavaScript
+            const productBagSizesData = <?= json_encode($productHasBagSizes ?? []) ?>;
+            initProductBagSizes(productBagSizesData);
+        });
+    </script>
 </body>
 
 </html>
