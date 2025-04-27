@@ -93,8 +93,10 @@
             <td><?= htmlspecialchars($item->pack_size) ?></td>
             <td><?= htmlspecialchars($item->bag_size) ?></td>
             <td>
-                    <a href="#" class="btn-alert">Add</a>
-            </td>
+                            <div class="buttons">
+                            <button class="view-btn">Add</button>
+                            </div>
+                        </td>
         </tr>
         <?php endforeach; ?>
         <?php else: ?>
@@ -108,30 +110,22 @@
             </tbody>
         </table>
       </div>
-      <!-- Add this modal HTML -->
-     <!-- <div id="statusModal" class="modal">
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <h2>Supply Status</h2>
-          <div class="status-details">
-            <p><strong>Supply ID:</strong> <span id="orderId"></span></p>
-            <p><strong>Status:</strong> <span id="orderStatus"></span></p>
-            <p><strong>Created Date:</strong> <span id="orderDate"></span></p>
-            <p><strong>Bag Size:</strong> <span id="bagSize"></span></p>
-            <p><strong>Category:</strong> <span id="category"></span></p>
-            <p><strong>Pack Size:</strong> <span id="packSize"></span></p>
-            <p><strong>Quantity:</strong> <span id="quantity"></span></p>
-            <p><strong>Description:</strong> <span id="orderDescription"></span></p>
-          </div>
-          <div class="status-timeline">
-            <div class="operation">
-              <button class="accept">Accept</button>
-              <button class="reject">Reject</button>
-            </div>
-          </div>
-        </div>-->
       </div>  
     </div>
+    <div id="modal" class="modal" style="display: none;">
+      <div class="modal-content">
+          <span class="close-btn">&times;</span>
+          <h2>Add Quantity</h2></br>
+          <form id="quantityForm" action="<?=ROOT?>/SupplyRequest/post" method="POST">
+          <div class="form-group">
+    <label for="area">Quantity:</label>
+    <input type="number" id="quantity" name="quantity" min="1" required>
+</div>
+              <input type="hidden" name="action" value="add">
+              <button type="submit" class="save-btn">Add</button>
+          </form>
+      </div>
+  </div>
   </div>
   <script src="<?=ROOT?>/assets/js/productionManager/sidebar.js"></script>
   <script src="<?=ROOT?>/assets/js/productionManager/supply_request.js"></script>
