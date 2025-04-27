@@ -81,7 +81,7 @@
                         <a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg" alt="" /></a>
                     </li>
                     <li>
-                        <a href="#">Profile</a>
+                        <a href="<?= ROOT ?>/SalesManagerProfile" class="active">Profile</a>
                     </li>
                     <li>
                         <a href="<?= ROOT ?>/Logout">Log Out</a>
