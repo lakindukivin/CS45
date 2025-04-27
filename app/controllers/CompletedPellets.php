@@ -20,9 +20,15 @@
   }
 
   $orderModel = new pelletsRequestsModel(); // You might want a specific method for this
-  $completedOrders = $orderModel->getOrdersByStatus('completed'); // Fetch completed orders
+  $completedPellets = $orderModel->getOrdersByStatus('accepted') ?:[];
+  $declinedPellets = $orderModel->getOrdersByStatus('declined')?:[]; 
+  $allPellets = array_merge($completedPellets, $declinedPellets);
 
-  $data['completedOrders'] = $completedOrders;
+  usort($allPellets, function($a, $b) {
+    return $b->pelletOrder_id - $a->pelletOrder_id; // Newest first (higher IDs first)
+});
+
+  $data['allPellets'] = $allPellets;
   $this->view('productionManager/completed_pellets', $data);
   }
  }
