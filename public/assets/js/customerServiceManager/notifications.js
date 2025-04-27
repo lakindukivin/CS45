@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         window.location.href = `${getRootUrl()}/ManageReviews`;
                         break;
                     case 'return':
-                        window.location.href = `${getRootUrl()}/Returns/view`;
+                        window.location.href = `${getRootUrl()}/Returns`;
                         break;
                 }
             }, 150); // Small delay for the effect to be visible

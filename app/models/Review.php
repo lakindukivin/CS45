@@ -6,8 +6,10 @@ class Review {
     protected $table = 'review';
     
     public function getAllPendingReviews() {
-        $query = "SELECT r.*, r.customer_id, r.order_id, r.comment, r.rating, r.date, r.dateModified,c.name, c.phone, c.address
-        FROM review r 
+        $query = "SELECT r.*, c.name as customerName, c.phone, c.address, p.productName
+        FROM review r
+        JOIN orders o ON r.order_id = o.order_id 
+        JOIN product p ON o.product_id = p.product_id
         JOIN customer c ON r.customer_id = c.customer_id
         WHERE r.status = 'pending'";
         return $this->query($query);
@@ -46,9 +48,11 @@ class Review {
     }
 
     public function getAllCompletedReviews() {
-        $query = "SELECT rp.*, r.customer_id, r.order_id, r.comment, r.rating, r.date, r.dateModified,c.name, c.phone, c.address
+        $query = "SELECT rp.*, r.customer_id, r.order_id, r.comment, r.rating, r.date, r.dateModified,c.name as customerName, p.productName
         FROM reply rp 
         JOIN review r ON rp.review_id = r.review_id
+        JOIN orders o ON r.order_id = o.order_id
+        JOIN product p ON o.product_id = p.product_id
         JOIN customer c ON r.customer_id = c.customer_id";
         return $this->query($query);
     }
@@ -65,6 +69,7 @@ class Review {
                   ORDER BY r.date DESC
                   LIMIT $limit";
                   
+
         return $this->query($query);
     }
     
@@ -92,5 +97,57 @@ class Review {
                   ORDER BY r.date DESC";
         return $this->query($query);
     }
+
+    public function getFilteredPendingReviews($name = null, $date = null) {
+        $query = "SELECT r.*, c.name as customerName, c.phone, c.address, p.productName
+                FROM review r
+                JOIN orders o ON r.order_id = o.order_id 
+                JOIN product p ON o.product_id = p.product_id
+                JOIN customer c ON r.customer_id = c.customer_id
+                WHERE r.status = 'pending'";
+                
+        $params = [];
+        
+        if (!empty($name)) {
+            $query .= " AND c.name LIKE :name";
+            $params['name'] = "%$name%";
+        }
+        
+        if (!empty($date)) {
+            $query .= " AND DATE(r.date) = :date";
+            $params['date'] = $date;
+        }
+        
+        return $this->query($query, $params);
+    }
+
+    public function getFilteredRepliedReviews($name = null, $date = null) {
+        $query = "SELECT rp.*, c.name as customerName, c.phone, c.address, p.productName, r.rating, r.comment, r.date, r.dateModified
+                  FROM reply rp
+                  JOIN review r ON rp.review_id = r.review_id
+                  JOIN orders o ON r.order_id = o.order_id
+                  JOIN product p ON o.product_id = p.product_id
+                  JOIN customer c ON r.customer_id = c.customer_id
+                  WHERE r.status = 'replied'";
+
+                  $params = [];
+
+        if (!empty($name)) {
+            $query .= " AND c.name LIKE :name";
+            $params['name'] = "%$name%";
+        }
+
+        if (!empty($date)) {
+            $query .= " AND DATE(r.date) = :date";
+            $params['date'] = $date;
+        }
+         
+        return $this->query($query, $params);
+    }
     
+    public function deleteReply($replyId) {
+        $query = "DELETE FROM reply WHERE reply_id = :reply_id";
+        $params = ['reply_id' => $replyId];
+        return $this->query($query, $params);
+    }
 }
