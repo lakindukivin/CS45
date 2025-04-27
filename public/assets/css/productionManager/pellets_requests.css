@@ -197,6 +197,26 @@ th {
   margin: 15px 0;
 }
 
+.decline-button {
+    background-color: darkred;
+    color: var(--white);
+    padding: 10px 20px ;
+    border: none ;
+    border-radius: 5px ;
+    cursor: pointer ;
+    font-size: 16px ;
+    font-weight: 600 ;
+    width:30%;
+    transition: var(--transition) ;
+    margin-right: 15%;
+}
+
+.decline-button:hover {
+    background-color: rgb(240, 56, 56);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
 .form-group select {
   width: 100%;
   padding: 8px;

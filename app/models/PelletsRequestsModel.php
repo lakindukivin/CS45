@@ -10,7 +10,7 @@ class PelletsRequestsModel {
     public function getAll() {
         $query = "SELECT po.*, c.Name as customer_name 
         FROM pellet po
-        JOIN customer c ON po.customer_id = c.Customer_id";
+        JOIN customer c ON po.customer_id = c.customer_id";
         return $this->query($query);
     }
 
@@ -34,7 +34,7 @@ class PelletsRequestsModel {
 
     public function updateOrderStatus($order_id, $status, $reply=null){
         if ($status === 'declined' && $reply !== null) {
-            $sql = "UPDATE pellet SET pelletOrderStatus = :status, reason = :reply WHERE pelletOrder_id = :order_id";
+            $sql = "UPDATE pellet SET pelletOrderStatus = :status, reply = :reply WHERE pelletOrder_id = :order_id";
             $params = [
                 ':status' => $status,
                 ':reply' => $reply,
@@ -52,10 +52,10 @@ class PelletsRequestsModel {
   }
 
   public function getOrdersByStatus($status) {
-    $query = "SELECT p.*, c.Name as customer_name 
-              FROM pellet p
-              JOIN customer c ON p.customer_id = c.customer_id 
-              WHERE p.pelletOrderStatus = :status";
+    $query = "SELECT po.*, c.Name as customer_name 
+              FROM pellet po
+              JOIN customer c ON po.customer_id = c.customer_id 
+              WHERE po.pelletOrderStatus = :status";
     $params = ['status' => $status];
     return $this->query($query, $params);
 } 
