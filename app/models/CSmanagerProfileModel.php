@@ -3,6 +3,9 @@
 class CSmanagerProfileModel
 {
     use Model;
+    
+    // Track transaction status
+    private $transactionActive = false;
 
     protected $table = 'staff'; // Primary table for CS manager
     protected $allowedColumns = [
@@ -22,9 +25,17 @@ class CSmanagerProfileModel
      */
     public function beginTransaction()
     {
-        // Get the database connection from the Model trait
-        $db = $this->getConnection();
-        return $db->beginTransaction();
+        try {
+            $db = $this->getConnection();
+            if ($db && !$this->transactionActive) {
+                $this->transactionActive = $db->beginTransaction();
+                return $this->transactionActive;
+            }
+        } catch (PDOException $e) {
+            error_log("Transaction begin error: " . $e->getMessage());
+            $this->transactionActive = false;
+        }
+        return false;
     }
     
     /**
@@ -33,8 +44,18 @@ class CSmanagerProfileModel
      */
     public function commit()
     {
-        $db = $this->getConnection();
-        return $db->commit();
+        try {
+            $db = $this->getConnection();
+            if ($db && $this->transactionActive) {
+                $result = $db->commit();
+                $this->transactionActive = false;
+                return $result;
+            }
+        } catch (PDOException $e) {
+            error_log("Transaction commit error: " . $e->getMessage());
+            $this->transactionActive = false;
+        }
+        return false;
     }
     
     /**
@@ -43,8 +64,18 @@ class CSmanagerProfileModel
      */
     public function rollback()
     {
-        $db = $this->getConnection();
-        return $db->rollback();
+        try {
+            $db = $this->getConnection();
+            if ($db && $this->transactionActive) {
+                $result = $db->rollBack();
+                $this->transactionActive = false;
+                return $result;
+            }
+        } catch (PDOException $e) {
+            error_log("Transaction rollback error: " . $e->getMessage());
+            $this->transactionActive = false;
+        }
+        return false;
     }
     
     /**
@@ -87,11 +118,8 @@ class CSmanagerProfileModel
      */
     public function updateProfile($userId, $data)
     {
-        if (method_exists($this, 'beginTransaction')) {
-            $this->beginTransaction();
-        } else {
-            throw new Exception("Undefined method 'beginTransaction'. Ensure the Model trait or class defines this method.");
-        }
+        // Start without transaction first - only use transactions if we can establish one
+        $useTransaction = $this->beginTransaction();
         
         try {
             // Update staff table
@@ -121,8 +149,28 @@ class CSmanagerProfileModel
                 $staff_update = $this->update($userId, $staff_data, 'user_id');
             }
             
+            // Update email in user table if email is provided
+            if (!empty($data['email'])) {
+                $email_update_query = "UPDATE user SET email = :email WHERE user_id = :user_id";
+                $email_update_params = [
+                    'email' => $data['email'],
+                    'user_id' => $userId
+                ];
+                
+                $this->query($email_update_query, $email_update_params);
+            }
+            
+            // Commit the transaction if we're using one
+            if ($useTransaction) {
+                $this->commit();
+            }
+            
             return true;
         } catch (Exception $e) {
+            // Rollback on error if we're using a transaction
+            if ($useTransaction) {
+                $this->rollback();
+            }
             error_log("Profile update error: " . $e->getMessage());
             return false;
         }
