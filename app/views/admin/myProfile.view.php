@@ -12,57 +12,57 @@
 </head>
 
 <body>
-   <nav id="sidebar">
+    <nav id="sidebar">
         <button id="toggle-btn" onclick="toggleSidebar()" class="toggle-btn">
             <img src="<?= ROOT ?>/assets/images/menu.svg" alt="menu" />
-    </button>
-    <div class="sidebar-container">
-        <div class="prof-picture">
-            <img src="<?= ROOT ?>/assets/images/user.svg" alt="profile" />
-            <span class="user-title">Admin</span>
+        </button>
+        <div class="sidebar-container">
+            <div class="prof-picture">
+                <img src="<?= ROOT ?>/assets/images/user.svg" alt="profile" />
+                <span class="user-title">Admin</span>
+            </div>
+
+            <div>
+                <ul>
+                    <li>
+                        <a href="#" class="sidebar-active">
+                            <img src="<?= ROOT ?>/assets/images/dashboard.svg" alt="dashboard" />
+                            <span class="sidebar-titles">Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="<?= ROOT ?>/manageCustomerAccounts">
+                            <img src="<?= ROOT ?>/assets/images/customer-account.svg" alt="customer" />
+                            <span class="sidebar-titles">Customer Management</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="<?= ROOT ?>/manageStaffAccounts">
+                            <img src="<?= ROOT ?>/assets/images/staff-account.svg" alt="staff" />
+                            <span class="sidebar-titles">Staff Management</span>
+                        </a>
+
+
+                    </li>
+
+                    <li>
+                        <a href="<?= ROOT ?>/issues">
+                            <img src="<?= ROOT ?>/assets/images/legal-issues.svg" alt="legal issues" />
+                            <span class="sidebar-titles">Issues</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= ROOT ?>/siteperformance">
+                            <img src="<?= ROOT ?>/assets/images/site-performance.svg" alt="site Performance" />
+                            <span class="sidebar-titles">Site Performance</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-
-        <div>
-            <ul>
-                <li>
-                    <a href="#" class="sidebar-active">
-                        <img src="<?= ROOT ?>/assets/images/dashboard.svg" alt="dashboard" />
-                        <span class="sidebar-titles">Dashboard</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="<?= ROOT ?>/manageCustomerAccounts">
-                        <img src="<?= ROOT ?>/assets/images/customer-account.svg" alt="customer" />
-                        <span class="sidebar-titles">Customer Management</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="<?= ROOT ?>/manageStaffAccounts">
-                        <img src="<?= ROOT ?>/assets/images/staff-account.svg" alt="staff" />
-                        <span class="sidebar-titles">Staff Management</span>
-                    </a>
-
-
-                </li>
-
-                <li>
-                    <a href="<?= ROOT ?>/issues">
-                        <img src="<?= ROOT ?>/assets/images/legal-issues.svg" alt="legal issues" />
-                        <span class="sidebar-titles">Issues</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="<?= ROOT ?>/siteperformance">
-                        <img src="<?= ROOT ?>/assets/images/site-performance.svg" alt="site Performance" />
-                        <span class="sidebar-titles">Site Performance</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+    </nav>
 
     <div class="content">
         <header class="header">
@@ -118,7 +118,7 @@
 
                 <div class="tab-content" id="personal-tab">
                     <div class="profile-details">
-                        <form action="<?= ROOT ?>/CSmanagerProfile/update" method="POST" enctype="multipart/form-data">
+                        <form action="<?= ROOT ?>/AdminProfile/update" method="POST" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="name">Full Name</label>
                                 <input type="text" id="name" name="name" value="<?= $profile->name ?? '' ?>">
@@ -154,7 +154,7 @@
 
                 <div class="tab-content" id="password-tab" style="display: none;">
                     <div class="profile-details">
-                        <form action="<?= ROOT ?>/CSmanagerProfile/changePassword" method="POST">
+                        <form action="<?= ROOT ?>/AdminProfile/changePassword" method="POST">
                             <div class="form-group">
                                 <label for="current_password">Current Password</label>
                                 <input type="password" id="current_password" name="current_password">
@@ -180,33 +180,9 @@
         </div>
     </div>
 
-    <script src="<?= ROOT ?>/assets/js/customerServiceManager/sidebar.js"></script>
-    <script>
-        // Tab switching functionality
-        document.addEventListener('DOMContentLoaded', function () {
-            const tabs = document.querySelectorAll('.tab-btn');
-            const tabContents = document.querySelectorAll('.tab-content');
+    <script src="<?= ROOT ?>/assets/js/sidebar.js"></script>
+    <script src="<?= ROOT ?>/assets/js/myprofile.js"></script>
 
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function () {
-                    // Remove active class from all tabs
-                    tabs.forEach(t => t.classList.remove('active'));
-
-                    // Add active class to current tab
-                    this.classList.add('active');
-
-                    // Hide all tab contents
-                    tabContents.forEach(content => {
-                        content.style.display = 'none';
-                    });
-
-                    // Show current tab content
-                    const tabId = this.getAttribute('data-tab');
-                    document.getElementById(tabId + '-tab').style.display = 'block';
-                });
-            });
-        });
-    </script>
 </body>
 
 </html>
