@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/admin/sidebar.css" />
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/admin/sitePerformance.css" />
     <title>Waste360 | Site Performance</title>
+    <!-- Add Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -75,7 +77,7 @@
                         <a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg" alt="" /></a>
                     </li>
                     <li>
-                        <a href="#">Profile</a>
+                        <a href="<?= ROOT ?>/AdminProfile">Profile</a>
                     </li>
                     <li>
                         <a href="<?= ROOT ?>/Logout">Log Out</a>
@@ -89,72 +91,17 @@
                 <div class="user-traffic">
                     <h3>User Traffic Information</h3>
                     <p>Total Visits (24h): <span id="total-visits">Loading...</span></p>
+                    <p>Unique Visitors: <span id="unique-visitors">Loading...</span></p>
+                    <p>Average Time on Site: <span id="avg-time">Loading...</span></p>
                 </div>
 
                 <div class="user-traffic-trend">
-                    <h3>User Traffic Trend (Last 24h)</h3>
-                    <canvas id="trafficChart"></canvas>
-                </div>
-
-                <div class="server-status">
-                    <h3>Server Status</h3>
-                    <table>
-                        <tr>
-                            <th>Uptime</th>
-                            <td>12h</td>
-                        </tr>
-                        <tr>
-                            <th>CPU Usage</th>
-                            <td>55%</td>
-                        </tr>
-                        <tr>
-                            <th>Memory Usage</th>
-                            <td>65</td>
-                        </tr>
-                        <tr>
-                            <th>Disk I/O</th>
-                            <td>120Mbps</td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div class="server-table">
-                    <button onclick="openErrorLogs()">Open Error Logs</button>
+                    <h3>User Traffic Trend (Last 7 Days)</h3>
+                    <canvas id="trafficTrendChart" width="400" height="200"></canvas>
                 </div>
             </section>
         </div>
 
-        <!-- Error Logs Modal -->
-        <div id="errorLogsModal" class="modal">
-            <div class="modal-content">
-                <span class="close" onclick="closeErrorLogs()">&times;</span>
-                <h2>Error Logs</h2>
-                <label for="filter">Filter by Severity:</label>
-                <select id="filter">
-                    <option>All</option>
-                    <option>Critical</option>
-                    <option>Warning</option>
-                    <option>Info</option>
-                </select>
-                <table>
-                    <tr>
-                        <th>Time</th>
-                        <th>Severity</th>
-                        <th>Description</th>
-                    </tr>
-                    <tr>
-                        <td>2024-11-10 14:32</td>
-                        <td>Critical</td>
-                        <td>Database connection failure</td>
-                    </tr>
-                    <tr>
-                        <td>2024-11-10 12:10</td>
-                        <td>Warning</td>
-                        <td>High memory usage</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
     </main>
 
     <script src="<?= ROOT ?>/assets/js/admin/sidebar.js"></script>

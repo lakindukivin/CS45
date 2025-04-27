@@ -26,4 +26,33 @@ class SitePerformance
 
         $this->view('admin/sitePerformance');
     }
+
+    public function trafficData()
+    {
+        header('Content-Type: application/json');
+        $model = new SitePerformanceModel();
+
+        $totalVisits = $model->getTotalVisits24h();
+        $uniqueVisitors = $model->getUniqueVisitors24h();
+        $avgTime = $model->getAverageSessionTime24h();
+        $visitsLast7Days = $model->getVisitsLast7Days();
+
+        $labels = [];
+        $data = [];
+        foreach ($visitsLast7Days as $row) {
+            $labels[] = date('D', strtotime($row['day']));
+            $data[] = (int) $row['visits'];
+        }
+
+        echo json_encode([
+            'totalVisits' => $totalVisits,
+            'uniqueVisitors' => $uniqueVisitors,
+            'avgTime' => $avgTime,
+            'trend' => [
+                'labels' => $labels,
+                'data' => $data
+            ]
+        ]);
+        exit;
+    }
 }
