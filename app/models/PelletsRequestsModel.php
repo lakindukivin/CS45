@@ -32,15 +32,38 @@ class PelletsRequestsModel {
         return $this->query($query, $params);
     }
 
-    public function updateOrderStatus($orderId, $status)
-  {
-        $query = "UPDATE pellet SET PelletOrder_status = :status WHERE PelletOrder_id = :id";
-        $params = [
-            'status' => $status,
-            'id' => $orderId
-        ];
+    public function updateOrderStatus($order_id, $status, $reply=null){
+        if ($status === 'declined' && $reply !== null) {
+            $sql = "UPDATE pellet SET pelletOrderStatus = :status, reason = :reply WHERE pelletOrder_id = :order_id";
+            $params = [
+                ':status' => $status,
+                ':reply' => $reply,
+                ':order_id' => $order_id
+            ];
+        } else {
+            $sql = "UPDATE pellet SET pelletOrderStatus = :status WHERE pelletOrder_id = :order_id";
+            $params = [
+                ':status' => $status,
+                ':order_id' => $order_id
+            ];
+        }
 
-        return $this->query($query, $params);
+        return $this->query($sql, $params);
   }
+
+  public function getOrdersByStatus($status) {
+    $query = "SELECT p.*, c.Name as customer_name 
+              FROM pellet p
+              JOIN customer c ON p.customer_id = c.customer_id 
+              WHERE p.pelletOrderStatus = :status";
+    $params = ['status' => $status];
+    return $this->query($query, $params);
+} 
+
+public function countPendingOrders() {
+    $query = "SELECT COUNT(*) as count FROM pellet WHERE pelletOrderStatus = 'pending'";
+    $result = $this->query($query);
+    return $result[0]->count ?? 0;
+}
 
 }

@@ -1,9 +1,4 @@
 <?php
-
-/**
- *completed pellets request class
- */
-
  class CompletedPellets{
 
   use Controller;
@@ -24,6 +19,10 @@
       redirect('login');
   }
 
-    $this->view('productionManager/completed_pellets');
+  $orderModel = new pelletsRequestsModel(); // You might want a specific method for this
+  $completedOrders = $orderModel->getOrdersByStatus('completed'); // Fetch completed orders
+
+  $data['completedOrders'] = $completedOrders;
+  $this->view('productionManager/completed_pellets', $data);
   }
  }

@@ -116,16 +116,15 @@
             <?php if(isset($data['orders']) && is_array($data['orders'])): ?>
                 <?php foreach($data['orders'] as $order): ?>
                     <tr>
-                        <td><?=htmlspecialchars($order->PelletOrder_id)?></td>
+                        <td><?=htmlspecialchars($order->pelletOrder_id)?></td>
                         <td><?=htmlspecialchars($order->customer_name)?></td>
-                        <td><?=htmlspecialchars($order->Company_name)?></td>
-                        <td><?=htmlspecialchars($order->Amount)?></td>
+                        <td><?=htmlspecialchars($order->company_name)?></td>
+                        <td><?=htmlspecialchars($order->amount)?></td>
                         <td><?=htmlspecialchars($order->dateRequired)?></td>
-                        <td><?=htmlspecialchars($order->PelletOrderStatus)?></td>
+                        <td><?=htmlspecialchars($order->pelletOrderStatus)?></td>
                         <td>
-                            <div class="buttons">
-                            <button class="view-btn" onclick="viewDetails(<?=$order->PelletOrder_id?>)">View </button>
-                            <button class="update-btn" onclick="updateStatus(<?=$order->PelletOrder_id?>)">Update</button>
+                        <div class="buttons">
+                            <button class="view-btn" onclick="window.location.href='<?= ROOT ?>/PelletsRequestsViewForm/index/<?= $order->pelletOrder_id ?>'">View</button>
                             </div>
                           </td>
                     </tr>

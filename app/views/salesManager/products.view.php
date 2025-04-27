@@ -103,6 +103,7 @@
                     </form>
                     <div>
                         <button class="action-btn" onclick="openAddModal()">Add Product</button>
+                        <button class="action-btn" onclick="openBagSizeModal()">Manage Bag Sizes</button>
                     </div>
                 </div>
 
@@ -140,9 +141,11 @@
                                             onclick="openEditModal('<?= $product->product_id ?>', '<?= $product->productName ?>', '<?= $product->productImage ?>', '<?= $product->productDescription ?>','<?= $product->productStatus ?>')">
                                             <img src="<?= ROOT ?>/assets/images/edit-btn.svg"" alt=" edit">
                                         </button>
-                                        <button class="delete-btn" onclick="openDeleteModal('<?= $product->product_id ?>')">
-                                            <img src="<?= ROOT ?>/assets/images/delete-btn.svg"" alt=" delete">
-                                        </button>
+                                        <?php if ($product->productStatus == 1): ?>
+                                            <button class="delete-btn" onclick="openDeleteModal('<?= $product->product_id ?>')">
+                                                <img src="<?= ROOT ?>/assets/images/delete-btn.svg"" alt=" delete">
+                                            </button>
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -176,6 +179,13 @@
                     <form action="<?= ROOT ?>/Products/add" id="productForm" enctype="multipart/form-data"
                         method="post">
                         <div class="form-group">
+                            <label for="productType">Product Type:</label>
+                            <select name="productType" id="productType">
+                                <option value="Bags">Bags</option>
+                                <option value="Pellets">Pellets</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="productName">Product Name:</label>
                             <input name="productName" type="text" id="productName" placeholder="Enter product Name"
                                 required />
@@ -188,6 +198,8 @@
                             <label for="description">Description:</label>
                             <textarea id="description" rows="4" name="description" minlength="3" required></textarea>
                         </div>
+
+
 
                         <button type="submit" class="action-btn">Add</button>
                     </form>
@@ -250,10 +262,146 @@
                     <button class="action-btn" onclick="closeResponseModal()">Close</button>
                 </div>
             </div>
+
+            <div id="bagSizeModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeBagSizeModal()">&times;</span>
+                    <h3>Manage Bag Sizes</h3>
+
+                    <!-- Display Existing Bag Sizes -->
+                    <div class="form-container">
+                        <div class="bag-sizes-header">
+                            <h4>Current Bag Sizes</h4>
+                            <button type="button" class="action-btn" onclick="openAddBagSizeModal()">Add New</button>
+                        </div>
+                        <table id="bagSizesTable">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Bag Size</th>
+                                    <th>Weight (kg)</th>
+                                    <th>Price (Rs)</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                if (!empty($productHasBagSizes)):
+                                    foreach ($productHasBagSizes as $bagSize):
+                                        ?>
+                                        <tr>
+                                            <td><?= htmlspecialchars($bagSize->productName) ?></td>
+                                            <td><?= htmlspecialchars($bagSize->bag_size) ?></td>
+                                            <td><?= htmlspecialchars($bagSize->weight) ?></td>
+                                            <td><?= htmlspecialchars($bagSize->price) ?></td>
+                                            <td>
+                                                <button class="edit-btn"
+                                                    onclick="openEditBagSizeModal(<?= $bagSize->product_id ?>, <?= $bagSize->bag_id ?>, '<?= $bagSize->weight ?>', '<?= $bagSize->price ?>')">
+                                                    <img src="<?= ROOT ?>/assets/images/edit-btn.svg" alt="edit">
+                                                </button>
+                                                <button class="delete-btn"
+                                                    onclick="openDeleteBagSizeModal(<?= $bagSize->product_id ?>, <?= $bagSize->bag_id ?>)">
+                                                    <img src="<?= ROOT ?>/assets/images/delete-btn.svg" alt="delete">
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                    endforeach;
+                                else:
+                                    ?>
+                                    <tr>
+                                        <td colspan="5">No bag sizes found</td>
+                                    </tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Bag Size Modal -->
+            <div id="addBagSizeModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeAddBagSizeModal()">&times;</span>
+                    <h3>Add New Bag Size</h3>
+                    <form action="<?= ROOT ?>/ProductHasBagSizes/add" method="post" id="addBagSizeForm">
+                        <div class="form-group">
+                            <label for="product_id">Product:</label>
+                            <select name="product_id" id="product_id" required>
+                                <option value="">Select a product</option>
+                                <?php if (!empty($allProducts)): ?>
+                                    <?php foreach ($allProducts as $product): ?>
+                                        <option value="<?= $product->product_id ?>">
+                                            <?= htmlspecialchars($product->productName) ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="bag_id">Bag Size:</label>
+                            <select name="bag_id" id="bag_id" required>
+                                <option value="1">Small</option>
+                                <option value="2">Large</option>
+                                <option value="3">Extra Large</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="weight">Weight (kg):</label>
+                            <input type="number" step="0.001" name="weight" id="weight" min="0"
+                                placeholder="Enter bag weight" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Price (Rs):</label>
+                            <input type="number" step="0.01" name="price" id="price" placeholder="Enter bag price"
+                                min="0" required />
+                        </div>
+                        <button type="submit" class="action-btn">Add Bag Size</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Edit Bag Size Modal -->
+            <div id="editBagSizeModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeEditBagSizeModal()">&times;</span>
+                    <h3>Edit Bag Size</h3>
+                    <form action="<?= ROOT ?>/ProductHasBagSizes/update" method="post" id="editBagSizeForm">
+                        <input type="hidden" name="editProductID" id="editProductID">
+                        <input type="hidden" name="editBagID" id="editBagID">
+
+                        <div class="form-group">
+                            <label for="editWeight">Weight (kg):</label>
+                            <input type="number" step="0.001" name="editWeight" id="editWeight" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editPrice">Price (Rs):</label>
+                            <input type="number" step="0.01" name="editPrice" id="editPrice" required>
+                        </div>
+                        <button type="submit" class="action-btn">Update</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Delete Bag Size Modal -->
+            <div id="deleteBagSizeModal" class="modal">
+                <div class="modal-content delete-modal">
+                    <h3>Confirm Delete</h3>
+                    <p>Are you sure you want to delete this bag size?</p>
+                    <form action="<?= ROOT ?>/ProductHasBagSizes/delete" method="post" id="deleteBagSizeForm">
+                        <input type="hidden" name="product_id" id="deleteBagSizeProductID">
+                        <input type="hidden" name="bag_id" id="deleteBagSizeGagID">
+                        <div class="delete-modal-actions">
+                            <button type="submit" class="confirm-btn">Confirm</button>
+                            <button type="button" class="cancel-btn" onclick="closeDeleteBagSizeModal()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
         </div>
     </main>
-
-
 
     <script src="<?= ROOT ?>/assets/js/sidebar.js"></script>
     <script src="<?= ROOT ?>/assets/js/formValidation.js"></script>

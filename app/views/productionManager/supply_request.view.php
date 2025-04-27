@@ -112,8 +112,7 @@
             </div>
           </div>
         </div>-->
-      </div>
-      <div> <button type="view" class="view-btn" ><a href="<?=ROOT?>/CompletedSupply">View Completed Requests</a> </button></div>
+      </div>  
     </div>
   </div>
   <script src="<?=ROOT?>/assets/js/productionManager/sidebar.js"></script>

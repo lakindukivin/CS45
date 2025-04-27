@@ -87,3 +87,26 @@
 
       // Initial call to display clock immediately
       updateClock();
+
+      // Fetch and update order counts every 30 seconds
+      function updateOrderCounts() {
+        fetch('<?= ROOT ?>/ProductionManagerHome/getOrderCounts')
+            .then(response => response.json())
+            .then(data => {
+                // Update the total count
+                document.querySelector('.metric-value').textContent = data.total;
+            });
+    }
+    setInterval(updateOrderCounts, 30000);
+    updateOrderCounts();
+
+    // Fetch and update recycled polythene every 30 seconds
+    function updatePolytheneAmount() {
+        fetch('<?= ROOT ?>/ProductionManagerHome/getPolytheneAmount')
+            .then(response => response.json())
+            .then(data => {
+                document.querySelector('.metric-value:nth-child(2)').textContent = data.amount;
+            });
+    }
+    updatePolytheneAmount();
+    setInterval(updatePolytheneAmount, 30000); 

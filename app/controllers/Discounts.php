@@ -27,6 +27,9 @@ class Discounts
             redirect('login');
         }
 
+        // Update expired discounts automatically
+        $this->discountModel->updateExpiredDiscounts();
+
         // Get all products for the add discount form
         $products = new ProductModel();
         $allProducts = $products->getAllProducts();
@@ -93,7 +96,7 @@ class Discounts
         }
     }
 
-    
+
     public function update()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -119,7 +122,8 @@ class Discounts
         }
     }
 
-    public function delete(){
+    public function delete()
+    {
         if (isset($_POST['deleteDiscountId'])) {
             if ($this->discountModel->delete($_POST['deleteDiscountId'])) {
                 $_SESSION['success'] = "Successfully deleted!";
@@ -132,7 +136,7 @@ class Discounts
             }
         }
     }
-     
+
 
 
     public function setActive()

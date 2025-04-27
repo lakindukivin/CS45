@@ -26,7 +26,7 @@ class RecycledPolythene {
 
         $data = [];
         // Get all existing months to prevent duplicates
-        $existingMonths = $this->polytheneModel->getAllMonths();
+        $existingMonths = $this->polytheneModel->getAllMonths()?:[];
         $data['existingMonths'] = array_column($existingMonths, 'month');
         $data['success'] = isset($_SESSION['success']) ? $_SESSION['success'] : '';
         unset($_SESSION['success']);
@@ -50,8 +50,7 @@ class RecycledPolythene {
             ];
 
             if($this->polytheneModel->updateAmount($data)) {
-                $_SESSION['success'] = "Data for $month was successfully saved";
-                redirect('RecycledPolythene?month=' . urlencode($month));
+                redirect('PolytheneAmount?month=' . urlencode($month));
             }
         }
     }
