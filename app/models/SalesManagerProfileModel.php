@@ -54,7 +54,7 @@ class SalesManagerProfileModel
                   FROM staff s
                   JOIN user u ON s.user_id = u.user_id
                   JOIN role r ON u.role_id = r.role_id
-                  WHERE s.user_id = :user_id AND u.role_id = 4";
+                  WHERE s.user_id = :user_id AND u.role_id = 2";
 
         $params = [
             'user_id' => $userId
@@ -113,7 +113,7 @@ class SalesManagerProfileModel
     public function changePassword($userId, $currentPassword, $newPassword)
     {
         // Get current user password directly
-        $query = "SELECT password FROM user WHERE user_id = :user_id AND role_id = 4";
+        $query = "SELECT password FROM user WHERE user_id = :user_id AND role_id = 2";
         $params = ['user_id' => $userId];
 
         $result = $this->query($query, $params);
