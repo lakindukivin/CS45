@@ -107,7 +107,14 @@
                         </td>
                     </tr>
                 <?php endforeach; ?>
-            <?php endif; ?>
+                <?php else: ?>
+        <tr>
+            <td colspan="7" class="no-items">
+                <img src="<?= ROOT ?>/assets/images/dolly.svg" alt="All good">
+                No pending custom orders available
+            </td>
+        </tr>
+        <?php endif; ?>
         </tbody>
     </table>
 
