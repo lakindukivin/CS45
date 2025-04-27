@@ -6,9 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/admin/common.css" />
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/admin/sidebar.css" />
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/admin/home.css" />
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/admin/myprofile.css" />
-    <title>Waste360 | Admin Profile</title>
+    <title>Profile | <?= $profile->role_name ?? 'Admin' ?></title>
 </head>
 
 <body>
@@ -18,14 +17,18 @@
         </button>
         <div class="sidebar-container">
             <div class="prof-picture">
-                <img src="<?= ROOT ?>/assets/images/user.svg" alt="profile" />
-                <span class="user-title">Admin</span>
+                <?php if (!empty($profile->image)): ?>
+                    <img src="<?= ROOT . $profile->image ?>" alt="profile" />
+                <?php else: ?>
+                    <img src="<?= ROOT ?>/assets/images/user.svg" alt="profile" />
+                <?php endif; ?>
+                <span class="user-title"><?= $profile->role_name ?? 'Admin' ?></span>
             </div>
 
             <div>
                 <ul>
                     <li>
-                        <a href="#" class="sidebar-active">
+                        <a href="<?= ROOT ?>/adminHome">
                             <img src="<?= ROOT ?>/assets/images/dashboard.svg" alt="dashboard" />
                             <span class="sidebar-titles">Dashboard</span>
                         </a>
@@ -181,7 +184,32 @@
     </div>
 
     <script src="<?= ROOT ?>/assets/js/sidebar.js"></script>
-    <script src="<?= ROOT ?>/assets/js/myprofile.js"></script>
+    <script>
+        // Tab switching functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function () {
+                    // Remove active class from all tabs
+                    tabs.forEach(t => t.classList.remove('active'));
+
+                    // Add active class to current tab
+                    this.classList.add('active');
+
+                    // Hide all tab contents
+                    tabContents.forEach(content => {
+                        content.style.display = 'none';
+                    });
+
+                    // Show current tab content
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId + '-tab').style.display = 'block';
+                });
+            });
+        });
+    </script>
 
 </body>
 
