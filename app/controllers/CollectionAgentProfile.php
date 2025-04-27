@@ -8,7 +8,7 @@ class CollectionAgentProfile
     
     public function __construct()
     {
-        // Check if user is logged in and is a Customer Service Manager
+        // Check if user is logged in and is a Collection Agent
         if(!isset($_SESSION['user_id']) || $_SESSION['role_id'] != 6) {
             redirect('login');
         }
