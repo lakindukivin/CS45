@@ -1,9 +1,5 @@
 <?php
 
-/**
- * admin home class
- */
-
 class AdminHome
 {
     use Controller;

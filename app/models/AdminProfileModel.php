@@ -4,7 +4,7 @@ class AdminProfileModel
 {
     use Model;
 
-    protected $table = 'staff'; // Primary table for admin profile
+    protected $table = 'staff';  
     protected $allowedColumns = [
         'staff_id',
         'name',
@@ -16,10 +16,7 @@ class AdminProfileModel
         'status'
     ];
     
-    /**
-     * Begin a database transaction
-     * @return bool Success status
-     */
+     
     public function beginTransaction()
     {
         // Get the database connection from the Model trait
@@ -27,30 +24,21 @@ class AdminProfileModel
         return $db->beginTransaction();
     }
     
-    /**
-     * Commit the active database transaction
-     * @return bool Success status
-     */
+     
     public function commit()
     {
         $db = $this->getConnection();
         return $db->commit();
     }
 
-    /**
-     * Rollback the active database transaction
-     * @return bool Success status
-     */
+     
     public function rollback()
     {
         $db = $this->getConnection();
         return $db->rollback();
     }
 
-    /**
-     * Get the database connection
-     * @return PDO Database connection
-     */
+     
     private function getConnection()
     {
         // This method should return the PDO connection instance
@@ -58,18 +46,14 @@ class AdminProfileModel
         return $this->db ?? $this->connect();
     }
 
-    /**
-     * Get Customer Service Manager profile data
-     * @param int $userId User ID
-     * @return object|false Profile data or false if not found
-     */
+     
     public function getProfileData($userId)
     {
         $query = "SELECT s.*, u.email, r.role as role_name 
                   FROM staff s
                   JOIN user u ON s.user_id = u.user_id
                   JOIN role r ON u.role_id = r.role_id
-                  WHERE s.user_id = :user_id AND u.role_id = 4";
+                  WHERE s.user_id = :user_id AND u.role_id = 1";
 
         $params = [
             'user_id' => $userId
@@ -79,12 +63,7 @@ class AdminProfileModel
         return $result[0] ?? false;
     }
 
-    /**
-     * Update Customer Service Manager profile
-     * @param int $userId User ID
-     * @param array $data Profile data to update
-     * @return bool Success status
-     */
+    
     public function updateProfile($userId, $data)
     {
         if (method_exists($this, 'beginTransaction')) {
@@ -113,7 +92,7 @@ class AdminProfileModel
             if (!$staff) {
                 // If no staff record exists, we need to create one
                 $staff_data['user_id'] = $userId;
-                $staff_data['role_id'] = 4; // Customer Service Manager role
+                $staff_data['role_id'] = 1;  
                 $staff_data['status'] = 1;
                 $staff_update = $this->insert($staff_data);
             } else {
@@ -129,17 +108,11 @@ class AdminProfileModel
     }
 
 
-    /**
-     * Change user password without using User model
-     * @param int $userId User ID
-     * @param string $currentPassword Current password
-     * @param string $newPassword New password
-     * @return bool|string True on success, error message on failure
-     */
+    
     public function changePassword($userId, $currentPassword, $newPassword)
     {
         // Get current user password directly
-        $query = "SELECT password FROM user WHERE user_id = :user_id AND role_id = 4";
+        $query = "SELECT password FROM user WHERE user_id = :user_id AND role_id = 1";
         $params = ['user_id' => $userId];
 
         $result = $this->query($query, $params);
