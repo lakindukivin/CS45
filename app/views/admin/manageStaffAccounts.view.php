@@ -115,7 +115,7 @@
                         <th>Address</th>
                         <th>Role</th>
                         <th>Status</th>
-                        <th>Actions</th>
+                        <th style="width:100px">Actions</th>
                     </tr>
                 </thead>
                 <tbody id="staffTableBody">
@@ -128,7 +128,7 @@
                                 <td><?= $staff->email ?></td>
                                 <td><?= $staff->phone ?></td>
                                 <td><?= $staff->address ?></td>
-                                <td><?= $staff->role_id ?></td>
+                                <td><?= $staff->role ?></td>
                                 <td><?= $staff->status == 1 ? "<a href=ManageStaffAccounts/setInactive?staff_id=" . $staff->staff_id . " class='active-btn'>Active</a>" : "<a  href=ManageStaffAccounts/setActive?staff_id=" . $staff->staff_id . " class='inactive-btn'>Inactive</a>"; ?>
                                 </td>
                                 <td class="action-buttons">
