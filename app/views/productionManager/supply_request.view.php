@@ -73,20 +73,38 @@
       <div class="container">
         <div class="header">
         <h1>Pending supply requests</h1>
-        <button class="add-button">
-                <a href="<?=ROOT?>/CompletedSupply">View Completed Supply Requests</a>
-            </button>
         </div>
         <table>
             <thead>
                 <tr>
                     <th>Product ID</th>
                     <th>Product Name</th>
-                    <th>Size</th>
+                    <th>Pack Size</th>
+                    <th>Bag Size</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody id="orderTableBody">
-                <!-- Table body will be populated by JavaScript -->
+            <?php if (!empty($stockItems)): ?>
+            <?php foreach ($stockItems as $item): ?>
+        <tr class="low-stock">
+            <td><?= htmlspecialchars($item->product_id) ?></td>
+            <td><?= htmlspecialchars($item->productName) ?></td>
+            <td><?= htmlspecialchars($item->pack_size) ?></td>
+            <td><?= htmlspecialchars($item->bag_size) ?></td>
+            <td>
+                    <a href="#" class="btn-alert">Add</a>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+        <?php else: ?>
+        <tr>
+            <td colspan="5" class="no-items">
+                <img src="<?= ROOT ?>/assets/images/check-mark.svg" alt="All good">
+                No low stock items requiring supply
+            </td>
+        </tr>
+        <?php endif; ?>
             </tbody>
         </table>
       </div>

@@ -52,6 +52,20 @@ h1 {
   color: var(--primary-green);
 }
 
+/* Style for the "no items" message */
+.no-items {
+  text-align: center;
+  padding: 1rem;
+  color: #4CAF50; /* Green text */
+}
+
+.no-items img {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
 .add-button {
   background-color: var(--secondary-green);
   color: white;
