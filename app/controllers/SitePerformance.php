@@ -7,6 +7,13 @@
 class SitePerformance
 {
     use Controller;
+
+    private $issuesModel;
+
+    public function __construct()
+    {
+        $this->issuesModel = new IssuesModel(); // Need to create or use existing issues model
+    }
     public function index()
     {
         // Ensure session is active
@@ -24,7 +31,26 @@ class SitePerformance
             redirect('login');
         }
 
-        $this->view('admin/sitePerformance');
+        $recentIssues = $this->issuesModel->getRecentIssues(8);
+
+        // Process issues into notification format
+        $notifications = [];
+        if (!empty($recentIssues)) {
+            foreach ($recentIssues as $issue) {
+                $notifications[] = [
+                    'type' => 'issue',
+                    'id' => $issue->issue_id,
+                    'timestamp' => strtotime($issue->created_at ?? date('Y-m-d H:i:s')),
+                    'message' => "New issue reported: " . substr($issue->description, 0, 50) . "...",
+                    'status' => $issue->status == 1 ? 'Resolved' : 'Pending',
+                    'email' => $issue->email
+                ];
+            }
+        }
+
+        $this->view('admin/admin',[
+            'notifications' => $notifications
+        ]);
     }
 
     public function trafficData()
