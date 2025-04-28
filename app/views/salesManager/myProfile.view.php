@@ -190,7 +190,7 @@
             </div>
         </div>
 
-        <script src="<?= ROOT ?>/assets/js/sidebar.js"></script>
+        <script src="<?= ROOT ?>/assets/js/salesManager/sidebar.js"></script>
         <script>
             // Tab switching functionality
             document.addEventListener('DOMContentLoaded', function () {

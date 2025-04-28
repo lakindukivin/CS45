@@ -65,6 +65,7 @@ class ProductHasBagSizes
             $bag_id = $_POST['bag_id'];
 
             if ($this->productHasBagSizesModel->deleteSize($product_id, $bag_id)) {
+                $this->setStatusForEmpty($product_id);
                 $_SESSION['success'] = "Successfully Deleted!";
                 header("Location: " . ROOT . "/products");
                 exit();
@@ -73,6 +74,14 @@ class ProductHasBagSizes
             $_SESSION['error'] = "Failed to delete product!";
             header("Location: " . ROOT . "/products");
             exit();
+        }
+    }
+
+    public function setStatusForEmpty($id)
+    {
+        $results = $this->productHasBagSizesModel->findById($id);
+        if (!$results) {
+            $this->productModel->setInactive($id);
         }
     }
 
