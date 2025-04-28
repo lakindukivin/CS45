@@ -48,13 +48,13 @@ class Profile
             $data = [
                 'user_id' => $userId,
                 'name' => htmlspecialchars($_POST['name'] ?? ''),
-                'phone_number' => htmlspecialchars($_POST['phone'] ?? ''), // Note field name change
+                'phone' => htmlspecialchars($_POST['phone'] ?? ''), // Note field name change
                 'address' => htmlspecialchars($_POST['address'] ?? ''),
                 'image' => $picturePath
             ];
 
             // Validate required fields
-            if (!empty($data['name']) && !empty($data['phone_number']) && !empty($data['address'])) {
+            if (!empty($data['name']) && !empty($data['phone']) && !empty($data['address'])) {
                 if ($profileData) {
                     $customer->updateCustomer($userId, $data);
                     $_SESSION['success_message'] = "Profile updated successfully!";
