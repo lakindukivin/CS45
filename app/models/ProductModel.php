@@ -10,11 +10,23 @@ class ProductModel
     public function getAllProducts()
     {
         try {
-            $query = "SELECT * FROM $this->table WHERE productStatus = 1 ORDER BY product_id DESC";
+            $query = "SELECT * FROM $this->table ORDER BY product_id DESC";
             $result = $this->query($query);
             return $result;
         } catch (Exception $e) {
             error_log("Error fetching products: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function getActiveProducts()
+    {
+        try {
+            $query = "SELECT * FROM $this->table WHERE productStatus = 1 ORDER BY product_id DESC";
+            $result = $this->query($query);
+            return $result;
+        } catch (Exception $e) {
+            error_log("Error fetching active products: " . $e->getMessage());
             return false;
         }
     }

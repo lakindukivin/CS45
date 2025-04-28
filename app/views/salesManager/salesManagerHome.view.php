@@ -11,13 +11,6 @@
 </head>
 
 <body>
-    <?php
-    if (isset($_SESSION['user_id'])) {
-        $profileLink = ROOT . '/profile';
-    } else {
-        $profileLink = ROOT . '/login';
-    }
-    ?>
 
     <nav id="sidebar">
         <button id="toggle-btn" onclick="toggleSidebar()" class="toggle-btn">
@@ -89,7 +82,7 @@
                         <a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg" alt="" /></a>
                     </li>
                     <li>
-                        <a href="#">Profile</a>
+                        <a href="<?= ROOT ?>/SalesManagerProfile">Profile</a>
                     </li>
                     <li>
                         <a href="<?= ROOT ?>/Logout">Log Out</a>

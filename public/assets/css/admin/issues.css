@@ -29,3 +29,21 @@ h3 {
 
 
 @media screen and (max-width: 768px) {}
+
+
+
+.highlighted-row {
+    animation: highlightFade 5s;
+}
+
+@keyframes highlightFade {
+
+    0%,
+    20% {
+        background-color: rgba(52, 150, 94, 0.2);
+    }
+
+    100% {
+        background-color: transparent;
+    }
+}

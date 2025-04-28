@@ -1,9 +1,5 @@
 <?php
 
-/**
- * admin home class
- */
-
 class AdminHome
 {
     use Controller;
@@ -27,15 +23,35 @@ class AdminHome
 
         // Load models
         $customerModel = new ManageCustomerAccountsModel();
-        $staffModel = new ManageStaffAccountsModel(); // You need to have this model
+        $staffModel = new ManageStaffAccountsModel();
+        $issuesModel = new IssuesModel(); // Need to create or use existing issues model
 
         // Get counts
         $totalCustomers = $customerModel->getCustomersCount();
-        $totalStaff = $staffModel->getStaffCount(); // Implement getStaffCount() in staff model
+        $totalStaff = $staffModel->getStaffCount();
+
+        // Get recent issues for notifications (8 most recent)
+        $recentIssues = $issuesModel->getRecentIssues(8);
+
+        // Process issues into notification format
+        $notifications = [];
+        if (!empty($recentIssues)) {
+            foreach ($recentIssues as $issue) {
+                $notifications[] = [
+                    'type' => 'issue',
+                    'id' => $issue->issue_id,
+                    'timestamp' => strtotime($issue->created_at ?? date('Y-m-d H:i:s')),
+                    'message' => "New issue reported: " . substr($issue->description, 0, 50) . "...",
+                    'status' => $issue->status == 1 ? 'Resolved' : 'Pending',
+                    'email' => $issue->email
+                ];
+            }
+        }
 
         $this->view('admin/adminHome', [
             'totalCustomers' => $totalCustomers,
             'totalStaff' => $totalStaff,
+            'notifications' => $notifications
         ]);
     }
 }

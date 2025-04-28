@@ -32,7 +32,7 @@ class Discounts
 
         // Get all products for the add discount form
         $products = new ProductModel();
-        $allProducts = $products->getAllProducts();
+        $allProducts = $products->getActiveProducts();
 
         // Get all discounts with product information
         $limit = 10;

@@ -61,6 +61,15 @@ function closeBagSizeModal() {
 }
 
 function openAddBagSizeModal() {
+  const productSelect = document.getElementById('product_id');
+
+  // Check if there are any bag products available
+  if (productSelect && productSelect.options.length <= 1) {
+    // Only the default "Select a bag product" option exists
+    showResponse('No bag products available. Please add a bag product first.');
+    return;
+  }
+
   document.getElementById('addBagSizeModal').style.display = 'block';
 }
 
@@ -90,6 +99,66 @@ function openDeleteBagSizeModal(productId, bagId) {
 function closeDeleteBagSizeModal() {
   document.getElementById('deleteBagSizeModal').style.display = 'none';
 }
+
+// Store existing product-bag size relationships
+const productBagSizes = {};
+
+// Function to initialize product-bag size relationships from PHP data
+function initProductBagSizes(bagSizesData) {
+  bagSizesData.forEach((item) => {
+    if (!productBagSizes[item.product_id]) {
+      productBagSizes[item.product_id] = [];
+    }
+    productBagSizes[item.product_id].push(parseInt(item.bag_id));
+  });
+}
+
+// Update available bag sizes based on selected product
+function updateAvailableBagSizes() {
+  const productId = document.getElementById('product_id').value;
+  const bagSizeSelect = document.getElementById('bag_id');
+
+  // Reset options
+  bagSizeSelect.innerHTML = '';
+
+  // Define all possible bag sizes
+  const allBagSizes = [
+    { id: 1, name: 'Small' },
+    { id: 2, name: 'Large' },
+    { id: 3, name: 'Extra Large' },
+  ];
+
+  // Filter out already used bag sizes for this product
+  const usedBagSizes = productBagSizes[productId] || [];
+  const availableBagSizes = allBagSizes.filter(
+    (size) => !usedBagSizes.includes(size.id)
+  );
+
+  // Add available options to the select
+  if (availableBagSizes.length === 0) {
+    const option = document.createElement('option');
+    option.value = '';
+    option.textContent = 'All bag sizes already assigned to this product';
+    option.disabled = true;
+    option.selected = true;
+    bagSizeSelect.appendChild(option);
+  } else {
+    availableBagSizes.forEach((size) => {
+      const option = document.createElement('option');
+      option.value = size.id;
+      option.textContent = size.name;
+      bagSizeSelect.appendChild(option);
+    });
+  }
+}
+
+// Add event listener to product select
+document.addEventListener('DOMContentLoaded', function () {
+  const productSelect = document.getElementById('product_id');
+  if (productSelect) {
+    productSelect.addEventListener('change', updateAvailableBagSizes);
+  }
+});
 
 //refresh searchbar
 document

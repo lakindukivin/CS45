@@ -46,14 +46,15 @@ class Issues
         }
         $totalPages = ceil($totalIssues / $limit);
 
-        // // Fetch all issues from the database
-        // $issues = $this->IssueModel->getAllIssues();
+        // Check if there's a highlight parameter
+        $highlightId = isset($_GET['highlight']) ? $_GET['highlight'] : null;
 
         $this->view('admin/issues', [
             'issues' => $issues,
             'currentPage' => $page,
             'totalPages' => $totalPages,
             'search' => $search,
+            'highlightId' => $highlightId  // Pass this to the view
         ]);
     }
 
