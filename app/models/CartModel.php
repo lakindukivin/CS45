@@ -9,13 +9,12 @@ class CartModel
         'cart_id',
         'customer_id',
         'product_id',
+        'bag_id',
         'quantity',
         'pack_size',
         'bag_size',
         'created_at'
     ];
-
-    protected $limit = 100;
 
     public function __construct()
     {
@@ -25,8 +24,8 @@ class CartModel
 
     public function getCartWithProducts($customer_id)
     {
-        $query = "SELECT c.*, p.productName, pb.price, p.productImage, b.bag_size,
-                  (pb.price * c.quantity) AS subtotal 
+        $query = "SELECT c.*, p.productName, p.productImage, pb.price, b.bag_size,
+                  (pb.price * c.quantity) AS subtotal
                   FROM {$this->table} c
                   JOIN product p ON c.product_id = p.product_id
                   JOIN product_has_bag_sizes pb ON c.product_id = pb.product_id AND c.bag_id = pb.bag_id
@@ -37,14 +36,12 @@ class CartModel
         return $this->query($query, ['customer_id' => $customer_id]);
     }
 
-
-
     public function getCartTotal($customer_id)
     {
-        $query = "SELECT SUM(p.price * c.quantity) AS total 
-                 FROM {$this->table} c
-                 JOIN products p ON c.product_id = p.product_id
-                 WHERE c.customer_id = :customer_id";
+        $query = "SELECT SUM(pb.price * c.quantity) AS total
+                  FROM {$this->table} c
+                  JOIN product_has_bag_sizes pb ON c.product_id = pb.product_id AND c.bag_id = pb.bag_id
+                  WHERE c.customer_id = :customer_id";
 
         $result = $this->query($query, ['customer_id' => $customer_id]);
         return $result[0]->total ?? 0;
@@ -61,8 +58,7 @@ class CartModel
 
         if ($existing) {
             $newQuantity = $existing->quantity + $data['quantity'];
-            $this->update($existing->cart_id, ['quantity' => $newQuantity], 'cart_id');
-            return true;
+            return $this->update($existing->cart_id, ['quantity' => $newQuantity], 'cart_id');
         }
 
         $data['created_at'] = date('Y-m-d H:i:s');
@@ -77,23 +73,14 @@ class CartModel
         ]);
 
         if (!$item) {
-            throw new Exception("Cart item not found or doesn't belong to customer.");
+            throw new Exception("Cart item not found or doesn't belong to you.");
         }
 
         return $this->update($cart_id, ['quantity' => $quantity], 'cart_id');
     }
 
-    public function removeFromCart($cart_id, $customer_id)
+    public function removeFromCart($cart_id)
     {
-        $item = $this->first([
-            'cart_id' => $cart_id,
-            'customer_id' => $customer_id
-        ]);
-
-        if (!$item) {
-            throw new Exception("Cart item not found or doesn't belong to customer.");
-        }
-
         return $this->delete($cart_id, 'cart_id');
     }
 }

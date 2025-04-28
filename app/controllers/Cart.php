@@ -4,122 +4,136 @@ class Cart
 {
     use Controller;
 
+    public function __construct()
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: " . ROOT . "/login");
+            exit();
+        }
+    }
+
+    private function getCustomerId()
+    {
+        $user_id = $_SESSION['user_id'];
+
+        $customerModel = new Customer();
+        $customer = $customerModel->first(['user_id' => $user_id]);
+
+        if (!$customer) {
+            throw new Exception("Customer not found for the logged user.");
+        }
+
+        return $customer->customer_id;
+    }
+
+    // Display the cart page with all items
     public function index()
     {
-        if (!isset($_SESSION['user_id'])) {
-            redirect('login');
+        try {
+            $customer_id = $this->getCustomerId();
+
+            $cartModel = new CartModel();
+            $cartItems = $cartModel->getCartWithProducts($customer_id);
+            $total = $cartModel->getCartTotal($customer_id);
+
+            $this->view('customer/cart', [
+                'cartItems' => $cartItems,
+                'total' => $total
+            ]);
+        } catch (Exception $e) {
+            $_SESSION['error'] = $e->getMessage();
+            header("Location: " . ROOT . "/store");
             exit();
         }
-
-        $cartModel = new CartModel();
-        $customerModel = new Customer();
-
-        // Get customer_id from user_id
-        $customer = $customerModel->getCustomerByUserId($_SESSION['user_id']);
-        if (!$customer) {
-            $_SESSION['error'] = "Please complete your customer profile first";
-            redirect('profile');
-            exit();
-        }
-
-        // Get cart items with product details
-        $cartItems = $cartModel->getCartWithProducts($customer->customer_id);
-        $total = $cartModel->getCartTotal($customer->customer_id);
-
-        $this->view('cart/index', [
-            'cartItems' => $cartItems,
-            'total' => $total,
-            'customer_id' => $customer->customer_id
-        ]);
     }
 
+    // Add item to cart (already implemented as 'add')
     public function add()
     {
-        if (!isset($_SESSION['user_id']) || $_SERVER['REQUEST_METHOD'] !== 'POST') {
-            redirect('login');
-            exit();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            try {
+                // Get customer ID
+                $customer_id = $this->getCustomerId();
+
+                // Prepare data
+                $data = [
+                    'customer_id' => $customer_id,
+                    'product_id' => $_POST['product_id'],
+                    'bag_id' => $_POST['bag_id'],
+                    'quantity' => $_POST['quantity'],
+                    'pack_size' => $_POST['pack_size'],
+                    'bag_size' => $_POST['bag_size']
+                ];
+
+                // Add to cart
+                $cartModel = new CartModel();
+                $cartModel->addToCart($data);
+
+                // Return JSON response indicating success
+                echo json_encode(['success' => true, 'message' => 'Item added to cart successfully!']);
+            } catch (Exception $e) {
+                // Return JSON response indicating error
+                echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+            }
         }
-
-        $cartModel = new CartModel();
-        $customerModel = new Customer();
-
-        $customer = $customerModel->getCustomerByUserId($_SESSION['user_id']);
-        if (!$customer) {
-            $_SESSION['error'] = "Please complete your customer profile first";
-            redirect('profile');
-            exit();
-        }
-
-        try {
-            $data = [
-                'customer_id' => $customer->customer_id,  // Changed from user_id to customer_id
-                'product_id' => (int)$_POST['product_id'],
-                'quantity' => (int)$_POST['quantity'],
-                'pack_size' => htmlspecialchars(trim($_POST['pack_size'])),
-                'bag_size' => htmlspecialchars(trim($_POST['bag_size']))
-            ];
-
-            $cartModel->addToCart($data);
-            $_SESSION['success'] = "Item added to cart successfully!";
-        } catch (Exception $e) {
-            $_SESSION['error'] = $e->getMessage();
-        }
-
-        redirect('store');
     }
 
-    public function update($cart_id)
+    // Handle update cart item quantity
+    public function update()
     {
-        if (!isset($_SESSION['user_id']) || $_SERVER['REQUEST_METHOD'] !== 'POST') {
-            redirect('login');
-            exit();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            try {
+                $customer_id = $this->getCustomerId();
+                $cart_id = $_POST['cart_id']; // Get the cart item ID from the form
+                $quantity = $_POST['quantity']; // Get the updated quantity
+
+                $cartModel = new CartModel();
+                $cartModel->updateCartItem($cart_id, $customer_id, $quantity); // Update the item
+
+                $_SESSION['success'] = 'Cart updated successfully!';
+                header("Location: " . ROOT . "/cart");
+                exit();
+            } catch (Exception $e) {
+                $_SESSION['error'] = $e->getMessage();
+                header("Location: " . ROOT . "/cart");
+                exit();
+            }
         }
-
-        $cartModel = new CartModel();
-        $customerModel = new Customer();
-
-        $customer = $customerModel->getCustomerByUserId($_SESSION['user_id']);
-        if (!$customer) {
-            $_SESSION['error'] = "Please complete your customer profile first";
-            redirect('profile');
-            exit();
-        }
-
-        try {
-            $quantity = (int)$_POST['quantity'];
-            $cartModel->updateCartItem($cart_id, $customer->customer_id, $quantity);
-            $_SESSION['success'] = "Cart updated successfully!";
-        } catch (Exception $e) {
-            $_SESSION['error'] = $e->getMessage();
-        }
-
-        redirect('cart');
     }
 
-    public function remove($cart_id)
+    // Handle removing an item from the cart
+    public function removeFromCart()
     {
-        if (!isset($_SESSION['user_id'])) {
-            redirect('login');
-            exit();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            try {
+                $customer_id = $this->getCustomerId();
+
+                if (!isset($_POST['cart_id'])) {
+                    throw new Exception("Cart ID is missing.");
+                }
+
+                $cart_id = $_POST['cart_id'];
+
+                $cartModel = new CartModel();
+
+                $item = $cartModel->first(['cart_id' => $cart_id, 'customer_id' => $customer_id]);
+                if (!$item) {
+                    throw new Exception("Cart item not found or you don't have permission to remove it.");
+                }
+
+                $cartModel->removeFromCart($cart_id);
+
+                $_SESSION['success'] = 'Item removed from cart successfully!';
+                header("Location: " . ROOT . "/cart");
+                exit();
+            } catch (Exception $e) {
+                $_SESSION['error'] = $e->getMessage();
+                header("Location: " . ROOT . "/cart");
+                exit();
+            }
         }
-
-        $cartModel = new CartModel();
-        $customerModel = new Customer();
-
-        $customer = $customerModel->getCustomerByUserId($_SESSION['user_id']);
-        if (!$customer) {
-            $_SESSION['error'] = "Please complete your customer profile first";
-            redirect('profile');
-            exit();
-        }
-
-        try {
-            $cartModel->removeFromCart($cart_id, $customer->customer_id);
-            $_SESSION['success'] = "Item removed from cart successfully!";
-        } catch (Exception $e) {
-            $_SESSION['error'] = $e->getMessage();
-        }
-
-        redirect('cart');
     }
 }
