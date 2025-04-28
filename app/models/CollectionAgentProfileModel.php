@@ -114,7 +114,7 @@ class CollectionAgentProfileModel
             if (!$staff) {
                 // If no staff record exists, we need to create one
                 $staff_data['user_id'] = $userId;
-                $staff_data['role_id'] = 6; // Customer Service Manager role
+                $staff_data['role_id'] = 6; // Collection Agent role
                 $staff_data['status'] = 1;
                 $staff_update = $this->insert($staff_data);
             } else {

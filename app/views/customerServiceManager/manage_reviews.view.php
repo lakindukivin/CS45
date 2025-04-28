@@ -122,8 +122,7 @@
       <h1 class="logo">Pending Reviews</h1>
       <nav class="nav">
         <ul>
-          <li><a href="#"><img src="<?=ROOT?>/assets/images/notifications.svg"></a></li>
-          <li><a href="<?=ROOT?>/profile">Profile</a></li>
+          <li><a href="<?=ROOT?>/CSManagerProfile">Profile</a></li>
           <li><a href="<?=ROOT?>/logout">Logout</a></li>
         </ul>
       </nav>
@@ -168,22 +167,22 @@
             </tr>
           </thead>
           <tbody>
-            <?php if(isset($data['reviews']) && is_array($data['reviews'])): ?>
+            <?php if(isset($data['reviews']) && is_array($data['reviews']) && !empty($data['reviews'])): ?>
             <?php foreach($data['reviews'] as $review): ?>
             <tr>
               <td><?=$review->customerName?></td>
               <td><?=$review->productName?></td>
               <td><?=$review->rating?></td>
-              <td><?=$review->date?></td>
+              <td><?=date('Y-m-d', strtotime($review->date))?></td>
               <td>
               <button class="view-btn" onclick="openReviewUpdatePopup(<?= htmlspecialchars(json_encode($review),ENT_QUOTES,'UTF-8')?>)"><img src="<?= ROOT ?>/assets/images/edit-btn.svg" alt=""></button>
               </td>
             </tr>
             <?php endforeach; ?>
             <?php else: ?>
-              <tr>
-                <td colspan="7">No reviews found</td>
-              </tr>
+            <tr>
+                <td colspan="5">No reviews found</td>
+            </tr>
             <?php endif; ?>  
           </tbody>
         </table>

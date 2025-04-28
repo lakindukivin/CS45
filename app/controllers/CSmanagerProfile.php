@@ -139,22 +139,24 @@ class CSmanagerProfile
             return ['error' => 'File size should be less than 10MB'];
         }
         
-        // Create uploads directory similar to products implementation
+        // Create uploads directory with absolute path to ensure it works
         $uploadDir = 'uploads/profiles/';
         
-        // Make sure directory exists
-        if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0777, true);
+        // Make sure directory exists with proper permissions
+        if (!file_exists($uploadDir)) {
+            if (!mkdir($uploadDir, 0755, true)) {
+                return ['error' => 'Failed to create upload directory. Please check permissions.'];
+            }
         }
         
         // Generate a unique filename with proper extension
         $fileName = uniqid('profile_') . '_' . basename($_FILES['profile_image']['name']);
         $targetFile = $uploadDir . $fileName;
         
-        // Move the uploaded file
+        // Try to move the uploaded file
         if (move_uploaded_file($_FILES['profile_image']['tmp_name'], $targetFile)) {
-            // Use consistent path format with leading slash
-            return ['path' => '/' . $targetFile];
+            // Return the path WITHOUT leading slash for consistent path handling
+            return ['path' => $targetFile];
         } else {
             // More detailed error message
             $upload_error = error_get_last();

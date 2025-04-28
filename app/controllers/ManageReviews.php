@@ -18,6 +18,11 @@ class ManageReviews {
         
         // Get filtered reviews
         $allPendingReviews = $reviewModel->getFilteredPendingReviews($filterName, $filterDate);
+        
+        // Make sure $allPendingReviews is an array before trying to count it
+        if (!is_array($allPendingReviews)) {
+            $allPendingReviews = [];
+        }
 
         // Pagination parameters
         $limit = 5; // Items per page

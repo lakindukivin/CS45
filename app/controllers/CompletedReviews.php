@@ -20,6 +20,11 @@ class CompletedReviews {
 
     // Get filtered reviews
     $allCompletedReviews = $reviewModel->getFilteredRepliedReviews($filterName, $filterDate);
+    
+    // Make sure $allCompletedReviews is an array before trying to count it
+    if (!is_array($allCompletedReviews)) {
+        $allCompletedReviews = [];
+    }
 
     // Pagination parameters
     $limit = 5; // Items per page

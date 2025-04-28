@@ -5,7 +5,7 @@ class GuestCollection {
   use Controller;
 
   public function index() {
-    $guestCollection = new GuestCollectionModel();
+    // $guestCollection = new GuestCollectionModel();
     $this ->view('collectionAgent/guest_collection'); 
   }
   

@@ -30,46 +30,51 @@ function openCompletedGiveAwayPopup(giveaway) {
     });
   }
 
-  // document.addEventListener('DOMContentLoaded', function () {
-  //   // Tab functionality
-  //   const tabs = document.querySelectorAll('.status-tab');
-  //   const tabContents = document.querySelectorAll('.tab-content');
-  
-  //   tabs.forEach(tab => {
-  //     tab.addEventListener('click', () => {
-  //       const status = tab.getAttribute('data-status');
+  // Make sure tab switching preserves the current page and filters
+  document.addEventListener('DOMContentLoaded', function() {
+    const statusTabs = document.querySelectorAll('.status-tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    // Show active tab based on URL parameter or default to accepted
+    const urlParams = new URLSearchParams(window.location.search);
+    const activeTab = urlParams.get('tab') || 'accepted';
+    
+    // Update tab visibility
+    tabContents.forEach(content => {
+      if (content.id === activeTab + '-orders') {
+        content.classList.add('active');
+      } else {
+        content.classList.remove('active');
+      }
+    });
+    
+    // Update tab button active state
+    statusTabs.forEach(tab => {
+      if (tab.getAttribute('data-status') === activeTab) {
+        tab.classList.add('active');
+      } else {
+        tab.classList.remove('active');
+      }
+      
+      // Add click event handler for tab switching with filter preservation
+      tab.addEventListener('click', function(e) {
+        e.preventDefault();
+        const tabStatus = this.getAttribute('data-status');
         
-  //       // Debug logging
-  //       console.log("Tab clicked:", status);
+        // Get current filters
+        const filterName = urlParams.get('filter_name') || '';
+        const filterDate = urlParams.get('filter_date') || '';
         
-  //       // Remove active class from all tabs and contents
-  //       tabs.forEach(t => t.classList.remove('active'));
-  //       tabContents.forEach(c => c.classList.remove('active'));
-  
-  //       // Add active class to clicked tab
-  //       tab.classList.add('active');
+        // Build the new URL with the tab and preserve filters
+        let newURL = '?tab=' + tabStatus;
+        if (filterName) newURL += '&filter_name=' + encodeURIComponent(filterName);
+        if (filterDate) newURL += '&filter_date=' + encodeURIComponent(filterDate);
         
-  //       let tabContentId;
-  //       if (status === 'accepted') {
-  //         tabContentId = 'accepted-orders';
-  //       } else {
-  //         tabContentId = `${status}-orders`;
-  //       }
-        
-  //       // Find and show the corresponding content
-  //       const tabContent = document.getElementById(tabContentId);
-  //       if (tabContent) {
-  //         tabContent.classList.add('active');
-  //         console.log("Tab content activated:", tabContentId);
-  //       } else {
-  //         console.error(`Tab content not found for ID: ${tabContentId}`);
-  //         // List all available tab content IDs for debugging
-  //         const allIds = Array.from(tabContents).map(el => el.id);
-  //         console.log("Available tab content IDs:", allIds);
-  //       }
-  //     });
-  //   });
-  // });
+        // Navigate to the new URL
+        window.location.href = newURL;
+      });
+    });
+  });
 
   function showMessage(type, customText) {
     const message = type === 'success' ? document.getElementById('successMessage') : document.getElementById('errorMessage');
