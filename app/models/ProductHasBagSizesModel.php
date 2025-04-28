@@ -74,4 +74,18 @@ class ProductHasBagSizesModel
         }
     }
 
+
+    public function findById($id)
+    {
+        try {
+            $query = 'SELECT * FROM product_has_bag_sizes  WHERE product_id=:id;';
+            $params = ['id' => $id];
+            return $this->query($query, $params);
+
+        } catch (Exception $e) {
+            error_log("Error geting results: " . $e->getMessage());
+            return false;
+        }
+    }
+
 }
