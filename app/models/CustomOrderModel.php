@@ -4,57 +4,58 @@ class CustomOrderModel
 {
     use Model;
 
-    protected $table = 'custom_order'; // The table this model interacts with
-    protected $allowedColumns = ['user_id', 'company_name', 'quantity', 'email', 'phone', 'type', 'specifications'];
+    protected $table = 'custom_order';
+    protected $allowedColumns = [
+        'customOrder_id',
+        'customer_id',
+        'company_name',
+        'quantity',
+        'email',
+        'phone',
+        'type',
+        'specifications',
+        'customOrder_status',
+        'created_at'
+    ];
 
-    /**
-     * Create a new order.
-     * 
-     * @param array $data - Associative array of data to insert into the table.
-     * @return bool - Returns true if insertion was successful, false otherwise.
-     */
     public function createOrder($data)
     {
         try {
-            return $this->insert($data);
+            // Verify customer exists
+            $customerModel = new Customer();
+            $customer = $customerModel->getCustomerByUserId($_SESSION['user_id']);
+
+            if (!$customer) {
+                throw new Exception('Please complete your customer profile before placing an order.');
+            }
+
+            $orderData = [
+                'customer_id' => $customer->customer_id,
+                'company_name' => $data['company_name'],
+                'quantity' => $data['quantity'],
+                'email' => $data['email'],
+                'phone' => $data['phone'],
+                'type' => $data['type'] ?? 'regular',
+                'specifications' => $data['specifications'] ?? null,
+                'customOrder_status' => 'pending',
+            ];
+
+            // Debug output
+            error_log("Attempting to insert order: " . print_r($orderData, true));
+
+            // Perform insert
+            $success = $this->insert($orderData);
+
+            if (!$success) {
+                error_log("Failed to insert order. Database error: ");
+                return false;
+            }
+
+            error_log("Order inserted successfully with ID: ");
+            return true;
         } catch (Exception $e) {
-            error_log("Error creating order: " . $e->getMessage());
-            return false;
+            error_log("Model Error in createOrder: " . $e->getMessage());
+            throw $e;
         }
-    }
-
-    /**
-     * Get all custom orders for a specific user.
-     * 
-     * @param int $user_id - The user ID to fetch orders for.
-     * @return array|bool - Returns an array of orders or false on failure.
-     */
-    public function getOrdersForUser($user_id)
-    {
-        try {
-            return $this->where(['user_id' => $user_id]);
-        } catch (Exception $e) {
-            error_log("Error fetching orders: " . $e->getMessage());
-            return false;
-        }
-    }
-
-    /**
-     * Update a specific custom order
-     *
-     * @param int $order_id - The order ID to update.
-     * @param array $data - The data to update the order with.
-     * @param string $id_column - The column to use for identifying the order, default is 'order_id'
-     * @return bool - Returns true on success, false otherwise.
-     */
-    public function update($order_id, $data, $id_column = 'order_id')
-    {
-        // Ensure only allowed columns are updated
-        if (!empty($this->allowedColumns)) {
-            $data = array_intersect_key($data, array_flip($this->allowedColumns));
-        }
-
-        // Perform the update query
-        return $this->update($order_id, $data, $id_column);
     }
 }

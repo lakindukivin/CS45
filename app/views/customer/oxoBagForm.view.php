@@ -76,7 +76,7 @@
                 <label for="bag-size">Quantity</label>
                 <input type="number" value="1" min="1" />
             </div>
-            <button>Add to Cart</button>
+            <button onclick="location.href='<?= ROOT ?>/cart'">Add to Cart</button>
             <button onclick="location.href='<?= ROOT ?>/customOrder'">Custom Order</button>
         </div>
     </main>
