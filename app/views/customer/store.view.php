@@ -53,20 +53,31 @@
                 <h3>Recycled Pellets</h3>
                 <a href="<?= ROOT ?>/pelletForm"><button class="primary">Send Request</button></a>
             </div>
-            <div class="product-card">
-                <img
-                    src="<?= ROOT ?>/assets/images/regular.png"
-                    alt="Regular Garbage Bags" />
-                <h3>Regular Garbage Bags</h3>
-                <a href="<?= ROOT ?>/regularBagForm"><button class="primary">See Options</button></a>
-            </div>
-            <div class="product-card">
-                <img
-                    src="<?= ROOT ?>/assets/images/oxo-biodegradable.png"
-                    alt="Oxo-biodegradable Garbage Bags" />
-                <h3>Oxo-biodegradable Garbage Bags</h3>
-                <a href="<?= ROOT ?>/oxoBagForm"><button class="primary">See Options</button></a>
-            </div>
+
+            <?php if (!empty($products)): ?>
+                <?php foreach ($products as $product): ?>
+                    <div class="product-card">
+                        <?php if (!empty($product->productImage)): ?>
+                            <img src="<?= ROOT ?>/assets/images/<?= htmlspecialchars($product->productImage) ?>" alt="<?= htmlspecialchars($product->productName) ?>" />
+                        <?php else: ?>
+                            <?php if ($product->product_id == 1): ?>
+                                <img src="<?= ROOT ?>/assets/images/regular.jpg" alt="Regular Garbage Bags" />
+                            <?php else: ?>
+                                <img src="<?= ROOT ?>/assets/images/oxo-biodegradable.jpg" alt="Oxo-biodegradable Garbage Bags" />
+                            <?php endif; ?>
+                        <?php endif; ?>
+
+                        <h3><?= htmlspecialchars($product->productName) ?></h3>
+
+                        <?php if (trim($product->product_id) == 1): ?>
+                            <a href="<?= ROOT ?>/regularBagForm"><button class="primary">See Options</button></a>
+                        <?php else: ?>
+                            <a href="<?= ROOT ?>/oxoBagForm"><button class="primary">See Options</button></a>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+
         </div>
     </main>
 

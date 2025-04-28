@@ -89,7 +89,7 @@
   transition: var(--transition);
 }
 
-#sidebar.compact .prof-picture img {
+#sidebar.close .prof-picture img {
   width: 30px;
   height: 30px;
 }

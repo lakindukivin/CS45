@@ -16,13 +16,24 @@ class Schedule {
 
     public function index() {
         $data = [];
+
+        // Pagination setup
+        $page = $_GET['page'] ?? 1;
+        $limit = 10; // Number of items per page
+        $offset = ($page - 1) * $limit;
+        $totalSchedules = $this->scheduleModel->query("SELECT COUNT(*) as count FROM polythenecollection")[0]->count;
+
         $data['schedules'] = $this->scheduleModel->query(
             "SELECT * FROM polythenecollection 
-             ORDER BY collection_date DESC, collection_time DESC"
+             ORDER BY collection_date DESC, collection_time DESC LIMIT $limit OFFSET $offset"
         );
+
+        $data['currentPage'] = $page;
+        $data['totalPages'] = ceil($totalSchedules / $limit);
         $data['success'] = $_SESSION['success'] ?? '';
         $data['error'] = $_SESSION['error'] ?? '';
         $data['validAreas'] = $this->validAreas; // Pass to view for dropdown
+        
         unset($_SESSION['success'], $_SESSION['error']);
         $this->view('productionManager/schedule', $data);
     }
