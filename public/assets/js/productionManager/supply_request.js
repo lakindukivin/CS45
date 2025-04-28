@@ -187,11 +187,23 @@ document.addEventListener('DOMContentLoaded', function() {
   const closeModalBtn = document.querySelector('.close-btn');
   const quantityForm = document.getElementById('quantityForm');
   const quantityInput = document.getElementById('quantity');
+  const productIdInput = document.getElementById('productId');
+    const packIdInput = document.getElementById('packId');
+    const bagIdInput = document.getElementById('bagId');
 
   // Remove onclick from HTML buttons and use event listeners
   addButtons.forEach(button => {
       button.addEventListener('click', function(e) {
           e.preventDefault();
+          // Get the product details from data attributes
+          const productId = this.getAttribute('data-product-id');
+          const packId = this.getAttribute('data-pack-id');
+          const bagId = this.getAttribute('data-bag-id');
+          
+          // Set the values in the hidden inputs
+          productIdInput.value = productId;
+          packIdInput.value = packId;
+          bagIdInput.value = bagId;
           modal.style.display = 'block';
       });
   });
@@ -212,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if (quantityForm) {
       quantityForm.addEventListener('submit', function(e) {
           e.preventDefault();
-          // Your form submission logic here
+          this.submit();
       });
   }
 });

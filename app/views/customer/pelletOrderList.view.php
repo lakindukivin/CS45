@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Your Orders</title>
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/profileComplete.css" />
+    <title>Your Pellet Orders</title>
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/customOrderList.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
     <script src="<?= ROOT ?>/assets/js/profileComplete.js" defer></script>
 </head>
@@ -39,20 +39,36 @@
     </header>
 
     <main>
-        <div class="content">
-            <div class="cta">
-                <h1>Your Orders</h1>
-                <p>Check your orders!</p>
-
-
-                <!-- Orders and Delete Account Buttons -->
-                <div class="action-buttons">
-                    <a href="<?= ROOT ?>/normalOrderList" class="btn orders-btn">Normal Orders</a>
-                    <a href="<?= ROOT ?>/customOrderList" class="btn orders-btn">Custom Orders</a>
-                    <a href="<?= ROOT ?>/pelletOrderList" class="btn orders-btn">Pellet Orders</a>
-                </div>
-            </div>
-        </div>
+    <h2>Pellet Orders</h2>
+    <div class="orders-container">
+    <table class="orders-table">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Date</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td data-label="Order ID">#W360-78945</td>
+                <td data-label="Date">2024-03-15</td>
+                <td data-label="Quantity">15 kg</td>
+                <td data-label="Price">$45.00</td>
+                <td data-label="Status">
+                    <span class="status-badge status-pending">Pending</span>
+                </td>
+                <td data-label="Actions" class="actions-cell">
+                <button class="action-btn delete-btn">Cancel</button>
+                </td>
+            </tr>
+            
+        </tbody>
+    </table>
+</div>
     </main>
 
     <footer>

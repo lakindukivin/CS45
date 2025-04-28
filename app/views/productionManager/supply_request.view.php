@@ -93,7 +93,10 @@
             <td><?= htmlspecialchars($item->bag_size) ?></td>
             <td>
                             <div class="buttons">
-                            <button class="view-btn">Add</button>
+                            <button class="view-btn" 
+                    data-product-id="<?= htmlspecialchars($item->product_id) ?>"
+                    data-pack-id="<?= htmlspecialchars($item->pack_id) ?>"
+                    data-bag-id="<?= htmlspecialchars($item->bag_id) ?>">Add</button>
                             </div>
                         </td>
         </tr>
@@ -119,7 +122,10 @@
           <div class="form-group">
     <label for="area">Quantity:</label>
     <input type="number" id="quantity" name="quantity" min="1" required>
-</div>
+</div>        
+              <input type="hidden" id="productId" name="product_id">
+              <input type="hidden" id="packId" name="pack_id">
+              <input type="hidden" id="bagId" name="bag_id">          
               <input type="hidden" name="action" value="add">
               <div class="buttons">
               <button type="submit" class="save-btn">Add</button>
