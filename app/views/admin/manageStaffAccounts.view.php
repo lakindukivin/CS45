@@ -199,6 +199,7 @@
                             <option value="1">Admin</option>
                             <option value="2">Sales and Marketing Manager</option>
                             <option value="4">Customer Service Manager</option>
+                            <option value="6">Collection Agent</option>
                         </select>
                     </div>
 
