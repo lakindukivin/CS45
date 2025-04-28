@@ -76,6 +76,10 @@
             <h1 class="logo">My Profile</h1>
             <nav class="nav">
                 <ul>
+                    <li>
+                        <a href="#"><img onclick="openNotificationModal()"
+                                src="<?= ROOT ?>/assets/images/notifications.svg" alt="" /></a>
+                    </li>
                     <li><a href="<?= ROOT ?>/AdminProfile" class="active">Profile</a></li>
                     <li><a href="<?= ROOT ?>/Logout">Logout</a></li>
                 </ul>
@@ -210,6 +214,8 @@
             });
         });
     </script>
+    <script src="<?= ROOT ?>/assets/js/notifications.js"></script>
+
 
 </body>
 
