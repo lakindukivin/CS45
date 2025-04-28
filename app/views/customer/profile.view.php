@@ -68,7 +68,7 @@
 
                 <div class="profile-actions">
                     <button type="submit" class="update-btn">Update Profile</button>
-                    <a href="<?= ROOT ?>/profileComplete" class="orders-btn">View Profile</a>
+                    <a href="<?= ROOT ?>/profile/view" class="orders-btn">View Profile</a>
                 </div>
             </div>
         </form>

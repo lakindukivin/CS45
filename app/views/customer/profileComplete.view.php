@@ -23,15 +23,11 @@
         exit();
     }
 
-    // Fetch profile data (this should come from your controller)
-    $userId = $_SESSION['user_id'];
     $customer = new Customer();
-    $profile = $customer->getCustomerByUserId($userId);
+    $user_id = $_SESSION['user_id'];
 
-    // Convert object to array if needed
-    if (is_object($profile)) {
-        $profile = (array)$profile;
-    }
+    // Fetch customer details based on user_id
+    $profile = $customer->getCustomerByUserId($user_id);
     ?>
 
     <header>
@@ -67,20 +63,10 @@
 
                 <!-- Profile Info Section -->
                 <div class="profile-info">
-                    <!-- Profile Picture -->
-                    <div class="profile-picture-container">
-                        <img src="<?= !empty($profile['image']) ? ROOT . htmlspecialchars($profile['image']) : ROOT . '/assets/images/default-avatar.png' ?>"
-                            alt="Profile Picture"
-                            class="profile-picture">
-                    </div>
-
-                    <!-- Profile Details -->
-                    <div class="profile-details">
-                        <h2>Your Profile Information</h2>
-                        <p><strong>Name:</strong> <?= !empty($profile['name']) ? htmlspecialchars($profile['name']) : 'Not provided' ?></p>
-                        <p><strong>Address:</strong> <?= !empty($profile['address']) ? htmlspecialchars($profile['address']) : 'Not provided' ?></p>
-                        <p><strong>Phone Number:</strong> <?= !empty($profile['phone']) ? htmlspecialchars($profile['phone']) : 'Not provided' ?></p>
-                    </div>
+                    <h2>Your Profile Information</h2>
+                    <p><strong>Name:</strong> <?= isset($profile->name) ? htmlspecialchars($profile->name) : 'Not provided' ?></p>
+                    <p><strong>Address:</strong> <?= isset($profile->address) ? htmlspecialchars($profile->address) : 'Not provided' ?></p>
+                    <p><strong>Phone Number:</strong> <?= isset($profile->phone) ? htmlspecialchars($profile->phone) : 'Not provided' ?></p>
                 </div>
 
                 <!-- Form for deleting the account (hidden by default) -->
@@ -90,8 +76,13 @@
 
                 <!-- Action Buttons -->
                 <div class="action-buttons">
+                    <!-- My Orders - Simple anchor -->
                     <a href="<?= ROOT ?>/order" class="btn orders-btn">My Orders</a>
-                    <button id="deleteAccountBtn" class="btn delete-account-btn">Delete Account</button>
+
+                    <!-- Delete Account - Pure button with JS -->
+                    <button type="button" class="btn delete-account-btn" id="deleteAccountBtn">Delete Account</button>
+
+                    <!-- Edit Profile - Simple anchor -->
                     <a href="<?= ROOT ?>/profile" class="btn edit-btn">Edit Profile</a>
                 </div>
             </div>

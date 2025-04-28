@@ -34,14 +34,14 @@ class ProfileComplete
             } else {
                 // Sanitize form inputs for profile update
                 $address = htmlspecialchars($_POST['address'] ?? '');
-                $phoneNumber = htmlspecialchars($_POST['phone_number'] ?? '');
+                $phoneNumber = htmlspecialchars($_POST['phone'] ?? '');
 
                 // Validate the inputs
                 if (!empty($address) && !empty($phoneNumber)) {
                     $data = [
                         'user_id' => $userId,
                         'address' => $address,
-                        'phone_number' => $phoneNumber,
+                        'phone' => $phoneNumber,
                     ];
 
                     // Check if the user already has a profile
