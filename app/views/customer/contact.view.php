@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contact Us</title>
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/contact.css" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
-        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
 </head>
 
 <body>
@@ -22,10 +20,7 @@
 
     <header>
         <a href="#" class="logo">
-            <img
-                src="<?= ROOT ?>/assets/images/Waste360.png"
-                alt="Waste360 Logo"
-                class="logo-image" />
+            <img src="<?= ROOT ?>/assets/images/Waste360.png" alt="Waste360 Logo" class="logo-image" />
             <span>Waste360</span>
         </a>
 
@@ -48,28 +43,21 @@
     <main>
         <section class="contact-section">
             <h2>Contact for support</h2>
-            <form id="contactForm">
+            <form id="contactForm" action="<?= ROOT ?>/Issues/add" method="POST">
                 <label for="email">Email</label>
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="Enter your email"
-                    required />
+                <input type="email" id="email" name="email" placeholder="Enter your email" required />
+
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required />
 
                 <label for="reason">Reason</label>
                 <select id="reason" name="reason" required>
                     <option value="returns">Returns</option>
-                    <option value="general">General</option>
+                    <option value="general">Report Issue</option>
                 </select>
 
-                <label for="phone">Phone</label>
-                <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    placeholder="Enter your phone number"
-                    required />
+                <label for="description">Describe</label>
+                <textarea type="text" id="description" name="description" placeholder="Enter your issue" required></textarea>
 
                 <button type="submit">Submit</button>
             </form>
