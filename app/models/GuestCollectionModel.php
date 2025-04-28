@@ -51,4 +51,9 @@ class GuestCollectionModel {
     // Return total or 0 if no results
     return (isset($result[0]->total)) ? $result[0]->total : 0;
   }
+
+  public function getAllCollections() {
+    $query = "SELECT * FROM guest_collection ORDER BY date DESC";
+    return $this->query($query);
+  }
 }

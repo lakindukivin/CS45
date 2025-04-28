@@ -5,8 +5,12 @@ class GuestCollection {
   use Controller;
 
   public function index() {
-    // $guestCollection = new GuestCollectionModel();
-    $this ->view('collectionAgent/guest_collection'); 
+    //  $guestCollection = new GuestCollectionModel();
+    //  $allCollections = $guestCollection->getAllCollections();
+    // $this ->view('collectionAgent/guest_collection', [
+    //   'allCollections' => $allCollections,
+    // ]); 
+    $this ->view('collectionAgent/guest_collection');
   }
   
   public function save() {

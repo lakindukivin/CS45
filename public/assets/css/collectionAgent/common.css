@@ -451,3 +451,25 @@ textarea {
       transform: translate(-50%, -60%);
     }
   }
+  /*  <div class="table-container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Guest Name</th>
+            <th>Phone</th>
+            <th>Amount</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach($allCollections as $collection): ?>
+            <tr>
+              <td><?= htmlspecialchars($collection->guest_name) ?></td>
+              <td><?= htmlspecialchars($collection->phone) ?></td>
+              <td><?= htmlspecialchars($collection->amount) ?></td>
+              <td><?= htmlspecialchars($collection->date) ?></td>
+            </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+    </div>  */

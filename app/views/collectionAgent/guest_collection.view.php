@@ -81,7 +81,7 @@
       <nav class="nav">
         <ul>
           <li><a href="<?=ROOT?>/collectionagentprofile
-          Profile">Profile</a></li>
+          ">Profile</a></li>
           <li><a href="<?=ROOT?>/logout">Logout</a></li>
         </ul>
       </nav>
@@ -106,9 +106,7 @@
         <button type="submit">Submit</button>
      </form>
     </div>
-    </div>
- 
-
+    
   <script src="<?= ROOT ?>/assets/js/customerServiceManager/sidebar.js"></script>
   <script src="<?= ROOT ?>/assets/js/collectionAgent/giveAwayRequest.js"></script>
   
