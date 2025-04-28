@@ -19,3 +19,4 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initialize price display
   updatePrice();
 });
+AV;

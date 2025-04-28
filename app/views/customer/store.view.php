@@ -60,7 +60,7 @@
                         <?php if (!empty($product->productImage)): ?>
                             <img src="<?= ROOT ?>/assets/images/<?= htmlspecialchars($product->productImage) ?>" alt="<?= htmlspecialchars($product->productName) ?>" />
                         <?php else: ?>
-                            <?php if ($product->productType == 'Regular'): ?>
+                            <?php if ($product->product_id == 1): ?>
                                 <img src="<?= ROOT ?>/assets/images/regular.jpg" alt="Regular Garbage Bags" />
                             <?php else: ?>
                                 <img src="<?= ROOT ?>/assets/images/oxo-biodegradable.jpg" alt="Oxo-biodegradable Garbage Bags" />
@@ -69,7 +69,7 @@
 
                         <h3><?= htmlspecialchars($product->productName) ?></h3>
 
-                        <?php if (trim($product->productType) == 'Regular'): ?>
+                        <?php if (trim($product->product_id) == 1): ?>
                             <a href="<?= ROOT ?>/regularBagForm"><button class="primary">See Options</button></a>
                         <?php else: ?>
                             <a href="<?= ROOT ?>/oxoBagForm"><button class="primary">See Options</button></a>

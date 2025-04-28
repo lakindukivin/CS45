@@ -2,38 +2,48 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Shopping Cart</title>
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/cart.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart</title>
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/cart.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <script src="<?= ROOT ?>/assets/js/regularBagForm.js" defer></script>
 </head>
 
 <body>
-    <?php include 'includes/header.php'; ?>
 
     <?php
-    // Start session if not already started
-    if (session_status() == PHP_SESSION_NONE) {
-        session_start();
+    if (isset($_SESSION['user_id'])) {
+        $profileLink = ROOT . '/profile';
+    } else {
+        $profileLink = ROOT . '/login';
     }
-
-    // Check if the user is logged in, redirect if not
-    if (!isset($_SESSION['user_id'])) {
-        header("Location: " . ROOT . "/login");
-        exit();
-    }
-
-    $customer = new Customer();
-    $user_id = $_SESSION['user_id'];
-
-    // Fetch customer details based on user_id
-    $profile = $customer->getCustomerByUserId($user_id);
     ?>
 
+    <header>
+        <a href="<?= ROOT ?>" class="logo">
+            <img src="<?= ROOT ?>/assets/images/Waste360.png" alt="Waste360 Logo" class="logo-image" />
+            <span>Waste360</span>
+        </a>
+
+        <nav>
+            <ul class="nav-links">
+                <li><a href="<?= ROOT ?>">Home</a></li>
+                <li><a href="<?= ROOT ?>/service">Services</a></li>
+                <li><a href="<?= ROOT ?>/store">Store</a></li>
+                <li><a href="<?= ROOT ?>/contact">Contact</a></li>
+                <li><a href="<?= ROOT ?>/about">About</a></li>
+                <li>
+                    <a href="<?= $profileLink ?>" class="profile-icon">
+                        <div class="profile-placeholder"></div>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
 
     <main class="cart-container">
-        <h1>Your Shopping Cart</h1>
+        <h1>Shopping Cart</h1>
 
         <?php if (isset($_SESSION['success'])): ?>
             <div class="alert success"><?= $_SESSION['success'] ?></div>
@@ -46,63 +56,69 @@
         <?php endif; ?>
 
         <?php if (empty($cartItems)): ?>
-            <div class="empty-cart">
-                <p>Your cart is empty</p>
-                <a href="<?= ROOT ?>/store" class="btn">Continue Shopping</a>
-            </div>
+            <p>Your cart is empty!</p>
+            <a href="<?= ROOT ?>/store" class="btn">Shop Now</a>
         <?php else: ?>
             <div class="cart-items">
-                <table>
+                <table class="cart-table">
                     <thead>
                         <tr>
                             <th>Product</th>
                             <th>Pack Size</th>
                             <th>Bag Size</th>
-                            <th>Price</th>
                             <th>Quantity</th>
                             <th>Subtotal</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <?php $total = 0; ?> <!-- Initialize total here -->
+
                         <?php foreach ($cartItems as $item): ?>
+                            <?php
+                            $itemSubtotal = $item->price * $item->quantity * $item->pack_size;
+                            $total += $itemSubtotal; // Add this item's subtotal to total
+                            ?>
                             <tr>
                                 <td>
                                     <div class="product-info">
-                                        <img src="<?= ROOT ?>/assets/images/<?= $item->image_path ?>" alt="<?= $item->name ?>">
-                                        <span><?= $item->name ?></span>
+                                        <?= htmlspecialchars($item->productName) ?>
                                     </div>
                                 </td>
-                                <td><?= ucfirst($item->pack_size) ?></td>
-                                <td><?= ucfirst($item->bag_size) ?></td>
-                                <td>LKR <?= number_format($item->price, 2) ?></td>
+                                <td><?= htmlspecialchars($item->pack_size) ?> bags</td>
+                                <td><?= htmlspecialchars($item->bag_size) ?></td>
                                 <td>
-                                    <form method="POST" action="<?= ROOT ?>/cart/update/<?= $item->cart_id ?>">
+                                    <form action="<?= ROOT ?>/cart/update" method="POST">
+                                        <input type="hidden" name="cart_id" value="<?= $item->cart_id ?>">
                                         <input type="number" name="quantity" value="<?= $item->quantity ?>" min="1">
-                                        <button type="submit" class="btn-update">Update</button>
+                                        <button type="submit" class="btn">Update</button>
                                     </form>
                                 </td>
-                                <td>LKR <?= number_format($item->subtotal, 2) ?></td>
                                 <td>
-                                    <a href="<?= ROOT ?>/cart/remove/<?= $item->cart_id ?>" class="btn-remove">Remove</a>
+                                    LKR <?= number_format($itemSubtotal, 2) ?>
+                                </td>
+                                <td>
+                                    <form action="<?= ROOT ?>/cart/removeFromCart" method="POST" onsubmit="return confirm('Are you sure you want to remove this item?');">
+                                        <input type="hidden" name="cart_id" value="<?= $item->cart_id ?>">
+                                        <button type="submit" class="btn btn-danger">Remove</button>
+                                    </form>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
+
                 </table>
 
-                <div class="cart-summary">
-                    <h3>Cart Total: LKR <?= number_format($total, 2) ?></h3>
-                    <div class="cart-actions">
-                        <a href="<?= ROOT ?>/store" class="btn">Continue Shopping</a>
-                        <a href="<?= ROOT ?>/checkout" class="btn btn-primary">Proceed to Checkout</a>
-                    </div>
+                <div class="cart-total">
+                    <h3>Total: LKR <?= number_format($total, 2) ?></h3>
+                    <a href="<?= ROOT ?>/checkout" class="btn btn-primary">Proceed to Checkout</a>
                 </div>
+
             </div>
         <?php endif; ?>
+
     </main>
 
-    <?php include 'includes/footer.php'; ?>
 </body>
 
 </html>
