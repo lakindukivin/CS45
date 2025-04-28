@@ -56,12 +56,6 @@
                             <span class="sidebar-titles">Issues</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="<?= ROOT ?>/siteperformance">
-                            <img src="<?= ROOT ?>/assets/images/site-performance.svg" alt="site Performance" />
-                            <span class="sidebar-titles">Site Performance</span>
-                        </a>
-                    </li>
                 </ul>
             </div>
         </div>

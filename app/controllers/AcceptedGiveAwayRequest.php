@@ -2,15 +2,16 @@
 class AcceptedGiveAwayRequest
 {
     use Controller;
-   
-    public function index () {
+
+    public function index()
+    {
         $giveAwayModel = new GiveAwayModel();
-        
+
         // Get current page and tab from URL
-        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
         $tab = isset($_GET['tab']) ? $_GET['tab'] : 'accepted';
         $limit = 3; // items per page
-        
+
         // Get filter parameters
         $filters = [
             'name' => isset($_GET['filter_name']) ? $_GET['filter_name'] : '',
@@ -40,7 +41,7 @@ class AcceptedGiveAwayRequest
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $giveaway_id = $_POST['giveaway_id'] ?? null;
-            
+
             // Check if we have the required data
             if (empty($giveaway_id)) {
                 die("Error: The giveaway_id is missing or empty.");
@@ -56,7 +57,18 @@ class AcceptedGiveAwayRequest
                 // Now calling the updated method with proper parameters
                 $giveAwayModel->updateAcceptedGiveAway($giveaway_id, 'collected');
                 $giveAwayModel->updatePolytheneAmount($giveaway_id, $_POST['amount']);
-               
+
+                //get data for carbon footprint
+                $carbonFootprintModel = new CarbonFootprintModel();
+                $carbonFootprintData = [
+                    'customer_id' => $existingGiveAway[0]->customer_id,
+                    'name' => 'Giveaways',
+                    'amount' => $_POST['amount'],
+                    'carbon_footprint_type_id' => 2,
+                ];
+                $carbonFootprintModel->addCarbonFootprint($carbonFootprintData);
+
+
                 // Redirect with success flag
                 header("Location: " . ROOT . "/AcceptedGiveAwayRequest?success=1&tab=$tab");
                 exit;
@@ -65,12 +77,12 @@ class AcceptedGiveAwayRequest
 
         // Check for success/error messages in the URL
         if (isset($_GET['success'])) {
-          $data['success'] = $_GET['success'];
+            $data['success'] = $_GET['success'];
         }
         if (isset($_GET['error'])) {
-          $data['error'] = $_GET['error'];
-        }  
-      
+            $data['error'] = $_GET['error'];
+        }
+
         $this->view('collectionAgent/accepted_give_away', $data);
     }
 }

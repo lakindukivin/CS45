@@ -71,41 +71,27 @@ class CarbonFootprintModel
     public function calculateCarbonFootprint($product_id, $bag_id = null, $pack_id = null, $quantity)
     {
         try {
-            $checkQuery = "SELECT productType FROM product WHERE product_id = :product_id";
-            $checkParams = [
+
+            $query = "SELECT weight FROM product_has_bag_sizes WHERE product_id = :product_id AND bag_id = :bag_id";
+            $params = [
                 'product_id' => $product_id,
+                'bag_id' => $bag_id,
             ];
-            $checkResult = $this->query($checkQuery, $checkParams);
-            $productType = $checkResult[0]->productType ?? null;
+            $result = $this->query($query, $params);
+            $query2 = "SELECT pack_size FROM pack_size WHERE pack_id = :pack_id";
+            $params2 = [
+                'pack_id' => $pack_id,
+            ];
+            $result2 = $this->query($query2, $params2);
 
-            if ($productType === 'Bag') {
-                $query = "SELECT weight FROM product_has_bag_sizes WHERE product_id = :product_id AND bag_id = :bag_id";
-                $params = [
-                    'product_id' => $product_id,
-                    'bag_id' => $bag_id,
-                ];
-                $result = $this->query($query, $params);
-                $query2 = "SELECT pack_size FROM pack_size WHERE pack_id = :pack_id";
-                $params2 = [
-                    'pack_id' => $pack_id,
-                ];
-                $result2 = $this->query($query2, $params2);
-
-                if ($result && $result2) {
-                    $weight = $result[0]->weight;
-                    $pack_size = $result2[0]->pack_size;
-                    $carbonFootprint = $weight * $pack_size * $quantity;
-                    return $carbonFootprint;
-                } else {
-                    return 0;
-                }
-            } else if ($productType === 'Pellets') {
-                return $quantity;
-
+            if ($result && $result2) {
+                $weight = $result[0]->weight;
+                $pack_size = $result2[0]->pack_size;
+                $carbonFootprint = $weight * $pack_size * $quantity;
+                return $carbonFootprint;
+            } else {
+                return 0;
             }
-
-
-
 
         } catch (Exception $e) {
             error_log("Error calculating carbon footprint: " . $e->getMessage());

@@ -12,7 +12,7 @@ class DiscountModel
         // Fixed SQL query with proper table aliases and selected columns
         $query = "SELECT d.discount_id, p.product_id, p.productName, d.discount_percentage, d.start_date, d.end_date, d.status 
                  FROM discount d 
-                 JOIN product p ON d.product_id = p.product_id order by discount_id limit $limit offset $offset";
+                 JOIN product p ON d.product_id = p.product_id order by discount_id DESC limit $limit offset $offset";
         return $this->query($query);
     }
 

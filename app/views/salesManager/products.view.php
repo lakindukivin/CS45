@@ -179,13 +179,6 @@
                     <form action="<?= ROOT ?>/Products/add" id="productForm" enctype="multipart/form-data"
                         method="post">
                         <div class="form-group">
-                            <label for="productType">Product Type:</label>
-                            <select name="productType" id="productType">
-                                <option value="Bag">Bags</option>
-                                <option value="Pellet">Pellets</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
                             <label for="productName">Product Name:</label>
                             <input name="productName" type="text" id="productName" placeholder="Enter product Name"
                                 required />
@@ -330,8 +323,8 @@
                             <label for="product_id">Product:</label>
                             <select name="product_id" id="product_id" required>
                                 <option value="">Select a bag product</option>
-                                <?php if (!empty($bagProducts)): ?>
-                                    <?php foreach ($bagProducts as $product): ?>
+                                <?php if (!empty($allProducts)): ?>
+                                    <?php foreach ($allProducts as $product): ?>
                                         <option value="<?= $product->product_id ?>">
                                             <?= htmlspecialchars($product->productName) ?>
                                         </option>
