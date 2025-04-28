@@ -161,7 +161,7 @@
             </tr>
           </thead>
           <tbody>
-            <?php if (isset($data['accepted_giveaway']) && is_array($data['accepted_giveaway'])): ?>
+            <?php if (isset($data['accepted_giveaway']) && is_array($data['accepted_giveaway']) && !empty($data['accepted_giveaway'])): ?>
               <?php foreach ($data['accepted_giveaway'] as $giveaway): ?>
                 <tr data-order='<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8') ?>'>                  
                   <td><?= $giveaway->name ?></td>
