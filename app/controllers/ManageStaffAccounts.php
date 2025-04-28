@@ -10,11 +10,13 @@ class ManageStaffAccounts
 
     private $manageStaffAccountsModel;
     private $userModel;
+    private $issuesModel;
 
     public function __construct()
     {
         $this->manageStaffAccountsModel = new ManageStaffAccountsModel();
         $this->userModel = new User();
+        $this->issuesModel = new IssuesModel();
     }
     public function index()
     {
@@ -46,11 +48,31 @@ class ManageStaffAccounts
             $totalStaff = $this->manageStaffAccountsModel->getStaffCount();
         }
         $totalPages = ceil($totalStaff / $limit);
+
+        // Get recent issues for notifications (8 most recent)
+        $recentIssues = $this->issuesModel->getRecentIssues(8);
+
+        // Process issues into notification format
+        $notifications = [];
+        if (!empty($recentIssues)) {
+            foreach ($recentIssues as $issue) {
+                $notifications[] = [
+                    'type' => 'issue',
+                    'id' => $issue->issue_id,
+                    'timestamp' => strtotime($issue->created_at ?? date('Y-m-d H:i:s')),
+                    'message' => "New issue reported: " . substr($issue->description, 0, 50) . "...",
+                    'status' => $issue->status == 1 ? 'Resolved' : 'Pending',
+                    'email' => $issue->email
+                ];
+            }
+        }
         $this->view('admin/manageStaffAccounts', [
             'staffAccounts' => $staffAccounts,
             'currentPage' => $page,
             'totalPages' => $totalPages,
             'search' => $search,
+            'notifications' => $notifications
+
         ]);
     }
 
@@ -72,7 +94,7 @@ class ManageStaffAccounts
                 $_SESSION['success'] = "Successfully Added!";
                 header("Location: " . ROOT . "/manageStaffAccounts");
                 exit();
-            }else {
+            } else {
                 $_SESSION['error'] = "Failed to add staff!";
                 header("Location: " . ROOT . "/manageStaffAccounts");
                 exit();
@@ -80,7 +102,7 @@ class ManageStaffAccounts
         }
     }
 
-     public function addStaffWithUser()
+    public function addStaffWithUser()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -172,7 +194,7 @@ class ManageStaffAccounts
                     $_SESSION['success'] = "Successfully updated!";
                     header("Location: " . ROOT . "/manageStaffAccounts");
                     exit();
-                }else {
+                } else {
                     $_SESSION['error'] = "Failed to update staff!";
                     header("Location: " . ROOT . "/manageStaffAccounts");
                     exit();
@@ -189,7 +211,7 @@ class ManageStaffAccounts
                 $_SESSION['success'] = "Successfully deleted!";
                 header("Location: " . ROOT . "/manageStaffAccounts");
                 exit();
-            }else {
+            } else {
                 $_SESSION['error'] = "Failed to delete staff!";
                 header("Location: " . ROOT . "/manageStaffAccounts");
                 exit();
@@ -204,7 +226,7 @@ class ManageStaffAccounts
                 $_SESSION['success'] = "Successfully restored!";
                 header("Location: " . ROOT . "/manageStaffAccounts");
                 exit();
-            }else { 
+            } else {
                 $_SESSION['error'] = "Failed to restore staff!";
                 header("Location: " . ROOT . "/manageStaffAccounts");
                 exit();

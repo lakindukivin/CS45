@@ -9,8 +9,8 @@ class ManageStaffAccountsModel
     //get all staff accounts
     public function getAllStaff($limit, $offset)
     {
-        $query = "SELECT s.staff_id,s.name,s.address,s.phone,s.role_id,u.email,s.status,s.image
-                  FROM staff s JOIN user u ON s.user_id=u.user_id order by staff_id  limit $limit offset $offset";
+        $query = "SELECT s.staff_id,s.name,s.address,s.phone,s.role_id,u.email,s.status,s.image,r.role
+                  FROM staff s JOIN user u ON s.user_id=u.user_id JOIN role r ON r.role_id=s.role_id order by staff_id  limit $limit offset $offset";
         return $this->query($query);
     }
     public function getStaffPaginated($limit, $offset)

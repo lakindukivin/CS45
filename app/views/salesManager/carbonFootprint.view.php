@@ -94,7 +94,7 @@
                         <a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg" alt="" /></a>
                     </li>
                     <li>
-                        <a href="#">Profile</a>
+                        <a href="<?= ROOT ?>/SalesManagerProfile" class="active">Profile</a>
                     </li>
                     <li>
                         <a href="<?= ROOT ?>/Logout">Log Out</a>
@@ -123,7 +123,7 @@
                             <th>Customer</th>
                             <th>Carbon Footprint Type</th>
                             <th>Item</th>
-                            <th>Amount of Carbon Footprint Saved</th>
+                            <th>Amount of Carbon Footprint Saved(Kg)</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -132,8 +132,9 @@
                             <?php foreach ($carbonFootprints as $carbonFootprint): ?>
                                 <tr>
                                     <td><?= htmlspecialchars($carbonFootprint->id) ?></td>
-                                    <td><?= htmlspecialchars($carbonFootprint->email) ?></td>
+                                    <td><?= htmlspecialchars($carbonFootprint->customer_name) ?></td>
                                     <td><?= htmlspecialchars($carbonFootprint->type) ?></td>
+                                    <td><?= htmlspecialchars($carbonFootprint->name) ?></td>
                                     <td><?= htmlspecialchars($carbonFootprint->amount) ?></td>
 
                                     <td>

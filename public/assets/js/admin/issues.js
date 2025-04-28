@@ -126,3 +126,27 @@ document.addEventListener('DOMContentLoaded', function () {
     statusSelect.addEventListener('change', handleStatusChange);
   }
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Check if there's an issue to highlight
+  const urlParams = new URLSearchParams(window.location.search);
+  const highlightId = urlParams.get('highlight');
+
+  if (highlightId) {
+    const issueRow = document.querySelector(
+      `tr[data-issue-id="${highlightId}"]`
+    );
+    if (issueRow) {
+      // Scroll to the row
+      issueRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      // Highlight the row
+      issueRow.classList.add('highlighted-row');
+
+      // Remove highlight after a few seconds
+      setTimeout(() => {
+        issueRow.classList.remove('highlighted-row');
+      }, 5000);
+    }
+  }
+});
