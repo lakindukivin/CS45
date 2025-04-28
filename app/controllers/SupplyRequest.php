@@ -1,9 +1,4 @@
 <?php
-
-/**
- * supplyrequest class
- */
-
  class SupplyRequest{
 
   use Controller;
