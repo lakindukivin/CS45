@@ -112,7 +112,7 @@
       </div>
       </div>  
     </div>
-    <div id="modal" class="modal" style="display: none;">
+    <div id="modal" class="modal">
       <div class="modal-content">
           <span class="close-btn">&times;</span>
           <h2>Add Quantity</h2></br>
@@ -122,7 +122,9 @@
     <input type="number" id="quantity" name="quantity" min="1" required>
 </div>
               <input type="hidden" name="action" value="add">
+              <div class="buttons">
               <button type="submit" class="save-btn">Add</button>
+              </div>
           </form>
       </div>
   </div>
