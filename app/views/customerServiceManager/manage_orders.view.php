@@ -137,8 +137,7 @@
       <h1 class="logo">Pending Orders</h1>
       <nav class="nav">
         <ul>
-          <li><a href="#"><img src="<?=ROOT?>/assets/images/notifications.svg"></a></li>
-          <li><a href="<?=ROOT?>/profile">Profile</a></li>
+          <li><a href="<?=ROOT?>/CSManagerProfile">Profile</a></li>
           <li><a href="<?=ROOT?>/logout">Logout</a></li>
         </ul>
       </nav>

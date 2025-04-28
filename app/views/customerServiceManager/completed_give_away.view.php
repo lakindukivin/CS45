@@ -118,7 +118,6 @@
       <h1 class="logo">Completed Give Away Request</h1>
       <nav class="nav">
         <ul>
-          <li><a href="#"><img src="<?=ROOT?>/assets/images/notifications.svg"></a></li>
           <li><a href="<?=ROOT?>/CSManagerProfile">Profile</a></li>
           <li><a href="#">Logout</a></li>
         </ul>
@@ -300,52 +299,5 @@
 
   <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>
   <script src="<?=ROOT?>/assets/js/customerServiceManager/give_away_request.js"></script>
-  <script>
-    // Make sure tab switching preserves the current page and filters
-    document.addEventListener('DOMContentLoaded', function() {
-      const statusTabs = document.querySelectorAll('.status-tab');
-      const tabContents = document.querySelectorAll('.tab-content');
-      
-      // Show active tab based on URL parameter or default to accepted
-      const urlParams = new URLSearchParams(window.location.search);
-      const activeTab = urlParams.get('tab') || 'accepted';
-      
-      // Update tab visibility
-      tabContents.forEach(content => {
-        if (content.id === activeTab + '-orders') {
-          content.classList.add('active');
-        } else {
-          content.classList.remove('active');
-        }
-      });
-      
-      // Update tab button active state
-      statusTabs.forEach(tab => {
-        if (tab.getAttribute('data-status') === activeTab) {
-          tab.classList.add('active');
-        } else {
-          tab.classList.remove('active');
-        }
-        
-        // Add click event handler for tab switching with filter preservation
-        tab.addEventListener('click', function(e) {
-          e.preventDefault();
-          const tabStatus = this.getAttribute('data-status');
-          
-          // Get current filters
-          const filterName = urlParams.get('filter_name') || '';
-          const filterDate = urlParams.get('filter_date') || '';
-          
-          // Build the new URL with the tab and preserve filters
-          let newURL = '?tab=' + tabStatus;
-          if (filterName) newURL += '&filter_name=' + encodeURIComponent(filterName);
-          if (filterDate) newURL += '&filter_date=' + encodeURIComponent(filterDate);
-          
-          // Navigate to the new URL
-          window.location.href = newURL;
-        });
-      });
-    });
-  </script>
 </body>
 </html>

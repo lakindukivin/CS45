@@ -80,8 +80,7 @@
       <h1 class="logo">Guest Collection</h1>
       <nav class="nav">
         <ul>
-          <li><a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg"></a></li>
-          <li><a href="<?=ROOT?>/CollectionAgent
+          <li><a href="<?=ROOT?>/collectionagentprofile
           Profile">Profile</a></li>
           <li><a href="<?=ROOT?>/logout">Logout</a></li>
         </ul>

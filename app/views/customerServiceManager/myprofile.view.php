@@ -20,7 +20,7 @@
             <!-- Profile image in sidebar -->
             <div class="prof-picture">
                 <?php if (!empty($profile->image)): ?>
-                    <img src="<?= ROOT . $profile->image ?>" alt="profile" />
+                    <img src="<?= ROOT ?>/<?= $profile->image ?>" alt="profile" />
                 <?php else: ?>
                     <img src="<?= ROOT ?>/assets/images/user.svg" alt="profile" />
                 <?php endif; ?>
@@ -91,7 +91,7 @@
                     <!-- Profile image in profile header -->
                     <div class="profile-image">
                         <?php if (!empty($profile->image)): ?>
-                            <img src="<?= ROOT . $profile->image ?>" alt="Profile Image">
+                            <img src="<?= ROOT ?>/<?= $profile->image ?>" alt="Profile Image">
                         <?php else: ?>
                             <img src="<?= ROOT ?>/assets/images/user.svg" alt="Default Profile">
                         <?php endif; ?>

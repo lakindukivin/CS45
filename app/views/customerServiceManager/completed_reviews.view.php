@@ -124,7 +124,6 @@
       <h1 class="logo">Update Reviews</h1>
       <nav class="nav">
         <ul>
-          <li><a href="#"><img src="<?=ROOT?>/assets/images/notifications.svg"></a></li>
           <li><a href="<?=ROOT?>/CSmanagerProfile">Profile</a></li>
           <li><a href="<?=ROOT?>/logout">Logout</a></li>
         </ul>
