@@ -11,10 +11,15 @@ class ManageCustomerAccounts
     private $manageCustomerAccountsModel;
     private $userModel;
 
+    private $issuesModel;
+
+
     public function __construct()
     {
         $this->manageCustomerAccountsModel = new ManageCustomerAccountsModel();
         $this->userModel = new User();
+        $this->issuesModel = new IssuesModel();
+
     }
 
     public function index()
@@ -47,11 +52,31 @@ class ManageCustomerAccounts
             $totalCustomers = $this->manageCustomerAccountsModel->getCustomersCount();
         }
         $totalPages = ceil($totalCustomers / $limit);
+
+        // Get recent issues for notifications (8 most recent)
+        $recentIssues = $this->issuesModel->getRecentIssues(8);
+
+        // Process issues into notification format
+        $notifications = [];
+        if (!empty($recentIssues)) {
+            foreach ($recentIssues as $issue) {
+                $notifications[] = [
+                    'type' => 'issue',
+                    'id' => $issue->issue_id,
+                    'timestamp' => strtotime($issue->created_at ?? date('Y-m-d H:i:s')),
+                    'message' => "New issue reported: " . substr($issue->description, 0, 50) . "...",
+                    'status' => $issue->status == 1 ? 'Resolved' : 'Pending',
+                    'email' => $issue->email
+                ];
+            }
+        }
         $this->view('admin/manageCustomerAccounts', [
             'customerAccounts' => $customers,
             'currentPage' => $page,
             'totalPages' => $totalPages,
             'search' => $search,
+            'notifications' => $notifications
+
 
         ]);
     }
@@ -102,7 +127,7 @@ class ManageCustomerAccounts
         }
     }
 
-// change status
+    // change status
     public function setActive()
     {
         if (isset($_GET['customer_id'])) {

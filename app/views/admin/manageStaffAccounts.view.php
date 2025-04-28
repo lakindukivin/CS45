@@ -75,7 +75,8 @@
             <nav class="nav">
                 <ul>
                     <li>
-                        <a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg" alt="" /></a>
+                        <a href="#"><img onclick="openNotificationModal()"
+                                src="<?= ROOT ?>/assets/images/notifications.svg" alt="" /></a>
                     </li>
                     <li>
                         <a href="<?= ROOT ?>/AdminProfile">Profile</a>
@@ -289,10 +290,72 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal" id="notificationModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span onclick="closeNotificationModal()" class="close">&times;</span>
+                    <h2>Notifications</h2>
+                </div>
+                <div class="panel-card">
+                    <h4><i class="fas fa-bell"></i> Recent Issues</h4>
+                    <div class="notification-list">
+                        <?php if (empty($notifications)): ?>
+                            <p class="no-notifications">No recent issues reported</p>
+                        <?php else: ?>
+                            <?php
+                            $currentDate = null;
+                            foreach ($notifications as $notification):
+                                $notificationDate = date('Y-m-d', $notification['timestamp']);
+                                $today = date('Y-m-d');
+                                $yesterday = date('Y-m-d', strtotime('-1 day'));
+
+                                // Display date separators
+                                if ($currentDate != $notificationDate) {
+                                    $currentDate = $notificationDate;
+                                    $dateLabel = '';
+
+                                    if ($currentDate == $today) {
+                                        $dateLabel = 'Today';
+                                    } else if ($currentDate == $yesterday) {
+                                        $dateLabel = 'Yesterday';
+                                    } else {
+                                        $dateLabel = date('F j, Y', strtotime($currentDate));
+                                    }
+
+                                    echo '<div class="notification-time-indicator"><span>' . $dateLabel . '</span></div>';
+                                }
+                                ?>
+                                <div class="notification-item notification-<?= $notification['type'] ?>"
+                                    data-id="<?= $notification['id'] ?>" data-type="<?= $notification['type'] ?>">
+                                    <div class="notification-icon">
+                                        <img src="<?= ROOT ?>/assets/images/legal-issues.svg" alt="issue">
+                                    </div>
+                                    <div class="notification-content">
+                                        <p class="notification-message"><?= $notification['message'] ?></p>
+                                        <p class="notification-email"><?= $notification['email'] ?></p>
+                                        <p class="notification-date">
+                                            <span><?= date('h:i A', $notification['timestamp']) ?></span>
+                                        </p>
+                                    </div>
+                                    <div class="notification-status <?= strtolower($notification['status']) ?>">
+                                        <?= ucfirst($notification['status']) ?>
+                                    </div>
+
+                                </div>
+
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </main>
 
     <script src="<?= ROOT ?>/assets/js/admin/sidebar.js"></script>
     <script src="<?= ROOT ?>/assets/js/formValidation.js"></script>
+    <script src="<?= ROOT ?>/assets/js/notifications.js"></script>
     <script src="<?= ROOT ?>/assets/js/admin/manageStaffAccounts.js"></script>
 </body>
 
