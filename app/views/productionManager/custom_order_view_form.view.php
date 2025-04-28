@@ -79,10 +79,6 @@
         <form method="POST" action="<?= ROOT ?>/CustomOrderViewForm/post/<?= $order->customOrder_id ?>">
         <input type="hidden" name="order_id" value="<?= $order->customOrder_id ?>">
         <div class="form-row">
-            <!--<div class="form-group">
-                <label>Order ID</label>
-                <input type="text" value="<?= htmlspecialchars($data['order']->customOrder_id) ?>" readonly>
-            </div>-->
             <div class="form-group">
                 <label>Customer Name</label>
                 <input type="text" value="<?= htmlspecialchars($data['order']->customer_name) ?>" readonly>
