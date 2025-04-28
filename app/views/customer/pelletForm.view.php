@@ -52,27 +52,49 @@
         </div>
         <div class="product-details">
             <h2>Pellet Purchase</h2></br>
-            <form class="login-form">
+            <form class="login-form" method="POST" action="<?= ROOT ?>/pelletform/submit">
+                <?php if (isset($success) && $success === true): ?>
+                    <div class="success-message"><?= $success_message ?></div>
+                <?php endif; ?>
+
                 <div class="input-group">
                     <label for="name">Company/Client name</label>
-                    <input type="text" id="name" name="name" required>
+                    <input type="text" id="name" name="name" value="<?= isset($company_name) ? $company_name : '' ?>" required>
+                    <?php if (isset($errors['name'])): ?>
+                        <span class="error"><?= $errors['name'] ?></span>
+                    <?php endif; ?>
                 </div>
                 <div class="input-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
+                    <input type="email" id="email" name="email" value="<?= isset($email) ? $email : '' ?>" required>
+                    <?php if (isset($errors['email'])): ?>
+                        <span class="error"><?= $errors['email'] ?></span>
+                    <?php endif; ?>
                 </div>
                 <div class="input-group">
                     <label for="amount">Amount of pellets</label>
-                    <input type="number" id="amount" name="amount" value="1" min="1" required>
+                    <input type="number" id="amount" name="amount" value="<?= isset($amount) ? $amount : '1' ?>" min="1" required>
+                    <?php if (isset($errors['amount'])): ?>
+                        <span class="error"><?= $errors['amount'] ?></span>
+                    <?php endif; ?>
                 </div>
                 <div class="input-group">
                     <label for="phone">Contact</label>
-                    <input type="tel" id="phone" name="phone" minlength="10" pattern="[0-9]{10}" required>
+                    <input type="tel" id="phone" name="phone" value="<?= isset($contact) ? $contact : '' ?>" minlength="10" pattern="[0-9]{10}" required>
+                    <?php if (isset($errors['phone'])): ?>
+                        <span class="error"><?= $errors['phone'] ?></span>
+                    <?php endif; ?>
                 </div>
                 <div class="input-group">
                     <label for="date">Required Date</label>
-                    <input type="date" id="date" name="date" required>
+                    <input type="date" id="date" name="date" value="<?= isset($dateRequired) ? $dateRequired : '' ?>" required>
+                    <?php if (isset($errors['date'])): ?>
+                        <span class="error"><?= $errors['date'] ?></span>
+                    <?php endif; ?>
                 </div>
+                <?php if (isset($errors['submit'])): ?>
+                    <div class="error"><?= $errors['submit'] ?></div>
+                <?php endif; ?>
                 <div class="cta-buttons">
                     <button type="submit">Submit</button>
                 </div>

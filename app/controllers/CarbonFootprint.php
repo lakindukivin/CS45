@@ -4,27 +4,52 @@ class CarbonFootprint
 {
     use Controller;
 
+    private $carbonFootprintModel;
+
+    public function __construct()
+    {
+        $this->carbonFootprintModel = new CarbonFootprintModel();
+    }
     public function index()
     {
-        // // Redirect to login if the user is not logged in
-        // if (!isset($_SESSION['user_id'])) {
-        //     redirect('login');
-        // }
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
 
-        // Load the CarbonFootprintModel
-        $carbonFootprintModel = new CarbonFootprintModel();
+        // Redirect to login if user is not authenticated
+        if (!isset($_SESSION['user_id'])) {
+            redirect('login');
+        }
 
-        // // Calculate and save the monthly carbon footprint
-        // $carbonFootprintModel->calculateAndSaveMonthlyCarbonFootprint();
+        // Check if the user has the right role to access this page
+        if ($_SESSION['role_id'] != 2) {
+            redirect('login');
+        }
 
-        // // Fetch the current carbon footprint data
-        // $data = $carbonFootprintModel->getCurrentCarbonFootprint();
+        // Pagination setup
+        $limit = 10;
+        $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+        $offset = ($page - 1) * $limit;
+        $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 
-        $carbonFootprints = $carbonFootprintModel->getAllCarbonFootprints();
+        if ($search !== '') {
+            $carbonFootprint = $this->carbonFootprintModel->searchCarbonFootprint($search, $limit, $offset);
+            $totalcarbonFootprint = $this->carbonFootprintModel->searchCarbonFootprintCount($search);
+        } else {
+            $carbonFootprint = $this->carbonFootprintModel->getCarbonFootprintPaginated($limit, $offset);
+            $totalcarbonFootprint = $this->carbonFootprintModel->getCarbonFootprintCount();
+        }
+        $totalPages = ceil($totalcarbonFootprint / $limit);
 
-        // Pass the data to the view
         $this->view('salesManager/carbonFootprint', [
-            'carbonFootprints' => $carbonFootprints
+            'carbonFootprints' => $carbonFootprint,
+            'currentPage' => $page,
+            'totalPages' => $totalPages,
+            'search' => $search,
         ]);
     }
+        
+
+        // Pass the data to the view
+       
 }

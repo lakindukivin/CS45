@@ -66,7 +66,6 @@
       <h1 class="logo">DashBoard</h1>
       <nav class="nav">
         <ul>
-          <li><a href="#"><img src="<?=ROOT?>/assets/images/notifications.svg"></a></li>
           <li><a href="#">Profile</a></li>
           <li><a href="#">Logout</a></li>
         </ul>
@@ -111,10 +110,15 @@
           <span class="close-btn" onclick="closeModal()">&times;</span>
           <h2>Add Collection Schedule</h2></br>
           <form id="scheduleForm" action="<?=ROOT?>/Schedule/addSchedule" method="POST">
-              <div class="form-group">
-                  <label for="area">Area:</label>
-                  <input type="text" id="area" name="area" required>
-              </div>
+          <div class="form-group">
+    <label for="area">Area:</label>
+    <select id="area" name="area" class="form-control" required>
+    <option value="" disabled selected>-- Select Area --</option>
+    <?php foreach ($validAreas as $area): ?>
+        <option value="<?= htmlspecialchars($area) ?>"><?= htmlspecialchars($area) ?></option>
+    <?php endforeach; ?>
+    </select>
+</div>
               <div class="form-group">
                   <label for="date">Date:</label>
                   <input type="date" id="date" name="date" min="<?= date('Y-m-d', strtotime('+1 day')) ?>" required>

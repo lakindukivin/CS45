@@ -62,7 +62,6 @@
       <h1 class="logo">DashBoard</h1>
       <nav class="nav">
         <ul>
-          <li><a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg"></a></li>
           <li><a href="#">Profile</a></li>
           <li><a href="#">Logout</a></li>
         </ul>
@@ -107,7 +106,14 @@
                         </td>
                     </tr>
                 <?php endforeach; ?>
-            <?php endif; ?>
+                <?php else: ?>
+        <tr>
+            <td colspan="7" class="no-items">
+                <img src="<?= ROOT ?>/assets/images/dolly.svg" alt="All good">
+                No pending custom orders available
+            </td>
+        </tr>
+        <?php endif; ?>
         </tbody>
     </table>
 

@@ -75,21 +75,15 @@
           <span  class="close"
           id="completedGiveAwayPopupClose">&times;</span>
             <h1>Give Away Request Update</h1>
-
           </div>
-
-
           <div class="popup-content">
-            <label for="Customer_id" class="">Customer ID: </label>
-            <input type="text" name="customer_id" id="customer_id" readonly/>
+            <label for="Customer_id" class=""></label>
+            <input type="hidden" name="customer_id" id="customer_id" readonly/>
           </div>
-
-
           <div class="popup-content">
             <label for="Name" class="">Name: </label>
             <input type="text" name="name" id="name" readonly/>
           </div>
-
           <div class="popup-content">
             <label for="Phone">Phone: </label>
             <input type="text" name="Phone" id="phone" readonly/>
@@ -112,8 +106,6 @@
             <label for="status">Details: </label>
             <input type="text" name="details" id="details" readonly/>
           </div>
-
-
         </form>
       </div>
     </div>
@@ -123,31 +115,48 @@
       <img src="<?=ROOT?>/assets/images/Waste360.png" alt="logo" />
       <h1>Waste360</h1>  
       </div> 
-      <h1 class="logo">DashBoard</h1>
+      <h1 class="logo">Completed Give Away Request</h1>
       <nav class="nav">
         <ul>
-          <li><a href="#"><img src="<?=ROOT?>/assets/images/notifications.svg"></a></li>
-          <li><a href="<?=ROOT?>/profile">Profile</a></li>
+          <li><a href="<?=ROOT?>/CSManagerProfile">Profile</a></li>
           <li><a href="#">Logout</a></li>
         </ul>
       </nav>
     </header>
     <div class="box">
       <div class="container">
-        <div class="header">
-        <h2>Completed Give Away Request</h2>
-        </div>
+       <!-- Filter Form -->
+       <div class="filter-container">
+          <form action="" method="get" class="filter-form">
+            <input type="hidden" name="tab" value="<?= $data['activeTab'] ?? 'accepted' ?>">
+            
+            <div class="filter-input">
+              <label for="filter_name">Customer Name:</label>
+              <input type="text" id="filter_name" name="filter_name" value="<?= htmlspecialchars($data['filters']['name'] ?? '') ?>" placeholder="Filter by name">
+            </div>
+            
+            <div class="filter-input">
+              <label for="filter_date">Request Date:</label>
+              <input type="date" id="filter_date" name="filter_date" value="<?= htmlspecialchars($data['filters']['date'] ?? '') ?>">
+            </div>
+            
+            <div class="filter-actions">
+              <button type="submit" class="filter-btn">Apply Filters</button>
+              <a href="?tab=<?= $data['activeTab'] ?? 'accepted' ?>" class="reset-filter-btn">Reset</a>
+            </div>
+          </form>
+        </div> 
 
         <div class="status-tabs">
-          <button class="status-tab active" data-status="accepted">Accepted</button>
-          <button class="status-tab" data-status="rejected">Rejected</button>
+          <button class="status-tab <?= ($data['activeTab'] == 'accepted') ? 'active' : '' ?>" data-status="accepted" >Accepted</button>
+          <button class="status-tab <?= ($data['activeTab'] == 'collected') ? 'active' : '' ?>" data-status="collected">Collected</button>
+          <button class="status-tab <?= ($data['activeTab'] == 'rejected') ? 'active' : '' ?>" data-status="rejected">Rejected</button>
         </div>
 
-        <div class="tab-content active" id="accepted-orders">
+        <div class="tab-content <?= ($data['activeTab'] == 'accepted') ? 'active' : '' ?>" id="accepted-orders">
         <table>  
             <thead>
                 <tr>
-                <th>Customer ID</th>
                 <th>Name</th>
                 <th>Phone</th>
                 <th>Request Date</th>
@@ -157,34 +166,45 @@
                 </tr>
             </thead>
             <tbody>
-            <?php if (isset($data['accepted_giveaway']) && is_array($data['accepted_giveaway'])): ?>
+            <?php if (isset($data['accepted_giveaway']) && is_array($data['accepted_giveaway']) && !empty($data['accepted_giveaway'])): ?>
               <?php foreach ($data['accepted_giveaway'] as $giveaway): ?>
                 <tr data-order='<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8') ?>'>                  
-                  <td><?= $giveaway->customer_id ?></td>
                   <td><?= $giveaway->name ?></td>
                   <td><?= $giveaway->phone ?></td>
-                  <td><?= $giveaway->request_date ?></td>
+                  <td><?= date('Y-m-d', strtotime($giveaway->request_date)) ?></td>
                   <td><?= $giveaway->address ?></td>
-                  <td><span class="status-badge accepted">Accepted</span></td>
+                  <td><span>Accepted</span></td>
                   <td>
-                    <button class="view-btn" onclick="openCompletedGiveAwayPopup(<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8')?>)">View/Update</button>
+                    <button class="view-btn" onclick="openCompletedGiveAwayPopup(<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8')?>)"><img src="<?= ROOT ?>/assets/images/edit-btn.svg" alt=""></button>
                   </td>
                 </tr>
               <?php endforeach; ?>
             <?php else: ?>
               <tr>
-                <td colspan="7">No give away requests found</td>
+                <td colspan="9">No give away requests found</td>
               </tr>
             <?php endif; ?>
             </tbody>
         </table>
+
+        <!-- Accepted Pagination Controls -->
+        <div class="pagination">
+                <?php if (isset($data['totalAcceptedPages']) && $data['totalAcceptedPages'] > 1): ?>
+                    <?php for ($i = 1; $i <= $data['totalAcceptedPages']; $i++): ?>
+                        <a href="?tab=accepted&page=<?= $i ?><?= !empty($data['filters']['name']) ? '&filter_name='.urlencode($data['filters']['name']) : '' ?><?= !empty($data['filters']['date']) ? '&filter_date='.urlencode($data['filters']['date']) : '' ?>"
+                            class="<?= (isset($data['currentPage']) && $data['currentPage'] == $i && (!isset($data['activeTab']) || $data['activeTab'] == 'accepted')) ? 'active' : '' ?>">
+                            <?= $i ?>
+                        </a>
+                    <?php endfor; ?>
+                <?php endif; ?>
+        </div>       
+
       </div> 
 
-      <div class="tab-content" id="rejected-orders">
+      <div class="tab-content <?= (isset($data['activeTab']) && $data['activeTab'] == 'collected') ? 'active' : '' ?>" id="collected-orders">
         <table>  
             <thead>
                 <tr>
-                <th>Customer ID</th>
                 <th>Name</th>
                 <th>Phone</th>
                 <th>Request Date</th>
@@ -194,27 +214,85 @@
                 </tr>
             </thead>
             <tbody>
-            <?php if (isset($data['rejected_giveaway']) && is_array($data['rejected_giveaway'])): ?>
-              <?php foreach ($data['rejected_giveaway'] as $giveaway): ?>
+            <?php if (isset($data['collected_giveaway']) && is_array($data['collected_giveaway']) && !empty($data['collected_giveaway'])): ?>
+              <?php foreach ($data['collected_giveaway'] as $giveaway): ?>
                 <tr data-order='<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8') ?>'>                  
-                  <td><?= $giveaway->customer_id ?></td>
                   <td><?= $giveaway->name ?></td>
                   <td><?= $giveaway->phone ?></td>
-                  <td><?= $giveaway->request_date ?></td>
+                  <td><?= date('Y-m-d', strtotime($giveaway->request_date)) ?></td>
+                  <td><?= $giveaway->address ?></td>
+                  <td><span>Collected</span></td>
+                  <td>
+                    <button class="view-btn" onclick="openCompletedGiveAwayPopup(<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8')?>)"><img src="<?= ROOT ?>/assets/images/edit-btn.svg" alt=""></button>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            <?php else: ?>
+              <tr>
+                <td colspan="9">No give away requests found</td>
+              </tr>
+            <?php endif; ?>
+            </tbody>
+        </table>
+
+        <!-- Collected Pagination Controls -->
+        <div class="pagination">
+                <?php if (isset($data['totalCollectedPages']) && $data['totalCollectedPages'] > 1): ?>
+                    <?php for ($i = 1; $i <= $data['totalCollectedPages']; $i++): ?>
+                        <a href="?tab=collected&page=<?= $i ?><?= !empty($data['filters']['name']) ? '&filter_name='.urlencode($data['filters']['name']) : '' ?><?= !empty($data['filters']['date']) ? '&filter_date='.urlencode($data['filters']['date']) : '' ?>"
+                            class="<?= (isset($data['currentPage']) && $data['currentPage'] == $i && isset($data['activeTab']) && $data['activeTab'] == 'collected') ? 'active' : '' ?>">
+                            <?= $i ?>
+                        </a>
+                    <?php endfor; ?>
+                <?php endif; ?>
+        </div>    
+      </div> 
+
+      <div class="tab-content <?= ($data['activeTab'] == 'rejected') ? 'active' : '' ?>" id="rejected-orders">
+        <table>  
+            <thead>
+                <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Request Date</th>
+                <th>Address</th>
+                <th>Status</th>
+                <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php if (isset($data['rejected_giveaway']) && is_array($data['rejected_giveaway']) && !empty($data['rejected_giveaway'])): ?>
+              <?php foreach ($data['rejected_giveaway'] as $giveaway): ?>
+                <tr data-order='<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8') ?>'>                  
+                  <td><?= $giveaway->name ?></td>
+                  <td><?= $giveaway->phone ?></td>
+                  <td><?= date('Y-m-d', strtotime($giveaway->request_date)) ?></td>
                   <td><?= $giveaway->address ?></td>
                   <td><span class="status-badge accepted">Rejected</span></td>
                   <td>
-                    <button class="view-btn" onclick="openCompletedGiveAwayPopup(<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8')?>)">View/Update</button>
+                    <button class="view-btn" onclick="openCompletedGiveAwayPopup(<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8')?>)"><img src="<?= ROOT ?>/assets/images/edit-btn.svg" alt=""></button>
                   </td>
                 </tr>
               <?php endforeach; ?>
             <?php else: ?>
               <tr>
-                <td colspan="7">No give away requests found</td>
+                <td colspan="9">No give away requests found</td>
               </tr>
             <?php endif; ?>
             </tbody>
         </table>
+
+        <!-- Rejected Pagination Controls -->
+        <div class="pagination">
+                <?php if (isset($data['totalRejectedPages']) && $data['totalRejectedPages'] > 1): ?>
+                    <?php for ($i = 1; $i <= $data['totalRejectedPages']; $i++): ?>
+                        <a href="?tab=rejected&page=<?= $i ?><?= !empty($data['filters']['name']) ? '&filter_name='.urlencode($data['filters']['name']) : '' ?><?= !empty($data['filters']['date']) ? '&filter_date='.urlencode($data['filters']['date']) : '' ?>"
+                            class="<?= (isset($data['currentPage']) && $data['currentPage'] == $i && isset($data['activeTab']) && $data['activeTab'] == 'rejected') ? 'active' : '' ?>">
+                            <?= $i ?>
+                        </a>
+                    <?php endfor; ?>
+                <?php endif; ?>
+        </div>       
       </div> 
     </div>
   </div>

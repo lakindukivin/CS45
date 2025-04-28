@@ -64,7 +64,6 @@
       <h1 class="logo">DashBoard</h1>
       <nav class="nav">
         <ul>
-          <li><a href="#"><img src="<?=ROOT?>/assets/images/notifications.svg"></a></li>
           <li><a href="#">Profile</a></li>
           <li><a href="#">Logout</a></li>
         </ul>
@@ -73,48 +72,61 @@
       <div class="container">
         <div class="header">
         <h1>Pending supply requests</h1>
-        <button class="add-button">
-                <a href="<?=ROOT?>/CompletedSupply">View Completed Supply Requests</a>
-            </button>
         </div>
         <table>
             <thead>
                 <tr>
                     <th>Product ID</th>
                     <th>Product Name</th>
-                    <th>Size</th>
+                    <th>Pack Size</th>
+                    <th>Bag Size</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody id="orderTableBody">
-                <!-- Table body will be populated by JavaScript -->
+            <?php if (!empty($stockItems)): ?>
+            <?php foreach ($stockItems as $item): ?>
+        <tr class="low-stock">
+            <td><?= htmlspecialchars($item->product_id) ?></td>
+            <td><?= htmlspecialchars($item->productName) ?></td>
+            <td><?= htmlspecialchars($item->pack_size) ?></td>
+            <td><?= htmlspecialchars($item->bag_size) ?></td>
+            <td>
+                            <div class="buttons">
+                            <button class="view-btn">Add</button>
+                            </div>
+                        </td>
+        </tr>
+        <?php endforeach; ?>
+        <?php else: ?>
+        <tr>
+            <td colspan="5" class="no-items">
+                <img src="<?= ROOT ?>/assets/images/check-mark.svg" alt="All good">
+                No low stock items requiring supply
+            </td>
+        </tr>
+        <?php endif; ?>
             </tbody>
         </table>
       </div>
-      <!-- Add this modal HTML -->
-     <!-- <div id="statusModal" class="modal">
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <h2>Supply Status</h2>
-          <div class="status-details">
-            <p><strong>Supply ID:</strong> <span id="orderId"></span></p>
-            <p><strong>Status:</strong> <span id="orderStatus"></span></p>
-            <p><strong>Created Date:</strong> <span id="orderDate"></span></p>
-            <p><strong>Bag Size:</strong> <span id="bagSize"></span></p>
-            <p><strong>Category:</strong> <span id="category"></span></p>
-            <p><strong>Pack Size:</strong> <span id="packSize"></span></p>
-            <p><strong>Quantity:</strong> <span id="quantity"></span></p>
-            <p><strong>Description:</strong> <span id="orderDescription"></span></p>
-          </div>
-          <div class="status-timeline">
-            <div class="operation">
-              <button class="accept">Accept</button>
-              <button class="reject">Reject</button>
-            </div>
-          </div>
-        </div>-->
-      </div>
-      <div> <button type="view" class="view-btn" ><a href="<?=ROOT?>/CompletedSupply">View Completed Requests</a> </button></div>
+      </div>  
     </div>
+    <div id="modal" class="modal">
+      <div class="modal-content">
+          <span class="close-btn">&times;</span>
+          <h2>Add Quantity</h2></br>
+          <form id="quantityForm" action="<?=ROOT?>/SupplyRequest/post" method="POST">
+          <div class="form-group">
+    <label for="area">Quantity:</label>
+    <input type="number" id="quantity" name="quantity" min="1" required>
+</div>
+              <input type="hidden" name="action" value="add">
+              <div class="buttons">
+              <button type="submit" class="save-btn">Add</button>
+              </div>
+          </form>
+      </div>
+  </div>
   </div>
   <script src="<?=ROOT?>/assets/js/productionManager/sidebar.js"></script>
   <script src="<?=ROOT?>/assets/js/productionManager/supply_request.js"></script>

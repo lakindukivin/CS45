@@ -58,26 +58,13 @@
                 <h1>Waste360</h1>
             </div>
             <h1 class="logo">DashBoard</h1>
+            <div class="time-display">
+                    <div id="clock" class="clock">Loading...</div>
+                </div>
             <nav class="nav">
                 <ul>
-                    <li class="notification-container">
-                        <a href="#" id="notification-icon"><img src="<?= ROOT ?>/assets/images/notifications.svg">
-                            <span class="notification-badge" id="notification-count">0</span>
-                        </a>
-                        <!-- Notification panel will appear here -->
-                        <div class="notification-panel" id="notification-panel">
-                            <div class="notification-header">
-                                <h3>Notifications</h3>
-                                <button id="mark-all-read">Mark all as read</button>
-                            </div>
-                            <div class="notification-content" id="notification-content">
-                                <!-- Notifications will be loaded here -->
-                                <div class="loading">Loading notifications...</div>
-                            </div>
-                        </div>
-                    </li>
-                    <li><a href="<?= ROOT ?>/profile">Profile</a></li>
-                    <li><a href="<?= ROOT ?>/login">Logout</a></li>
+                    <li><a href="<?= ROOT ?>/CSmanagerProfile">Profile</a></li>
+                    <li><a href="<?= ROOT ?>/logout">Logout</a></li>
                 </ul>
             </nav>
         </header>
@@ -106,14 +93,69 @@
                         <!-- Add more dates dynamically -->
                     </div>
                 </div>
+                <div class="notification">
+                    <div class="panel-card">
+                        <h4><i class="fas fa-bell"></i> Pending Notifications</h4>
+                        <div class="notification-list">
+                            <?php if (empty($notifications)): ?>
+                                <p class="no-notifications">No recent notifications</p>
+                            <?php else: ?>
+                                <?php 
+                                $currentDate = null;
+                                foreach($notifications as $notification): 
+                                    $notificationDate = date('Y-m-d', $notification['timestamp']);
+                                    $today = date('Y-m-d');
+                                    $yesterday = date('Y-m-d', strtotime('-1 day'));
+                                    
+                                    // Display date separators
+                                    if ($currentDate != $notificationDate) {
+                                        $currentDate = $notificationDate;
+                                        $dateLabel = '';
+                                        
+                                        if ($currentDate == $today) {
+                                            $dateLabel = 'Today';
+                                        } else if ($currentDate == $yesterday) {
+                                            $dateLabel = 'Yesterday';
+                                        } else {
+                                            $dateLabel = date('F j, Y', strtotime($currentDate));
+                                        }
+                                        
+                                        echo '<div class="notification-time-indicator"><span>' . $dateLabel . '</span></div>';
+                                    }
+                                ?>
+                                    <div class="notification-item notification-<?= $notification['type'] ?>" 
+                                         data-id="<?= $notification['id'] ?>"
+                                         data-type="<?= $notification['type'] ?>">
+                                        <div class="notification-icon">
+                                            <?php if($notification['type'] == 'order'): ?>
+                                                <img src="<?= ROOT ?>/assets/images/manage_order.svg" alt="">
+                                            <?php elseif($notification['type'] == 'giveaway'): ?>
+                                                <img src="<?= ROOT ?>/assets/images/give_away.svg" alt="">
+                                            <?php elseif($notification['type'] == 'review'): ?>
+                                                <img src="<?= ROOT ?>/assets/images/reviews.svg" alt="">
+                                            <?php elseif($notification['type'] == 'return'): ?>
+                                                <img src="<?= ROOT ?>/assets/images/returns.svg" alt="">
+                                            <?php endif; ?>
+                                        </div>
+                                        <div class="notification-content">
+                                            <p class="notification-message"><?= $notification['message'] ?></p>
+                                            <p class="notification-date">
+                                                <span><?= date('h:i A', $notification['timestamp']) ?></span>
+                                            </p>
+                                        </div>
+                                        <div class="notification-status <?= strtolower($notification['status']) ?>">
+                                            <?= ucfirst($notification['status']) ?>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!--timee-->
             <div class="status-section">
-                <div class="time-display">
-                    <h3>Current Time</h3>
-                    <div id="clock" class="clock">Loading...</div>
-                </div>
                 <div class="metric-grid">
                     <div class="metric-card">
                         <h4>Give Aways</h4>

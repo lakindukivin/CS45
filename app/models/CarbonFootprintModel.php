@@ -5,72 +5,132 @@ class CarbonFootprintModel
     use Model;
 
     protected $table = 'carbon_footprint'; // Table to store carbon footprint data
-    protected $allowedColumns = ['footprint_id', 'month', 'amount']; // Columns allowed for insertion/update
-
-    // /**
-    //  * Calculate and save the monthly carbon footprint.
-    //  * 
-    //  * @return bool - Returns true if the calculation and insertion are successful, false otherwise.
-    //  */
-    // public function calculateAndSaveMonthlyCarbonFootprint()
-    // {
-    //     try {
-    //         // Fetch total giveaway quantity from the giveaway table
-    //         $giveawayQuery = "SELECT SUM(quantity) as total_giveaway FROM polythenegiveaway WHERE MONTH(date) = MONTH(CURRENT_DATE()) AND YEAR(date) = YEAR(CURRENT_DATE())";
-    //         $giveawayResult = $this->query($giveawayQuery);
-    //         $totalGiveaway = $giveawayResult[0]['total_giveaway'] ?? 0;
-
-    //         // Fetch total order quantity from the order table
-    //         $orderQuery = "SELECT SUM(quantity) as total_order FROM `orders` WHERE MONTH(order_date) = MONTH(CURRENT_DATE()) AND YEAR(order_date) = YEAR(CURRENT_DATE())";
-    //         $orderResult = $this->query($orderQuery);
-    //         $totalOrder = $orderResult[0]['total_order'] ?? 0;
-
-    //         // Calculate the total carbon footprint saved
-    //         $carbonFootprintSaved = $totalGiveaway + $totalOrder;
-
-    //         // Prepare data for insertion
-    //         $data = [
-    //             'value' => $carbonFootprintSaved,
-    //             'unit' => 'kg',
-    //             'date' => date('Y-m-d H:i:s') // Current timestamp
-    //         ];
-
-    //         // Insert the calculated carbon footprint into the carbon_footprint table
-    //         return $this->insert($data);
-    //     } catch (Exception $e) {
-    //         error_log("Error calculating and saving carbon footprint: " . $e->getMessage());
-    //         return false;
-    //     }
-    // }
-
-    /**
-     * Get the latest carbon footprint data.
-     * 
-     * @return array|bool - Returns the latest carbon footprint data or false on failure.
-     */
-    // public function getCurrentCarbonFootprint()
-    // {
-    //     try {
-    //         // Fetch the latest carbon footprint data
-    //         $query = "SELECT value, unit FROM {$this->table} ORDER BY date DESC LIMIT 1";
-    //         $result = $this->query($query);
-
-    //         if ($result && count($result) > 0) {
-    //             return $result[0]; // Return the latest record
-    //         }
-
-    //         return false; // Return false if no data is found
-    //     } catch (Exception $e) {
-    //         error_log("Error fetching carbon footprint data: " . $e->getMessage());
-    //         return false;
-    //     }
-    // }
+    protected $allowedColumns = ['id', 'customer_id', 'carbon_footprint_type_id', 'name', 'amount'];
 
 
     public function getAllCarbonFootprints()
     {
-        // Fetch all carbon footprint data
-        $query = "SELECT * FROM {$this->table}";
-        return $this->query($query);
+        try {
+            return $this->findAll();
+        } catch (Exception $e) {
+            error_log("Error fetching data: " . $e->getMessage());
+            return false;
+        }
     }
+
+
+    //pagination funtions
+    public function getCarbonFootprintPaginated($limit, $offset)
+    {
+        try {
+            $this->limit = $limit;
+            $this->offset = $offset;
+            return $this->findAll('id');
+        } catch (Exception $e) {
+            error_log("Error fetching paginated CarbobFootprint: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function getCarbonFootprintCount()
+    {
+        try {
+            $query = "SELECT COUNT(*) as count FROM $this->table";
+            $result = $this->query($query);
+            return $result ? $result[0]->count : 0;
+        } catch (Exception $e) {
+            error_log("Error counting CarbobFootprint: " . $e->getMessage());
+            return 0;
+        }
+    }
+
+    public function addCarbonFootprint($data)
+    {
+        try {
+            $this->insert($data);
+            return true;
+        } catch (Exception $e) {
+            error_log("Error adding carbon footprint: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function deleteCarbonFootprint($footprintId)
+    {
+        try {
+            return $this->delete($footprintId);
+        } catch (Exception $e) {
+            error_log("Error deleting carbon footprint: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function calculateCarbonFootprint($product_id, $bag_id=null, $pack_id=null, $quantity)
+    {
+        try {
+            $checkQuery = "SELECT productType FROM product WHERE product_id = :product_id";
+            $checkParams = [
+                'product_id' => $product_id,
+            ];
+            $checkResult = $this->query($checkQuery, $checkParams);
+            $productType = $checkResult[0]->productType ?? null;
+
+            if ($productType === 'Bag') {
+                $query = "SELECT weight FROM product_has_bag_sizes WHERE product_id = :product_id AND bag_id = :bag_id";
+                $params = [
+                    'product_id' => $product_id,
+                    'bag_id' => $bag_id,
+                ];
+                $result = $this->query($query, $params);
+                $query2 = "SELECT pack_size FROM pack_size WHERE pack_id = :pack_id";
+                $params2 = [
+                    'pack_id' => $pack_id,
+                ];
+                $result2 = $this->query($query2, $params2);
+
+                if ($result && $result2) {
+                    $weight = $result[0]->weight;
+                    $pack_size = $result2[0]->pack_size;
+                    $carbonFootprint = $weight * $pack_size * $quantity; 
+                    return $carbonFootprint;
+                } else {
+                    return 0; 
+                }
+            } else if($productType==='Pellets') {
+                return $quantity;
+                
+            }
+
+
+
+
+        } catch (Exception $e) {
+            error_log("Error calculating carbon footprint: " . $e->getMessage());
+            return false;
+        }
+
+    }
+
+    public function searchCarbonFootprint($search, $limit, $offset)
+    {
+        $search = '%' . $search . '%';
+        $limit = (int) $limit;
+        $offset = (int) $offset;
+        $query = "SELECT * FROM $this->table WHERE  title LIKE :search OR description LIKE :search OR start_date LIKE :search OR end_date LIKE :search ORDER BY ad_id DESC LIMIT $limit OFFSET $offset";
+        $params = [
+            'search' => $search
+        ];
+        return $this->query($query, $params);
+    }
+
+    public function searchCarbonFootprintCount($search)
+    {
+        $search = '%' . $search . '%';
+        $query = "SELECT COUNT(*) as count FROM $this->table WHERE title LIKE :search OR description LIKE :search OR start_date LIKE :search OR end_date LIKE :search";
+        $params = ['search' => $search];
+        $result = $this->query($query, $params);
+        return $result ? $result[0]->count : 0;
+    }
+
+
 }

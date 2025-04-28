@@ -3,15 +3,31 @@ class GiveAwayRequest {
 
     use Controller;
     
-    // private $giveAwayModel;
-
-    // public function __construct() {
-    //     $this->giveAwayModel = new GiveAwayModel();
-    // }
-
     public function index($data) {
         $giveAwayModel = new GiveAwayModel();
-        $data['giveaways'] = $giveAwayModel->getAllGiveAways();
+
+        // Get current page and tab from URL
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $limit = 5; // items per page
+
+         // Get filter parameters
+         $filters = [
+            'name' => isset($_GET['filter_name']) ? $_GET['filter_name'] : '',
+            'date' => isset($_GET['filter_date']) ? $_GET['filter_date'] : '',
+        ];
+
+        // Get total count of pending giveaways
+        $allPendingGiveaways = $giveAwayModel->getPendingGiveAways($page, $limit, $filters);
+        $totalPending = $giveAwayModel->countPendingGiveAways($filters);
+        $totalPendingPages = ceil($totalPending / $limit);
+        
+        $data = [
+            'giveaways' => $allPendingGiveaways,
+            'currentPage' => $page,
+            'totalPages' => $totalPendingPages,
+            'activeTab' => 'pending',
+            'filters' => $filters
+        ];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $giveaway_id = $_POST['giveaway_id'];

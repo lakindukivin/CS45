@@ -38,9 +38,14 @@ class PendingCustomOrder {
         }
     }
 
-    public function updateStatus()
-    {
+    public function updateStatus() {
         if(isset($_POST['orderId']) && isset($_POST['status'])) {
+            $allowed_statuses = ['pending', 'accepted', 'completed', 'declined']; // Add all valid statuses
+            if(!in_array($_POST['status'], $allowed_statuses)) {
+                echo json_encode(['success' => false, 'error' => 'Invalid status']);
+                exit;
+            }
+            
             $model = new PendingCustomOrderModel();
             $result = $model->updateOrderStatus($_POST['orderId'], $_POST['status']);
             echo json_encode(['success' => $result]);

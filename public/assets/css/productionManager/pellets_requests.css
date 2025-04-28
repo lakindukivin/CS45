@@ -18,15 +18,25 @@
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
+.content {
+  margin-left: 250px; /* Same as sidebar width */
+  transition: margin-left 0.3s ease;
+  width: calc(100% - 250px);
+}
+
+.content.collapsed {
+  margin-left: 80px; /* Collapsed sidebar width */
+  width: calc(100% - 80px);
+}
+
 .container {
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   padding: 20px;
   max-width: 1200px;
-  width: 1000px;
-  margin-top: 20px;
-  margin-left: 40px;  
+  width: calc(100% - 40px); /* Changed from fixed width */
+  margin: 20px auto; /* Centered */  
 }
 
 .header {
@@ -44,14 +54,16 @@ h1 {
 
 .add-button {
   background-color: var(--secondary-green);
+  color: white;
+  padding: 0.75rem 1.5rem;
   border: none;
-  padding: 8px 16px;
   border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  text-decoration: none;
+  width: 30%;
+  transition: background-color 0.2s ease;
+  margin-top: 5px;
 }
 
 .add-button:hover {
@@ -60,9 +72,28 @@ h1 {
   box-shadow: var(--shadow-md);
 }
 
+.add-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
+}
+
 .add-button a {
   color: white;
   text-decoration: none;
+}
+
+/* Style for the "no items" message */
+.no-items {
+  text-align: center;
+  padding: 1rem;
+  color: #4CAF50; /* Green text */
+}
+
+.no-items img {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  margin-right: 8px;
 }
 
 table {
@@ -166,6 +197,26 @@ th {
   margin: 15px 0;
 }
 
+.decline-button {
+    background-color: darkred;
+    color: var(--white);
+    padding: 10px 20px ;
+    border: none ;
+    border-radius: 5px ;
+    cursor: pointer ;
+    font-size: 16px ;
+    font-weight: 600 ;
+    width:30%;
+    transition: var(--transition) ;
+    margin-right: 15%;
+}
+
+.decline-button:hover {
+    background-color: rgb(240, 56, 56);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
 .form-group select {
   width: 100%;
   padding: 8px;
@@ -197,6 +248,16 @@ th {
 }
 
 @media (max-width: 768px) {
+  .content {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .content.collapsed {
+    margin-left: 0;
+    width: 100%;
+  }
+  
   .container {
     width: 90%;
     margin: 1rem auto;

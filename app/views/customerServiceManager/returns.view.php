@@ -74,28 +74,27 @@
           <span class="close" id="closePopupBtn">&times;</span>
             <h1>Return Update</h1>
           </div>
-
           <div class="popup-content">
           <div>
-            <label for="Return-id" class="">Return ID:</label>
-            <input type="text" id="return_id" name="returnId" class="input-field" readonly>
+            <label for="Return-id" class="" type="hidden" ></label>
+            <input type="hidden" id="return_id" name="returnId" class="input-field" readonly>
           </div>
 
           <div>
-            <label for="Order-id" class="">Order ID:</label>
-            <input type="text" id="order_id" name="orderId" class="input-field" readonly>
+            <label for="Order-id" class=""></label>
+            <input type="hidden" id="order_id" name="orderId" class="input-field" readonly>
           </div>
           </div>
           
           <div class="popup-content">
           <div>
-            <label for="Product-id" class="">Product ID:</label>
-            <input type="text" id="product_id" name="productId" class="input-field" readonly>
+            <label for="Product-id" class=""></label>
+            <input type="hidden" id="product_id" name="productId" class="input-field" readonly>
           </div>
 
           <div >
-            <label for="Customer-id" class="">Customer ID:</label>
-            <input type="text" id="customer_id" name="customerId" class="input-field" readonly>
+            <label for="Customer-id" class=""></label>
+            <input type="hidden" id="customer_id" name="customerId" class="input-field" readonly>
           </div>
           </div>
           
@@ -108,6 +107,16 @@
           <div class="popup-content">
             <label for="Product-name" class="">Product Name:</label>
             <input type="text" id="productName" name="productName" class="input-field" readonly>
+          </div>
+
+          <div class="popup-content">
+            <label for="Bag-size" class="">Bag Size:</label>
+            <input type="text" id="bagSize" name="bagSize" class="input-field" readonly>
+          </div>
+
+            <div class="popup-content">
+            <label for="Pack-size" class="">Pack Size:</label>
+            <input type="text" id="packSize" name="packSize" class="input-field" readonly>
           </div>
 
           <div class="popup-content">
@@ -126,8 +135,18 @@
           </div>
 
           <div class="popup-content">
+            <label for="Request-date" class="">Request Date:</label>
+            <input type="text" id="requestDate" name="requestDate" class="input-field" readonly>
+          </div>
+
+          <div class="popup-content">
             <label for="Phone" class="">Phone:</label>
             <input type="text" id="phone" name="phone" class="input-field" readonly>
+          </div>
+
+          <div class="popup-content">
+            <label for="Address">Address:</label>
+            <input type="text" id="address" name="address" class="input-field" readonly>
           </div>
 
           <div class="popup-content">
@@ -169,19 +188,38 @@
       <img src="<?=ROOT?>/assets/images/Waste360.png" alt="logo" />
       <h1>Waste360</h1>  
       </div> 
-      <h1 class="logo">DashBoard</h1>
+      <h1 class="logo">Pending Return Requests</h1>
       <nav class="nav">
         <ul>
-          <li><a href="#"><img src="<?=ROOT?>/assets/images/notifications.svg"></a></li>
-          <li><a href="<?=ROOT?>/profile">Profile</a></li>
-          <li><a href="#">Logout</a></li>
+          <li><a href="<?=ROOT?>/CSmanagerProfile">Profile</a></li>
+          <li><a href="<?=ROOT?>/logout">Logout</a></li>
         </ul>
       </nav>
     </header>
     <div class="box">
       <div class="container">
         <div class="header">
-        <h2>Pending Return Requests</h2>
+           <!-- Filter Form -->
+        <div class="filter-container">
+          <form action="" method="get" class="filter-form">
+            <input type="hidden" name="tab" value="<?= $data['activeTab'] ?? 'accepted' ?>">
+            
+            <div class="filter-input">
+              <label for="filter_name">Customer Name:</label>
+              <input type="text" id="filter_name" name="filter_name" value="<?= htmlspecialchars($data['filters']['name'] ?? '') ?>" placeholder="Filter by name">
+            </div>
+            
+            <div class="filter-input">
+              <label for="filter_date">Request Date:</label>
+              <input type="date" id="filter_date" name="filter_date" value="<?= htmlspecialchars($data['filters']['date'] ?? '') ?>">
+            </div>
+            
+            <div class="filter-actions">
+              <button type="submit" class="filter-btn">Apply Filters</button>
+              <a href="?tab=<?= $data['activeTab'] ?? 'accepted' ?>" class="reset-filter-btn">Reset</a>
+            </div>
+          </form>
+        </div>
         <button class="add-button">
                 <a href="<?=ROOT?>/CompletedReturns">View Completed Returns</a>
             </button>
@@ -189,25 +227,23 @@
         <table id="returnTable">
             <thead>
                 <tr>
-                    <th>Order ID</th>
-                    <th>Customer ID</th>
                     <th>Customer Name</th>
+                    <th>Product Name</th>
                     <th>Quantity</th>
                     <th>Phone</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-            <?php if(isset($data['returns']) && is_array($data['returns'])): ?>
+            <?php if(isset($data['returns']) && is_array($data['returns']) && !empty($data['returns'])): ?>
               <?php foreach ($data['returns'] as $return) : ?>
                 <tr>
-                  <td><?= $return->order_id ?></td>
-                  <td><?= $return->customer_id ?></td>
                   <td><?= $return->customerName ?></td>
+                  <td><?= $return->productName ?></td>
                   <td><?= $return->quantity ?></td>
                   <td><?= $return->phone ?></td>
                   <td>
-                  <button class="view-btn" onclick="openReturnUpdatePopup(<?= htmlspecialchars(json_encode($return), ENT_QUOTES, 'UTF-8')?>)">View/Edit</button>
+                  <button class="view-btn" onclick="openReturnUpdatePopup(<?= htmlspecialchars(json_encode($return), ENT_QUOTES, 'UTF-8')?>)"><img src="<?= ROOT ?>/assets/images/edit-btn.svg" alt=""></button>
                   </td>
                 </tr>
               <?php endforeach; ?>
@@ -218,6 +254,19 @@
             <?php endif; ?>
             </tbody>
         </table>
+
+        <!-- Pagination Controls - Fixed to use $data array -->
+        <div class="pagination">
+                <?php if (isset($data['totalPages']) && $data['totalPages'] > 1): ?>
+                    <?php for ($i = 1; $i <= $data['totalPages']; $i++): ?>
+                        <a href="?page=<?= $i ?><?= !empty($data['filters']['name']) ? '&filter_name='.urlencode($data['filters']['name']) : '' ?><?= !empty($data['filters']['date']) ? '&filter_date='.urlencode($data['filters']['date']) : '' ?>"
+                            class="<?= (isset($data['currentPage']) && $data['currentPage'] == $i) ? 'active' : '' ?>">
+                            <?= $i ?>
+                        </a>
+                    <?php endfor; ?>
+                <?php endif; ?>
+        </div>
+        
       </div>
     </div>
   </div> 
@@ -233,31 +282,6 @@
     <p class="message-text">The return was rejected!</p>
 </div>
 
-  <script>
-    function openReturnUpdatePopup(returnData) {
-        document.getElementById('return_id').value = returnData.return_id;
-        document.getElementById('order_id').value = returnData.order_id;
-        document.getElementById('product_id').value = returnData.product_id;
-        document.getElementById('customer_id').value = returnData.customer_id;
-        document.getElementById('customerName').value = returnData.customerName;
-        document.getElementById('productName').value = returnData.productName;
-        document.getElementById('quantity').value = returnData.quantity;
-        document.getElementById('total').value = returnData.total;
-        document.getElementById('orderDate').value = returnData.orderDate;
-        document.getElementById('returnDetails').value = returnData.returnDetails;
-        document.getElementById('cus_requirements').value = returnData.cus_requirements;
-        document.getElementById('phone').value = returnData.phone;
-        document.getElementById('return_status').value = returnData.returnStatus;
-
-
-        document.getElementById('returnUpdatePopup').style.display = 'flex';
-
-        // Add event listener to close the popup
-      document.getElementById('closePopupBtn').addEventListener('click', () => {
-        document.getElementById('returnUpdatePopup').style.display = 'none';
-      });
-    }
-  </script>
   <script src="<?=ROOT?>/assets/js/customerServiceManager/sidebar.js"></script>  
   <script src="<?=ROOT?>/assets/js/customerServiceManager/returns.js"></script>  
 </body>

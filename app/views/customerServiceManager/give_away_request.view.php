@@ -62,14 +62,14 @@
           </div>
 
           <div class="popup-content">
-            <label for="Order-id" class="">Give Away ID:</label>
-            <input type="text" name="giveaway_id" id="giveaway_id" readonly/>
+            <label for="Order-id" class=""></label>
+            <input type="hidden" name="giveaway_id" id="giveaway_id" readonly/>
           </div>
 
 
           <div class="popup-content">
-            <label for="Customer_id" class="">Customer ID: </label>
-            <input type="text" name="customer_id" id="customer_id" readonly/>
+            <label for="Customer_id" class=""></label>
+            <input type="hidden" name="customer_id" id="customer_id" readonly/>
           </div>
 
 
@@ -109,9 +109,9 @@
 
           <div class="popup-content">
             <label for="decision-reason">Decision reason:</label>
-            <input type="text" name="decision_reason" id="decision_reason"/>
+            <input type="text" name="decision_reason" id="decision_reason" required/>
           </div>
-
+ 
           <div class="popup-content">
             <label for="message_to_customer">Message to Customer:</label>
             <textarea id="message_to_customer" name="message_to_customer" class="input-field"></textarea>
@@ -137,23 +137,42 @@
       <h1 class="logo">Pending Give Away Request</h1>
       <nav class="nav">
         <ul>
-          <li><a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg"></a></li>
-          <li><a href="<?=ROOT?>/profile">Profile</a></li>
-          <li><a href="#">Logout</a></li>
+          <li><a href="<?=ROOT?>/CSmanagerProfile">Profile</a></li>
+          <li><a href="<?=ROOT?>/logout">Logout</a></li>
         </ul>
       </nav>
     </header>
     <div class="box">
       <div class="container">
         <div class="header">
+           <!-- Filter Form -->
+        <div class="filter-container">
+          <form action="" method="get" class="filter-form">
+            <input type="hidden" name="tab" value="<?= $data['activeTab'] ?? 'accepted' ?>">
+            
+            <div class="filter-input">
+              <label for="filter_name">Customer Name:</label>
+              <input type="text" id="filter_name" name="filter_name" value="<?= htmlspecialchars($data['filters']['name'] ?? '') ?>" placeholder="Filter by name">
+            </div>
+            
+            <div class="filter-input">
+              <label for="filter_date">Request Date:</label>
+              <input type="date" id="filter_date" name="filter_date" value="<?= htmlspecialchars($data['filters']['date'] ?? '') ?>">
+            </div>
+            
+            <div class="filter-actions">
+              <button type="submit" class="filter-btn">Apply Filters</button>
+              <a href="?tab=<?= $data['activeTab'] ?? 'accepted' ?>" class="reset-filter-btn">Reset</a>
+            </div>
+          </form>
+        </div>
           <button class="add-button">
             <a href="<?= ROOT ?>/CompletedGiveAway">View Completed Give Aways</a>
-          </button>
+          </button>          
         </div>
         <table id="giveAwayTable">
           <thead>
             <tr>
-              <th>Customer ID</th>
               <th>Name</th>
               <th>Phone</th>
               <th>request_date</th>
@@ -166,14 +185,13 @@
             <?php if (isset($data['giveaways']) && is_array($data['giveaways'])): ?>
               <?php foreach ($data['giveaways'] as $giveaway): ?>
                 <tr>
-                  <td><?= $giveaway->customer_id ?></td>
                   <td><?= $giveaway->name ?></td>
                   <td><?= $giveaway->phone ?></td>
-                  <td><?= $giveaway->request_date ?></td>
+                  <td><?= date('Y-m-d', strtotime($giveaway->request_date)) ?></td>
                   <td><?= $giveaway->address ?></td>
                   <td><?= $giveaway->giveawayStatus ?></td>
                   <td>
-                    <button class="view-btn" onclick="openGiveAwayReqUpdatePopup(<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8')?>)">View/Update</button>
+                    <button class="view-btn" onclick="openGiveAwayReqUpdatePopup(<?= htmlspecialchars(json_encode($giveaway), ENT_QUOTES, 'UTF-8')?>)"><img src="<?= ROOT ?>/assets/images/edit-btn.svg" alt=""></button>
                   </td>
                 </tr>
               <?php endforeach; ?>
@@ -184,11 +202,21 @@
             <?php endif; ?>
           </tbody>
         </table>
+
+        <!-- Pagination Controls -->
+        <div class="pagination">
+          <?php if (isset($data['currentPage']) && isset($data['totalPages'])): ?>
+            <?php for ($i = 1; $i <= $data['totalPages']; $i++): ?>
+              <a href="?page=<?= $i ?>&tab=<?= $data['activeTab'] ?>&filter_name=<?= htmlspecialchars($data['filters']['name'] ?? '') ?>&filter_date=<?= htmlspecialchars($data['filters']['date'] ?? '') ?>" class="<?= ($i == $data['currentPage']) ? 'active' : '' ?>"><?= $i ?></a>
+            <?php endfor; ?>
+          <?php endif; ?>
+        </div>  
+
       </div>
     </div>
   </div>
 
-  <div id="successMessage" class="success-message" style="display: none;">
+<div id="successMessage" class="success-message" style="display: none;">
     <div class="icon">✅</div>
     <p class="message-text">The order was successfully accepted!</p>
 </div>

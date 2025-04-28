@@ -4,7 +4,28 @@ class ManageOrders {
 
     public function index() {
         $orderModel = new ManageOrderModel();
-        $data['orders'] = $orderModel->getAllOrders();
+        
+        // Get current page and tab from URL
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $limit = 5; // items per page
+
+         // Get filter parameters
+         $filters = [
+            'name' => isset($_GET['filter_name']) ? $_GET['filter_name'] : '',
+            'date' => isset($_GET['filter_date']) ? $_GET['filter_date'] : '',
+        ];
+
+        $allPendingOrders = $orderModel->getPendingOrders($page, $limit, $filters);
+        $totalPending = $orderModel->countPendingOrders($filters);
+        $totalPendingPages = ceil($totalPending / $limit);
+
+        $data = [
+            'orders' => $allPendingOrders,
+            'currentPage' => $page,
+            'totalPages' => $totalPendingPages,
+            'activeTab' => 'pending',
+            'filters' => $filters
+        ];
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $order_id = $_POST['orderId'];
@@ -46,6 +67,15 @@ class ManageOrders {
                 exit();
             }
         }
+        
+        // Check for success or error flags from redirects
+        if (isset($_GET['success'])) {
+            $data['success'] = true;
+        }
+        if (isset($_GET['error'])) {
+            $data['error'] = true;
+        }
+        
         $this->view('customerServiceManager/manage_orders', $data);
     }
 }

@@ -62,7 +62,6 @@
       <h1 class="logo">DashBoard</h1>
       <nav class="nav">
         <ul>
-          <li><a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg"></a></li>
           <li><a href="#">Profile</a></li>
           <li><a href="#">Logout</a></li>
         </ul>
@@ -79,10 +78,6 @@
         <form method="POST" action="<?= ROOT ?>/CustomOrderViewForm/post/<?= $order->customOrder_id ?>">
         <input type="hidden" name="order_id" value="<?= $order->customOrder_id ?>">
         <div class="form-row">
-            <!--<div class="form-group">
-                <label>Order ID</label>
-                <input type="text" value="<?= htmlspecialchars($data['order']->customOrder_id) ?>" readonly>
-            </div>-->
             <div class="form-group">
                 <label>Customer Name</label>
                 <input type="text" value="<?= htmlspecialchars($data['order']->customer_name) ?>" readonly>
@@ -121,28 +116,27 @@
                 <textarea readonly><?= htmlspecialchars($data['order']->Specifications) ?></textarea>   
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group">
-                <label>Reply</label>
-                <textarea name="reply" placeholder="Reason for declining"></textarea>
-            </div>
-        </div>
 
         <div class="button-group">
             <button type="submit" name="action" value="accept" class="submit-button" id="acceptBtn">Accept</button>
-            <button type="submit" name="action" value="decline" class="decline-button" id="declineBtn">Decline</button>
+            <button type="button" name="action" value="decline" class="decline-button" id="declineBtn">Decline</button>
         </div>
         </form>
 </div>
-
-    <!-- View Details Modal -->
-    <div id="detailsModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeDetailsModal()">&times;</span>
-            <h2>Order Details</h2>
-            <div id="orderDetails"></div>
-        </div>
-    </div>
+<!-- declined reason -->
+<div id="modal" class="modal">
+      <div class="modal-content">
+          <span class="close-btn" onclick="closeModal()">&times;</span>
+          <h2>Decline Order</h2></br>
+          <form id="declineForm">
+          <div class="form-group">
+          <label>Reason for Declining</label>
+          <textarea name="reason" required placeholder="Please provide a reason..."></textarea>
+</div>
+<button type="submit" class="decline-button">Decline</button>
+          </form>
+      </div>
+  </div>
 
     <!-- Status Update Modal -->
     <!--<div id="statusModal" class="modal">

@@ -1,4 +1,3 @@
-<!-- filepath: c:\xampp\htdocs\CS45\app\views\customerServiceManager\manage_reviews.view.php -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -59,23 +58,35 @@
 
                 <h1>Update Review</h1>
             </div>
+            <div >
+                <label for="review_id"></label>
+                <input type="hidden" id="review_id" name="review_id" readonly>
+            </div>
+
+            <div >
+                <label for="reply_id"></label>
+                <input type="hidden" id="reply_id" name="reply_id" readonly>
+            </div>
+
+            <div >
+                <label for="customer_id"></label>
+                <input type="hidden" id="customer_id" name="customer_id" readonly>
+            </div>
+
+            <div >
+                <label for="order_id"></label>
+                <input type="hidden" id="order_id" name="order_id" readonly>
+            </div>
+
             <div class="popup-content">
-            <div>
-                <label for="review_id">Review ID:</label>
-                <input type="text" id="review_id" name="review_id" readonly>
+                <label for="customer_name">Customer Name:</label>
+                <input type="text" id="customer_name" name="customer_name" readonly>
             </div>
 
-            <div>
-                <label for="customer_id">Customer ID:</label>
-                <input type="text" id="customer_id" name="customer_id" readonly>
+            <div class="popup-content">
+              <label for="product_name">Product Name:</label>
+              <input type="text" id="product_name" name="product_name" readonly>
             </div>
-
-            <div>
-                <label for="order_id">Order ID:</label>
-                <input type="text" id="order_id" name="order_id" readonly>
-            </div>
-            </div>
-            
 
             <div class="popup-content">
                 <label for="rating">Rating:</label>
@@ -94,7 +105,7 @@
 
             <div class="popup-content">
                 <label for="reply">Reply:</label>
-                <textarea id="reply" name="reply" rows="4" cols="50"></textarea>
+                <textarea id="reply" name="reply" rows="4" cols="50" required></textarea>
             </div>
 
             <div class="button-container">
@@ -108,12 +119,11 @@
         <img src="<?=ROOT?>/assets/images/Waste360.png" alt="logo" />
         <h1>Waste360</h1>
       </div>
-      <h1 class="logo">DashBoard</h1>
+      <h1 class="logo">Pending Reviews</h1>
       <nav class="nav">
         <ul>
-          <li><a href="#"><img src="<?=ROOT?>/assets/images/notifications.svg"></a></li>
-          <li><a href="<?=ROOT?>/profile">Profile</a></li>
-          <li><a href="#">Logout</a></li>
+          <li><a href="<?=ROOT?>/CSManagerProfile">Profile</a></li>
+          <li><a href="<?=ROOT?>/logout">Logout</a></li>
         </ul>
       </nav>
     </header>
@@ -121,7 +131,27 @@
     <div class="box">
       <div class="container">
         <div class="header">
-          <h2>Pending Reviews</h2>
+           <!-- Filter Form -->
+        <div class="filter-container">
+          <form action="" method="get" class="filter-form">
+            <input type="hidden" name="tab" value="<?= $data['activeTab'] ?? 'accepted' ?>">
+            
+            <div class="filter-input">
+              <label for="filter_name">Customer Name:</label>
+              <input type="text" id="filter_name" name="filter_name" value="<?= htmlspecialchars($data['filters']['name'] ?? '') ?>" placeholder="Filter by name">
+            </div>
+            
+            <div class="filter-input">
+              <label for="filter_date">Request Date:</label>
+              <input type="date" id="filter_date" name="filter_date" value="<?= htmlspecialchars($data['filters']['date'] ?? '') ?>">
+            </div>
+            
+            <div class="filter-actions">
+              <button type="submit" class="filter-btn">Apply Filters</button>
+              <a href="?tab=<?= $data['activeTab'] ?? 'accepted' ?>" class="reset-filter-btn">Reset</a>
+            </div>
+          </form>
+        </div>
           <button class="add-button">
             <a href="<?=ROOT?>/CompletedReviews">View Replied Reviews</a>
           </button>
@@ -129,33 +159,46 @@
         <table>
           <thead>
             <tr>
-              <th>Customer ID</th>
-              <th>Order ID</th>
+              <th>Customer Name</th>
+              <th>Product Name</th>
               <th>Rating</th>
               <th>Date</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            <?php if(isset($data['reviews']) && is_array($data['reviews'])): ?>
+            <?php if(isset($data['reviews']) && is_array($data['reviews']) && !empty($data['reviews'])): ?>
             <?php foreach($data['reviews'] as $review): ?>
             <tr>
-              <td><?=$review->customer_id?></td>
-              <td><?=$review->order_id?></td>
+              <td><?=$review->customerName?></td>
+              <td><?=$review->productName?></td>
               <td><?=$review->rating?></td>
-              <td><?=$review->date?></td>
+              <td><?=date('Y-m-d', strtotime($review->date))?></td>
               <td>
-              <button class="view-btn" onclick="openReviewUpdatePopup(<?= htmlspecialchars(json_encode($review),ENT_QUOTES,'UTF-8')?>)">View/Reply</button>
+              <button class="view-btn" onclick="openReviewUpdatePopup(<?= htmlspecialchars(json_encode($review),ENT_QUOTES,'UTF-8')?>)"><img src="<?= ROOT ?>/assets/images/edit-btn.svg" alt=""></button>
               </td>
             </tr>
             <?php endforeach; ?>
             <?php else: ?>
-              <tr>
-                <td colspan="7">No give away requests found</td>
-              </tr>
+            <tr>
+                <td colspan="5">No reviews found</td>
+            </tr>
             <?php endif; ?>  
           </tbody>
         </table>
+
+         <!-- Pagination Controls -->
+         <div class="pagination">
+                <?php if (isset($totalPages) && $totalPages > 1): ?>
+                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                        <a href="?<?= isset($search) && $search !== '' ? 'search=' . urlencode($search) . '&' : '' ?>page=<?= $i ?>"
+                            class="<?= (isset($currentPage) && $currentPage == $i) ? 'active' : '' ?>">
+                            <?= $i ?>
+                        </a>
+                    <?php endfor; ?>
+                <?php endif; ?>
+        </div>
+
        </div>
     </div>
   </div>

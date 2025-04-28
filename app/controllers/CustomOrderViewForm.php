@@ -43,28 +43,31 @@ class CustomOrderViewForm {
     public function post() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $order_id = $_POST['order_id'] ?? null;
-            if (!$order_id) {
-                $_SESSION['error'] = "No order ID provided.";
-                redirect('PendingCustomOrder');
-                exit;
-            }
-    
             $action = $_POST['action'] ?? '';
-            $reply = trim($_POST['reply'] ?? '');
-    
+            $reason = trim($_POST['reason'] ?? '');
+
             $orderModel = new PendingCustomOrderModel();
+
+            // if (!$order_id) {
+            //     $_SESSION['error'] = "No order ID provided.";
+            //     redirect('PendingCustomOrder');
+            //     exit;
+            // }
+    
+            
+    
+            
             
             try {
-                if ($action === 'decline' && empty($reply)) {
-                    throw new Exception("Please provide a reason for declining.");
-                }
-    
-                if ($action === 'accept') {
-                    $orderModel->updateOrderStatus($order_id, 'completed');
-                    $_SESSION['success'] = "Order #$order_id has been accepted and marked as completed.";
-                } elseif ($action === 'decline') {
-                    $orderModel->updateOrderStatus($order_id, 'declined', $reply);
+                if ($action === 'decline') {
+                    if (empty($reason)) {
+                        throw new Exception("Please provide a reason for declining.");
+                    }
+                    $orderModel->updateOrderStatus($order_id, 'declined', $reason);
                     $_SESSION['success'] = "Order #$order_id has been declined.";
+                } elseif ($action === 'accept') {
+                    $orderModel->updateOrderStatus($order_id, 'accepted');
+                    $_SESSION['success'] = "Order #$order_id has been accepted and marked as completed.";
                 }
     
                 redirect('CompletedCustomOrders');

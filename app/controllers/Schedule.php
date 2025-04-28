@@ -3,22 +3,39 @@ class Schedule {
     use Controller;
     private $scheduleModel;
 
+    private $validAreas = [
+        'Colombo', 'Dehiwala-Mount Lavinia', 'Moratuwa',
+        'Sri Jayawardenepura Kotte', 'Negombo', 'Wattala',
+        'Kaduwela', 'Kolonnawa', 'Kesbewa', 'Maharagama',
+        'Kotikawatta', 'Homagama', 'Piliyandala', 'Nugegoda',
+        'Boralesgamuwa', 'Ratmalana', 'Avissawella', 'Panadura', 'Kalutara'
+    ];
     public function __construct() {
         $this->scheduleModel = new ScheduleModel();
     }
 
     public function index() {
         $data = [];
-        // Load existing schedules from database
-        $data['schedules'] = $this->scheduleModel->findAll('collection_date');
+        $data['schedules'] = $this->scheduleModel->query(
+            "SELECT * FROM polythenecollection 
+             ORDER BY collection_date DESC, collection_time DESC"
+        );
         $data['success'] = $_SESSION['success'] ?? '';
         $data['error'] = $_SESSION['error'] ?? '';
+        $data['validAreas'] = $this->validAreas; // Pass to view for dropdown
         unset($_SESSION['success'], $_SESSION['error']);
         $this->view('productionManager/schedule', $data);
     }
 
     public function addSchedule() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Validate area is in our allowed list
+            if (!in_array($_POST['area'], $this->validAreas)) {
+                $_SESSION['error'] = "Invalid area selected";
+                redirect('schedule');
+                return;
+            }
+
             $data = [
                 'area' => $_POST['area'],
                 'collection_date' => $_POST['date'], // Map to correct column

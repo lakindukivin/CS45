@@ -80,8 +80,7 @@ class ManageStaffAccounts
         }
     }
 
-    // ...existing code...
-    public function addStaffWithUser()
+     public function addStaffWithUser()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -101,7 +100,7 @@ class ManageStaffAccounts
             // 1. Insert into user table
             $userData = [
                 'email' => $_POST['email'],
-                'password' => password_hash('defaultpassword', PASSWORD_BCRYPT), // Set a default or random password
+                'password' => password_hash('defaultpassword', PASSWORD_DEFAULT), // Set a default or random password
                 'role_id' => $_POST['role']
 
             ];

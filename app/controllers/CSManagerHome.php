@@ -31,12 +31,86 @@ class CSManagerHome
         $orders = $this->model('ManageOrderModel')->countByDate($today);
         $reviews = $this->model('Review')->countByDate($today);
 
-        // Pass the counts to the view
+        // Get recent notifications (8 most recent combined from all sources)
+        $recentOrders = $this->model('ManageOrderModel')->getRecentOrders(8) ?: [];
+        $recentGiveaways = $this->model('GiveAwayModel')->getRecentGiveaways(8) ?: [];
+        $recentReviews = $this->model('Review')->getRecentReviews(8) ?: [];
+        $recentReturns = $this->model('ReturnModel')->getRecentReturns(8) ?: [];
+
+        // Combine all notifications
+        $allNotifications = [];
+        
+        // Process orders - update message to show these are pending orders
+        if (is_array($recentOrders) || is_object($recentOrders)) {
+            foreach($recentOrders as $order) {
+                $allNotifications[] = [
+                    'type' => 'order',
+                    'id' => $order->order_id,
+                    'date' => $order->orderDate,
+                    'timestamp' => strtotime($order->orderDate),
+                    'message' => "Pending order from {$order->customerName}",
+                    'status' => $order->orderStatus
+                ];
+            }
+        }
+        
+        // Process giveaways - update message to show these are pending giveaways
+        if (is_array($recentGiveaways) || is_object($recentGiveaways)) {
+            foreach($recentGiveaways as $giveaway) {
+                $allNotifications[] = [
+                    'type' => 'giveaway',
+                    'id' => $giveaway->giveaway_id,
+                    'date' => $giveaway->request_date,
+                    'timestamp' => strtotime($giveaway->request_date),
+                    'message' => "Pending giveaway request from {$giveaway->name}",
+                    'status' => $giveaway->giveawayStatus
+                ];
+            }
+        }
+        
+        // Process reviews - update message to show these are pending reviews
+        if (is_array($recentReviews) || is_object($recentReviews)) {
+            foreach($recentReviews as $review) {
+                $allNotifications[] = [
+                    'type' => 'review',
+                    'id' => $review->review_id,
+                    'date' => $review->date,
+                    'timestamp' => strtotime($review->date),
+                    'message' => "Pending review from {$review->name}",
+                    'status' => $review->status
+                ];
+            }
+        }
+        
+        // Process returns - update message to show these are pending returns
+        if (is_array($recentReturns) || is_object($recentReturns)) {
+            foreach($recentReturns as $return) {
+                $allNotifications[] = [
+                    'type' => 'return',
+                    'id' => $return->return_id, 
+                    'date' => $return->date,
+                    'timestamp' => strtotime($return->date),
+                    'message' => "Pending return request from {$return->name}",
+                    'status' => $return->returnStatus
+                ];
+            }
+        }
+        
+        // Sort by timestamp (most recent first)
+        usort($allNotifications, function($a, $b) {
+            return $b['timestamp'] - $a['timestamp'];
+        });
+        
+        // Get only the 8 most recent
+        $recentNotifications = array_slice($allNotifications, 0, 8);
+
+        // Pass the counts and notifications to the view
         $this->view('customerServiceManager/cSManagerHome', [
             'giveaways' => $giveaways,
             'returns' => $returns,
             'orders' => $orders,
             'reviews' => $reviews,
+            'notifications' => $recentNotifications
         ]);
     }
 

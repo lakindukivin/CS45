@@ -33,12 +33,12 @@ class PendingCustomOrderModel {
         
         return $this->query($query, $params);
     }
-    public function updateOrderStatus($order_id, $status, $reply = null) {
-        if ($status === 'declined' && $reply !== null) {
-            $sql = "UPDATE custom_order SET customOrder_status = :status, decline_reason = :reply WHERE customOrder_id = :order_id";
+    public function updateOrderStatus($order_id, $status, $reason = null) {
+        if ($status === 'declined' && $reason !== null) {
+            $sql = "UPDATE custom_order SET customOrder_status = :status, reason = :reason WHERE customOrder_id = :order_id";
             $params = [
                 ':status' => $status,
-                ':reply' => $reply,
+                ':reason' => $reason,
                 ':order_id' => $order_id
             ];
         } else {
@@ -62,5 +62,9 @@ class PendingCustomOrderModel {
         return $this->query($query, $params);
     }   
     
-    
+    public function countPendingOrders() {
+        $query = "SELECT COUNT(*) as count FROM custom_order WHERE customOrder_status = 'pending'";
+        $result = $this->query($query);
+        return $result[0]->count ?? 0;
+    }
 }

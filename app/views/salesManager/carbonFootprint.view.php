@@ -105,32 +105,25 @@
 
         <div id="carbon-footprint-section" class="container">
 
-
-            <!-- <div id="update-data" class="input-container">
-                <h3>Update Carbon Footprint Data</h3>
-                <form id="updateForm">
-                    <div class="form-group">
-                        <label for="value">Value:</label>
-                        <input type="number" id="value" placeholder="Enter value" min="0" step="0.01" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="unit">Unit:</label>
-                        <select id="unit" required>
-                            <option value="" disabled selected>Select a unit</option>
-                            <option value="kgs">kgs</option>
-                            <option value="Tons">Tons</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="action-btn">Save Changes</button>
+            <div class="table-header">
+                <form class="search-bar" method="get" action="">
+                    <img src="<?= ROOT ?>/assets/images/magnifying-glass-solid.svg" class="search-icon" width="20px" />
+                    <input type="text" name="search" value="<?= isset($search) ? htmlspecialchars($search) : '' ?>"
+                        placeholder="Search ..." />
+                    <button type="submit">Search</button>
                 </form>
-            </div> -->
+
+            </div>
             <div id="current-data">
                 <h3>Current Carbon Footprint Data</h3>
                 <table id="carbonFootprintTable">
                     <thead>
                         <tr>
-                            <th>Month</th>
-                            <th>Amount of Carbon Footprint Saved(in kg)</th>
+                            <th>Carbon Footprint ID</th>
+                            <th>Customer</th>
+                            <th>Carbon Footprint Type</th>
+                            <th>Item</th>
+                            <th>Amount of Carbon Footprint Saved</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -138,26 +131,40 @@
                         <?php if (!empty($carbonFootprints)): ?>
                             <?php foreach ($carbonFootprints as $carbonFootprint): ?>
                                 <tr>
-                                    <td><?= htmlspecialchars($carbonFootprint->month) ?></td>
+                                    <td><?= htmlspecialchars($carbonFootprint->id) ?></td>
+                                    <td><?= htmlspecialchars($carbonFootprint->email) ?></td>
+                                    <td><?= htmlspecialchars($carbonFootprint->type) ?></td>
                                     <td><?= htmlspecialchars($carbonFootprint->amount) ?></td>
 
                                     <td>
                                         <button class="delete-btn"
-                                            onclick="openDeleteModal('<?= $carbonFootprint->discount_id ?>')">Delete</button>
+                                            onclick="openDeleteModal('<?= $carbonFootprint->discount_id ?>')"><img
+                                                src="<?= ROOT ?>/assets/images/delete-btn.svg"" alt=" delete"></button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="6">No discounts found.</td>
+                                <td colspan="6">No data found.</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
                 </table>
+
+                <!-- Pagination Controls -->
+                <div class="pagination">
+                    <?php if (isset($totalPages) && $totalPages > 1): ?>
+                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                            <a href="?<?= isset($search) && $search !== '' ? 'search=' . urlencode($search) . '&' : '' ?>page=<?= $i ?>"
+                                class="<?= (isset($currentPage) && $currentPage == $i) ? 'active' : '' ?>">
+                                <?= $i ?>
+                            </a>
+                        <?php endfor; ?>
+                    <?php endif; ?>
+                </div>
                 <!-- Delete Confirmation Modal -->
                 <div id="deleteModal" class="modal">
                     <div class="modal-content">
-                        <span class="close" onclick="closeDeleteModal()">&times;</span>
                         <h3>Confirm Delete</h3>
                         <p>Are you sure you want to delete this record?</p>
                         <form action="<?= ROOT ?>/carbonFootprint/delete" method="POST">

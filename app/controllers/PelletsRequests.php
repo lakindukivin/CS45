@@ -1,9 +1,5 @@
 <?php
 
-/**
- * pellets request class
- */
-
  class PelletsRequests{
 
   use Controller;
@@ -30,8 +26,8 @@
       redirect('login');
   }
 
-    $orders = $this->pelletsRequestsModel->getAll();
-    $this->view('productionManager/pellets_requests', ['orders' => $orders]);
+    $pendingPellets = $this->pelletsRequestsModel->getOrdersByStatus('pending');
+    $this->view('productionManager/pellets_requests', ['orders' => $pendingPellets]);
   }
 
   public function getOrderDetails()

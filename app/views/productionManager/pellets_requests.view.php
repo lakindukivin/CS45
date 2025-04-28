@@ -85,7 +85,6 @@
       <h1 class="logo">DashBoard</h1>
       <nav class="nav">
         <ul>
-          <li><a href="#"><img src="<?=ROOT?>/assets/images/notifications.svg"></a></li>
           <li><a href="#">Profile</a></li>
           <li><a href="#">Logout</a></li>
         </ul>
@@ -116,21 +115,26 @@
             <?php if(isset($data['orders']) && is_array($data['orders'])): ?>
                 <?php foreach($data['orders'] as $order): ?>
                     <tr>
-                        <td><?=htmlspecialchars($order->PelletOrder_id)?></td>
+                        <td><?=htmlspecialchars($order->pelletOrder_id)?></td>
                         <td><?=htmlspecialchars($order->customer_name)?></td>
-                        <td><?=htmlspecialchars($order->Company_name)?></td>
-                        <td><?=htmlspecialchars($order->Amount)?></td>
+                        <td><?=htmlspecialchars($order->company_name)?></td>
+                        <td><?=htmlspecialchars($order->amount)?></td>
                         <td><?=htmlspecialchars($order->dateRequired)?></td>
-                        <td><?=htmlspecialchars($order->PelletOrderStatus)?></td>
+                        <td><?=htmlspecialchars($order->pelletOrderStatus)?></td>
                         <td>
-                            <div class="buttons">
-                            <button class="view-btn" onclick="viewDetails(<?=$order->PelletOrder_id?>)">View </button>
-                            <button class="update-btn" onclick="updateStatus(<?=$order->PelletOrder_id?>)">Update</button>
+                        <div class="buttons">
+                            <button class="view-btn" onclick="window.location.href='<?= ROOT ?>/PelletsRequestsViewForm/index/<?= $order->pelletOrder_id ?>'">View</button>
                             </div>
                           </td>
                     </tr>
-                <?php endforeach; ?>
-            <?php endif; ?>            </tbody>
+                <?php endforeach; ?><?php else: ?>
+        <tr>
+            <td colspan="7" class="no-items">
+                <img src="<?= ROOT ?>/assets/images/dolly.svg" alt="All good">
+                No pellets reqeusts available
+            </td>
+        </tr>
+        <?php endif; ?></tbody>
         </table>
       </div>
   

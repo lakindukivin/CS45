@@ -1,9 +1,4 @@
 <?php
-
-/**
- *completed pellets request class
- */
-
  class CompletedPellets{
 
   use Controller;
@@ -24,6 +19,16 @@
       redirect('login');
   }
 
-    $this->view('productionManager/completed_pellets');
+  $orderModel = new pelletsRequestsModel(); // You might want a specific method for this
+  $completedPellets = $orderModel->getOrdersByStatus('accepted') ?:[];
+  $declinedPellets = $orderModel->getOrdersByStatus('declined')?:[]; 
+  $allPellets = array_merge($completedPellets, $declinedPellets);
+
+  usort($allPellets, function($a, $b) {
+    return $b->pelletOrder_id - $a->pelletOrder_id; // Newest first (higher IDs first)
+});
+
+  $data['allPellets'] = $allPellets;
+  $this->view('productionManager/completed_pellets', $data);
   }
  }

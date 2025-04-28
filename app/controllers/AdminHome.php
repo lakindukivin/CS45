@@ -7,6 +7,7 @@
 class AdminHome
 {
     use Controller;
+
     public function index()
     {
         // Ensure session is active
@@ -23,6 +24,18 @@ class AdminHome
         if ($_SESSION['role_id'] != 1) {
             redirect('login');
         }
-        $this->view('admin/adminHome');
+
+        // Load models
+        $customerModel = new ManageCustomerAccountsModel();
+        $staffModel = new ManageStaffAccountsModel(); // You need to have this model
+
+        // Get counts
+        $totalCustomers = $customerModel->getCustomersCount();
+        $totalStaff = $staffModel->getStaffCount(); // Implement getStaffCount() in staff model
+
+        $this->view('admin/adminHome', [
+            'totalCustomers' => $totalCustomers,
+            'totalStaff' => $totalStaff,
+        ]);
     }
 }

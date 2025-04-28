@@ -64,7 +64,6 @@
             <h1 class="logo">DashBoard</h1>
             <nav class="nav">
                 <ul>
-                    <li><a href="#"><img src="<?= ROOT ?>/assets/images/notifications.svg"></a></li>
                     <li><a href="#">Profile</a></li>
                     <li><a href="<?=ROOT?>/Logout">Logout</a></li>
                 </ul>
@@ -101,11 +100,11 @@
                 <div class="metric-grid">
                     <div class="metric-card">
                         <h4>New Orders</h4>
-                        <div class="metric-value">0</div>
+                        <div class="metric-value"><?= ($pendingCustomOrders + $pendingPelletsOrders) ?></div>
                     </div>
                     <div class="metric-card">
                         <h4>Monthly Amount of Recycled Polythene</h4>
-                        <div class="metric-value">0</div>
+                        <div class="metric-value"><?= $polytheneAmount ?> tons</div>
                     </div>
                     <div class="metric-card">
                         <h4>Today Collection centres</h4>
