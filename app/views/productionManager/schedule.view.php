@@ -75,6 +75,7 @@
     <div class="container">
       <div class="header">
       <h1>Collection Schedule</h1>
+      <button class="add-button" onclick="openModal()">Add Collection Schedule</button>
       </div>
       <div class="table-container">
           <table id="collectionTable">
@@ -102,8 +103,52 @@
               </tbody>
           </table>
       </div>
-      <button class="submit-btn" onclick="openModal()">Add Collection Schedule</button>
   </div>
+
+  <div class="pagination">
+    <?php if ($totalPages > 1): ?>
+        <?php if ($currentPage > 1): ?>
+            <a href="<?= ROOT ?>/schedule?page=<?= $currentPage - 1 ?>" class="page-link arrow">
+                <img src="<?= ROOT ?>/assets/images/left-arrow.svg" alt="Previous" class="pagination-icon">
+            </a>
+        <?php endif; ?>
+        
+        <?php if ($totalPages <= 5): ?>
+            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <a href="<?= ROOT ?>/schedule?page=<?= $i ?>" 
+                   class="page-link <?= $i == $currentPage ? 'active' : '' ?>">
+                    <?= $i ?>
+                </a>
+            <?php endfor; ?>
+        <?php else: ?>
+            <!-- Show more complex pagination for many pages -->
+            <?php if ($currentPage > 3): ?>
+                <span class="page-link">...</span>
+            <?php endif; ?>
+            
+            <?php 
+            $start = max(1, $currentPage - 2);
+            $end = min($totalPages, $currentPage + 2);
+            
+            for ($i = $start; $i <= $end; $i++): ?>
+                <a href="<?= ROOT ?>/schedule?page=<?= $i ?>" 
+                   class="page-link <?= $i == $currentPage ? 'active' : '' ?>">
+                    <?= $i ?>
+                </a>
+            <?php endfor; ?>
+            
+            <?php if ($currentPage < $totalPages - 2): ?>
+                <span class="page-link">...</span>
+            <?php endif; ?>
+        <?php endif; ?>
+        
+        <?php if ($currentPage < $totalPages): ?>
+            <a href="<?= ROOT ?>/schedule?page=<?= $currentPage + 1 ?>" class="page-link arrow">
+                <img src="<?= ROOT ?>/assets/images/right-arrow.svg" alt="Next" class="pagination-icon">
+            </a>
+        <?php endif; ?>
+    <?php endif; ?>
+</div>
 
   <div id="modal" class="modal">
       <div class="modal-content">
