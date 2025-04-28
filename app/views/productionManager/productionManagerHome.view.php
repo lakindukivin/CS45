@@ -106,14 +106,6 @@
                         <h4>Monthly Amount of Recycled Polythene</h4>
                         <div class="metric-value"><?= $polytheneAmount ?> tons</div>
                     </div>
-                    <div class="metric-card">
-                        <h4>Today Collection centres</h4>
-                        <div class="metric-value">0</div>
-                    </div>
-                    <div class="metric-card">
-                        <h4>Amount of Supply request</h4>
-                        <div class="metric-value">0</div>
-                    </div>
                 </div>
             </div>
         </div>
