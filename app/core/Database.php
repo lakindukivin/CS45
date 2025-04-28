@@ -1,9 +1,10 @@
 <?php
 
 
-trait Database {
+trait Database
+{
 
-    private function connect()
+    protected function connect()
     {
         $string = "mysql:hostname=" . DBHOST . ";dbname=" . DBNAME;
         $con = new PDO($string, DBUSER, DBPASS);
@@ -24,7 +25,6 @@ trait Database {
         }
 
         return false;
-        
     }
 
     public function get_row($query, $data = [])

@@ -83,4 +83,10 @@ class CartModel
     {
         return $this->delete($cart_id, 'cart_id');
     }
+
+    public function removeItemsByCustomer($customer_id)
+    {
+        $db = Database::getInstance();
+        $db->delete('cart', ['customer_id' => $customer_id]); // Remove all cart items for this customer
+    }
 }
