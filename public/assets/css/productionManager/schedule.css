@@ -295,6 +295,31 @@ select.form-control:-moz-focusring {
   box-shadow: var(--shadow-md);
 }
 
+.error-message {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: none;
+}
+
+.error-message:not(:empty) {
+  display: block;
+}
+
+/* Error state for form controls */
+.error {
+  border-color: #dc3545 !important;
+}
+
+.error:focus {
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+}
+
+/* Normal state */
+input, textarea, select {
+  border-color: var(--accent-green);
+}
+
 @media (max-width: 768px) {
   .modal-content {
     margin: 20% auto;
