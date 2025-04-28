@@ -7,7 +7,7 @@
 trait Model
 {
     use Database;
-    protected $limit = 10;
+    protected $limit = 100;
     protected $offset = '0';
     public $order_type = "desc";
     public $order_column = "customer_id";
