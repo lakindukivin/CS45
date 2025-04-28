@@ -12,7 +12,37 @@
 </head>
 
 <body>
+    <?php
+    if (isset($_SESSION['user_id'])) {
+        $profileLink = ROOT . '/profile';
+    } else {
+        $profileLink = ROOT . '/login';
+    }
+    ?>
+    <header>
+        <a href="#" class="logo">
+            <img
+                src="<?= ROOT ?>/assets/images/Waste360.png"
+                alt="Waste360 Logo"
+                class="logo-image" />
+            <span>Waste360</span>
+        </a>
 
+        <nav>
+            <ul class="nav-links">
+                <li><a href="<?= ROOT ?>">Home</a></li>
+                <li><a href="<?= ROOT ?>/service">Services</a></li>
+                <li><a href="<?= ROOT ?>/store">Store</a></li>
+                <li><a href="<?= ROOT ?>/contact">Contact</a></li>
+                <li><a href="<?= ROOT ?>/about">About</a></li>
+                <li>
+                    <a href="<?= $profileLink ?>" class="profile-icon">
+                        <div class="profile-placeholder"></div>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
     <main>
         <?php if (isset($product)): ?>
             <div class="product-image">
@@ -33,44 +63,44 @@
 
                 <p><?= htmlspecialchars($product->productDescription) ?></p>
 
-                <?php if (!empty($packs)): ?>ChatGPT
+                <?php if (!empty($packs)): ?>
+                    <div class="dropdown">
+                        <label for="pack-size">Pack Size</label>
+                        <select id="pack-size" name="pack_size">
+                            <?php foreach ($packs as $pack): ?>
+                                <option value="<?= htmlspecialchars($pack->pack_size) ?>"><?= htmlspecialchars($pack->pack_size) ?> bags</option>
+
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                <?php endif; ?>
+
+
+                <?php if (!empty($bag_sizes)): ?>
+                    <div class="dropdown">
+                        <label for="bag-size">Bag Size</label>
+                        <select id="bag-size" name="bag_size">
+                            <?php foreach ($bag_sizes as $size): ?>
+                                <option value="<?= $size->bag_id ?>" data-price="<?= $size->price ?>">
+                                    <?= htmlspecialchars($size->bag_size) ?> - LKR <?= number_format($size->price, 2) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                <?php endif; ?>
+
                 <div class="dropdown">
-                    <label for="pack-size">Pack Size</label>
-                    <select id="pack-size" name="pack_size">
-                        <?php foreach ($packs as $pack): ?>
-                            <option value="<?= htmlspecialchars($pack->pack_size) ?>"><?= htmlspecialchars($pack->pack_size) ?> bags</option>
-
-                        <?php endforeach; ?>
-                    </select>
+                    <label for="quantity">Quantity</label>
+                    <input type="number" id="quantity" name="quantity" value="1" min="1" />
                 </div>
-            <?php endif; ?>
 
-
-            <?php if (!empty($bag_sizes)): ?>
-                <div class="dropdown">
-                    <label for="bag-size">Bag Size</label>
-                    <select id="bag-size" name="bag_size">
-                        <?php foreach ($bag_sizes as $size): ?>
-                            <option value="<?= $size->bag_id ?>" data-price="<?= $size->price ?>">
-                                <?= htmlspecialchars($size->bag_size) ?> - LKR <?= number_format($size->price, 2) ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
+                <div class="price-display">
+                    <strong>Total Price: </strong>
+                    <span id="dynamic-price">LKR <?= !empty($bag_sizes) ? number_format($bag_sizes[0]->price, 2) : '0.00' ?></span>
                 </div>
-            <?php endif; ?>
 
-            <div class="dropdown">
-                <label for="quantity">Quantity</label>
-                <input type="number" id="quantity" name="quantity" value="1" min="1" />
-            </div>
-
-            <div class="price-display">
-                <strong>Total Price: </strong>
-                <span id="dynamic-price">LKR <?= !empty($bag_sizes) ? number_format($bag_sizes[0]->price, 2) : '0.00' ?></span>
-            </div>
-
-            <button onclick="addToCart()">Add to Cart</button>
-            <button onclick="location.href='<?= ROOT ?>/customOrder'">Custom Order</button>
+                <button onclick="addToCart()">Add to Cart</button>
+                <button onclick="location.href='<?= ROOT ?>/customOrder'">Custom Order</button>
             </div>
         <?php else: ?>
             <div class="error-message">
