@@ -128,8 +128,14 @@
                             </div>
                           </td>
                     </tr>
-                <?php endforeach; ?>
-            <?php endif; ?>            </tbody>
+                <?php endforeach; ?><?php else: ?>
+        <tr>
+            <td colspan="7" class="no-items">
+                <img src="<?= ROOT ?>/assets/images/dolly.svg" alt="All good">
+                No pellets reqeusts available
+            </td>
+        </tr>
+        <?php endif; ?></tbody>
         </table>
       </div>
   

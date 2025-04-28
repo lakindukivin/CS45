@@ -86,14 +86,16 @@
                 </tr>
             </thead>
             <tbody id="orderTableBody">
-            <?php if (!empty($completedOrders)): ?>
-                    <?php foreach ($completedOrders as $order): ?>
+            <?php if (!empty($allPellets)): ?>
+                    <?php foreach ($allPellets as $order): ?>
                         <tr>
                             <td><?= htmlspecialchars($order->pelletOrder_id) ?></td>
                             <td><?= htmlspecialchars($order->customer_name ?? 'N/A') ?></td>
                             <td><?= htmlspecialchars($order->amount) ?></td>
                             <td><?= htmlspecialchars($order->dateRequired) ?></td>
-                            <td><span class="status completed">Completed</span></td>
+                            <td class="status-<?= $order->pelletOrderStatus ?>">
+                        <?= ucfirst($order->pelletOrderStatus) ?>
+                    </td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>

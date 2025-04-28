@@ -1,9 +1,4 @@
 <?php
-
-/**
- * supplyrequest class
- */
-
  class SupplyRequest{
 
   use Controller;
@@ -23,7 +18,11 @@
   if ($_SESSION['role_id'] != 3) {
       redirect('login');
   }
-    $this->view('productionManager/supply_request');
+
+  $supplyRequestModel = new SupplyRequestModel();
+        $data['stockItems'] = $supplyRequestModel->getLowStockItems();
+        
+        $this->view('productionManager/supply_request', $data);
   }
   
 }

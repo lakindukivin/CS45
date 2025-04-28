@@ -77,7 +77,7 @@
 
         <div class="form">
         <form method="POST" action="<?= ROOT ?>/PelletsRequestsViewForm/post/<?= $order->pelletOrder_id ?>">
-        <input type="hidden" name="order_id" value="<?= $order->pelletOrder_id ?>">
+        <input type="hidden" name="order_id" value="<?= $order->pelletOrder_id ?>" >
         <div class="form-row">
             <div class="form-group">
                 <label>Customer Name</label>
@@ -110,21 +110,30 @@
                 <input type="tel" value="<?= htmlspecialchars($data['order']->contact) ?>" readonly>
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group">
-                <label>Reply</label>
-                <textarea name="reply" placeholder="Reason for declining"></textarea>
-            </div>
-        </div>
 
         <div class="button-group">
             <button type="submit" name="action" value="accept" class="submit-button" id="acceptBtn">Accept</button>
-            <button type="submit" name="action" value="decline" class="decline-button" id="declineBtn">Decline</button>
+            <button type="button" name="action" value="decline" class="decline-button" id="declineBtn">Decline</button>
         </div>
         </form>
 </div>
+<!-- declined reason -->
+<div id="modal" class="modal">
+      <div class="modal-content">
+          <span class="close-btn" onclick="closeModal()">&times;</span>
+          <h2>Decline Request</h2></br>
+          <form id="declineForm">
+          <div class="form-group">
+          <label>Reason for Declining</label>
+          <textarea name="reply" required placeholder="Please provide a reason..."></textarea>
+</div>
+<button type="submit" class="decline-button">Decline</button>
+          </form>
+      </div>
+  </div>
   </div> 
   </div>
   <script src="<?= ROOT ?>/assets/js/productionManager/sidebar.js"></script>
+  <script src="<?= ROOT ?>/assets/js/productionManager/pellets_request.js"></script>
 </body>
 </html>

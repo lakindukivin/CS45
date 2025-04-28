@@ -82,6 +82,20 @@ h1 {
   text-decoration: none;
 }
 
+/* Style for the "no items" message */
+.no-items {
+  text-align: center;
+  padding: 1rem;
+  color: #4CAF50; /* Green text */
+}
+
+.no-items img {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -181,6 +195,26 @@ th {
 
 .form-group {
   margin: 15px 0;
+}
+
+.decline-button {
+    background-color: darkred;
+    color: var(--white);
+    padding: 10px 20px ;
+    border: none ;
+    border-radius: 5px ;
+    cursor: pointer ;
+    font-size: 16px ;
+    font-weight: 600 ;
+    width:30%;
+    transition: var(--transition) ;
+    margin-right: 15%;
+}
+
+.decline-button:hover {
+    background-color: rgb(240, 56, 56);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
 }
 
 .form-group select {
