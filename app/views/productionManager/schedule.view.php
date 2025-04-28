@@ -109,7 +109,7 @@
       <div class="modal-content">
           <span class="close-btn" onclick="closeModal()">&times;</span>
           <h2>Add Collection Schedule</h2></br>
-          <form id="scheduleForm" action="<?=ROOT?>/Schedule/addSchedule" method="POST">
+          <form id="scheduleForm" action="<?=ROOT?>/Schedule/addSchedule" method="POST" novalidate>
           <div class="form-group">
     <label for="area">Area:</label>
     <select id="area" name="area" class="form-control" required>
