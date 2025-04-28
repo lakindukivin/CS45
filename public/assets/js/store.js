@@ -1,14 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
   const cards = document.querySelectorAll(".product-card");
+  console.log(`Found ${cards.length} product cards`); // Debug line
 
   const animateCards = () => {
     cards.forEach((card, index) => {
+      console.log(`Animating card ${index}:`, card); // Debug line
       setTimeout(() => {
         card.classList.add("visible");
-      }, index * 300); // Delay each card's animation for a cascading effect
+      }, index * 300);
     });
   };
 
-  // Call animateCards immediately when the page loads
   animateCards();
 });

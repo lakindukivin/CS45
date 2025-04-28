@@ -12,6 +12,26 @@
 <body>
     <?php include 'includes/header.php'; ?>
 
+    <?php
+    // Start session if not already started
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    // Check if the user is logged in, redirect if not
+    if (!isset($_SESSION['user_id'])) {
+        header("Location: " . ROOT . "/login");
+        exit();
+    }
+
+    $customer = new Customer();
+    $user_id = $_SESSION['user_id'];
+
+    // Fetch customer details based on user_id
+    $profile = $customer->getCustomerByUserId($user_id);
+    ?>
+
+
     <main class="cart-container">
         <h1>Your Shopping Cart</h1>
 

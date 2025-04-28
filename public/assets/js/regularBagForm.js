@@ -1,18 +1,21 @@
-let isFormDirty = false;
+document.addEventListener("DOMContentLoaded", function () {
+  // Price calculation functionality
+  const bagSizeSelect = document.getElementById("bag-size");
+  const quantityInput = document.getElementById("quantity");
+  const priceDisplay = document.getElementById("dynamic-price");
 
-// Track input changes to mark the form as "dirty"
-const inputs = document.querySelectorAll('input, select');
-inputs.forEach((input) => {
-  input.addEventListener('input', () => {
-    isFormDirty = true;
-  });
-});
+  function updatePrice() {
+    const selectedOption = bagSizeSelect.options[bagSizeSelect.selectedIndex];
+    const unitPrice = parseFloat(selectedOption.getAttribute("data-price"));
+    const quantity = parseInt(quantityInput.value);
+    const totalPrice = unitPrice * quantity;
 
-// Show a confirmation dialog when the user tries to leave the page
-window.addEventListener('beforeunload', (event) => {
-  if (isFormDirty) {
-    // This will show the browser's default confirmation dialog
-    event.preventDefault();
-    event.returnValue = ''; // Required for some browsers
+    priceDisplay.textContent = "LKR " + totalPrice.toFixed(2);
   }
+
+  bagSizeSelect.addEventListener("change", updatePrice);
+  quantityInput.addEventListener("input", updatePrice);
+
+  // Initialize price display
+  updatePrice();
 });
