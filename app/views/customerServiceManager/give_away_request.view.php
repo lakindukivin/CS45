@@ -109,7 +109,10 @@
 
           <div class="popup-content">
             <label for="decision-reason">Decision reason:</label>
-            <input type="text" name="decision_reason" id="decision_reason" required/>
+            <select  name="decision_reason" id="decision_reason" required>
+              <option value="Requirements Fulfilled">Requirements Fulfilled</option>
+              <option value="Requrements Not Fulfilled">Requrements Not Fulfilled</option>
+            </select>
           </div>
  
           <div class="popup-content">

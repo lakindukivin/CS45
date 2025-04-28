@@ -234,7 +234,7 @@ form.bg-white {
   color: #333;
 }
 
-.popup-content input {
+.popup-content input, .popup-content select {
   width: 100%;
   padding: 8px;
   margin-top: 5px;
