@@ -100,6 +100,7 @@ class ReturnModel {
         $query = "SELECT ri.*, o.customer_id, c.name AS customerName,b.bag_size, s.pack_size, o.quantity, c.phone, p.productName, o.total,  o.orderDate
                   FROM return_item ri
                   JOIN orders o ON ri.order_id = o.order_id
+                  JOIN product p ON o.product_id = p.product_id
                   JOIN bag_size b ON o.bag_id = b.bag_id
                   JOIN pack_size s ON o.pack_id = s.pack_id
                   JOIN customer c ON o.customer_id = c.customer_id
