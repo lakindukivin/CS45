@@ -25,7 +25,10 @@ class CarbonFootprintModel
         try {
             $this->limit = $limit;
             $this->offset = $offset;
-            return $this->findAll('id');
+            $query = "SELECT cf.id, c.name as customer_name, t.type, cf.name, cf.amount FROM carbon_footprint cf JOIN customer c ON cf.customer_id = c.customer_id JOIN carbon_footprint_type t ON cf.carbon_footprint_type_id = t.id ORDER BY cf.id DESC LIMIT $limit OFFSET $offset";
+            return $this->query($query);
+
+
         } catch (Exception $e) {
             error_log("Error fetching paginated CarbobFootprint: " . $e->getMessage());
             return false;
@@ -65,7 +68,7 @@ class CarbonFootprintModel
         }
     }
 
-    public function calculateCarbonFootprint($product_id, $bag_id=null, $pack_id=null, $quantity)
+    public function calculateCarbonFootprint($product_id, $bag_id = null, $pack_id = null, $quantity)
     {
         try {
             $checkQuery = "SELECT productType FROM product WHERE product_id = :product_id";
@@ -91,14 +94,14 @@ class CarbonFootprintModel
                 if ($result && $result2) {
                     $weight = $result[0]->weight;
                     $pack_size = $result2[0]->pack_size;
-                    $carbonFootprint = $weight * $pack_size * $quantity; 
+                    $carbonFootprint = $weight * $pack_size * $quantity;
                     return $carbonFootprint;
                 } else {
-                    return 0; 
+                    return 0;
                 }
-            } else if($productType==='Pellets') {
+            } else if ($productType === 'Pellets') {
                 return $quantity;
-                
+
             }
 
 

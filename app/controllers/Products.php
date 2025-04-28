@@ -50,9 +50,16 @@ class Products
             $totalProducts = $this->productModel->getProductsCount();
         }
         $totalPages = ceil($totalProducts / $limit);
-        $allProducts = $this->productModel->getAllProducts();
-        $productHasBagSizes = $this->productHasBagSizesModel->getAllProductHasBagSizes();
 
+        // Get all products
+        $allProducts = $this->productModel->getAllProducts();
+
+        // Filter bag products only for the bag size form
+        $bagProducts = array_filter($allProducts, function ($product) {
+            return isset($product->productType) && $product->productType == 'Bag';
+        });
+
+        $productHasBagSizes = $this->productHasBagSizesModel->getAllProductHasBagSizes();
 
         $this->view('salesManager/products', [
             'products' => $products,
@@ -60,12 +67,9 @@ class Products
             'totalPages' => $totalPages,
             'search' => $search,
             'allProducts' => $allProducts,
+            'bagProducts' => $bagProducts, // Add filtered bag products
             'productHasBagSizes' => $productHasBagSizes,
-           
-
         ]);
-
-
     }
 
     //Get single product 
@@ -98,6 +102,7 @@ class Products
             }
 
             $data = [
+                'productType' => $_POST['productType'],
                 'productName' => $_POST['productName'],
                 'productImage' => $imagePath,
                 'productDescription' => $_POST['description'],
@@ -135,6 +140,7 @@ class Products
 
                 $data = [
                     'product_id' => $_POST['editProductID'],
+                    'productType' => $_POST['editProductType'],
                     'productName' => $_POST['editProductName'],
                     'productImage' => $imagePath,
                     'productDescription' => $_POST['editDescription'],

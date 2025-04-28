@@ -348,3 +348,33 @@ function setupFormValidation(formId, validations) {
     });
   }
 }
+
+// Add validation to the bag size form
+document.addEventListener('DOMContentLoaded', function () {
+  const bagSizeForm = document.getElementById('addBagSizeForm');
+  if (bagSizeForm) {
+    bagSizeForm.addEventListener('submit', function (event) {
+      const productId = document.getElementById('product_id').value;
+      const bagId = document.getElementById('bag_id').value;
+
+      if (!productId) {
+        alert('Please select a product');
+        event.preventDefault();
+        return;
+      }
+
+      if (!bagId) {
+        alert('Please select a valid bag size');
+        event.preventDefault();
+        return;
+      }
+
+      // Check if this combination already exists
+      const usedBagSizes = productBagSizes[productId] || [];
+      if (usedBagSizes.includes(parseInt(bagId))) {
+        alert('This bag size is already associated with the selected product');
+        event.preventDefault();
+      }
+    });
+  }
+});
