@@ -170,7 +170,7 @@ class ManageStaffAccounts
 
                 $imagePath = $_POST['existingImagePath'] ?? '';
                 if (isset($_FILES['editStaffImage']) && $_FILES['editStaffImage']['error'] == UPLOAD_ERR_OK) {
-                    $uploadDir = 'uploads/adsAndBanners/';
+                    $uploadDir = 'uploads/staff/';
                     if (!is_dir($uploadDir)) {
                         mkdir($uploadDir, 0777, true);
                     }
