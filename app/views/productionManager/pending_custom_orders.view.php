@@ -63,7 +63,7 @@
       <nav class="nav">
         <ul>
           <li><a href="<?= ROOT ?>/ProductionManagerProfile">Profile</a></li>
-          <li><a href="#">Logout</a></li>
+          <li><a href="<?= ROOT ?>/Logout">Logout</a></li>
         </ul>
       </nav>
     </header>
