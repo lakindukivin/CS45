@@ -1,0 +1,253 @@
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+  }
+  
+  /* Header Styles */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    padding: 20px 0;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .logo-image {
+    width: 80px;
+    height: 80px;
+    margin-right: 5px;
+  }
+  
+  .logo span {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.6em;
+    font-weight: bold;
+    color: #000000;
+  }
+  
+  .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+    align-items: center;
+  }
+  
+  .nav-links li {
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav-links li a {
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    font-size: 1.15rem;
+    transition: color 0.3s ease;
+  }
+  
+  .nav-links li a:hover {
+    color: #22973c;
+  }
+  
+  .nav-links li a.current {
+    color: #22973c;
+  }
+  
+  .profile-icon {
+    display: inline-block;
+  }
+  
+  .profile-placeholder {
+    width: 30px;
+    height: 30px;
+    background-color: #ccc;
+    border-radius: 50%;
+  }
+  
+  /* Main Content Styles */
+  main {
+    max-width: 1200px;
+    width: 90%;
+    margin: 60px auto;
+    text-align: center;
+    flex: 1;
+  }
+  
+  h1, h2, h3 {
+    color: #236d5e;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Completed Orders Container */
+  .completed-orders-container {
+    width: 100%;
+    padding: 2rem;
+    text-align: left;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .completed-orders-container h1 {
+    text-align: center;
+    font-size: 2rem;
+    color: #236d5e;
+    margin-bottom: 2rem;
+  }
+  
+  /* Table Styles */
+  .completed-orders {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .completed-orders th, .completed-orders td {
+    padding: 1.25rem;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+  }
+  
+  .completed-orders th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #236d5e;
+  }
+  
+  .completed-orders tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .completed-orders td {
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  .completed-orders td a {
+    text-decoration: none;
+    color: #22973c;
+    transition: color 0.3s ease;
+  }
+  
+  .completed-orders td a:hover {
+    color: #1a5347;
+  }
+  
+  /* Button Styles */
+  button, .btn {
+    padding: 9px 20px;
+    font-size: 1.1rem;
+    border: none;
+    background-color: #236d5e;
+    font-weight: normal;
+    color: #ffffff;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+  }
+  
+  button:hover, .btn:hover {
+    background-color: #2b823a;
+    color: #fff;
+  }
+  
+  /* Alert Messages */
+  .alert {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 4px;
+    text-align: center;
+  }
+  
+  .alert.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+  }
+  
+  .alert.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+  }
+  
+  /* Empty State */
+  .empty-state {
+    text-align: center;
+    padding: 3rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin: 2rem 0;
+  }
+  
+  .empty-state p {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .completed-orders-container {
+      padding: 1rem;
+    }
+  
+    .completed-orders {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+  
+    .completed-orders th, .completed-orders td {
+      padding: 0.75rem;
+    }
+  
+    .completed-orders-container h1 {
+      font-size: 1.8rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .nav-links {
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 1rem;
+    }
+  
+    .completed-orders-container h1 {
+      font-size: 1.5rem;
+    }
+  
+    .completed-orders th, .completed-orders td {
+      padding: 0.75rem;
+      font-size: 0.9rem;
+    }
+  }
+  

@@ -47,7 +47,7 @@
 
                 <!-- Orders and Delete Account Buttons -->
                 <div class="action-buttons">
-                    <a href="<?= ROOT ?>/normalOrderList" class="btn orders-btn">Normal Orders</a>
+                    <a href="<?= ROOT ?>/normalOrder" class="btn orders-btn">Normal Orders</a>
                     <a href="<?= ROOT ?>/customOrderList" class="btn orders-btn">Custom Orders</a>
                     <a href="<?= ROOT ?>/pelletOrderList" class="btn orders-btn">Pellet Orders</a>
                 </div>
