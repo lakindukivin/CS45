@@ -62,7 +62,24 @@
                 <button type="submit">Submit</button>
             </form>
         </section>
+
+        <!-- 🌍 New Section for Google Map -->
+        <section class="map-section">
+            <h2>Find Us Here</h2>
+            <div class="map-container">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3962.396550978857!2d80.01350687678675!3d6.721370893274595!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae24928b29a289d%3A0x5cbd6c3b54d1ede3!2sWaste%20360!5e0!3m2!1sen!2slk!4v1745895827890!5m2!1sen!2slk"
+                    width="100%"
+                    height="400"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </section>
     </main>
+
 
     <footer>
         <div class="footer-content">

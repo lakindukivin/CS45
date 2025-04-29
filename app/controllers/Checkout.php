@@ -4,7 +4,6 @@ class Checkout
 {
     use Controller;
 
-    // Declare checkoutModel at the class level so it can be accessed across methods
     private $checkoutModel;
 
     public function __construct()
@@ -26,7 +25,6 @@ class Checkout
         return $customer->customer_id;
     }
 
-    // Render checkout page
     public function index()
     {
         try {
@@ -46,7 +44,6 @@ class Checkout
         }
     }
 
-    // Process checkout
     public function processCheckout()
     {
         try {
@@ -56,7 +53,7 @@ class Checkout
             $orderDate = date('Y-m-d H:i:s');
             $orderStatus = 'Pending';
 
-            // Get cart items and total
+            // Get the cart items and total from the form
             $cartModel = new CartModel();
             $cartItems = $cartModel->getCartWithProducts($customer_id);
             $total = $_POST['total_amount']; // Use the total passed from the form
