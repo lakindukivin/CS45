@@ -64,7 +64,7 @@
       <h1 class="logo">DashBoard</h1>
       <nav class="nav">
         <ul>
-          <li><a href="#">Profile</a></li>
+          <li><a href="<?= ROOT ?>/ProductionManagerProfile">Profile</a></li>
           <li><a href="#">Logout</a></li>
         </ul>
       </nav>
