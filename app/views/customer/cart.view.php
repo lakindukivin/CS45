@@ -56,7 +56,8 @@
         <?php endif; ?>
 
         <?php if (empty($cartItems)): ?>
-            <p>Your cart is empty!</p>
+            <br>
+            <p>Your cart is empty!</p><br>
             <a href="<?= ROOT ?>/store" class="btn">Shop Now</a>
         <?php else: ?>
             <div class="cart-items">
@@ -72,12 +73,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $total = 0; ?> <!-- Initialize total here -->
+                        <?php $total = 0; ?>
 
                         <?php foreach ($cartItems as $item): ?>
                             <?php
                             $itemSubtotal = $item->price * $item->quantity * $item->pack_size;
-                            $total += $itemSubtotal; // Add this item's subtotal to total
+                            $total += $itemSubtotal;
                             ?>
                             <tr>
                                 <td>
@@ -106,12 +107,14 @@
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
-
                 </table>
 
                 <div class="cart-total">
                     <h3>Total: LKR <?= number_format($total, 2) ?></h3>
-                    <a href="<?= ROOT ?>/checkout" class="btn btn-primary">Proceed to Checkout</a>
+                    <div class="cart-actions">
+                        <a href="<?= ROOT ?>/checkout" class="btn btn-primary">Proceed to Checkout</a>
+                        <a href="<?= ROOT ?>/store" class="btn">Back to Store</a>
+                    </div>
                 </div>
 
             </div>

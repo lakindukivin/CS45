@@ -80,7 +80,7 @@
                     <a href="<?= ROOT ?>/order" class="btn orders-btn">My Orders</a>
 
                     <!-- Delete Account - Pure button with JS -->
-                    <button type="button" class="btn delete-account-btn" id="deleteAccountBtn">Delete Account</button>
+                    <button type="button" class="btn orders-btn">Giveaway</button>
 
                     <!-- Edit Profile - Simple anchor -->
                     <a href="<?= ROOT ?>/profile" class="btn edit-btn">Edit Profile</a>

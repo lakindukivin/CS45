@@ -113,7 +113,8 @@
                 </div>
                 <div class="button-group">
                     <button class="btn" onclick="addToCart()">Add to Cart</button>
-                    <button class="btn" onclick="location.href='<?= ROOT ?>/customOrder'">Custom Order</button>
+                    <button class="btn" onclick="location.href='<?= ROOT ?>/customOrder'">Custom Order</button> <br>
+                    <br><button class="btn" onclick="location.href='<?= ROOT ?>/cart'">View Cart</button>
                 </div>
             </div>
         <?php else: ?>
