@@ -279,4 +279,16 @@
       align-items: center;
     }
   }
-  
+  .error-message {
+    background-color: #ffe5e5;
+    color: red;
+    border: 1px solid red;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+.error-message p {
+    margin: 5px 0;
+}

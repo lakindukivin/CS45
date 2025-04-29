@@ -1,6 +1,7 @@
 <?php
 
-class ManageOrderModel {
+class ManageOrderModel
+{
     use Model;
 
     protected $table = 'orders';
@@ -37,11 +38,11 @@ class ManageOrderModel {
                   LEFT JOIN product p ON o.product_id = p.product_id
                   LEFT JOIN customer c ON o.customer_id = c.customer_id
                   WHERE o.order_id = :order_id";
-                  
+
         $data = [
             'order_id' => $order_id,
         ];
-        
+
         $result = $this->query($query, $data);
 
         // Debugging: Log the query and result
@@ -121,7 +122,7 @@ class ManageOrderModel {
         return $this->query($query, array_merge($data, ['orderId' => $orderId]));
     }
 
-    
+
 
     // Add this new method to get orders by status
     public function getCompletedOrdersByStatus($status)
@@ -134,7 +135,7 @@ class ManageOrderModel {
                   JOIN product p ON o.product_id = p.product_id
                   WHERE co.status = :status
                   ORDER BY co.date_completed DESC";
-        
+
         return $this->query($query, ['status' => $status]);
     }
 
@@ -148,24 +149,24 @@ class ManageOrderModel {
                   JOIN customer c ON o.customer_id = c.customer_id
                   JOIN product p ON o.product_id = p.product_id
                   WHERE o.order_id = :orderId";
-        
+
         $result = $this->query($query, ['orderId' => $orderId]);
         return $result ? $result[0] : false;
     }
 
-        //search pending orders by name and date
-    public function getPendingOrders($page = 1, $limit = 10, $filters = []) {
+    //search pending orders by name and date
+    public function getPendingOrders($page = 1, $limit = 10, $filters = [])
+    {
         $offset = ($page - 1) * $limit;
 
-        $query = "SELECT o.*, p.productName, c.name as customerName, b.bag_size, s.pack_size, o.quantity, c.phone, o.total, o.orderDate 
+        $query = "SELECT o.*, p.productName, c.name as customerName, b.bag_size, o.quantity, c.phone, o.total, o.orderDate 
                   FROM orders o 
                   JOIN product p ON o.product_id = p.product_id
                   JOIN bag_size b ON o.bag_id = b.bag_id
-                  JOIN pack_size s ON o.pack_id = s.pack_id 
                   JOIN customer c ON o.customer_id = c.customer_id 
                   WHERE o.orderStatus = 'pending'";
 
-        $params = [];          
+        $params = [];
 
         // Add filters for name and date
         if (!empty($filters['name'])) {
@@ -183,14 +184,14 @@ class ManageOrderModel {
     }
 
     // search accepted orders by name and date
-    public function getAcceptedOrders($page = 1, $limit = 10, $filters = []) {
+    public function getAcceptedOrders($page = 1, $limit = 10, $filters = [])
+    {
         $offset = ($page - 1) * $limit;
 
-        $query = "SELECT co.*, p.productName, c.name as customerName , b.bag_size, s.pack_size, o.quantity, c.phone, o.total, o.orderDate
+        $query = "SELECT co.*, p.productName, c.name as customerName , b.bag_size, o.quantity, c.phone, o.total, o.orderDate
                   FROM completed_orders co 
                   JOIN orders o ON co.order_id = o.order_id
                   JOIN bag_size b ON o.bag_id = b.bag_id
-                  JOIN pack_size s ON o.pack_id = s.pack_id 
                   JOIN product p ON o.product_id = p.product_id 
                   JOIN customer c ON o.customer_id = c.customer_id 
                   WHERE co.status = 'accepted'";
@@ -199,8 +200,8 @@ class ManageOrderModel {
 
         // Add filters for name and date
         if (!empty($filters['name'])) {
-             $query .= " AND c.name LIKE :name";
-             $params['name'] = '%' . $filters['name'] . '%';
+            $query .= " AND c.name LIKE :name";
+            $params['name'] = '%' . $filters['name'] . '%';
         }
         if (!empty($filters['date'])) {
             $query .= " AND DATE(co.date_completed) = :date";
@@ -210,17 +211,17 @@ class ManageOrderModel {
         $query .= " LIMIT $limit OFFSET $offset";
 
         return $this->query($query, $params);
-}        
+    }
 
-        //search processing orders by name and date
-    public function getProcessingOrders($page = 1, $limit = 10, $filters = []) {
+    //search processing orders by name and date
+    public function getProcessingOrders($page = 1, $limit = 10, $filters = [])
+    {
         $offset = ($page - 1) * $limit;
 
-        $query = "SELECT co.*, p.productName, c.name as customerName, b.bag_size, s.pack_size, o.quantity, c.phone, o.total, o.orderDate 
+        $query = "SELECT co.*, p.productName, c.name as customerName, b.bag_size, o.quantity, c.phone, o.total, o.orderDate 
                   FROM completed_orders co 
                   JOIN orders o ON co.order_id = o.order_id
                   JOIN bag_size b ON o.bag_id = b.bag_id
-                  JOIN pack_size s ON o.pack_id = s.pack_id 
                   JOIN product p ON o.product_id = p.product_id
                   JOIN customer c ON o.customer_id = c.customer_id 
                   WHERE co.status = 'processing'";
@@ -243,14 +244,14 @@ class ManageOrderModel {
     }
 
     //search shipped orders by name and date
-    public function getShippedOrders($page = 1, $limit = 10, $filters = []) {
+    public function getShippedOrders($page = 1, $limit = 10, $filters = [])
+    {
         $offset = ($page - 1) * $limit;
 
-        $query = "SELECT co.*, p.productName, c.name as customerName, b.bag_size, s.pack_size, o.quantity, c.phone, o.total, o.orderDate  
+        $query = "SELECT co.*, p.productName, c.name as customerName, b.bag_size, o.quantity, c.phone, o.total, o.orderDate  
                   FROM completed_orders co 
                   JOIN orders o ON co.order_id = o.order_id
                   JOIN bag_size b ON o.bag_id = b.bag_id
-                  JOIN pack_size s ON o.pack_id = s.pack_id 
                   JOIN product p ON o.product_id = p.product_id 
                   JOIN customer c ON o.customer_id = c.customer_id 
                   WHERE co.status = 'shipped'";
@@ -273,14 +274,14 @@ class ManageOrderModel {
     }
 
     //search delivered orders by name and date
-    public function getDeliveredOrders($page = 1, $limit = 10, $filters = []) {
+    public function getDeliveredOrders($page = 1, $limit = 10, $filters = [])
+    {
         $offset = ($page - 1) * $limit;
 
-        $query = "SELECT co.*, p.productName, c.name as customerName,b.bag_size, s.pack_size, o.quantity, c.phone, o.total, o.orderDate  
+        $query = "SELECT co.*, p.productName, c.name as customerName,b.bag_size,  o.quantity, c.phone, o.total, o.orderDate  
                   FROM completed_orders co 
                   JOIN orders o ON co.order_id = o.order_id 
                   JOIN bag_size b ON o.bag_id = b.bag_id
-                  JOIN pack_size s ON o.pack_id = s.pack_id 
                   JOIN product p ON o.product_id = p.product_id 
                   JOIN customer c ON o.customer_id = c.customer_id 
                   WHERE co.status = 'delivered'";
@@ -303,14 +304,14 @@ class ManageOrderModel {
     }
 
     // search rejected orders by name and date
-    public function getRejectedOrders($page = 1, $limit = 10, $filters = []) {
+    public function getRejectedOrders($page = 1, $limit = 10, $filters = [])
+    {
         $offset = ($page - 1) * $limit;
 
-        $query = "SELECT co.*, p.productName, c.name as customerName,b.bag_size, s.pack_size, o.quantity, c.phone, o.total, o.orderDate 
+        $query = "SELECT co.*, p.productName, c.name as customerName,b.bag_size,  o.quantity, c.phone, o.total, o.orderDate 
                   FROM completed_orders co 
                   JOIN orders o ON co.order_id = o.order_id 
                   JOIN bag_size b ON o.bag_id = b.bag_id
-                  JOIN pack_size s ON o.pack_id = s.pack_id 
                   JOIN product p ON o.product_id = p.product_id 
                   JOIN customer c ON o.customer_id = c.customer_id 
                   WHERE co.status = 'rejected'";
@@ -333,7 +334,8 @@ class ManageOrderModel {
     }
 
 
-    public function countPendingOrders($filters = []) {
+    public function countPendingOrders($filters = [])
+    {
         $query = "SELECT COUNT(o.order_id) as count 
                   FROM orders o 
                   JOIN product p ON o.product_id = p.product_id 
@@ -358,7 +360,8 @@ class ManageOrderModel {
         return isset($result[0]->count) ? $result[0]->count : 0;
     }
 
-    public function countAcceptedOrders($filters = []) {
+    public function countAcceptedOrders($filters = [])
+    {
         $query = "SELECT COUNT(co.order_id) as count 
                   FROM completed_orders co 
                   JOIN orders o ON co.order_id = o.order_id 
@@ -383,7 +386,8 @@ class ManageOrderModel {
     }
 
 
-    public function countProcessingOrders($filters = []) {
+    public function countProcessingOrders($filters = [])
+    {
         $query = "SELECT COUNT(co.order_id) as count 
                   FROM completed_orders co 
                   JOIN orders o ON co.order_id = o.order_id 
@@ -407,7 +411,8 @@ class ManageOrderModel {
         return isset($result[0]->count) ? $result[0]->count : 0;
     }
 
-    public function countShippedOrders($filters = []) {
+    public function countShippedOrders($filters = [])
+    {
         $query = "SELECT COUNT(co.order_id) as count 
                   FROM completed_orders co 
                   JOIN orders o ON co.order_id = o.order_id 
@@ -430,8 +435,9 @@ class ManageOrderModel {
         $result = $this->query($query, $params);
         return isset($result[0]->count) ? $result[0]->count : 0;
     }
-     
-    public function countDeliveredOrders($filters = []) {
+
+    public function countDeliveredOrders($filters = [])
+    {
         $query = "SELECT COUNT(co.order_id) as count 
                   FROM completed_orders co 
                   JOIN orders o ON co.order_id = o.order_id 
@@ -455,7 +461,8 @@ class ManageOrderModel {
         return isset($result[0]->count) ? $result[0]->count : 0;
     }
 
-    public function countRejectedOrders($filters = []) {
+    public function countRejectedOrders($filters = [])
+    {
         $query = "SELECT COUNT(co.order_id) as count 
                   FROM completed_orders co 
                   JOIN orders o ON co.order_id = o.order_id 
@@ -499,7 +506,7 @@ class ManageOrderModel {
     {
         // Convert $limit to an integer to prevent SQL injection
         $limit = (int) $limit;
-        
+
         // Modified to get only pending orders
         $query = "SELECT o.*, c.name as customerName 
                   FROM orders o 
@@ -510,5 +517,4 @@ class ManageOrderModel {
 
         return $this->query($query);
     }
-
 }

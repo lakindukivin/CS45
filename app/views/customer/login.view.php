@@ -44,6 +44,15 @@
                 alt="Recycling image"
                 class="recycling-image" />
             <div class="cta">
+
+                <?php if (!empty($errors)): ?>
+                    <div class="error-message">
+                        <?php foreach ($errors as $error): ?>
+                            <p><?= htmlspecialchars($error) ?></p>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+
                 <form class="login-form" method="post">
                     <div class="input-group">
                         <label for="Email">Email</label>
@@ -71,9 +80,11 @@
                         <a href="<?= ROOT ?>/createAccount">Sign up now</a>
                     </p>
                 </form>
+
             </div>
         </div>
     </main>
+
 
     <footer>
         <div class="footer-content">
