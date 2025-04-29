@@ -124,8 +124,11 @@ function updateAvailableBagSizes() {
   // Define all possible bag sizes
   const allBagSizes = [
     { id: 1, name: 'Small' },
-    { id: 2, name: 'Large' },
-    { id: 3, name: 'Extra Large' },
+    { id: 2, name: 'Medium' },
+    { id: 3, name: 'Large' },
+    { id: 4, name: 'XL' },
+    { id: 5, name: 'XXL' },
+    { id: 6, name: 'XXXL' },
   ];
 
   // Filter out already used bag sizes for this product
